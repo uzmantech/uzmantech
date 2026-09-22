@@ -1,0 +1,28 @@
+name: Temporary Heimdall Bundle
+
+on:
+  push:
+    branches:
+      - temp/heimdall-bundle
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Heimdall
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p heimdall_payload/tools/samsung/heimdall
+          curl -L --fail --retry 3 \
+            "https://raw.githubusercontent.com/tothphu/heimdall_build/master/heimdall_1.4.2_win64.zip" \
+            -o /tmp/heimdall.zip
+          echo "1300E01674E1D92683F92B45DE72390195A6FF50D37107860CDE9E4E54755DB9  /tmp/heimdall.zip" | sha256sum -c -
+          unzip -q /tmp/heimdall.zip -d heimdall_payload/tools/samsung/heimdall
+          find heimdall_payload -maxdepth 4 -type f -print
+      - name: Upload Heimdall artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: heimdall-win64-bundle
+          path: heimdall_payload
+          if-no-files-found: error

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<defs>
+ <radialGradient id="bg" cx="50%" cy="42%" r="62%"><stop offset="0" stop-color="#102d66"/><stop offset=".62" stop-color="#06152f"/><stop offset="1" stop-color="#020914"/></radialGradient>
+ <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0088ff"/><stop offset=".5" stop-color="#00dfff"/><stop offset="1" stop-color="#1260ff"/></linearGradient>
+ <linearGradient id="u" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".42" stop-color="#b9c6d8"/><stop offset=".7" stop-color="#007cff"/><stop offset="1" stop-color="#00e8ef"/></linearGradient>
+ <linearGradient id="text" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff"/><stop offset=".55" stop-color="#e8f2ff"/><stop offset=".7" stop-color="#00bfff"/><stop offset="1" stop-color="#00efff"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<circle cx="400" cy="400" r="382" fill="url(#bg)" stroke="#063d89" stroke-width="12"/>
+<circle cx="400" cy="400" r="365" fill="none" stroke="url(#ring)" stroke-width="9" filter="url(#glow)"/>
+<g fill="none" stroke="#0875e8" stroke-width="4" opacity=".75">
+<path d="M55 285h105l35 35h95"/><path d="M745 285H640l-35 35h-95"/>
+<path d="M40 365h150l28 28h90"/><path d="M760 365H610l-28 28h-90"/>
+<path d="M45 490h115l35-35h90"/><path d="M755 490H640l-35-35h-90"/>
+<path d="M95 550h110l30-30h55"/><path d="M705 550H595l-30-30h-55"/>
+</g>
+<g fill="#0b7fff"><circle cx="55" cy="285" r="7"/><circle cx="745" cy="285" r="7"/><circle cx="40" cy="365" r="7"/><circle cx="760" cy="365" r="7"/><circle cx="45" cy="490" r="7"/><circle cx="755" cy="490" r="7"/></g>
+<path d="M315 155v260c0 48 20 70 58 70 42 0 66-25 66-76V160h87v266c0 109-58 166-153 166-94 0-145-57-145-165V155z" fill="url(#u)"/>
+<path d="M260 425c92 13 208-20 312-91 42-29 78-43 102-31 28 14 17 48-25 72-101 58-244 101-369 83-52-8-75-25-80-47-5-23 18-39 60-44z" fill="url(#ring)" stroke="#4cefff" stroke-width="4"/>
+<path d="M505 157h61v61h-61zM575 115h48v48h-48zM575 188h48v48h-48z" fill="#12e5f5"/>
+<text x="400" y="625" text-anchor="middle" font-family="Arial,Segoe UI,sans-serif" font-size="74" font-weight="900" letter-spacing="2" fill="url(#text)">UZMANTECH</text>
+<text x="400" y="673" text-anchor="middle" font-family="Arial,Segoe UI,sans-serif" font-size="20" font-weight="600" letter-spacing="8" fill="#fff">TEKNOLOJİDE UZMAN ÇÖZÜMLER</text>
+<path d="M250 715h300" stroke="#008dff" stroke-width="5"/><path d="M365 708h70l-18 10h-34z" fill="#00dfff"/>
+</svg>

@@ -6,7 +6,7 @@
 <section id="usersPanel"><div class="toolbar"><input id="search" class="search" placeholder="Kullanıcı, e-posta veya telefon ara"><button class="btn" id="refresh">Yenile</button><button class="btn primary" style="width:auto" id="addDays">Süre Ekle</button></div><div id="users"></div></section>
 <section id="pendingPanel" class="hidden"><div class="toolbar"><button class="btn" id="refreshPending">Yenile</button></div><div id="pending"></div></section>
 <section id="devicesPanel" class="hidden"><div class="toolbar"><button class="btn" id="refreshDevices">Yenile</button></div><div id="devices"></div></section><section id="logsPanel" class="hidden"><div class="toolbar"><button class="btn" id="refreshLogs">Yenile</button></div><div id="logs"></div></section><section id="updatesPanel" class="hidden"><div class="toolbar"><button class="btn" id="refreshUpdates">Yenile</button></div><div id="updates"></div></section></div></div>
-<div id="editModal class="modal hidden"><div class="card modalbox"><button class="btn close" id="closeEdit">Kapat</button><h2>Kullanıcı Düzenle</h2><input type="hidden" id="editId"><div class="field"><label>Kullanıcı adı</label><input id="editUsername" disabled></div><div class="field"><label>E-posta</label><input id="editEmail" type="email"></div><div class="field"><label>Telefon</label><input id="editPhone"></div><div class="field"><label>Rol</label><select id="editRole"><option value="user">Kullanıcı</option><option value="admin">Admin</option></select></div><div class="field"><label>Durum</label><select id="editStatus"><option value="active">Aktif</option><option value="disabled">Pasif</option><option value="pending">Bekleyen</option></select></div><div class="field"><label>Bitiş tarihi</label><input id="editExpiry" type="datetime-local"></div><div class="actions"><button class="btn primary" id="saveEdit">Kaydet</button><button class="btn danger" id="deleteUser">Kullanıcıyı Sil</button></div><div id="editErr" class="err hidden"></div></div></div>
+<div id="editModal" class="modal hidden"><div class="card modalbox"><button class="btn close" id="closeEdit">Kapat</button><h2>Kullanıcı Düzenle</h2><input type="hidden" id="editId"><div class="field"><label>Kullanıcı adı</label><input id="editUsername" disabled></div><div class="field"><label>E-posta</label><input id="editEmail" type="email"></div><div class="field"><label>Telefon</label><input id="editPhone"></div><div class="field"><label>Rol</label><select id="editRole"><option value="user">Kullanıcı</option><option value="admin">Admin</option></select></div><div class="field"><label>Durum</label><select id="editStatus"><option value="active">Aktif</option><option value="disabled">Pasif</option><option value="pending">Bekleyen</option></select></div><div class="field"><label>Bitiş tarihi</label><input id="editExpiry" type="datetime-local"></div><div class="actions"><button class="btn primary" id="saveEdit">Kaydet</button><button class="btn danger" id="deleteUser">Kullanıcıyı Sil</button></div><div id="editErr" class="err hidden"></div></div></div>
 <script>
 const BASE="https://iutehccebzqnhqkevawz.supabase.co/functions/v1";let token="",users=[],devices=[],logs=[],updates=[];const $=x=>document.getElementById(x);
 function show(id,on){$(id).classList.toggle("hidden",!on)}function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -38,11 +38,13 @@ $("loginBtn").onclick=async()=>{
   show("err",false);$("loginBtn").disabled=true;$("loginBtn").textContent="Giriş yapılıyor...";
   try{
     await login();
-    show("login",false);show("app",true);
-    $("loginBtn").textContent="Giriş Yap";
-    await load();
   }catch(e){
-    $("err").textContent=e.message;$("err").classList.remove("hidden");
-  }finally{$("loginBtn").disabled=false;$("loginBtn").textContent="Giriş Yap"}
+    $("err").textContent=e.message;show("err",true);
+    $("loginBtn").disabled=false;$("loginBtn").textContent="Giriş Yap";
+    return;
+  }
+  show("login",false);show("app",true);
+  $("loginBtn").disabled=false;$("loginBtn").textContent="Giriş Yap";
+  load();
 };$("pass").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("loginBtn").click()}};$("logout").onclick=logout;$("refresh").onclick=load;$("refreshDevices").onclick=load;$("refreshPending").onclick=load;$("refreshLogs").onclick=loadLogs;$("refreshUpdates").onclick=loadUpdates;$("search").oninput=render;$("closeEdit").onclick=()=>show("editModal",false);$("saveEdit").onclick=saveEdit;$("deleteUser").onclick=deleteUser;$("addDays").onclick=()=>alert("Süre eklemek için kullanıcı kartındaki 'Süre Uzat' butonunu kullanın.");document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");show("usersPanel",b.dataset.tab==="users");show("pendingPanel",b.dataset.tab==="pending");show("devicesPanel",b.dataset.tab==="devices");show("logsPanel",b.dataset.tab==="logs");show("updatesPanel",b.dataset.tab==="updates");if(b.dataset.tab==="logs")loadLogs();if(b.dataset.tab==="updates")loadUpdates()});
 </script></body></html>

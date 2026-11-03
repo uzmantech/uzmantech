@@ -1,24 +1,28 @@
-/* API boundary for future server integration. UI code must not access Supabase tables directly. */
-window.UzmantechAPI = (() => {
-  const config = window.UZMANTECH_CONFIG || { mode: "demo", apiBaseUrl: "" };
-  async function request(path, options = {}) {
-    if (config.mode !== "live" || !config.apiBaseUrl) {
-      throw new Error("Portal servis bağlantısı henüz etkin değil.");
-    }
-    const response = await fetch(config.apiBaseUrl.replace(/\/$/, "") + path, {
+(() => {
+  const config = window.UZMANTECH_CONFIG || {};
+  const token = () => sessionStorage.getItem("uzmantech_web_session") || "";
+  async function call(path, options = {}) {
+    if (!config.apiBaseUrl || !config.publishableKey) throw new Error("Portal bağlantısı yapılandırılmamış.");
+    const response = await fetch(config.apiBaseUrl + path, {
       ...options,
-      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-      credentials: "include"
+      headers: {
+        apikey: config.publishableKey,
+        Authorization: "Bearer " + (token() || config.publishableKey),
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      },
+      cache: "no-store"
     });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || "İşlem tamamlanamadı.");
-    return payload;
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.success === false) throw new Error(data.message || "İşlem tamamlanamadı.");
+    return data;
   }
-  return Object.freeze({
-    getSession: () => request("/session"),
-    login: (data) => request("/auth/login", { method: "POST", body: JSON.stringify(data) }),
-    register: (data) => request("/auth/register", { method: "POST", body: JSON.stringify(data) }),
-    listArchive: (params = {}) => request("/archive?" + new URLSearchParams(params)),
-    createPaymentNotice: (data) => request("/payments", { method: "POST", body: JSON.stringify(data) })
+  window.UzmantechAPI = Object.freeze({
+    login: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "login", ...data }) }),
+    session: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "session" }) }),
+    archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
+    admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
+    setSession: value => value ? sessionStorage.setItem("uzmantech_web_session", value) : sessionStorage.removeItem("uzmantech_web_session"),
+    getToken: token
   });
 })();

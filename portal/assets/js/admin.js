@@ -2,10 +2,28 @@
  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
  const api=window.UzmantechAPI;
  let users=[];
+ let payments=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="archive"?"Arşiv durumu":"Genel Bakış";$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="archive"?"Arşiv durumu":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
+
+ const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
+ const statusNames={pending:"Onay bekliyor",approved:"Onaylandı",rejected:"Reddedildi"};
+ function renderPayments(){
+  const body=$("#paymentsBody");if(!body)return;
+  body.innerHTML=payments.map(p=>{
+   const user=p.user||{},date=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
+   const receipt=p.receipt_url?'<a class="btn" href="'+esc(p.receipt_url)+'" target="_blank" rel="noopener noreferrer">Dekontu aç</a>':'<span class="muted">Açılamadı</span>';
+   const actions=p.status==="pending"?'<button class="btn" data-payment-action="approved" data-id="'+esc(p.id)+'">Onayla</button> <button class="btn" data-payment-action="rejected" data-id="'+esc(p.id)+'">Reddet</button>':'-';
+   return '<tr><td>'+esc(user.username||"Bilinmeyen")+'<br><small>'+esc(user.email||"")+'</small></td><td>'+esc(planNames[p.plan]||p.plan)+'<br><small>'+esc(p.license_days)+' gün</small></td><td>₺'+Number(p.amount).toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+'</td><td>'+receipt+'</td><td>'+esc(date)+'</td><td><span class="status '+(p.status==="approved"?"active":p.status==="pending"?"pending":"expired")+'">'+esc(statusNames[p.status]||p.status)+'</span></td><td>'+actions+'</td></tr>';
+  }).join("")||'<tr><td colspan="7">Henüz ödeme bildirimi yok.</td></tr>';
+ }
+ async function loadPayments(){
+  const body=$("#paymentsBody");if(body)body.innerHTML='<tr><td colspan="7">Ödeme bildirimleri yükleniyor…</td></tr>';
+  const result=await api.portalAdmin({action:"payment_list"});payments=result.payments||[];renderPayments();
+ }
+
  function renderUsers(){
   const q=$("#userSearch").value.trim().toLocaleLowerCase("tr-TR");
   const list=users.filter(u=>[u.username,u.email,u.phone].join(" ").toLocaleLowerCase("tr-TR").includes(q));
@@ -41,11 +59,23 @@
  $("#logoutBtn").addEventListener("click",()=>{api.setSession("");location.reload();});
  $("#refreshBtn").addEventListener("click",()=>loadDashboard().catch(e=>toast(e.message)));
  $("#reloadUsers").addEventListener("click",()=>loadUsers().catch(e=>toast(e.message)));
+ $("#reloadPayments")?.addEventListener("click",()=>loadPayments().catch(e=>toast(e.message)));
  $("#userSearch").addEventListener("input",renderUsers);
  $("#adminNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  document.addEventListener("click",async e=>{
   const jump=e.target.closest("[data-jump]");if(jump)navigate(jump.dataset.jump);
   if(e.target.id==="navToggle")$("#sidebar").classList.toggle("open");
+  const paymentBtn=e.target.closest("[data-payment-action]");
+  if(paymentBtn){
+   const id=paymentBtn.dataset.id,status=paymentBtn.dataset.paymentAction,p=payments.find(x=>x.id===id);if(!p)return;
+   const actionLabel=status==="approved"?"onaylanacak ve lisansı eklenecek":"reddedilecek";
+   if(!confirm((p.user?.username||"Kullanıcı")+" ödeme bildirimi "+actionLabel+" mı?"))return;
+   paymentBtn.disabled=true;
+   try{await api.portalAdmin({action:"payment_review",payment_id:id,status});toast(status==="approved"?"Ödeme onaylandı, lisans eklendi.":"Ödeme reddedildi.");await loadPayments();await loadUsers();}
+   catch(err){toast(err.message);}
+   finally{paymentBtn.disabled=false;}
+   return;
+  }
   const btn=e.target.closest("[data-action]");if(!btn)return;
   const id=btn.dataset.id,action=btn.dataset.action,u=users.find(x=>x.id===id);if(!u)return;
   let days=365;

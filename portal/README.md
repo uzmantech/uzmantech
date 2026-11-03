@@ -1,42 +1,28 @@
 # Uzmantech Web Portal
 
-Bu klasör, Uzmantech web portalının ayrı geliştirme alanıdır. Mevcut kök web sitesi ve masaüstü uygulama dosyaları değiştirilmez.
+## Canlı bileşenler
+- GitHub Pages üzerinde statik portal arayüzü
+- Supabase Edge Function `portal-api`: web oturumu ve arşiv sorgusu
+- Mevcut `users` tablosu üzerinden web giriş doğrulaması
+- Mevcut PBKDF2_SHA256 parola formatı ile uyum
+- Ayrı web oturumu; masaüstü cihaz-hash girişi değiştirilmez
+- Mevcut `rapid-service` üzerinden admin kullanıcı listesi, dashboard, lisans verme/uzatma ve pasifleştirme
+- Arşiv kayıtları Supabase'den okunur; oturum açmamış ziyaretçilere dosya URL alanları gönderilmez
 
-## Dosya yapısı
+## Bilinçli olarak henüz açılmayanlar
+- Web kayıt: mevcut kayıt akışı e-posta doğrulama kodu ister. Web için doğrulama e-postası gönderen servis henüz yapılandırılmadı.
+- Ödeme/dekont: güvenli ödeme bildirimi tablosu ve özel dekont depolama alanı henüz oluşturulmadı.
+- Eğitim videoları: eğitim içerik kaynağı henüz tanımlanmadı.
+- Harici dosya bağlantıları, üye oturumunda gösterilse bile sağlayıcının herkese açık linkiyse kopyalanıp paylaşılabilir. Gerçek süreli erişim için özel dosya depolama ve imzalı URL gerekir.
 
-- `index.html`: Ziyaretçi portalı
-- `admin.html`: Yönetim paneli arayüzü
-- `assets/css/site.css`: Ziyaretçi arayüz stilleri
-- `assets/css/admin.css`: Yönetim paneli stilleri
-- `assets/js/config.js`: Tarayıcıda kullanılabilecek herkese açık yapılandırma
-- `assets/js/api.js`: Sunucu API bağlantı katmanı taslağı
-- `assets/js/site.js`: Arama, filtreleme ve arayüz etkileşimleri
-- `assets/js/admin.js`: Yönetim arayüzü etkileşimleri
-
-## Şu anki durum
-
-Bu sürüm arayüz ve dosya yapısı başlangıcıdır. Cihazlar, dosyalar, kullanıcılar ve ödemeler örnek veridir. Kimlik doğrulama, ödeme, video ve indirme uçları henüz bağlı değildir.
-
-## Güvenlik ve entegrasyon kuralları
-
-1. Supabase `service_role` anahtarı hiçbir zaman tarayıcıya konulmaz.
-2. Yönetici yetkisi yalnızca sunucu tarafında doğrulanır.
-3. Web oturumu masaüstü uygulamasının cihaz-hash kilidine dayalı giriş akışından ayrı tasarlanır.
-4. Mevcut masaüstü `login`, `register` ve `archive-service` fonksiyonları incelenmeden değiştirilmez.
-5. Dosya ikili içerikleri herkese açık URL ile sunulmaz. Üyelik ve dosya yetkisi sunucuda kontrol edilir; gerekiyorsa kısa ömürlü imzalı bağlantı üretilir.
-6. EFT/dekont bildirimi lisansı etkinleştirmez. Yönetici dekontu doğruladıktan sonra sunucu lisansı başlatır.
-7. Veritabanı tabloları ve RLS politikaları mevcut masaüstü bağımlılıkları incelenmeden değiştirilmez.
+## Güvenlik
+- Tarayıcıda yalnızca Supabase publishable key bulunur.
+- `service_role` ve `ADMIN_SESSION_SECRET` Edge Function ortamında kalır.
+- Admin işlemleri mevcut `rapid-service` fonksiyonunda tekrar yetkilendirilir.
+- Masaüstü `login`, `register` ve `archive-service` fonksiyonları değiştirilmedi.
+- Veritabanı şeması ve RLS politikaları değiştirilmedi.
 
 ## Yayın
-
-Mevcut GitHub Pages iş akışı depo kökünü yayınladığı için bu klasör `/portal/` yolunda sunulabilir. Bu, gerçek üyelik veya dosya servisi olduğu anlamına gelmez.
-
-## Sonraki geliştirme aşamaları
-
-- Mevcut Supabase Edge Function kaynaklarının ve RLS bağımlılıklarının incelenmesi
-- Ayrı web oturumu ve güvenli yetkilendirme
-- Üye kayıt/başvuru ve yönetici onay akışı
-- Ödeme bildirimi, dekont saklama ve manuel onay
-- Mevcut arşiv kataloğuna salt-okunur bağlantı ve güvenli indirme
-- Eğitim içeriklerinin üyelik kontrolüyle sunulması
-- Yönetici işlem kayıtları ve yetki kontrolleri
+- Portal: `/portal/`
+- Yönetim: `/portal/admin.html`
+- Kök `index.html` ve mevcut Pages workflow korunmuştur.

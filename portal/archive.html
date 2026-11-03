@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19"><meta name="description" content="Uzmantech teknik servis dosya arşivi">
+<title>Dosya Arşivi | Uzmantech</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/archive.css">
+</head>
+<body>
+<header class="site-header"><div class="container header-row">
+<a class="brand" href="./" aria-label="Uzmantech ana sayfa"><img class="brand-logo" src="../assets/logo.svg" alt="Uzmantech logo"><span>UZMANTECH</span></a>
+<nav class="main-nav" aria-label="Ana menü"><a class="active" href="archive.html">Dosya Arşivi</a><a href="index.html#egitimler">Eğitimler</a><a href="index.html#uyelik">Üyelik</a></nav>
+<div class="header-actions" id="archiveHeaderActions"><button class="button button-quiet" data-open="login">Giriş Yap</button><a class="button button-primary" href="index.html#uyelik">Üye Ol</a><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button></div>
+</div></header>
+<main class="archive-page">
+<div class="container">
+<div class="archive-intro"><div><p class="eyebrow">UZMANTECH MERKEZİ KÜTÜPHANE</p><h1>Dosya Arşivi</h1><p>Markanı seç, modelini aç, ihtiyacın olan teknik dosyaya ulaş.</p></div><div class="archive-count" id="archiveCount">Markalar yükleniyor…</div></div>
+<div class="archive-layout">
+<aside class="brand-sidebar">
+<div class="sidebar-head"><div><span class="eyebrow">CİHAZ KATALOĞU</span><h2>Markalar</h2></div><span class="brand-count" id="brandCount">…</span></div>
+<input type="search" id="brandSearch" placeholder="Marka ara…" aria-label="Marka ara">
+<div class="brand-list" id="brandList"><div class="empty-state">Markalar yükleniyor…</div></div>
+</aside>
+<section class="archive-content">
+<div class="archive-toolbar"><div class="archive-search"><span>⌕</span><input id="archiveQuery" type="search" placeholder="Model, kod adı veya açıklama ara"><button class="button button-primary" id="searchArchive">Ara</button></div>
+<select id="archiveCategory" aria-label="Dosya türü"><option value="all">Tüm dosya türleri</option><option value="firmware">Firmware</option><option value="eng">ENG yazılım</option><option value="imei">IMEI</option><option value="test_point">Test Point</option><option value="resistor">Direnç</option></select></div>
+<div class="active-filter" id="activeFilter"><span>Arşivdeki kayıtlar</span><button id="clearFilter" hidden>Filtreyi temizle ×</button></div>
+<div class="archive-results" id="archiveGrid"><div class="empty-state">Arşiv yükleniyor…</div></div>
+<div class="archive-footer" id="archiveFooter"></div>
+</section>
+</div>
+</div>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js"></script>
+</body></html>

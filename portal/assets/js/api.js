@@ -21,6 +21,8 @@
     login: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "login", ...data }) }),
     session: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "session" }) }),
     archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
+    catalog: () => call("/portal-api/catalog"),
+    recent: () => call("/portal-api/recent"),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
     portalAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
     exchangeRate: () => call("/portal-api/exchange-rate"),

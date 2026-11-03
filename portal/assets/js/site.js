@@ -1,7 +1,7 @@
 (() => {
   const $ = (s, root=document) => root.querySelector(s);
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const state = { user: null, category: "all", query: "", busy: false, timer: null };
+  const state = { user: null, category: "all", query: "", busy: false, timer: null, exchangeRate: null, exchangeRateAt: 0 };
   const toast = message => {
     const el=$("#toast"); if(!el) return;
     el.textContent=message; el.classList.add("show");
@@ -74,22 +74,41 @@
     modal("Yeni üyelik",'<div class="notice">Web kayıt ekranı, mevcut e-posta doğrulama ve yönetici onay akışına bağlanacak. E-posta gönderim servisi henüz web için yapılandırılmadığından şu anda kayıt alınmıyor.</div><p class="muted">Hesap güvenliği için doğrulama kodu gönderilemeyen bir kayıt formunu aktif etmiyorum.</p>');
   }
 
-  function openPlan(plan, label, days){
+  async function refreshExchangeRate(force=false){
+    if(!force && state.exchangeRate && Date.now()-state.exchangeRateAt<60000) return state.exchangeRate;
+    const result=await window.UzmantechAPI.exchangeRate();
+    const rate=Number(result.usd_sell);
+    if(!Number.isFinite(rate)||rate<=0) throw new Error("Enpara USD satış kuru alınamadı.");
+    state.exchangeRate=rate;state.exchangeRateAt=Date.now();
+    document.querySelectorAll("[data-price]").forEach(el=>{
+      const usd=({monthly:15,half_year:30,annual:40})[el.dataset.price];
+      if(usd)el.textContent=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(Math.ceil(usd*rate*100)/100);
+    });
+    const rateLabel=$("#exchangeRateLabel");
+    if(rateLabel)rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+" TL";
+    return rate;
+  }
+
+  async function openPlan(plan, label, days){
     if(!state.user){
       modal(label+" üyelik",'<div class="notice">Ödeme bildirimi göndermek için önce Uzmantech hesabınla giriş yapmalısın.</div><button class="button button-primary" id="planLogin" type="button">Giriş Yap</button>');
       $("#planLogin").addEventListener("click",openLogin);
       return;
     }
-    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: '+days+' gün. Banka hesap/IBAN bilgisi henüz portala eklenmedi. Havale yapmadan önce ödeme bilgilerini işletmeden teyit et.</div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Gönderdiğin tutar (₺)</span><input name="amount" type="number" min="1" max="1000000" step="0.01" required></label><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Dekont özel depolama alanına yüklenir. Yönetici onayından sonra '+days+' günlük lisans otomatik tanımlanır.</p></form>');
+    let rate;
+    try{rate=await refreshExchangeRate(true);}catch(error){toast(error.message);return;}
+    const usd=({monthly:15,half_year:30,annual:40})[plan];
+    const amount=Math.ceil(usd*rate*100)/100;
+    const amountText=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2}).format(amount);
+    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: '+days+' gün. Ücret: <strong>'+usd+' USD</strong> = <strong>'+amountText+'</strong>. Hesaplama Enpara USD satış kuruna göre yapılır.</div><div class="content-card" style="margin:12px 0;padding:14px"><strong>Havale bilgileri</strong><p>Alıcı: Ömer Özen<br>Banka: Enpara<br>IBAN: <strong>TR65 0015 7000 0000 0091 1012 51</strong></p><p class="muted">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL</p></div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Ödeme tutarı (TL)</span><input name="amount" type="text" value="'+amount.toFixed(2)+'" readonly></label><input name="rate" type="hidden" value="'+rate+'"><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Havale işlemini yukarıdaki TL tutarıyla yap. Yönetici onayından sonra '+days+' günlük lisans otomatik tanımlanır.</p></form>');
     $("#paymentForm").addEventListener("submit",async e=>{
       e.preventDefault();
-      const form=e.currentTarget, file=form.elements.receipt.files[0], amount=Number(form.elements.amount.value), payerName=form.elements.payer_name.value.trim();
-      if(!file || file.size===0 || file.size>5*1024*1024){toast("Dekont dosyası boş olamaz ve 5 MB sınırını aşamaz.");return;}
+      const form=e.currentTarget,file=form.elements.receipt.files[0],amount=Number(form.elements.amount.value),rate=Number(form.elements.rate.value),payerName=form.elements.payer_name.value.trim();
+      if(!file||file.size===0||file.size>5*1024*1024){toast("Dekont dosyası boş olamaz ve 5 MB sınırını aşamaz.");return;}
       if(!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){toast("Yalnızca PDF, JPG, PNG veya WEBP yükleyebilirsin.");return;}
-      if(!Number.isFinite(amount)||amount<=0){toast("Geçerli bir ödeme tutarı gir.");return;}
       const btn=$("#paymentSubmit");btn.disabled=true;btn.textContent="Güvenli şekilde yükleniyor…";
       try{
-        const result=await window.UzmantechAPI.paymentReceipt({plan,amount,payerName,file});
+        const result=await window.UzmantechAPI.paymentReceipt({plan,amount,rate,payerName,file});
         closeModal();toast(result.message||"Ödeme bildirimi alındı.");
       }catch(error){toast(error.message);}
       finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
@@ -120,6 +139,6 @@
   (async()=>{
     const token=window.UzmantechAPI.getToken();
     if(token){try{const result=await window.UzmantechAPI.session();state.user=result.user;}catch{window.UzmantechAPI.setSession("");}}
-    syncHeader();await loadArchive();
+    syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadArchive();
   })();
 })();

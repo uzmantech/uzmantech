@@ -4,21 +4,20 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080e19"><meta name="description" content="Uzmantech teknik servis dosya ve eğitim portalı">
 <title>Uzmantech | Teknik Servis Portalı</title>
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">\n<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 <header class="site-header"><div class="container header-row">
 <a class="brand" href="./" aria-label="Uzmantech ana sayfa"><img class="brand-logo" src="../assets/logo.svg" alt="Uzmantech logo"><span>UZMANTECH</span></a>
-<nav class="main-nav" aria-label="Ana menü"><a href="#arsiv">Dosya Arşivi</a><a href="#egitimler">Eğitimler</a><a href="#uyelik">Üyelik</a></nav>
+<nav class="main-nav" aria-label="Ana menü"><a href="archive.html">Dosya Arşivi</a><a href="#egitimler">Eğitimler</a><a href="#uyelik">Üyelik</a></nav>
 <div class="header-actions"><button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button></div>
 </div></header>
 <main>
 <section class="hero"><div class="container hero-inner"><p class="eyebrow">TEKNİK SERVİSİN DİJİTAL MERKEZİ</p><h1>Aradığın yazılımı<br><span>kolayca bul.</span></h1><p class="hero-copy">Telefon modelini veya model kodunu ara. Firmware, servis dosyaları ve teknik eğitimlere tek merkezden ulaş.</p>
 <form class="device-search" id="deviceSearchForm"><label class="sr-only" for="deviceQuery">Cihaz modeli veya kod adı</label><input id="deviceQuery" autocomplete="off" placeholder="Örn. Redmi Note 13, SM-A546E, garnet"><button class="button button-primary" type="submit">Cihaz Ara</button></form>
 <div class="search-hint">Örnek: Redmi Note 13 · Samsung A54 · POCO X6 Pro</div><div id="searchResults" class="search-results" aria-live="polite"></div></div></section>
-<section class="section" id="arsiv"><div class="container"><div class="section-heading"><div><p class="eyebrow">MERKEZİ DOSYA KÜTÜPHANESİ</p><h2>Dosya Arşivi</h2><p class="muted">Marka ve dosya türüne göre filtrele.</p></div><span class="demo-label">CANLI MERKEZİ ARŞİV</span></div>
-<div class="toolbar"><input id="archiveQuery" type="search" placeholder="Model, kod adı veya açıklama ara"><select id="archiveCategory" aria-label="Dosya kategorisi"><option value="all">Tüm kategoriler</option><option value="firmware">Firmware</option><option value="eng">ENG</option><option value="imei">IMEI</option><option value="test_point">Test Point</option><option value="resistor">Direnç</option></select></div>
-<div class="card-grid" id="archiveGrid"><div class="empty-state">Arşiv yükleniyor…</div></div><p id="archiveEmpty" class="empty-state" hidden>Aramanla eşleşen kayıt bulunamadı.</p></div></section>
+<section class="section recent-section" id="son-eklenen"><div class="container"><div class="section-heading"><div><p class="eyebrow">ARŞİVE YENİ EKLENENLER</p><h2>Son Eklenen Dosyalar</h2><p class="muted">En yeni teknik kayıtları hızlıca görüntüle.</p></div><a class="button button-outline" href="archive.html">Tüm dosya arşivini aç <span aria-hidden="true">→</span></a></div><div class="recent-grid" id="recentGrid"><div class="empty-state">Son eklenen dosyalar yükleniyor…</div></div></div></section>
 <section class="section section-alt" id="egitimler"><div class="container"><div class="section-heading"><div><p class="eyebrow">BİLGİ BANKASI</p><h2>Teknik Eğitimler</h2><p class="muted">Uygulamalı servis eğitimleri ve rehberler.</p></div></div><div class="card-grid">
 <article class="content-card"><div class="course-art">▣</div><span class="tag">ADB / FASTBOOT</span><h3>ADB ve Fastboot temelleri</h3><p>Bağlantı, sürücü ve komut kontrolleri.</p><button class="button button-outline" data-course="ADB ve Fastboot temelleri">Eğitimi incele</button></article>
 <article class="content-card"><div class="course-art">◈</div><span class="tag">SAMSUNG</span><h3>Samsung firmware</h3><p>Model, CSC ve paket yapısını tanı.</p><button class="button button-outline" data-course="Samsung firmware">Eğitimi incele</button></article>

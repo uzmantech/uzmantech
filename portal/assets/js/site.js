@@ -135,6 +135,44 @@
     });
   }
 
+  // Accessible, auto-advancing feature showcase.
+  const showcaseTrack=$(".showcase-track");
+  if(showcaseTrack){
+    const slides=[...showcaseTrack.querySelectorAll(".showcase-slide")];
+    const dots=[...document.querySelectorAll("[data-showcase-dot]")];
+    const current=$("#showcaseCurrent");
+    const progress=$(".showcase-progress i");
+    const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let active=0,rotation=null,startedAt=0,remaining=6000,progressFrame=null;
+    const duration=6000;
+    const paint=()=>{
+      showcaseTrack.style.transform="translateX(-"+(active*100)+"%)";
+      slides.forEach((slide,index)=>{slide.classList.toggle("is-active",index===active);slide.setAttribute("aria-hidden",index===active?"false":"true");});
+      dots.forEach((dot,index)=>{dot.classList.toggle("is-active",index===active);dot.setAttribute("aria-current",index===active?"true":"false");});
+      if(current)current.textContent=String(active+1).padStart(2,"0");
+      if(progress)progress.style.width="0%";
+    };
+    const stop=()=>{if(rotation)clearTimeout(rotation);rotation=null;if(progressFrame)cancelAnimationFrame(progressFrame);progressFrame=null;};
+    const tick=()=>{
+      stop();if(reducedMotion||document.hidden)return;
+      startedAt=performance.now();
+      const animate=now=>{const pct=Math.min(100,((now-startedAt)/duration)*100);if(progress)progress.style.width=pct+"%";if(pct<100)progressFrame=requestAnimationFrame(animate);};
+      progressFrame=requestAnimationFrame(animate);
+      rotation=setTimeout(()=>{active=(active+1)%slides.length;remaining=duration;paint();tick();},remaining);
+    };
+    const go=index=>{active=(index+slides.length)%slides.length;remaining=duration;paint();tick();};
+    document.querySelector("[data-showcase-prev]")?.addEventListener("click",()=>go(active-1));
+    document.querySelector("[data-showcase-next]")?.addEventListener("click",()=>go(active+1));
+    dots.forEach((dot,index)=>dot.addEventListener("click",()=>go(index)));
+    const windowEl=$(".showcase-window");
+    windowEl?.addEventListener("mouseenter",()=>{if(rotation){remaining=Math.max(500,remaining-(performance.now()-startedAt));stop();}});
+    windowEl?.addEventListener("mouseleave",tick);
+    windowEl?.addEventListener("focusin",()=>stop());
+    windowEl?.addEventListener("focusout",e=>{if(!windowEl.contains(e.relatedTarget))tick();});
+    document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();else tick();});
+    paint();tick();
+  }
+
   document.addEventListener("click",e=>{
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();

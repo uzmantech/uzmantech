@@ -43,6 +43,7 @@
       '<button class="button button-outline" data-file="'+esc(title)+'">'+(state.user?"İndirme bağlantısı yok":"Üyelik ile indir")+'</button>')+'</article>';
   }
   async function loadArchive(){
+    if(!$("#archiveGrid"))return;
     if(state.busy)return;
     state.busy=true;
     const grid=$("#archiveGrid"), empty=$("#archiveEmpty");
@@ -58,6 +59,20 @@
       if(empty)empty.hidden=true;
     }finally{state.busy=false;}
   }
+  async function loadRecent(){
+    const grid=$("#recentGrid");if(!grid)return;
+    try{
+      const result=await window.UzmantechAPI.recent();
+      const items=result.results||[];
+      grid.innerHTML=items.map(entry=>{
+        const d=entry.data||{},model=d.model||d.title||"Teknik kayıt",brand=d.brand||"",code=d.codename||d.code||"";
+        const category=String(entry.category||"").replace("_"," ").toUpperCase();
+        return '<article class="recent-card"><div class="recent-top"><span class="tag">'+esc(category)+'</span><span class="recent-brand">'+esc(brand)+'</span></div><h3>'+esc(model)+'</h3><p>'+esc(code?("Kod adı: "+code):(d.description||d.notes||"Yeni arşiv kaydı"))+'</p><a href="archive.html?q='+encodeURIComponent(model)+'">Kaydı görüntüle →</a></article>';
+      }).join("");
+      if(!items.length)grid.innerHTML='<div class="empty-state">Henüz gösterilecek yeni kayıt yok.</div>';
+    }catch(error){grid.innerHTML='<div class="empty-state">Son eklenenler yüklenemedi.</div>';}
+  }
+
   function openLogin(){
     modal("Üye girişi",'<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required maxlength="254"></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required maxlength="256"></label><button class="button button-primary" id="loginSubmit" type="submit" style="width:100%">Giriş Yap</button><p class="muted">Masaüstü uygulamasındaki cihaz kilidinden bağımsız web oturumu kullanılır.</p></form>');
     $("#loginForm").addEventListener("submit",async e=>{
@@ -128,17 +143,12 @@
     const plan=e.target.closest("[data-plan]");if(plan){const key=plan.dataset.plan;const cfg={monthly:["1 aylık",30],half_year:["6 aylık",180],annual:["12 aylık",365]}[key];if(cfg)openPlan(key,cfg[0],cfg[1]);}
     if(e.target.id==="deviceSearchForm"){}
   });
-  $("#deviceSearchForm").addEventListener("submit",e=>{e.preventDefault();state.query=$("#deviceQuery").value.trim();$("#archiveQuery").value=state.query;loadArchive();$("#arsiv").scrollIntoView({behavior:"smooth"});});
-  $("#deviceQuery").addEventListener("input",e=>{
-    clearTimeout(state.timer);state.timer=setTimeout(()=>{state.query=e.target.value.trim();$("#archiveQuery").value=state.query;loadArchive();},450);
-  });
-  $("#archiveQuery").addEventListener("input",e=>{clearTimeout(state.timer);state.timer=setTimeout(()=>{state.query=e.target.value.trim();loadArchive();},450);});
-  $("#archiveCategory").addEventListener("change",e=>{state.category=e.target.value;loadArchive();});
-  $("#modalClose").addEventListener("click",closeModal);
+  $("#deviceSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=$("#deviceQuery").value.trim();location.href="archive.html"+(q?"?q="+encodeURIComponent(q):"");});
+  $("#modalClose")?.addEventListener("click",closeModal);
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
   (async()=>{
     const token=window.UzmantechAPI.getToken();
     if(token){try{const result=await window.UzmantechAPI.session();state.user=result.user;}catch{window.UzmantechAPI.setSession("");}}
-    syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadArchive();
+    syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadRecent();await loadArchive();
   })();
 })();

@@ -65,7 +65,7 @@
       const form=new FormData(e.currentTarget);
       try{
         const result=await window.UzmantechAPI.login({identifier:form.get("identifier"),password:form.get("password")});
-        window.UzmantechAPI.setSession(result.session_token);state.user=result.user;closeModal();syncHeader();toast("Giriş başarılı. Hoş geldiniz.");loadArchive();
+        window.UzmantechAPI.setSession(result.session_token);state.user=result.user;closeModal();syncHeader();toast(result.user.membership_expired?"Üyelik süreniz dolmuş. Yenilemek için paket seçebilirsiniz.":"Giriş başarılı. Hoş geldiniz.");loadArchive();
       }catch(error){toast(error.message);}
       finally{btn.disabled=false;btn.textContent="Giriş Yap";}
     });

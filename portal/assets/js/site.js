@@ -81,6 +81,9 @@
     if(e.target.id==="logoutBtn"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
     if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");
     if(e.target.closest("[data-file]")&&!state.user){openLogin();}
+    if(e.target.closest("[data-file]")&&state.user){toast("Bu kayıt için indirme bağlantısı henüz tanımlanmamış.");}
+    const course=e.target.closest("[data-course]");if(course){modal(course.dataset.course,'<div class="notice">Bu eğitimin video içeriği henüz yayınlanmadı.</div><p class="muted">Eğitim kataloğu ve video erişimi sonraki aşamada bağlanacak.</p>');}
+    const plan=e.target.closest("[data-plan]");if(plan){modal(plan.dataset.plan+" üyelik",'<div class="notice">Online ödeme ve dekont bildirim sistemi henüz etkin değil. Şu anda ödeme veya üyelik başvurusu alınmıyor.</div>');}
     if(e.target.id==="deviceSearchForm"){}
   });
   $("#deviceSearchForm").addEventListener("submit",e=>{e.preventDefault();state.query=$("#deviceQuery").value.trim();$("#archiveQuery").value=state.query;loadArchive();$("#arsiv").scrollIntoView({behavior:"smooth"});});

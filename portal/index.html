@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19"><meta name="description" content="Uzmantech teknik servis dosya ve eğitim portalı">
+<title>Uzmantech | Teknik Servis Portalı</title>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="container header-row">
+<a class="brand" href="./"><span class="brand-mark">U</span><span>UZMANTECH</span></a>
+<nav class="main-nav" aria-label="Ana menü"><a href="#arsiv">Dosya Arşivi</a><a href="#egitimler">Eğitimler</a><a href="#uyelik">Üyelik</a></nav>
+<div class="header-actions"><button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button></div>
+</div></header>
+<main>
+<section class="hero"><div class="container hero-inner"><p class="eyebrow">TEKNİK SERVİSİN DİJİTAL MERKEZİ</p><h1>Aradığın yazılımı<br><span>kolayca bul.</span></h1><p class="hero-copy">Telefon modelini veya model kodunu ara. Firmware, servis dosyaları ve teknik eğitimlere tek merkezden ulaş.</p>
+<form class="device-search" id="deviceSearchForm"><label class="sr-only" for="deviceQuery">Cihaz modeli veya kod adı</label><input id="deviceQuery" autocomplete="off" placeholder="Örn. Redmi Note 13, SM-A546E, garnet"><button class="button button-primary" type="submit">Cihaz Ara</button></form>
+<div class="search-hint">Örnek: Redmi Note 13 · Samsung A54 · POCO X6 Pro</div><div id="searchResults" class="search-results" aria-live="polite"></div></div></section>
+<section class="section" id="arsiv"><div class="container"><div class="section-heading"><div><p class="eyebrow">MERKEZİ DOSYA KÜTÜPHANESİ</p><h2>Dosya Arşivi</h2><p class="muted">Marka ve dosya türüne göre filtrele.</p></div><span class="demo-label">ÖRNEK KAYITLAR</span></div>
+<div class="toolbar"><input id="archiveQuery" type="search" placeholder="Model, kod adı veya açıklama ara"><select id="archiveCategory" aria-label="Dosya kategorisi"><option value="all">Tüm kategoriler</option><option value="firmware">Firmware</option><option value="eng">ENG</option><option value="imei">IMEI</option><option value="test_point">Test Point</option><option value="tool">Araçlar</option></select></div>
+<div class="card-grid" id="archiveGrid">
+<article class="content-card archive-card" data-category="firmware" data-search="xiaomi redmi note 13 pro garnet hyperos global"><span class="tag">FIRMWARE · XIAOMI</span><h3>Redmi Note 13 Pro 5G</h3><p>HyperOS · Global · Recovery ROM</p><div class="card-meta">Kod adı: garnet · Android 14</div><button class="button button-outline" data-file="Redmi Note 13 Pro 5G">Detayları gör</button></article>
+<article class="content-card archive-card" data-category="eng" data-search="xiaomi poco x6 pro duchamp engineering"><span class="tag">ENG · XIAOMI</span><h3>POCO X6 Pro</h3><p>Engineering firmware örnek kaydı</p><div class="card-meta">Kod adı: duchamp · Android 14</div><button class="button button-outline" data-file="POCO X6 Pro ENG">Detayları gör</button></article>
+<article class="content-card archive-card" data-category="firmware" data-search="samsung galaxy a54 sm-a546e one ui oxm"><span class="tag">FIRMWARE · SAMSUNG</span><h3>Galaxy A54 5G</h3><p>One UI · Multi CSC</p><div class="card-meta">Model: SM-A546E · OXM</div><button class="button button-outline" data-file="Galaxy A54 5G">Detayları gör</button></article>
+<article class="content-card archive-card" data-category="imei" data-search="qualcomm imei servis notları"><span class="tag">IMEI · REHBER</span><h3>Qualcomm servis notları</h3><p>Örnek teknik bilgi kaydı</p><div class="card-meta">Platform: Qualcomm</div><button class="button button-outline" data-file="Qualcomm servis notları">Detayları gör</button></article>
+<article class="content-card archive-card" data-category="tool" data-search="adb fastboot bağlantı kontrolü windows"><span class="tag">ARAÇ · ADB</span><h3>ADB bağlantı kontrolü</h3><p>Tanılama ve temel komut rehberi</p><div class="card-meta">Windows · Doküman</div><button class="button button-outline" data-file="ADB bağlantı kontrolü">Detayları gör</button></article>
+<article class="content-card archive-card" data-category="test_point" data-search="xiaomi test point servis"><span class="tag">TEST POINT</span><h3>Test Point kaynakları</h3><p>Örnek servis kaydı</p><div class="card-meta">Marka/model kataloğu</div><button class="button button-outline" data-file="Test Point kaynakları">Detayları gör</button></article>
+</div><p id="archiveEmpty" class="empty-state" hidden>Aramanla eşleşen kayıt bulunamadı.</p></div></section>
+<section class="section section-alt" id="egitimler"><div class="container"><div class="section-heading"><div><p class="eyebrow">BİLGİ BANKASI</p><h2>Teknik Eğitimler</h2><p class="muted">Uygulamalı servis eğitimleri ve rehberler.</p></div></div><div class="card-grid">
+<article class="content-card"><div class="course-art">▣</div><span class="tag">ADB / FASTBOOT</span><h3>ADB ve Fastboot temelleri</h3><p>Bağlantı, sürücü ve komut kontrolleri.</p><button class="button button-outline" data-course="ADB ve Fastboot temelleri">Eğitimi incele</button></article>
+<article class="content-card"><div class="course-art">◈</div><span class="tag">SAMSUNG</span><h3>Samsung firmware</h3><p>Model, CSC ve paket yapısını tanı.</p><button class="button button-outline" data-course="Samsung firmware">Eğitimi incele</button></article>
+<article class="content-card"><div class="course-art">⌘</div><span class="tag">XIAOMI</span><h3>Xiaomi servis modları</h3><p>Recovery, Fastboot ve cihaz tanılama.</p><button class="button button-outline" data-course="Xiaomi servis modları">Eğitimi incele</button></article>
+</div></div></section>
+<section class="section" id="uyelik"><div class="container"><div class="section-heading"><div><p class="eyebrow">ÜYELİK SİSTEMİ</p><h2>Erişim Paketleri</h2><p class="muted">Paket ve fiyat bilgileri yönetim tarafından belirlenecek.</p></div></div><div class="plan-grid">
+<article class="content-card plan"><span class="tag">1 AY</span><h3>Aylık üyelik</h3><div class="price">₺ —</div><ul><li>Dosya arşivi</li><li>Cihaz kataloğu</li><li>Üye paneli</li></ul><button class="button button-outline" data-plan="1 Aylık">Paketi seç</button></article>
+<article class="content-card plan plan-featured"><span class="tag">6 AY</span><h3>6 aylık üyelik</h3><div class="price">₺ —</div><ul><li>Dosya arşivi</li><li>Teknik eğitimler</li><li>Üye paneli</li></ul><button class="button button-primary" data-plan="6 Aylık">Paketi seç</button></article>
+<article class="content-card plan"><span class="tag">12 AY</span><h3>Yıllık üyelik</h3><div class="price">₺ —</div><ul><li>Tüm portal bölümleri</li><li>Teknik eğitimler</li><li>Üyelik süresince güncellemeler</li></ul><button class="button button-outline" data-plan="12 Aylık">Paketi seç</button></article>
+</div></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-row"><strong>UZMANTECH</strong><span>Teknik servis platformu</span><span class="muted">Portal ön sürümü</span></div></footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script>
+</body></html>

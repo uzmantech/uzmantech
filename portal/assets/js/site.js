@@ -73,6 +73,29 @@
   function openRegister(){
     modal("Yeni üyelik",'<div class="notice">Web kayıt ekranı, mevcut e-posta doğrulama ve yönetici onay akışına bağlanacak. E-posta gönderim servisi henüz web için yapılandırılmadığından şu anda kayıt alınmıyor.</div><p class="muted">Hesap güvenliği için doğrulama kodu gönderilemeyen bir kayıt formunu aktif etmiyorum.</p>');
   }
+
+  function openPlan(plan, label, days){
+    if(!state.user){
+      modal(label+" üyelik",'<div class="notice">Ödeme bildirimi göndermek için önce Uzmantech hesabınla giriş yapmalısın.</div><button class="button button-primary" id="planLogin" type="button">Giriş Yap</button>');
+      $("#planLogin").addEventListener("click",openLogin);
+      return;
+    }
+    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: '+days+' gün. Banka hesap/IBAN bilgisi henüz portala eklenmedi. Havale yapmadan önce ödeme bilgilerini işletmeden teyit et.</div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Gönderdiğin tutar (₺)</span><input name="amount" type="number" min="1" max="1000000" step="0.01" required></label><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Dekont özel depolama alanına yüklenir. Yönetici onayından sonra '+days+' günlük lisans otomatik tanımlanır.</p></form>');
+    $("#paymentForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const form=e.currentTarget, file=form.elements.receipt.files[0], amount=Number(form.elements.amount.value), payerName=form.elements.payer_name.value.trim();
+      if(!file || file.size===0 || file.size>5*1024*1024){toast("Dekont dosyası boş olamaz ve 5 MB sınırını aşamaz.");return;}
+      if(!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){toast("Yalnızca PDF, JPG, PNG veya WEBP yükleyebilirsin.");return;}
+      if(!Number.isFinite(amount)||amount<=0){toast("Geçerli bir ödeme tutarı gir.");return;}
+      const btn=$("#paymentSubmit");btn.disabled=true;btn.textContent="Güvenli şekilde yükleniyor…";
+      try{
+        const result=await window.UzmantechAPI.paymentReceipt({plan,amount,payerName,file});
+        closeModal();toast(result.message||"Ödeme bildirimi alındı.");
+      }catch(error){toast(error.message);}
+      finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
+    });
+  }
+
   document.addEventListener("click",e=>{
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();
@@ -83,7 +106,7 @@
     if(e.target.closest("[data-file]")&&!state.user){openLogin();}
     if(e.target.closest("[data-file]")&&state.user){toast("Bu kayıt için indirme bağlantısı henüz tanımlanmamış.");}
     const course=e.target.closest("[data-course]");if(course){modal(course.dataset.course,'<div class="notice">Bu eğitimin video içeriği henüz yayınlanmadı.</div><p class="muted">Eğitim kataloğu ve video erişimi sonraki aşamada bağlanacak.</p>');}
-    const plan=e.target.closest("[data-plan]");if(plan){modal(plan.dataset.plan+" üyelik",'<div class="notice">Online ödeme ve dekont bildirim sistemi henüz etkin değil. Şu anda ödeme veya üyelik başvurusu alınmıyor.</div>');}
+    const plan=e.target.closest("[data-plan]");if(plan){const key=plan.dataset.plan;const cfg={monthly:["1 aylık",30],half_year:["6 aylık",180],annual:["12 aylık",365]}[key];if(cfg)openPlan(key,cfg[0],cfg[1]);}
     if(e.target.id==="deviceSearchForm"){}
   });
   $("#deviceSearchForm").addEventListener("submit",e=>{e.preventDefault();state.query=$("#deviceQuery").value.trim();$("#archiveQuery").value=state.query;loadArchive();$("#arsiv").scrollIntoView({behavior:"smooth"});});

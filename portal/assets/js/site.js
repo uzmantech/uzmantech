@@ -95,9 +95,14 @@
     const rate=Number(result.usd_sell);
     if(!Number.isFinite(rate)||rate<=0) throw new Error("Enpara USD satış kuru alınamadı.");
     state.exchangeRate=rate;state.exchangeRateAt=Date.now();
+    const packageUsd={monthly:15,half_year:30,annual:40};
     document.querySelectorAll("[data-price]").forEach(el=>{
-      const usd=({monthly:15,half_year:30,annual:40})[el.dataset.price];
-      if(usd)el.textContent=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(Math.round(usd*rate*100)/100);
+      const usd=packageUsd[el.dataset.price];
+      if(usd)el.textContent=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2,maximumFractionDigits:2}).format(Math.round(usd*rate*100)/100);
+    });
+    document.querySelectorAll("[data-usd]").forEach(el=>{
+      const usd=packageUsd[el.dataset.usd];
+      if(usd)el.textContent=usd+" USD";
     });
     const rateLabel=$("#exchangeRateLabel");
     if(rateLabel)rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+" TL";

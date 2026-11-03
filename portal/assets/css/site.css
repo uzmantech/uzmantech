@@ -17,3 +17,5 @@
 .recent-card a{font-size:11px;color:#73b6ff;font-weight:800}
 .recent-section .section-heading{align-items:center}
 @media(max-width:570px){.recent-grid{grid-template-columns:1fr 1fr}.recent-card{padding:12px}.recent-card h3{font-size:12px}}
+
+.plan-usd{margin-top:-7px;margin-bottom:10px;color:#8fb9e8;font-size:14px;font-weight:800;letter-spacing:.25px}

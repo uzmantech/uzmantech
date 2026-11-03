@@ -82,7 +82,7 @@
     state.exchangeRate=rate;state.exchangeRateAt=Date.now();
     document.querySelectorAll("[data-price]").forEach(el=>{
       const usd=({monthly:15,half_year:30,annual:40})[el.dataset.price];
-      if(usd)el.textContent=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(Math.ceil(usd*rate*100)/100);
+      if(usd)el.textContent=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(Math.round(usd*rate*100)/100);
     });
     const rateLabel=$("#exchangeRateLabel");
     if(rateLabel)rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+" TL";
@@ -98,7 +98,7 @@
     let rate;
     try{rate=await refreshExchangeRate(true);}catch(error){toast(error.message);return;}
     const usd=({monthly:15,half_year:30,annual:40})[plan];
-    const amount=Math.ceil(usd*rate*100)/100;
+    const amount=Math.round(usd*rate*100)/100;
     const amountText=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2}).format(amount);
     modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: '+days+' gün. Ücret: <strong>'+usd+' USD</strong> = <strong>'+amountText+'</strong>. Hesaplama Enpara USD satış kuruna göre yapılır.</div><div class="content-card" style="margin:12px 0;padding:14px"><strong>Havale bilgileri</strong><p>Alıcı: Ömer Özen<br>Banka: Enpara<br>IBAN: <strong>TR65 0015 7000 0000 0091 1012 51</strong></p><p class="muted">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL</p></div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Ödeme tutarı (TL)</span><input name="amount" type="text" value="'+amount.toFixed(2)+'" readonly></label><input name="rate" type="hidden" value="'+rate+'"><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Havale işlemini yukarıdaki TL tutarıyla yap. Yönetici onayından sonra '+days+' günlük lisans otomatik tanımlanır.</p></form>');
     $("#paymentForm").addEventListener("submit",async e=>{

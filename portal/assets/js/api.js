@@ -23,8 +23,9 @@
     archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
     portalAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
-    paymentReceipt: ({plan, amount, payerName, file}) => {
-      const params = new URLSearchParams({plan, amount: String(amount), payer_name: payerName});
+    exchangeRate: () => call("/portal-api/exchange-rate"),
+    paymentReceipt: ({plan, amount, rate, payerName, file}) => {
+      const params = new URLSearchParams({plan, amount: String(amount), rate: String(rate), payer_name: payerName});
       return call("/portal-api/payment-receipt?" + params.toString(), { method: "POST", body: file, headers: {"Content-Type": file.type} });
     },
     setSession: value => value ? sessionStorage.setItem("uzmantech_web_session", value) : sessionStorage.removeItem("uzmantech_web_session"),

@@ -135,42 +135,23 @@
     });
   }
 
-  // Accessible, auto-advancing feature showcase.
-  const showcaseTrack=$(".showcase-track");
-  if(showcaseTrack){
-    const slides=[...showcaseTrack.querySelectorAll(".showcase-slide")];
-    const dots=[...document.querySelectorAll("[data-showcase-dot]")];
-    const current=$("#showcaseCurrent");
-    const progress=$(".showcase-progress i");
-    const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let active=0,rotation=null,startedAt=0,remaining=6000,progressFrame=null;
-    const duration=6000;
-    const paint=()=>{
-      showcaseTrack.style.transform="translateX(-"+(active*100)+"%)";
-      slides.forEach((slide,index)=>{slide.classList.toggle("is-active",index===active);slide.setAttribute("aria-hidden",index===active?"false":"true");});
-      dots.forEach((dot,index)=>{dot.classList.toggle("is-active",index===active);dot.setAttribute("aria-current",index===active?"true":"false");});
-      if(current)current.textContent=String(active+1).padStart(2,"0");
-      if(progress)progress.style.width="0%";
-    };
-    const stop=()=>{if(rotation)clearTimeout(rotation);rotation=null;if(progressFrame)cancelAnimationFrame(progressFrame);progressFrame=null;};
-    const tick=()=>{
-      stop();if(reducedMotion||document.hidden)return;
-      startedAt=performance.now();
-      const animate=now=>{const pct=Math.min(100,((now-startedAt)/duration)*100);if(progress)progress.style.width=pct+"%";if(pct<100)progressFrame=requestAnimationFrame(animate);};
-      progressFrame=requestAnimationFrame(animate);
-      rotation=setTimeout(()=>{active=(active+1)%slides.length;remaining=duration;paint();tick();},remaining);
-    };
-    const go=index=>{active=(index+slides.length)%slides.length;remaining=duration;paint();tick();};
-    document.querySelector("[data-showcase-prev]")?.addEventListener("click",()=>go(active-1));
-    document.querySelector("[data-showcase-next]")?.addEventListener("click",()=>go(active+1));
-    dots.forEach((dot,index)=>dot.addEventListener("click",()=>go(index)));
-    const windowEl=$(".showcase-window");
-    windowEl?.addEventListener("mouseenter",()=>{if(rotation){remaining=Math.max(500,remaining-(performance.now()-startedAt));stop();}});
-    windowEl?.addEventListener("mouseleave",tick);
-    windowEl?.addEventListener("focusin",()=>stop());
-    windowEl?.addEventListener("focusout",e=>{if(!windowEl.contains(e.relatedTarget))tick();});
-    document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();else tick();});
-    paint();tick();
+  // Hero carousel: pauses on hover, focus, and hidden tabs.
+  const heroSlides=[...document.querySelectorAll("[data-hero-slide]")];
+  if(heroSlides.length){
+    const heroDots=[...document.querySelectorAll("[data-hero-dot]")];
+    let heroIndex=0,heroTimer=null;
+    const renderHero=()=>{heroSlides.forEach((s,i)=>{s.classList.toggle("is-active",i===heroIndex);s.setAttribute("aria-hidden",i===heroIndex?"false":"true");});heroDots.forEach((d,i)=>d.classList.toggle("is-active",i===heroIndex));};
+    const stopHero=()=>{if(heroTimer)clearInterval(heroTimer);heroTimer=null;};
+    const startHero=()=>{stopHero();if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||document.hidden)return;heroTimer=setInterval(()=>{heroIndex=(heroIndex+1)%heroSlides.length;renderHero();},5600);};
+    const goHero=i=>{heroIndex=(i+heroSlides.length)%heroSlides.length;renderHero();startHero();};
+    document.querySelector("[data-hero-prev]")?.addEventListener("click",()=>goHero(heroIndex-1));
+    document.querySelector("[data-hero-next]")?.addEventListener("click",()=>goHero(heroIndex+1));
+    heroDots.forEach((d,i)=>d.addEventListener("click",()=>goHero(i)));
+    const stage=document.querySelector(".showcase-stage");
+    stage?.addEventListener("mouseenter",stopHero);stage?.addEventListener("mouseleave",startHero);
+    stage?.addEventListener("focusin",stopHero);stage?.addEventListener("focusout",e=>{if(!stage.contains(e.relatedTarget))startHero();});
+    document.addEventListener("visibilitychange",()=>document.hidden?stopHero():startHero());
+    renderHero();startHero();
   }
 
   document.addEventListener("click",e=>{

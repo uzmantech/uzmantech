@@ -53,11 +53,70 @@ function maskEmail(email: string): string {
   if (!domain) return email;
   return (name.length < 3 ? name[0] || "*" : name.slice(0, 2)) + "***@" + domain;
 }
-async function queuePortalEmail(recipient: string, subject: string, body: string) {
-  return await db.from("portal_email_outbox").insert({
-    recipient, subject, body, status: "queued",
-    expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+async function sendPortalEmail(recipient: string, subject: string, body: string) {
+  const clientId = Deno.env.get("GMAIL_CLIENT_ID") || "";
+  const clientSecret = Deno.env.get("GMAIL_CLIENT_SECRET") || "";
+  const refreshToken = Deno.env.get("GMAIL_REFRESH_TOKEN") || "";
+  const sender = (Deno.env.get("GMAIL_SENDER_EMAIL") || "").trim().toLowerCase();
+  if (!clientId || !clientSecret || !refreshToken || !sender) {
+    throw new Error("Gmail API sunucu ayarları eksik.");
+  }
+  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(recipient) ||
+      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(sender)) {
+    throw new Error("Gmail alıcı veya gönderici adresi geçersiz.");
+  }
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }),
+    signal: AbortSignal.timeout(12000),
   });
+  const tokenData = await tokenResponse.json().catch(() => ({}));
+  if (!tokenResponse.ok || !tokenData.access_token) {
+    console.error("Gmail OAuth token refresh failed", tokenResponse.status, tokenData.error || "");
+    throw new Error("Gmail erişim yetkisi yenilenemedi.");
+  }
+
+  const encodeBase64 = (value: string) => {
+    const bytes = new TextEncoder().encode(value);
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    return btoa(binary);
+  };
+  const encodedSubject = "=?UTF-8?B?" + encodeBase64(subject) + "?=";
+  const message = [
+    "To: " + recipient,
+    "From: Uzmantech <" + sender + ">",
+    "Subject: " + encodedSubject,
+    "MIME-Version: 1.0",
+    'Content-Type: text/plain; charset="UTF-8"',
+    "Content-Transfer-Encoding: base64",
+    "",
+    encodeBase64(body),
+  ].join("\\r\\n");
+  const raw = b64url(new TextEncoder().encode(message));
+
+  const sendResponse = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + tokenData.access_token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ raw }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!sendResponse.ok) {
+    const errorData = await sendResponse.json().catch(() => ({}));
+    console.error("Gmail API send failed", sendResponse.status, errorData.error?.status || "");
+    throw new Error("Gmail doğrulama e-postasını gönderemedi.");
+  }
+  return true;
 }
 async function verifyPassword(password: string, stored: string): Promise<boolean> {
   try {
@@ -508,11 +567,12 @@ Deno.serve(async (req: Request) => {
       "    " + code + "\n\n" +
       "Bu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir.\n\n" +
       "Bu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\n\nUzmantech";
-    const { error: mailError } = await queuePortalEmail(email, "Uzmantech - E-posta Doğrulama Kodu", mailBody);
-    if (mailError) {
+    try {
+      await sendPortalEmail(email, "Uzmantech - E-posta Doğrulama Kodu", mailBody);
+    } catch (mailError) {
       await db.from("registration_verifications").delete().eq("email", email);
-      console.error("portal registration email queue failed", mailError);
-      return response({ success: false, message: "Doğrulama e-postası kuyruğa alınamadı. Lütfen tekrar deneyin." }, 503);
+      console.error("portal registration Gmail send failed", mailError);
+      return response({ success: false, message: "Doğrulama e-postası gönderilemedi. Sunucu e-posta ayarlarını kontrol edin." }, 503);
     }
 
     await db.from("portal_registration_attempts").delete().lt("created_at", new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString());
@@ -520,7 +580,7 @@ Deno.serve(async (req: Request) => {
       success: true,
       verification_required: true,
       email: maskEmail(email),
-      message: "6 haneli doğrulama kodu e-posta adresinize gönderilmek üzere sıraya alındı.",
+      message: "6 haneli doğrulama kodu e-posta adresinize gönderildi.",
     }, 200);
   }
 
@@ -689,14 +749,16 @@ Deno.serve(async (req: Request) => {
       "Uzmantech şifre sıfırlama kodunuz:\\n\\n    " + code +
       "\\n\\nBu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir." +
       "\\n\\nBu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\\n\\nUzmantech";
-    const { error: mailError } = await queuePortalEmail(email, "Uzmantech - Şifre Sıfırlama Kodu", mailBody);
-    if (mailError) {
+    try {
+      await sendPortalEmail(email, "Uzmantech - Şifre Sıfırlama Kodu", mailBody);
+    } catch (mailError) {
       await db.from("users").update({
         reset_code_hash: null, reset_code_expires_at: null,
         reset_code_attempts: 0, reset_code_sent_at: null, updated_at: new Date().toISOString(),
       }).eq("id", user.id);
-      console.error("portal password reset mail queue failed", mailError);
-      return response({ success: false, message: "Doğrulama e-postası kuyruğa alınamadı." }, 503);
+      console.error("portal password reset Gmail send failed", mailError);
+      // Keep the response generic so account existence is not disclosed.
+      return response({ success: true, accepted: true });
     }
     return response({ success: true, accepted: true });
   }

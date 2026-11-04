@@ -285,6 +285,51 @@
     });
   }
 
+
+  async function loadSupportHistory(){
+    const host=$("#supportHistory");
+    if(!host)return;
+    host.innerHTML='<div class="empty-state">Destek geçmişi yükleniyor…</div>';
+    try{
+      const result=await window.UzmantechAPI.supportHistory();
+      const statuses={open:"Yeni",in_progress:"İşlemde",resolved:"Çözüldü"};
+      const rows=result.tickets||[];
+      host.innerHTML=rows.length?'<div class="support-history-list">'+rows.map(ticket=>
+        '<article class="support-history-item"><div><b>'+esc(ticket.subject)+'</b><small>'+esc(new Date(ticket.created_at).toLocaleString("tr-TR"))+' · '+esc(statuses[ticket.status]||ticket.status)+'</small></div>'+
+        (ticket.admin_note?'<p>'+esc(ticket.admin_note)+'</p>':'')+'</article>'
+      ).join("")+'</div>':'<div class="empty-state">Henüz destek talebiniz yok.</div>';
+    }catch(error){host.innerHTML='<div class="notice">'+esc(error.message)+'</div>';}
+  }
+
+  function openSupport(){
+    if(!state.user){openLogin();return;}
+    modal("Hızlı Destek",
+      '<p class="muted">Sorununuzu açıklayın. Talebiniz yönetim paneline kaydedilir ve buradan durumunu takip edebilirsiniz.</p>'+
+      '<form id="supportForm">'+
+      '<label class="field"><span>Konu</span><input name="subject" required minlength="4" maxlength="120" placeholder="Örn. Cihaz bağlantısı sorunu"></label>'+
+      '<label class="field"><span>Kategori</span><select name="category" required><option value="technical">Teknik destek</option><option value="license">Lisans ve üyelik</option><option value="payment">Ödeme</option><option value="archive">Dosya arşivi</option><option value="other">Diğer</option></select></label>'+
+      '<label class="field"><span>Mesajınız</span><textarea name="message" required minlength="20" maxlength="4000" rows="5" placeholder="Sorunu ve varsa aldığınız hata mesajını açıklayın."></textarea></label>'+
+      '<button class="button button-primary" id="supportSubmit" type="submit" style="width:100%">Destek Talebini Gönder</button></form>'+
+      '<div class="support-history-heading"><h3>Destek taleplerim</h3><span class="muted">Son 30 kayıt</span></div><div id="supportHistory"></div>');
+    $("#supportForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const form=e.currentTarget, data=new FormData(form), btn=$("#supportSubmit");
+      const subject=String(data.get("subject")||"").trim();
+      const category=String(data.get("category")||"other");
+      const message=String(data.get("message")||"").trim();
+      if(subject.length<4||message.length<20){toast("Konu ve mesaj alanlarını kontrol edin.");return;}
+      btn.disabled=true;btn.textContent="Gönderiliyor…";
+      try{
+        const result=await window.UzmantechAPI.supportTicket({subject,category,message});
+        toast(result.message||"Destek talebi oluşturuldu.");
+        form.reset();
+        await loadSupportHistory();
+      }catch(error){toast(error.message);}
+      finally{btn.disabled=false;btn.textContent="Destek Talebini Gönder";}
+    });
+    loadSupportHistory();
+  }
+
   // Hero carousel: pauses on hover, focus, and hidden tabs.
   const heroSlides=[...document.querySelectorAll("[data-hero-slide]")];
   if(heroSlides.length){
@@ -310,14 +355,12 @@
     if(opener?.dataset.open==="register")openRegister();
     if(opener?.dataset.open==="plans")openPlans();
     if(e.target.closest("#paymentHistoryBtn"))openPaymentHistory();
-    if(opener?.dataset.open==="plans")openPlans();
-    if(e.target.id==="paymentHistoryBtn"||e.target.closest("#paymentHistoryBtn"))openPaymentHistory();
     if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();
     if(e.target.closest("#logoutBtn")){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
     if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");
     const tool=e.target.closest("[data-tool]");
     if(tool){modal(tool.dataset.tool,'<div class="notice">Bu işlem Uzmantech masaüstü uygulamasında gerçekleştirilir. Web portalı cihaz üzerinde ADB veya Fastboot komutu çalıştırmaz.</div><p class="muted">Masaüstü uygulamasındaki ilgili bölümü kullanabilirsin.</p>');}
-    if(e.target.closest("#supportRequest")){modal("Hızlı Destek",'<div class="notice">Destek talebi formu bu portal sürümüne henüz bağlanmadı.</div><p class="muted">Çalışmayan bir e-posta adresine yönlendirmek yerine bu bağlantıyı şimdilik bilgilendirme olarak bıraktım.</p>');}
+    if(e.target.closest("#supportRequest"))openSupport();
     if(e.target.closest("[data-file]")&&!state.user){openLogin();}
     if(e.target.closest("[data-file]")&&state.user){toast("Bu kayıt için indirme bağlantısı henüz tanımlanmamış.");}
     const course=e.target.closest("[data-course]");if(course){modal(course.dataset.course,'<div class="notice">Bu eğitimin video içeriği henüz yayınlanmadı.</div><p class="muted">Eğitim kataloğu ve video erişimi sonraki aşamada bağlanacak.</p>');}

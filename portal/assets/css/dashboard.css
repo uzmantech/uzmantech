@@ -195,3 +195,61 @@
 .header-register:hover{background:#1b4168;border-color:#56a6ff}
 .header-register[hidden]{display:none}
 @media(max-width:570px){.header-register{padding:8px 10px;font-size:12px}.dash-top-actions{gap:7px}}
+
+
+/* 2026-11-04: Full-width portal home, right rail removed */
+@media(min-width:761px){
+ .dash-content{padding:24px clamp(20px,3vw,52px) 28px}
+ .dash-layout{display:block;width:100%;max-width:1800px;margin:0 auto}
+ .dash-primary{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+ .dash-hero{min-height:350px}
+ .dash-account-grid{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(360px,1.2fr) minmax(260px,.9fr);gap:14px;margin:0 0 26px}
+ .dash-account-grid>.dash-panel{height:100%;min-height:180px}
+ .dash-account-grid .welcome-card{display:flex;align-items:center}
+ .dash-account-grid .license-card{min-height:180px;height:auto}
+ .dash-account-grid .download-card{min-height:180px;height:auto;display:flex;flex-direction:column;justify-content:center}
+ .dash-section{margin:0 0 27px}
+ .dash-section-heading{display:flex;justify-content:space-between;align-items:end;margin:0 0 14px}
+ .dash-section-heading .eyebrow{font-size:11px;letter-spacing:2px;color:#3b9dff;font-weight:800}
+ .dash-section-heading h2{font:700 clamp(22px,2vw,29px)/1.2 "Space Grotesk",sans-serif;margin:5px 0 6px}
+ .dash-section-heading p{margin:0;color:#aabbd0;font-size:14px}
+ .premium-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+ .premium-card{min-height:155px;padding:19px;background:linear-gradient(145deg,#15243a,#101b2b);border:1px solid #263a55;border-radius:14px}
+ .premium-symbol{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;background:#1c3555;font-size:25px;font-weight:800;margin-bottom:12px}
+ .premium-symbol.android{color:#60e65a}.premium-symbol.tool{color:#c15bff}.premium-symbol.backup{color:#21b5ff}.premium-symbol.customers{color:#ffb52b}.premium-symbol.archive{color:#58a7ff}.premium-symbol.cloud{color:#5dd6c0}
+ .premium-card h3{font-size:16px;margin:0 0 6px}.premium-card p{font-size:13px;line-height:1.5;color:#aebdd0;margin:0}
+ .dash-package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+ .dash-package{padding:20px;border:1px solid #2a3d58;border-radius:15px;background:linear-gradient(145deg,#152238,#101a2a);display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+ .dash-package>span{font-size:10px;letter-spacing:1.7px;color:#65b4ff;font-weight:800}
+ .dash-package h3{font:700 22px "Space Grotesk",sans-serif;margin:0}
+ .dash-package p{margin:0;color:#aabbd0;font-size:13px}
+ .dash-package strong{font-size:27px;margin:5px 0 7px}
+ .dash-package .dash-button{width:100%;margin-top:auto;cursor:pointer}
+ .dash-package.featured{border-color:#1676ee;box-shadow:0 0 0 1px #1676ee33,inset 0 0 35px #0758b522}
+ .dash-price-note{font-size:12px;color:#91a5bf;margin:10px 2px 0}
+ .support-wide{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 23px;margin:0 0 22px}
+ .support-wide .support-heading{margin:0;align-items:center}
+ .support-wide .support-heading p{max-width:none}
+ .support-wide .support-button{width:auto;min-width:220px}
+ .dash-announcements{margin:0 0 20px}
+}
+@media(max-width:760px){
+ .dash-content{padding:15px 12px 24px}
+ .dash-layout{display:block}
+ .dash-account-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:0 0 20px}
+ .dash-account-grid>.dash-panel{min-height:unset;height:auto}
+ .dash-section{margin:0 0 22px}
+ .dash-section-heading{margin:0 0 12px}
+ .dash-section-heading h2{font-size:21px;margin:5px 0}
+ .dash-section-heading p{font-size:13px;color:#aabbd0}
+ .premium-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .premium-card{padding:13px;min-height:160px}
+ .premium-card h3{font-size:14px}
+ .premium-card p{font-size:12px}
+ .premium-symbol{width:34px;height:34px;font-size:21px}
+ .dash-package-grid{display:grid;grid-template-columns:1fr;gap:10px}
+ .dash-package{padding:16px}
+ .support-wide{display:block;margin:0 0 18px}
+ .support-wide .support-heading{margin-bottom:14px}
+ .support-wide .support-button{width:100%}
+}

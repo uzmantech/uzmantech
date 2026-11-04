@@ -193,7 +193,7 @@
     if(opener?.dataset.open==="login")openLogin();
     if(opener?.dataset.open==="register")openRegister();
     if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();
-    if(e.target.id==="logoutBtn"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
+    if(e.target.closest("#logoutBtn")){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
     if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");
     const tool=e.target.closest("[data-tool]");
     if(tool){modal(tool.dataset.tool,'<div class="notice">Bu işlem Uzmantech masaüstü uygulamasında gerçekleştirilir. Web portalı cihaz üzerinde ADB veya Fastboot komutu çalıştırmaz.</div><p class="muted">Masaüstü uygulamasındaki ilgili bölümü kullanabilirsin.</p>');}

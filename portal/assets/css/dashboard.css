@@ -314,3 +314,33 @@
 .dash-image-hero{padding:0!important;min-height:0!important;height:auto!important;overflow:hidden;background:transparent!important;border:0!important;box-shadow:none!important;display:block!important;line-height:0}
 .dash-image-hero>img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;object-position:center}
 @media(max-width:760px){.dash-image-hero{min-height:0!important;height:auto!important}.dash-image-hero>img{width:100%;height:auto;object-fit:contain}}
+
+
+/* Responsive layout refinement: prevent account cards from overflowing on tablets */
+@media (min-width:761px) and (max-width:1120px){
+  .dash-content{padding-inline:22px}
+  .dash-account-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .dash-account-grid .welcome-card{grid-column:1/-1;min-height:108px}
+  .dash-account-grid .license-card,.dash-account-grid .download-card{min-width:0}
+  .dash-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dash-shortcuts a,.dash-shortcuts button{min-height:116px}
+  .premium-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dash-package-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .announcement-row{grid-template-columns:40px 100px minmax(0,1fr)}
+  .announcement-row time{grid-column:3;font-size:11px}
+}
+@media (min-width:1121px) and (max-width:1390px){
+  .dash-account-grid{grid-template-columns:minmax(220px,.8fr) minmax(330px,1.2fr) minmax(230px,.9fr);gap:11px}
+  .dash-content{padding-inline:24px}
+  .dash-shortcuts b{font-size:13px}
+}
+@media (max-width:760px){
+  .dash-account-grid .welcome-card{min-height:88px}
+  .dash-account-grid .license-card,.dash-account-grid .download-card{min-width:0}
+  .dash-shortcuts button{min-width:0}
+  .dash-shortcuts button:focus-visible,.dash-nav a:focus-visible,.dash-nav button:focus-visible,
+  .dash-button:focus-visible,.header-register:focus-visible{outline:2px solid #65b4ff;outline-offset:3px}
+}
+@media (prefers-reduced-motion:reduce){
+  .dash-shortcuts a,.dash-shortcuts button,.premium-card,.dash-package{transition:none}
+}

@@ -16,7 +16,9 @@
    const user=p.user||{},date=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
    const receipt=p.receipt_url?'<a class="btn" href="'+esc(p.receipt_url)+'" target="_blank" rel="noopener noreferrer">Dekontu aç</a>':'<span class="muted">Açılamadı</span>';
    const actions=p.status==="pending"?'<button class="btn" data-payment-action="approved" data-id="'+esc(p.id)+'">Onayla</button> <button class="btn" data-payment-action="rejected" data-id="'+esc(p.id)+'">Reddet</button>':'-';
-   return '<tr><td>'+esc(user.username||"Bilinmeyen")+'<br><small>'+esc(user.email||"")+'</small></td><td>'+esc(planNames[p.plan]||p.plan)+'<br><small>'+esc(p.license_days)+' gün</small></td><td>₺'+Number(p.amount).toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+'</td><td>'+receipt+'</td><td>'+esc(date)+'</td><td><span class="status '+(p.status==="approved"?"active":p.status==="pending"?"pending":"expired")+'">'+esc(statusNames[p.status]||p.status)+'</span></td><td>'+actions+'</td></tr>';
+   const usd='$'+Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})+' USD';
+   const tryAmount=p.amount_try==null?'<small class="muted">Eski kayıt: TL tutarı yok</small>':'<small>₺'+Number(p.amount_try).toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+' · Kur '+Number(p.exchange_rate||0).toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+'</small>';
+   return '<tr><td>'+esc(user.username||"Bilinmeyen")+'<br><small>'+esc(user.email||"")+'</small></td><td>'+esc(planNames[p.plan]||p.plan)+'<br><small>'+esc(p.license_days)+' gün</small></td><td><strong>'+usd+'</strong><br>'+tryAmount+'</td><td>'+receipt+'</td><td>'+esc(date)+'</td><td><span class="status '+(p.status==="approved"?"active":p.status==="pending"?"pending":"expired")+'">'+esc(statusNames[p.status]||p.status)+'</span></td><td>'+actions+'</td></tr>';
   }).join("")||'<tr><td colspan="7">Henüz ödeme bildirimi yok.</td></tr>';
  }
  async function loadPayments(){
@@ -27,13 +29,19 @@
  function renderUsers(){
   const q=$("#userSearch").value.trim().toLocaleLowerCase("tr-TR");
   const list=users.filter(u=>[u.username,u.email,u.phone].join(" ").toLocaleLowerCase("tr-TR").includes(q));
-  $("#usersBody").innerHTML=list.map(u=>{
-   const expiry=u.expiry_date?new Date(u.expiry_date).toLocaleDateString("tr-TR"):"-";
-   const status=u.status==="active"?"Aktif":u.status==="pending"?"Onay bekliyor":"Pasif";
+  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"Özel Lisans","none":"Lisans Yok"};
+  $( "#usersBody" ).innerHTML=list.map(u=>{
+   const expiry=u.expiry_date?new Date(u.expiry_date):null;
+   const dateText=expiry&&!Number.isNaN(expiry.getTime())?expiry.toLocaleDateString("tr-TR"):"-";
+   const remaining=expiry&&!Number.isNaN(expiry.getTime())?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
+   const status=u.status==="active"?(remaining!==null&&remaining<=0?"Lisans süresi doldu":"Aktif"):u.status==="pending"?"Onay bekliyor":u.disabled_reason==="license_expired"?"Lisans süresi doldu · Yenileme açık":u.disabled_reason==="admin_disabled"?"Yönetici tarafından kapatıldı":"Pasif";
+   const plan=planNames[u.license_plan]||u.license_plan||"Lisans yok";
+   const remainingText=remaining===null?"Lisans atanmamış":remaining<=0?"Süresi doldu":remaining+" gün kaldı";
    const buttons=u.status==="pending"
     ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Onayla + lisans ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
-    :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
-   return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+'</td><td><span class="status '+(u.status==="active"?"active":u.status==="pending"?"pending":"expired")+'">'+status+'</span></td><td>'+expiry+'</td><td>'+buttons+'</td></tr>';
+    :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat / aç</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
+   const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
+   return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
   }).join("")||'<tr><td colspan="5">Kayıt bulunamadı.</td></tr>';
  }
  async function loadUsers(){
@@ -70,8 +78,9 @@
    const id=paymentBtn.dataset.id,status=paymentBtn.dataset.paymentAction,p=payments.find(x=>x.id===id);if(!p)return;
    const actionLabel=status==="approved"?"onaylanacak ve lisansı eklenecek":"reddedilecek";
    if(!confirm((p.user?.username||"Kullanıcı")+" ödeme bildirimi "+actionLabel+" mı?"))return;
+   const adminNote=status==="rejected"?(prompt("Ret nedeni (üyenin ödeme geçmişinde görünür):","Dekont veya ödeme bilgisi doğrulanamadı.")||""):"";
    paymentBtn.disabled=true;
-   try{await api.portalAdmin({action:"payment_review",payment_id:id,status});toast(status==="approved"?"Ödeme onaylandı, lisans eklendi.":"Ödeme reddedildi.");await loadPayments();await loadUsers();}
+   try{await api.portalAdmin({action:"payment_review",payment_id:id,status,admin_note:adminNote});toast(status==="approved"?"Ödeme onaylandı, lisans eklendi.":"Ödeme reddedildi.");await loadPayments();await loadUsers();}
    catch(err){toast(err.message);}
    finally{paymentBtn.disabled=false;}
    return;

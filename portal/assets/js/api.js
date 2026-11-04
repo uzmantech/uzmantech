@@ -38,6 +38,10 @@
       return call("/portal-api/payment-receipt?" + params.toString(), { method: "POST", body: file, headers: {"Content-Type": file.type} });
     },
     paymentHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "payment_history" }) }),
+    supportTicket: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_ticket", ...data }) }),
+    supportHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_history" }) }),
+    supportList: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_list" }) }),
+    supportUpdate: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_update", ...data }) }),
     setSession: value => value ? sessionStorage.setItem("uzmantech_web_session", value) : sessionStorage.removeItem("uzmantech_web_session"),
     getToken: token
   });

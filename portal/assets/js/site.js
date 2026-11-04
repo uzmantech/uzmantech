@@ -162,9 +162,10 @@
         ["half_year","6 Aylık","180 gün",30],
         ["annual","12 Aylık","365 gün",40]
       ];
-      const cards=packages.map(([key,label,days,usd])=>
-        '<article class="plan-option"><h3>'+label+'</h3><p>'+days+'</p><strong data-usd="'+key+'">'+usd+' USD</strong><b data-price="'+key+'">Hesaplanıyor…</b><button class="button button-primary" type="button" data-plan="'+key+'">Bu paketi seç</button></article>'
-      ).join("");
+      const cards=packages.map(item=>{
+        const key=item[0],label=item[1],days=item[2],usd=item[3];
+        return '<article class="plan-option"><h3>'+label+'</h3><p>'+days+'</p><strong data-usd="'+key+'">'+usd+' USD</strong><b data-price="'+key+'">Hesaplanıyor…</b><button class="button button-primary" type="button" data-plan="'+key+'">Bu paketi seç</button></article>';
+      }).join("");
       modal("Lisans paketleri",'<p class="muted">Ödeme Enpara USD satış kuru üzerinden TL olarak hesaplanır. Dekont yönetici tarafından onaylandığında lisans süresi hesabına eklenir.</p><div class="plan-options">'+cards+'</div><p class="muted" id="planRateNote">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL</p>');
       await refreshExchangeRate();
     }).catch(error=>toast(error.message));
@@ -178,32 +179,58 @@
       const rows=result.payments||[];
       const names={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
       const statuses={pending:"Onay bekliyor",approved:"Onaylandı",rejected:"Reddedildi"};
-      const html=rows.length?'<div class="payment-history-list">'+rows.map(p=>{
-        const usd=Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-        const tl=p.amount_try==null?"TL tutarı kaydedilmemiş":new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY"}).format(Number(p.amount_try));
-        const dt=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
-        const status=p.status||"pending";
-        return '<article class="payment-history-item"><div><b>'+esc(names[p.plan]||p.plan)+'</b><small>'+esc(dt)+' · '+esc(p.license_days)+' gün</small></div><div class="payment-history-amount"><b>
-    if(!state.user){
-      modal(label+" üyelik",'<div class="notice">Ödeme bildirimi göndermek için önce Uzmantech hesabınla giriş yapmalısın.</div><button class="button button-primary" id="planLogin" type="button">Giriş Yap</button>');
-      $("#planLogin").addEventListener("click",openLogin);
-      return;
+      const html=rows.length
+        ? '<div class="payment-history-list">'+rows.map(p=>{
+            const usd=Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+            const tl=p.amount_try==null?"TL tutarı kaydedilmemiş":new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY"}).format(Number(p.amount_try));
+            const dt=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
+            const status=p.status||"pending";
+            const rate=p.exchange_rate?Number(p.exchange_rate).toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4}):"";
+            return '<article class="payment-history-item"><div><b>'+esc(names[p.plan]||p.plan)+'</b><small>'+esc(dt)+' · '+esc(p.license_days)+' gün</small></div><div class="payment-history-amount"><b>$'+usd+' USD</b><small>'+esc(tl)+(rate?' · Kur '+esc(rate):'')+'</small></div><span class="payment-history-status '+esc(status)+'">'+esc(statuses[status]||status)+'</span>'+(p.admin_note?'<p class="payment-history-note">'+esc(p.admin_note)+'</p>':'')+'</article>';
+          }).join("")+'</div>'
+        : '<div class="empty-state">Henüz ödeme bildirimin bulunmuyor.</div>';
+      modal("Ödeme geçmişim",html);
+    }catch(error){
+      modal("Ödeme geçmişim",'<div class="notice">'+esc(error.message)+'</div>');
     }
+  }
+
+  async function openPlan(plan,label,days){
+    if(!state.user){openLogin();return;}
+    const usd=({monthly:15,half_year:30,annual:40})[plan];
+    if(!usd){toast("Seçilen lisans paketi geçersiz.");return;}
     let rate;
     try{rate=await refreshExchangeRate(true);}catch(error){toast(error.message);return;}
-    const usd=({monthly:15,half_year:30,annual:40})[plan];
-    const amount=Math.round(usd*rate*100)/100;
-    const amountText=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2}).format(amount);
-    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: '+days+' gün. Ücret: <strong>'+usd+' USD</strong> = <strong>'+amountText+'</strong>. Hesaplama Enpara USD satış kuruna göre yapılır.</div><div class="content-card" style="margin:12px 0;padding:14px"><strong>Havale bilgileri</strong><p>Alıcı: Ömer Özen<br>Banka: Enpara<br>IBAN: <strong>TR65 0015 7000 0000 0091 1012 51</strong></p><p class="muted">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL</p></div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Ödeme tutarı (TL)</span><input name="amount" type="text" value="'+amount.toFixed(2)+'" readonly></label><input name="rate" type="hidden" value="'+rate+'"><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Havale işlemini yukarıdaki TL tutarıyla yap. Yönetici onayından sonra '+days+' günlük lisans otomatik tanımlanır.</p></form>');
+    const amountTry=Math.round(usd*rate*100)/100;
+    const amountText=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2}).format(amountTry);
+    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: <strong>'+days+' gün</strong>. Paket bedeli: <strong>'+usd+' USD</strong>. Havale tutarı: <strong>'+amountText+'</strong>.</div><div class="content-card" style="margin:12px 0;padding:14px"><strong>Havale bilgileri</strong><p>Alıcı: Ömer Özen<br>Banka: Enpara<br>IBAN: <strong>TR65 0015 7000 0000 0091 1012 51</strong></p><p class="muted">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL. Sunucu bu kuru ödeme bildirimi sırasında yeniden doğrular.</p></div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Havale tutarı (TL)</span><input name="amount" type="text" value="'+amountTry.toFixed(2)+'" readonly></label><input name="amount_usd" type="hidden" value="'+usd+'"><input name="rate" type="hidden" value="'+rate+'"><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Dekontun yönetici onayına düşer. Onaydan sonra lisans süren otomatik uzatılır.</p></form>');
     $("#paymentForm").addEventListener("submit",async e=>{
       e.preventDefault();
-      const form=e.currentTarget,file=form.elements.receipt.files[0],amount=Number(form.elements.amount.value),rate=Number(form.elements.rate.value),payerName=form.elements.payer_name.value.trim();
+      const form=e.currentTarget;
+      const file=form.elements.receipt.files[0];
+      const amount=Number(form.elements.amount.value);
+      const rateValue=Number(form.elements.rate.value);
+      const amountUsd=Number(form.elements.amount_usd.value);
+      const payerName=form.elements.payer_name.value.trim();
       if(!file||file.size===0||file.size>5*1024*1024){toast("Dekont dosyası boş olamaz ve 5 MB sınırını aşamaz.");return;}
       if(!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){toast("Yalnızca PDF, JPG, PNG veya WEBP yükleyebilirsin.");return;}
-      const btn=$("#paymentSubmit");btn.disabled=true;btn.textContent="Güvenli şekilde yükleniyor…";
+      const btn=$("#paymentSubmit");
+      btn.disabled=true;
+      btn.textContent="Güvenli şekilde yükleniyor…";
       try{
-        const result=await window.UzmantechAPI.paymentReceipt({plan,amount,rate,payerName,file});
-        closeModal();toast(result.message||"Ödeme bildirimi alındı.");
+        const latest=await window.UzmantechAPI.exchangeRate();
+        const currentRate=Number(latest.usd_sell);
+        const currentAmount=Math.round(amountUsd*currentRate*100)/100;
+        if(!Number.isFinite(currentRate)||currentRate<=0)throw new Error("Güncel döviz kuru doğrulanamadı.");
+        if(Math.abs(currentRate-rateValue)>0.01||Math.abs(currentAmount-amount)>0.02){
+          form.elements.amount.value=currentAmount.toFixed(2);
+          form.elements.rate.value=String(currentRate);
+          toast("Döviz kuru güncellendi. Yeni TL tutarını kontrol edip dekontu yeniden gönder.");
+          return;
+        }
+        const result=await window.UzmantechAPI.paymentReceipt({plan,amountUsd,amountTry:amount,rate:rateValue,payerName,file});
+        closeModal();
+        toast(result.message||"Ödeme bildirimi alındı.");
       }catch(error){toast(error.message);}
       finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
     });

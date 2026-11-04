@@ -49,8 +49,15 @@
     }
     const licenseAction=$("#licenseAction");
     if(licenseAction){
-      licenseAction.textContent=user?"Lisansı Yenile":"Giriş Yap";
-      licenseAction.dataset.open=user?"plans":"login";
+      if(admin){
+        licenseAction.textContent="Yönetici hesabı";
+        licenseAction.removeAttribute("data-open");
+        licenseAction.disabled=true;
+      }else{
+        licenseAction.disabled=false;
+        licenseAction.textContent=user?"Lisansı Yenile":"Giriş Yap";
+        licenseAction.dataset.open=user?"plans":"login";
+      }
     }
     const historyButton=$("#paymentHistoryBtn");
     if(historyButton)historyButton.hidden=!user || admin;

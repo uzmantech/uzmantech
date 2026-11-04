@@ -161,3 +161,32 @@
  .dash-hero-actions .dash-button{min-width:0}
  .dash-hero-art{width:55%}
 }
+
+/* Membership, renewal and billing panels */
+.license-actions{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap}
+.license-actions .dash-button{min-height:39px;padding:9px 13px;font-size:13px;flex:1}
+.license-actions .dash-button-outline{background:#18263a;border-color:#8294ac}
+.plan-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.plan-option{background:#111d30;border:1px solid #2a3c57;border-radius:13px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.plan-option h3{font-size:17px;margin:0;color:#f3f7ff}
+.plan-option p{margin:0;color:#aabbd0;font-size:13px}
+.plan-option strong{font-size:18px;color:#f4f8ff}
+.plan-option>b{font-size:16px;color:#36a0ff}
+.plan-option .button{margin-top:5px;width:100%;font-size:13px;padding:10px}
+.payment-history-list{display:grid;gap:9px;max-height:430px;overflow:auto}
+.payment-history-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:13px;background:#111d30;border:1px solid #2a3c57;border-radius:10px}
+.payment-history-item b,.payment-history-item small{display:block}
+.payment-history-item small{font-size:12px;color:#aabbd0;margin-top:3px}
+.payment-history-amount{text-align:right}
+.payment-history-status{font-size:11px;font-weight:700;border-radius:20px;padding:6px 9px;white-space:nowrap;background:#3a3440;color:#f5d6a6}
+.payment-history-status.approved{background:#0b7045;color:#d0ffe5}
+.payment-history-status.pending{background:#1552a5;color:#ddecff}
+.payment-history-status.rejected{background:#7a2632;color:#ffe1e5}
+.payment-history-note{grid-column:1/-1;margin:0;color:#ffc3c8;font-size:12px}
+@media(max-width:760px){
+ .plan-options{grid-template-columns:1fr}
+ .payment-history-item{grid-template-columns:minmax(0,1fr) auto;gap:7px}
+ .payment-history-status{grid-column:1/-1;justify-self:start}
+ .license-actions{display:grid;grid-template-columns:1fr 1fr}
+ .license-actions .dash-button{width:100%}
+}

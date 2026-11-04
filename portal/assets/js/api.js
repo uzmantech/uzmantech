@@ -20,6 +20,9 @@
   window.UzmantechAPI = Object.freeze({
     login: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "login", ...data }) }),
     register: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register", ...data }) }),
+    verifyRegistration: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register_verify", ...data }) }),
+    requestPasswordReset: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "password_reset_request", ...data }) }),
+    confirmPasswordReset: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "password_reset_confirm", ...data }) }),
     session: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "session" }) }),
     archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
     catalog: () => call("/portal-api/catalog"),

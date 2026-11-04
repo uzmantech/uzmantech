@@ -62,6 +62,9 @@
     const historyButton=$("#paymentHistoryBtn");
     if(historyButton)historyButton.hidden=!user || admin;
 
+    const registerButton=$("#headerRegister");
+    if(registerButton)registerButton.hidden=!!user;
+
     const profile=$(".top-profile");
     if(profile){
       if(user){profile.removeAttribute("data-open");profile.id="logoutBtn";profile.title="Oturumu kapat";}

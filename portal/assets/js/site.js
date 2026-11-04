@@ -152,7 +152,7 @@
 
   function openPlans(){
     if(!state.user){openLogin();return;}
-    refreshExchangeRate(true).then(rate=>{
+    refreshExchangeRate(true).then(async rate=>{
       const packages=[
         ["monthly","1 Aylık","30 gün",15],
         ["half_year","6 Aylık","180 gün",30],
@@ -162,6 +162,7 @@
         '<article class="plan-option"><h3>'+label+'</h3><p>'+days+'</p><strong data-usd="'+key+'">'+usd+' USD</strong><b data-price="'+key+'">Hesaplanıyor…</b><button class="button button-primary" type="button" data-plan="'+key+'">Bu paketi seç</button></article>'
       ).join("");
       modal("Lisans paketleri",'<p class="muted">Ödeme Enpara USD satış kuru üzerinden TL olarak hesaplanır. Dekont yönetici tarafından onaylandığında lisans süresi hesabına eklenir.</p><div class="plan-options">'+cards+'</div><p class="muted" id="planRateNote">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL</p>');
+      await refreshExchangeRate();
     }).catch(error=>toast(error.message));
   }
 
@@ -271,6 +272,16 @@
       if(!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){toast("Yalnızca PDF, JPG, PNG veya WEBP yükleyebilirsin.");return;}
       const btn=$("#paymentSubmit");btn.disabled=true;btn.textContent="Güvenli şekilde yükleniyor…";
       try{
+        const latest=await window.UzmantechAPI.exchangeRate();
+        const currentRate=Number(latest.usd_sell);
+        const currentAmount=Math.round(amountUsd*currentRate*100)/100;
+        if(!Number.isFinite(currentRate)||currentRate<=0){throw new Error("Güncel döviz kuru doğrulanamadı.");}
+        if(Math.abs(currentRate-rateValue)>0.01||Math.abs(currentAmount-amount)>0.02){
+          form.elements.amount.value=currentAmount.toFixed(2);
+          form.elements.rate.value=String(currentRate);
+          toast("Döviz kuru güncellendi. Yeni TL tutarını kontrol edip dekontu tekrar gönder.");
+          return;
+        }
         const result=await window.UzmantechAPI.paymentReceipt({plan,amountUsd,amountTry:amount,rate:rateValue,payerName,file});
         closeModal();toast(result.message||"Ödeme bildirimi alındı.");
       }catch(error){toast(error.message);}

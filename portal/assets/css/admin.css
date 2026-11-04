@@ -5,3 +5,8 @@
 @media(max-width:650px){.layout{display:block}.brand-logo{width:44px;height:44px}.sidebar{position:fixed;z-index:10;left:-245px;top:0;bottom:0;width:238px;transition:.2s}.sidebar.open{left:0}.nav-toggle{display:inline-block;background:transparent;color:white;border:0;font-size:20px;margin-right:10px}.topbar{height:62px;padding:0 13px}.content{padding:18px 13px}.stats{gap:8px}.stats article{padding:12px}.stats article b{font-size:22px}.page-head{align-items:flex-start;flex-direction:column}.top-right .demo{display:none}}
 
 .field{display:block;margin:13px 0}.field span{display:block;font-size:12px;color:#a7b8ce;margin-bottom:6px}.field input{width:100%;padding:12px;border:1px solid #30445f;background:#091423;color:white;border-radius:9px}.toolbar input{width:min(420px,100%)}
+
+.ticket-message,.ticket-note{max-width:440px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.5;color:#b8c7d9}
+.ticket-note{color:#8fdbb7}
+#supportBody details summary{cursor:pointer;color:#8fc2ff;font-weight:700}
+#supportBody details[open] summary{margin-bottom:7px}

@@ -131,11 +131,13 @@
   }
 
   async function refreshExchangeRate(force=false){
-    if(!force && state.exchangeRate && Date.now()-state.exchangeRateAt<60000) return state.exchangeRate;
-    const result=await window.UzmantechAPI.exchangeRate();
-    const rate=Number(result.usd_sell);
-    if(!Number.isFinite(rate)||rate<=0) throw new Error("Enpara USD satış kuru alınamadı.");
-    state.exchangeRate=rate;state.exchangeRateAt=Date.now();
+    let rate=state.exchangeRate;
+    if(force||!rate||Date.now()-state.exchangeRateAt>=60000){
+      const result=await window.UzmantechAPI.exchangeRate();
+      rate=Number(result.usd_sell);
+      if(!Number.isFinite(rate)||rate<=0)throw new Error("Enpara USD satış kuru alınamadı.");
+      state.exchangeRate=rate;state.exchangeRateAt=Date.now();
+    }
     const packageUsd={monthly:15,half_year:30,annual:40};
     document.querySelectorAll("[data-price]").forEach(el=>{
       const usd=packageUsd[el.dataset.price];
@@ -147,6 +149,8 @@
     });
     const rateLabel=$("#exchangeRateLabel");
     if(rateLabel)rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+" TL";
+    const planRate=$("#planRateNote");
+    if(planRate)planRate.textContent="1 USD = "+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+" TL";
     return rate;
   }
 

@@ -2,73 +2,70 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070d18"><meta name="description" content="Uzmantech teknik servis dosya arşivi, cihaz kataloğu ve teknik eğitim platformu">
-<title>Uzmantech | Teknik Servis Platformu</title>
+<meta name="theme-color" content="#080e19"><meta name="description" content="Uzmantech Portal">
+<title>Uzmantech Portal</title>
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
-<body class="premium-home">
-<header class="site-header"><div class="container header-row">
-<a class="brand" href="./" aria-label="Uzmantech ana sayfa"><img class="brand-logo" src="../assets/logo.svg" alt="Uzmantech logo"><span>UZMANTECH</span></a>
-<nav class="main-nav" aria-label="Ana menü"><a href="archive.html">Dosya Arşivi</a><a href="#platform">Platform</a><a href="#egitimler">Eğitimler</a><a href="#uyelik">Üyelik</a></nav>
-<div class="header-actions"><button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button></div>
-</div></header>
-<main>
-<section class="hero premium-hero"><div class="hero-grid-glow"></div><div class="container premium-hero-inner">
-<div class="hero-copy-column"><div class="hero-kicker"><span class="live-dot"></span> TEKNİK SERVİSİN YENİ MERKEZİ</div>
-<h1>Teknik servis<br>işlerinde <span>gücünü</span><br><span class="gradient-word">tek merkezden al.</span></h1>
-<p class="hero-copy">Firmware dosyaları, servis kaynakları, cihaz kataloğu ve teknik eğitimler. Aradığın her şey Uzmantech'te, elinin altında.</p>
-<form class="device-search premium-search" id="deviceSearchForm"><label class="sr-only" for="deviceQuery">Cihaz modeli veya kod adı</label><span class="search-symbol">⌕</span><input id="deviceQuery" autocomplete="off" placeholder="Cihaz modeli veya kod adı ara..."><button class="button button-primary" type="submit">Hemen Ara <span>↗</span></button></form>
-<div class="search-hint">Örnek aramalar: Redmi Note 13 · SM-A546E · garnet</div><div id="searchResults" class="search-results" aria-live="polite"></div>
-<div class="hero-proof"><div class="proof-avatars"><span>F</span><span>E</span><span>I</span></div><div><strong>Tek noktadan erişim</strong><small>Dosya arşivi · Cihaz kataloğu · Eğitimler</small></div></div>
-</div>
-<div class="hero-visual hero-showcase" aria-label="Uzmantech uygulama ve web platformu tanıtımı">
-  <div class="showcase-stage">
-    <div class="showcase-halo halo-blue"></div><div class="showcase-halo halo-violet"></div>
-    <div class="showcase-orbit"></div>
-    <div class="showcase-slide is-active" data-hero-slide="0">
-      <div class="showcase-side-panel archive-panel"><div class="side-panel-top"><span>WEB PORTAL</span><b>01</b></div><div class="side-icon">▤</div><h3>Dosya Arşivi</h3><p>Binlerce güncel firmware ve servis dosyası.</p><div class="mini-brand samsung">SAMSUNG</div><div class="mini-brand xiaomi">mi Xiaomi</div><div class="mini-brand oppo">oppo</div><div class="mini-brand vivo">vivo</div><div class="mini-brand realme">realme</div></div>
-      <div class="showcase-main-card app-panel"><div class="showcase-ribbon">MASAÜSTÜ UYGULAMASI</div><div class="showcase-brand"><span class="ut-logo">U</span><div><b>UZMANTECH</b><small>TEKNİK SERVİS PLATFORMU</small></div><em>v1.1.7</em></div><div class="app-preview-window"><div class="preview-title"><span>● ● ●</span><b>UZMANTECH</b><span>− □ ×</span></div><div class="preview-layout"><aside><b>UT</b><span class="active">⌂ Ana Sayfa</span><span>⚒ Uzmantool</span><span>▣ Cihaz İşlemleri</span><span>◫ Yedekleme</span><span>♙ Müşteri Takibi</span><span>⚙ Ayarlar</span></aside><div class="preview-main"><small>TEKNİK SERVİS PANELİ</small><h4>Hoş geldin</h4><div class="preview-tools"><div><i class="tool-adb">⌘</i><b>ADB</b><small>Cihaz bağlantısı</small></div><div><i class="tool-fast">ϟ</i><b>Fastboot</b><small>Bootloader</small></div><div><i class="tool-imei">▤</i><b>IMEI</b><small>Cihaz bilgisi</small></div><div><i class="tool-backup">◉</i><b>Yedekleme</b><small>Android / Apple</small></div></div><div class="preview-device"><i></i> Cihaz bağlı: Redmi Note 13</div></div></div></div><div class="showcase-caption"><span>01</span><b>Tüm servis işlemlerin tek uygulamada</b><small>ADB · Fastboot · IMEI · Yedekleme · Uzmantool</small></div></div>
-      <div class="showcase-side-panel learning-panel"><div class="side-panel-top"><span>TEKNİK AKADEMİ</span><b>03</b></div><div class="side-icon">◈</div><h3>Teknik Eğitimler</h3><p>Adım adım uygulamalı servis rehberleri.</p><div class="learning-preview"><span>▶</span></div><small>Servis eğitimleri</small><small>Araç kullanımı</small><small>İpuçları ve çözümler</small></div>
+<body class="dashboard-page">
+<aside class="dash-sidebar">
+  <a class="dash-brand" href="./"><img src="../assets/logo.svg" alt=""><span><b>Uzmantech</b><small>Portal</small></span></a>
+  <nav class="dash-nav" aria-label="Portal menüsü">
+    <a class="active" href="./"><span>⌂</span>Ana Sayfa</a>
+    <a href="#download"><span>⇩</span>Uzmantech İndir</a>
+    <a href="#license"><span>⚿</span>Lisans İşlemleri</a>
+    <button type="button" data-open="login"><span>♙</span>Hesabım</button>
+    <a href="#support"><span>☏</span>Destek Talepleri</a>
+    <a href="#announcements"><span>⟳</span>Güncellemeler</a>
+    <a href="archive.html"><span>▱</span>Dosya Arşivi</a>
+    <a href="archive.html"><span>▦</span>Araçlar <b class="nav-chevron">›</b></a>
+    <a href="#announcements"><span>⚑</span>Duyurular</a>
+    <a href="#support"><span>ⓘ</span>Yardım</a>
+  </nav>
+  <div class="dash-side-foot">UZMANTECH PORTAL</div>
+</aside>
+<div class="dash-main">
+<header class="dash-topbar">
+  <button class="dash-menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button>
+  <div class="dash-top-actions"><span class="language-mark">🇹🇷</span><span>TR</span><span class="top-separator"></span><button class="notification-button" aria-label="Bildirimler">♧<i>3</i></button><span class="top-separator"></span><span class="avatar">♙</span><div class="top-account"><b id="accountName">Misafir</b><small id="accountRole">Portal Kullanıcısı</small></div><button class="account-chevron" data-open="login" aria-label="Hesap">⌄</button></div>
+</header>
+<main class="dash-content">
+  <div class="dash-layout">
+    <div class="dash-primary">
+      <section class="dash-hero">
+        <div class="dash-hero-copy"><h1>Uzmantech <span>v1.1.7</span></h1><h2>Mobil Teknik Servisler İçin<br>Profesyonel Çözüm</h2><p>ADB, Fastboot, UZMANTOOL, Yedekleme,<br>Müşteri Takibi ve daha fazlası tek platformda.</p><div class="dash-hero-actions"><a class="dash-button" href="#download">⇩&nbsp; Uzmantech İndir</a><a class="dash-button dash-button-outline" href="#announcements">▤&nbsp; Sürüm Notları</a></div></div>
+        <div class="dash-hero-art" aria-hidden="true"><div class="glow-orb"></div><div class="laptop"><div class="laptop-screen"><div class="laptop-top"><b>◉ Uzmantech</b><small>Uzmantech v1.1.7</small></div><div class="laptop-body"><aside><b>⌂ Ana Sayfa</b><span>Uzmantool</span><span>İşlem Merkezi</span><span>Yedekleme</span><span>Müşteri Takip</span></aside><div class="laptop-tools"><div>♟<b>ADB</b></div><div>⌘<b>Fastboot</b></div><div>⚒<b>UZMANTOOL</b></div><div>☁<b>Yedekleme</b></div><div>♟<b>Müşteri Takip</b></div><div>▣<b>Araçlar</b></div></div></div></div><div class="laptop-base"></div></div><div class="phone-mock"><span>●</span><b>♟</b><strong>●</strong></div></div>
+      </section>
+      <section class="dash-shortcuts" aria-label="Hızlı erişim">
+        <a href="archive.html"><span class="shortcut-icon android">♟</span><b>ADB İşlemleri</b></a>
+        <a href="archive.html"><span class="shortcut-icon fastboot">⌘</span><b>Fastboot</b></a>
+        <a href="archive.html"><span class="shortcut-icon tool">⚒</span><b>UZMANTOOL</b></a>
+        <a href="archive.html"><span class="shortcut-icon backup">☁</span><b>Yedekleme</b></a>
+        <a href="#support"><span class="shortcut-icon customers">♟</span><b>Müşteri Takip</b></a>
+        <a href="archive.html"><span class="shortcut-icon other">▣</span><b>Diğer Araçlar</b></a>
+      </section>
+      <section class="dash-panel dash-announcements" id="announcements">
+        <div class="dash-panel-heading"><h2><span>⚑</span> Son Duyurular</h2><a href="#announcements">Tümünü Gör →</a></div>
+        <article class="announcement-row"><span class="announcement-icon">▣</span><span class="announcement-tag green">Güncelleme</span><div><b>Uzmantech v1.1.7 Yayında!</b><p>Yeni özellikler, iyileştirmeler ve hata düzeltmeleri.</p></div><time>24 Ekim 2026</time></article>
+        <article class="announcement-row"><span class="announcement-icon">▧</span><span class="announcement-tag blue">Bilgilendirme</span><div><b>Sunucu Bakımı Hakkında</b><p>Portal hizmetleriyle ilgili duyuruları buradan takip edebilirsiniz.</p></div><time>23 Ekim 2026</time></article>
+        <article class="announcement-row"><span class="announcement-icon">▣</span><span class="announcement-tag orange">Önemli</span><div><b>Lisans Süreleri Hakkında</b><p>Lisans yenileme ve süre uzatma işlemleri için bilgilendirme.</p></div><time>20 Ekim 2026</time></article>
+      </section>
     </div>
-    <div class="showcase-slide" data-hero-slide="1">
-      <div class="showcase-side-panel app-panel-mini"><div class="side-panel-top"><span>UZMANTECH APP</span><b>01</b></div><div class="side-icon">⌘</div><h3>Servis Araçları</h3><p>Günlük işlemlerini tek merkezden yönet.</p><div class="mini-tool">ADB <b>●</b></div><div class="mini-tool">Fastboot <b>●</b></div><div class="mini-tool">IMEI <b>●</b></div><div class="mini-tool">Yedekleme <b>●</b></div></div>
-      <div class="showcase-main-card web-panel"><div class="showcase-ribbon">WEB PLATFORMU</div><div class="web-browser"><div class="browser-bar"><span>● ● ●</span><b>portal.uzmantech.com</b><i>↗</i></div><div class="web-layout"><aside><b>MARKALAR</b><span class="selected">Samsung</span><span>Xiaomi</span><span>Apple</span><span>Oppo</span><span>Vivo</span><span>Realme</span></aside><div class="web-content"><div class="web-title"><span>▤</span><div><small>UZMANTECH KAYNAK MERKEZİ</small><h4>Dosya Arşivi</h4></div></div><div class="web-search">⌕ Model veya dosya ara...</div><div class="web-file"><b>SM-A546E</b><span>Firmware</span><em>7.24 GB</em></div><div class="web-file"><b>Redmi Note 13</b><span>Fastboot</span><em>6.10 GB</em></div><div class="web-file"><b>iPhone 13</b><span>Servis kaydı</span><em>Güncel</em></div><div class="web-file"><b>Galaxy S24</b><span>ENG</span><em>2.08 GB</em></div></div></div></div><div class="showcase-caption"><span>02</span><b>Geniş dosya arşivi ve cihaz kataloğu</b><small>Marka · Model · Kod adı · Firmware</small></div></div>
-      <div class="showcase-side-panel catalog-panel"><div class="side-panel-top"><span>MODEL KATALOĞU</span><b>02</b></div><div class="side-icon">▦</div><h3>Cihaz Kataloğu</h3><p>Markaları ve modelleri kolayca keşfet.</p><div class="catalog-stat"><b>Samsung</b><span>›</span></div><div class="catalog-stat"><b>Xiaomi</b><span>›</span></div><div class="catalog-stat"><b>Apple</b><span>›</span></div></div>
-    </div>
-    <div class="showcase-slide" data-hero-slide="2">
-      <div class="showcase-side-panel archive-panel"><div class="side-panel-top"><span>WEB PORTAL</span><b>02</b></div><div class="side-icon">▦</div><h3>Cihaz Kataloğu</h3><p>Model ve kod adlarına göre düzenli kaynak.</p><div class="catalog-bubbles"><span>SM</span><span>mi</span><span>OP</span><span>V</span></div></div>
-      <div class="showcase-main-card education-panel"><div class="showcase-ribbon">BİLGİ VE EĞİTİM MERKEZİ</div><div class="education-header"><span class="ut-logo">U</span><div><b>UZMANTECH</b><small>TECHNICAL LEARNING HUB</small></div></div><h3>Bilgini geliştir.<br><span>Servis gücünü artır.</span></h3><p>Teknik servis süreçlerine yönelik rehberler ve eğitim başlıkları.</p><div class="education-cards"><div><span>⌘</span><b>ADB & FASTBOOT</b><small>Bağlantı ve komutlar</small></div><div><span>▧</span><b>SAMSUNG</b><small>Firmware süreçleri</small></div><div><span>◈</span><b>XIAOMI</b><small>Recovery ve servis modları</small></div></div><div class="showcase-caption"><span>03</span><b>Teknik eğitimler ve uygulamalı rehberler</b><small>Bilgi bankası · Eğitim · Çözüm</small></div></div>
-      <div class="showcase-side-panel learning-panel"><div class="side-panel-top"><span>UZMANTECH ACADEMY</span><b>03</b></div><div class="side-icon">▶</div><h3>Adım Adım</h3><p>Öğren, uygula, servis kaliteni yükselt.</p><div class="learning-preview"><span>▶</span></div><small>Uygulamalı anlatımlar</small><small>İpuçları ve çözümler</small></div>
-    </div>
-    <button class="hero-showcase-arrow prev" type="button" data-hero-prev aria-label="Önceki tanıtım">‹</button><button class="hero-showcase-arrow next" type="button" data-hero-next aria-label="Sonraki tanıtım">›</button>
-    <div class="hero-showcase-dots"><button class="is-active" data-hero-dot="0" aria-label="Uygulama"></button><button data-hero-dot="1" aria-label="Dosya arşivi"></button><button data-hero-dot="2" aria-label="Eğitimler"></button></div>
+    <aside class="dash-secondary">
+      <section class="dash-panel welcome-card"><span class="avatar large">♙</span><div><h2 id="welcomeName">Merhaba!</h2><p id="welcomeRole">Uzmantech Portal'a hoş geldiniz</p></div><span class="crown">♛</span></section>
+      <section class="dash-panel license-card" id="license"><h2><span>⚿</span> Lisans Bilgilerim</h2><div class="license-line"><span>♙ &nbsp; Lisans Türü</span><b class="license-value" id="licenseType">Giriş yapınız</b></div><div class="license-line"><span>▦ &nbsp; Bitiş Tarihi</span><b id="licenseEnd">-</b></div><div class="license-line"><span>◷ &nbsp; Kalan Süre</span><b class="license-value" id="licenseRemaining">-</b></div><button class="dash-text-button" data-open="login">Hesabıma giriş yap →</button></section>
+      <section class="dash-panel download-card" id="download"><div class="download-heading"><span>⇩</span><div><h2>Uzmantech v1.1.7</h2><p>Güncel Sürümü Hemen İndir</p></div></div><a class="dash-button download-button" href="#" id="downloadLink">⇩ &nbsp; İndir (x64)</a><small>İndirme bağlantısı henüz tanımlanmadı.</small></section>
+      <section class="dash-panel support-card" id="support"><div class="support-heading"><span>☏</span><div><h2>Hızlı Destek</h2><p>Sorun, öneri veya yardım talepleriniz için bizimle iletişime geçin.</p></div></div><a class="dash-button dash-button-outline support-button" href="mailto: destek@uzmantech.com">➤ &nbsp; Destek Talebi Oluştur</a></section>
+    </aside>
   </div>
-  <div class="hero-visual-proof"><span><i>✓</i> Tek uygulamada servis araçları</span><span><i>✓</i> Web üzerinden dosya ve model arşivi</span></div>
-</div></div><div class="hero-bottom-line"><div class="container hero-bottom-inner"><span>TEK PLATFORM. DAHA GÜÇLÜ SERVİS.</span><span>FIRMWARE <i>✳</i> ENG FILES <i>✳</i> IMEI <i>✳</i> TEST POINT <i>✳</i> TEKNİK EĞİTİMLER</span></div></div>
-</section>
-<section class="platform-strip" id="platform"><div class="container"><div class="platform-heading"><p class="eyebrow">UZMANTECH PLATFORMU</p><h2>İşini hızlandıran araçlar,<br><span>ihtiyacın olan kaynaklar.</span></h2><p class="muted">Teknik servis süreçlerinde aradığın bilgiye dağılmadan, tek bir merkezden ulaş.</p></div>
-<div class="feature-grid">
-<a class="feature-card feature-archive" href="archive.html"><div class="feature-top"><span class="feature-icon">▤</span><span class="feature-arrow">↗</span></div><span class="feature-index">01 / KAYNAK MERKEZİ</span><h3>Dosya Arşivi</h3><p>Firmware, ENG, IMEI ve diğer teknik kayıtları kategori ve model üzerinden keşfet.</p><span class="feature-link">Arşivi keşfet <b>→</b></span><div class="feature-watermark">01</div></a>
-<a class="feature-card feature-catalog" href="archive.html"><div class="feature-top"><span class="feature-icon">▦</span><span class="feature-arrow">↗</span></div><span class="feature-index">02 / MODEL BULUCU</span><h3>Cihaz Kataloğu</h3><p>Markaları ve modelleri düzenli listede görüntüle, aradığın cihaza doğrudan git.</p><span class="feature-link">Cihazları görüntüle <b>→</b></span><div class="feature-watermark">02</div></a>
-<a class="feature-card feature-learning" href="#egitimler"><div class="feature-top"><span class="feature-icon">◈</span><span class="feature-arrow">↗</span></div><span class="feature-index">03 / BİLGİ BANKASI</span><h3>Teknik Eğitimler</h3><p>ADB, Fastboot, Samsung ve Xiaomi başlıklarında teknik bilgi ve rehberlere göz at.</p><span class="feature-link">Eğitimleri incele <b>→</b></span><div class="feature-watermark">03</div></a>
-</div></div></section>
-<section class="section recent-section premium-recent" id="son-eklenen"><div class="container"><div class="section-heading"><div><p class="eyebrow">ARŞİVE YENİ EKLENENLER</p><h2>En yeni teknik kayıtlar.</h2><p class="muted">Arşive son eklenen içeriklere hızlıca göz at.</p></div><a class="button button-outline" href="archive.html">Tüm arşivi görüntüle <span aria-hidden="true">↗</span></a></div><div class="recent-grid" id="recentGrid"><div class="empty-state">Son eklenen dosyalar yükleniyor…</div></div></div></section>
-<section class="section section-alt premium-learning" id="egitimler"><div class="container"><div class="section-heading"><div><p class="eyebrow">BİLGİNİ GELİŞTİR</p><h2>Teknik bilgi, daha sağlam iş.</h2><p class="muted">Servis süreçlerine yönelik eğitim başlıklarını keşfet.</p></div></div><div class="card-grid">
-<article class="content-card premium-course"><div class="course-art">⌘</div><span class="tag">ADB / FASTBOOT</span><h3>ADB ve Fastboot temelleri</h3><p>Bağlantı, sürücü ve komut kontrolleri.</p><button class="button button-outline" data-course="ADB ve Fastboot temelleri">Eğitimi incele <span>↗</span></button></article>
-<article class="content-card premium-course"><div class="course-art">◈</div><span class="tag">SAMSUNG</span><h3>Samsung firmware</h3><p>Model, CSC ve paket yapısını tanı.</p><button class="button button-outline" data-course="Samsung firmware">Eğitimi incele <span>↗</span></button></article>
-<article class="content-card premium-course"><div class="course-art">⌬</div><span class="tag">XIAOMI</span><h3>Xiaomi servis modları</h3><p>Recovery, Fastboot ve cihaz tanılama.</p><button class="button button-outline" data-course="Xiaomi servis modları">Eğitimi incele <span>↗</span></button></article>
-</div></div></section>
-<section class="section premium-pricing" id="uyelik"><div class="container"><div class="pricing-intro"><div><p class="eyebrow">ÜYELİK SİSTEMİ</p><h2>Erişimini seç.<br><span>İşine odaklan.</span></h2><p class="muted">Ücretler Enpara güncel USD satış kuru üzerinden TL olarak hesaplanır.</p><p class="muted" id="exchangeRateLabel">Enpara kuru yükleniyor…</p></div><div class="pricing-side-note"><span>ESNEK ERİŞİM</span><p>İhtiyacına uygun süreyi seç, Uzmantech kaynaklarına erişimini başlat.</p></div></div><div class="plan-grid">
-<article class="content-card plan premium-plan"><span class="tag">01 AY</span><h3>Aylık üyelik</h3><div class="price" data-price="monthly">Kur yükleniyor…</div><div class="plan-usd" data-usd="monthly">15 USD</div><ul><li>Dosya arşivi</li><li>Cihaz kataloğu</li><li>Üye paneli</li></ul><button class="button button-outline" data-plan="monthly">Paketi seç <span>↗</span></button></article>
-<article class="content-card plan plan-featured premium-plan"><div class="popular-label">POPÜLER SEÇİM</div><span class="tag">06 AY</span><h3>6 aylık üyelik</h3><div class="price" data-price="half_year">Kur yükleniyor…</div><div class="plan-usd" data-usd="half_year">30 USD</div><ul><li>Dosya arşivi</li><li>Teknik eğitimler</li><li>Üye paneli</li></ul><button class="button button-primary" data-plan="half_year">Paketi seç <span>↗</span></button></article>
-<article class="content-card plan premium-plan"><span class="tag">12 AY</span><h3>Yıllık üyelik</h3><div class="price" data-price="annual">Kur yükleniyor…</div><div class="plan-usd" data-usd="annual">40 USD</div><ul><li>Tüm portal bölümleri</li><li>Teknik eğitimler</li><li>Üyelik süresince güncellemeler</li></ul><button class="button button-outline" data-plan="annual">Paketi seç <span>↗</span></button></article>
-</div></div></section>
-<section class="final-cta"><div class="container final-cta-inner"><div><p class="eyebrow">UZMANTECH'E KATIL</p><h2>Teknik servisinde<br><span>yeni bir merkez aç.</span></h2><p>Arşivi keşfet, cihazını bul, ihtiyacın olan kaynağa ulaş.</p></div><a class="button button-primary" href="archive.html">Dosya arşivine git <span>↗</span></a></div></section>
+  <div class="dash-footer"><span>© Uzmantech Portal</span><span id="exchangeRateLabel">Döviz kuru yükleniyor…</span><a href="admin.html">Yönetim</a></div>
 </main>
-<footer class="site-footer premium-footer"><div class="container footer-row"><strong>UZMANTECH</strong><span>Teknik servis platformu</span><span class="muted">© Uzmantech</span></div></footer>
+</div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script>
+<script>
+(()=>{const side=document.querySelector('.dash-sidebar');document.querySelector('#menuToggle')?.addEventListener('click',()=>side.classList.toggle('open'));const name=document.querySelector('#accountName');const observer=new MutationObserver(()=>{const user=document.querySelector('.header-user');if(user){name.textContent=user.textContent;document.querySelector('#welcomeName').textContent='Merhaba, '+user.textContent;document.querySelector('#accountRole').textContent='Üye';document.querySelector('#welcomeRole').textContent='Uzmantech üyesi';}});const actions=document.querySelector('.header-actions');if(actions)observer.observe(actions,{childList:true,subtree:true});document.querySelector('#downloadLink')?.addEventListener('click',e=>{e.preventDefault();document.querySelector('#toast').textContent='İndirme bağlantısı henüz tanımlanmadı.';document.querySelector('#toast').classList.add('show');});})();
+</script>
 </body></html>

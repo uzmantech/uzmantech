@@ -260,89 +260,9 @@
     if(opener?.dataset.open==="login")openLogin();
     if(opener?.dataset.open==="register")openRegister();
     if(opener?.dataset.open==="plans")openPlans();
+    if(e.target.closest("#paymentHistoryBtn"))openPaymentHistory();
+    if(opener?.dataset.open==="plans")openPlans();
     if(e.target.id==="paymentHistoryBtn"||e.target.closest("#paymentHistoryBtn"))openPaymentHistory();
-    if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();
-    if(e.target.closest("#logoutBtn")){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
-    if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");
-    const tool=e.target.closest("[data-tool]");
-    if(tool){modal(tool.dataset.tool,'<div class="notice">Bu işlem Uzmantech masaüstü uygulamasında gerçekleştirilir. Web portalı cihaz üzerinde ADB veya Fastboot komutu çalıştırmaz.</div><p class="muted">Masaüstü uygulamasındaki ilgili bölümü kullanabilirsin.</p>');}
-    if(e.target.closest("#supportRequest")){modal("Hızlı Destek",'<div class="notice">Destek talebi formu bu portal sürümüne henüz bağlanmadı.</div><p class="muted">Çalışmayan bir e-posta adresine yönlendirmek yerine bu bağlantıyı şimdilik bilgilendirme olarak bıraktım.</p>');}
-    if(e.target.closest("[data-file]")&&!state.user){openLogin();}
-    if(e.target.closest("[data-file]")&&state.user){toast("Bu kayıt için indirme bağlantısı henüz tanımlanmamış.");}
-    const course=e.target.closest("[data-course]");if(course){modal(course.dataset.course,'<div class="notice">Bu eğitimin video içeriği henüz yayınlanmadı.</div><p class="muted">Eğitim kataloğu ve video erişimi sonraki aşamada bağlanacak.</p>');}
-    const plan=e.target.closest("[data-plan]");if(plan){const key=plan.dataset.plan;const cfg={monthly:["1 aylık",30],half_year:["6 aylık",180],annual:["12 aylık",365]}[key];if(cfg)openPlan(key,cfg[0],cfg[1]);}
-    if(e.target.id==="deviceSearchForm"){}
-  });
-  $("#deviceSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=$("#deviceQuery").value.trim();location.href="archive.html"+(q?"?q="+encodeURIComponent(q):"");});
-  $("#modalClose")?.addEventListener("click",closeModal);
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
-  (async()=>{
-    const token=window.UzmantechAPI.getToken();
-    if(token){try{const result=await window.UzmantechAPI.session();state.user=result.user;}catch{window.UzmantechAPI.setSession("");}}
-    syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadRecent();await loadArchive();
-  })();
-})();+usd+'</b><small>'+esc(tl)+'</small></div><span class="payment-history-status '+esc(status)+'">'+esc(statuses[status]||status)+'</span>'+(p.admin_note?'<p class="payment-history-note">'+esc(p.admin_note)+'</p>':'')+'</article>';
-      }).join("")+'</div>':'<div class="empty-state">Henüz ödeme bildirimin bulunmuyor.</div>';
-      modal("Ödeme geçmişim",html);
-    }catch(error){modal("Ödeme geçmişim",'<div class="notice">'+esc(error.message)+'</div>');}
-  }
-
-  async function openPlan(plan, label, days){
-    if(!state.user){openLogin();return;}
-    const usd=({monthly:15,half_year:30,annual:40})[plan];
-    if(!usd){toast("Seçilen lisans paketi geçersiz.");return;}
-    let rate;
-    try{rate=await refreshExchangeRate(true);}catch(error){toast(error.message);return;}
-    const amountTry=Math.round(usd*rate*100)/100;
-    const amountText=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2}).format(amountTry);
-    modal(label+" üyelik başvurusu",'<div class="notice">Paket süresi: <strong>'+days+' gün</strong>. Paket bedeli: <strong>'+usd+' USD</strong>. Havale tutarı: <strong>'+amountText+'</strong>.</div><div class="content-card" style="margin:12px 0;padding:14px"><strong>Havale bilgileri</strong><p>Alıcı: Ömer Özen<br>Banka: Enpara<br>IBAN: <strong>TR65 0015 7000 0000 0091 1012 51</strong></p><p class="muted">1 USD = '+rate.toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+' TL. Sunucu bu kuru ödeme bildiriminde tekrar doğrular.</p></div><form id="paymentForm"><label class="field"><span>Ödeyen adı soyadı</span><input name="payer_name" required minlength="2" maxlength="120"></label><label class="field"><span>Havale tutarı (TL)</span><input name="amount" type="text" value="'+amountTry.toFixed(2)+'" readonly></label><input name="amount_usd" type="hidden" value="'+usd+'"><input name="rate" type="hidden" value="'+rate+'"><label class="field"><span>Banka dekontu (PDF, JPG, PNG, WEBP · en fazla 5 MB)</span><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="button button-primary" id="paymentSubmit" type="submit" style="width:100%">Dekontu gönder</button><p class="muted">Dekont gönderildiğinde başvurun yönetici onayına düşer. Onaydan sonra lisansın otomatik uzatılır.</p></form>');
-    $("#paymentForm").addEventListener("submit",async e=>{
-      e.preventDefault();
-      const form=e.currentTarget,file=form.elements.receipt.files[0],amount=Number(form.elements.amount.value),rateValue=Number(form.elements.rate.value),amountUsd=Number(form.elements.amount_usd.value),payerName=form.elements.payer_name.value.trim();
-      if(!file||file.size===0||file.size>5*1024*1024){toast("Dekont dosyası boş olamaz ve 5 MB sınırını aşamaz.");return;}
-      if(!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){toast("Yalnızca PDF, JPG, PNG veya WEBP yükleyebilirsin.");return;}
-      const btn=$("#paymentSubmit");btn.disabled=true;btn.textContent="Güvenli şekilde yükleniyor…";
-      try{
-        const latest=await window.UzmantechAPI.exchangeRate();
-        const currentRate=Number(latest.usd_sell);
-        const currentAmount=Math.round(amountUsd*currentRate*100)/100;
-        if(!Number.isFinite(currentRate)||currentRate<=0){throw new Error("Güncel döviz kuru doğrulanamadı.");}
-        if(Math.abs(currentRate-rateValue)>0.01||Math.abs(currentAmount-amount)>0.02){
-          form.elements.amount.value=currentAmount.toFixed(2);
-          form.elements.rate.value=String(currentRate);
-          toast("Döviz kuru güncellendi. Yeni TL tutarını kontrol edip dekontu tekrar gönder.");
-          return;
-        }
-        const result=await window.UzmantechAPI.paymentReceipt({plan,amountUsd,amountTry:amount,rate:rateValue,payerName,file});
-        closeModal();toast(result.message||"Ödeme bildirimi alındı.");
-      }catch(error){toast(error.message);}
-      finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
-    });
-  }
-
-  // Hero carousel: pauses on hover, focus, and hidden tabs.
-  const heroSlides=[...document.querySelectorAll("[data-hero-slide]")];
-  if(heroSlides.length){
-    const heroDots=[...document.querySelectorAll("[data-hero-dot]")];
-    let heroIndex=0,heroTimer=null;
-    const renderHero=()=>{heroSlides.forEach((s,i)=>{s.classList.toggle("is-active",i===heroIndex);s.setAttribute("aria-hidden",i===heroIndex?"false":"true");});heroDots.forEach((d,i)=>d.classList.toggle("is-active",i===heroIndex));};
-    const stopHero=()=>{if(heroTimer)clearInterval(heroTimer);heroTimer=null;};
-    const startHero=()=>{stopHero();if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||document.hidden)return;heroTimer=setInterval(()=>{heroIndex=(heroIndex+1)%heroSlides.length;renderHero();},5600);};
-    const goHero=i=>{heroIndex=(i+heroSlides.length)%heroSlides.length;renderHero();startHero();};
-    document.querySelector("[data-hero-prev]")?.addEventListener("click",()=>goHero(heroIndex-1));
-    document.querySelector("[data-hero-next]")?.addEventListener("click",()=>goHero(heroIndex+1));
-    heroDots.forEach((d,i)=>d.addEventListener("click",()=>goHero(i)));
-    const stage=document.querySelector(".showcase-stage");
-    stage?.addEventListener("mouseenter",stopHero);stage?.addEventListener("mouseleave",startHero);
-    stage?.addEventListener("focusin",stopHero);stage?.addEventListener("focusout",e=>{if(!stage.contains(e.relatedTarget))startHero();});
-    document.addEventListener("visibilitychange",()=>document.hidden?stopHero():startHero());
-    renderHero();startHero();
-  }
-
-  document.addEventListener("click",e=>{
-    const opener=e.target.closest("[data-open]");
-    if(opener?.dataset.open==="login")openLogin();
-    if(opener?.dataset.open==="register")openRegister();
     if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();
     if(e.target.closest("#logoutBtn")){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
     if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");

@@ -1,7 +1,7 @@
 # Uzmantech Web Portal
 
 ## Canlı bileşenler
-- GitHub Pages üzerinde statik portal arayüzü
+- Cloudflare Pages üzerinde, GitHub deposundaki `portal/` dizininden otomatik dağıtılan statik portal arayüzü
 - Supabase Edge Function `portal-api` v14: web oturumu, arşiv sorgusu, ödeme bildirimi ve destek talepleri
 - Mevcut `users` tablosu üzerinden web giriş doğrulaması
 - Mevcut PBKDF2_SHA256 parola formatı ile uyum

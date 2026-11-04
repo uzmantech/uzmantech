@@ -122,7 +122,7 @@
   }
 
   function openLogin(){
-    modal("Üye girişi",'<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required maxlength="254"></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required maxlength="256"></label><button class="button button-primary" id="loginSubmit" type="submit" style="width:100%">Giriş Yap</button><p class="muted">Masaüstü uygulamasındaki cihaz kilidinden bağımsız web oturumu kullanılır.</p></form>');
+    modal("Üye girişi",'<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required maxlength="254"></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required maxlength="256"></label><button class="button button-primary" id="loginSubmit" type="submit" style="width:100%">Giriş Yap</button><p class="muted">Masaüstü uygulamasındaki cihaz kilidinden bağımsız web oturumu kullanılır.</p><p class="muted">Henüz hesabın yok mu? <button type="button" class="text-button" data-open="register">Üye ol</button></p></form>');
     $("#loginForm").addEventListener("submit",async e=>{
       e.preventDefault(); const btn=$("#loginSubmit");btn.disabled=true;btn.textContent="Kontrol ediliyor…";
       const form=new FormData(e.currentTarget);
@@ -134,7 +134,46 @@
     });
   }
   function openRegister(){
-    modal("Yeni üyelik",'<div class="notice">Yeni hesap kayıtları e-posta doğrulama kodu gerektiriyor. Mevcut kayıt servisi doğrulama kaydını hazırlıyor ancak portal için doğrulama e-postasını gönderen servis henüz bağlı değil.</div><p class="muted">Bu nedenle kayıt formunu çalışıyor gibi göstermiyorum. Mevcut hesapla giriş yapabilir veya yönetici onayı bekleyen hesabın durumunu yöneticiden kontrol ettirebilirsin.</p>');
+    const body='<form id="registerForm">'+
+      '<label class="field"><span>Kullanıcı adı</span><input name="username" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_.-]+" placeholder="Örn. uzmantech_user"></label>'+
+      '<label class="field"><span>E-posta adresi</span><input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="ornek@eposta.com"></label>'+
+      '<label class="field"><span>Ülke</span><select name="country_code" required><option value="TR" selected>Türkiye (+90)</option><option value="US">ABD (+1)</option><option value="GB">Birleşik Krallık (+44)</option><option value="DE">Almanya (+49)</option><option value="FR">Fransa (+33)</option><option value="NL">Hollanda (+31)</option><option value="BE">Belçika (+32)</option><option value="AT">Avusturya (+43)</option><option value="CH">İsviçre (+41)</option><option value="IT">İtalya (+39)</option><option value="ES">İspanya (+34)</option><option value="AZ">Azerbaycan (+994)</option></select></label>'+
+      '<label class="field"><span>Telefon numarası</span><input name="phone" type="tel" autocomplete="tel" required maxlength="24" placeholder="05XXXXXXXXX"></label>'+
+      '<label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
+      '<label class="field"><span>Şifre tekrar</span><input name="password_confirm" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
+      '<label class="register-consent"><input name="consent" type="checkbox" required><span>Kayıt talebimin yönetici incelemesine alınacağını ve e-posta doğrulama kodunun şu anda otomatik gönderilmediğini anlıyorum.</span></label>'+
+      '<div class="notice">Kayıt sonrası hesabın <strong>Yönetici Onayı Bekliyor</strong> durumunda oluşturulur. Yönetici onaylayana kadar giriş yapamazsın. E-posta adresi otomatik doğrulanmaz.</div>'+
+      '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Üyelik Başvurusu Gönder</button>'+
+      '<p class="muted">Zaten hesabın var mı? <button type="button" class="text-button" data-open="login">Giriş yap</button></p>'+
+      '</form>';
+    modal("Yeni üyelik",body);
+    $("#registerForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const form=e.currentTarget;
+      const data=new FormData(form);
+      const password=String(data.get("password")||"");
+      const passwordConfirm=String(data.get("password_confirm")||"");
+      if(password!==passwordConfirm){toast("Şifreler aynı değil.");return;}
+      const btn=$("#registerSubmit");
+      btn.disabled=true;
+      btn.textContent="Başvuru gönderiliyor…";
+      try{
+        const lang=(document.documentElement.lang||"tr").toLowerCase().startsWith("en")?"en":"tr";
+        const result=await window.UzmantechAPI.register({
+          username:String(data.get("username")||"").trim(),
+          email:String(data.get("email")||"").trim().toLowerCase(),
+          phone:String(data.get("phone")||"").trim(),
+          country_code:String(data.get("country_code")||"TR"),
+          language_code:lang,
+          password
+        });
+        modal("Başvurun alındı",'<div class="notice"><strong>'+esc(result.message||"Üyelik başvurun oluşturuldu.")+'</strong></div><p>Hesabın yönetici onayına alındı. Onay verildiğinde kullanıcı adı veya e-posta adresinle giriş yapabilirsin.</p><p class="muted">E-posta adresin otomatik doğrulanmadı. Yanlış bilgi girdiysen yöneticiyle iletişime geç.</p><button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş ekranına dön</button>');
+      }catch(error){
+        toast(error.message);
+        btn.disabled=false;
+        btn.textContent="Üyelik Başvurusu Gönder";
+      }
+    });
   }
 
   async function refreshExchangeRate(force=false){

@@ -134,3 +134,30 @@
 .dash-hero-art{width:61%;height:104%;right:-1%}
 @media(max-width:1200px){.dash-secondary{gap:14px}.download-card{margin-bottom:0}}
 @media(max-width:760px){.dash-secondary{gap:13px}.download-card{margin-bottom:0}}
+
+/* Exact desktop proportions from the supplied 1672px dashboard reference */
+@media(min-width:1201px){
+ .dash-content{padding:23px 34px 16px 13px}
+ .dash-layout{grid-template-columns:minmax(0,1fr) 384px;gap:21px;max-width:none;width:100%}
+ .dash-hero{height:349px;min-height:349px}
+ .dash-hero-copy{max-width:49%}
+ .dash-hero-art{right:-1%;top:-2%;width:58%;height:104%}
+ .dash-shortcuts{margin-top:14px;margin-bottom:23px}
+ .dash-shortcuts a,.dash-shortcuts button{height:139px;min-height:139px}
+ .dash-announcements{min-height:288px}
+ .dash-secondary{gap:13px}
+ .welcome-card{height:95px;min-height:95px}
+ .license-card{height:235px;min-height:235px}
+ .download-card{height:173px;min-height:173px}
+ .support-card{height:203px;min-height:203px}
+}
+@media(min-width:1201px) and (max-width:1450px){
+ .dash-layout{grid-template-columns:minmax(0,1fr) 345px}
+ .dash-content{padding-right:20px}
+ .dash-hero h1{font-size:35px}
+ .dash-hero h1 span{font-size:22px}
+ .dash-hero h2{font-size:22px}
+ .dash-hero p{font-size:15px}
+ .dash-hero-actions .dash-button{min-width:0}
+ .dash-hero-art{width:55%}
+}

@@ -36,7 +36,7 @@
     if($("#accountRole"))$("#accountRole").textContent=roleLabel;
     if($("#welcomeRole"))$("#welcomeRole").textContent=!user?"Uzmantech Portal'a hoş geldiniz":roleLabel;
 
-    const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"Özel Lisans","none":"Lisans Yok"};
+    const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
     const licenseType=$("#licenseType"),licenseEnd=$("#licenseEnd"),remaining=$("#licenseRemaining");
     if(licenseType){
       licenseType.textContent=!user?"Giriş yapın":admin?"Yönetici":expired?(expiryValid?"Süresi Doldu":"Lisans Atanmamış"):(planNames[user.license_plan]||"Aktif Lisans");

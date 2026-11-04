@@ -34,6 +34,90 @@ function safeEqual(a: Uint8Array, b: Uint8Array) {
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
   return diff === 0;
 }
+
+async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function makeOtp(): string {
+  const values = new Uint32Array(1);
+  let value = 0;
+  do {
+    crypto.getRandomValues(values);
+    value = values[0];
+  } while (value >= 4294000000);
+  return String(value % 1000000).padStart(6, "0");
+}
+function maskEmail(email: string): string {
+  const [name, domain] = email.split("@");
+  if (!domain) return email;
+  return (name.length < 3 ? name[0] || "*" : name.slice(0, 2)) + "***@" + domain;
+}
+async function sendPortalEmail(recipient: string, subject: string, body: string) {
+  const clientId = Deno.env.get("GMAIL_CLIENT_ID") || "";
+  const clientSecret = Deno.env.get("GMAIL_CLIENT_SECRET") || "";
+  const refreshToken = Deno.env.get("GMAIL_REFRESH_TOKEN") || "";
+  const sender = (Deno.env.get("GMAIL_SENDER_EMAIL") || "").trim().toLowerCase();
+  if (!clientId || !clientSecret || !refreshToken || !sender) {
+    throw new Error("Gmail API sunucu ayarları eksik.");
+  }
+  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(recipient) ||
+      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(sender)) {
+    throw new Error("Gmail alıcı veya gönderici adresi geçersiz.");
+  }
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }),
+    signal: AbortSignal.timeout(12000),
+  });
+  const tokenData = await tokenResponse.json().catch(() => ({}));
+  if (!tokenResponse.ok || !tokenData.access_token) {
+    console.error("Gmail OAuth token refresh failed", tokenResponse.status, tokenData.error || "");
+    throw new Error("Gmail erişim yetkisi yenilenemedi.");
+  }
+
+  const encodeBase64 = (value: string) => {
+    const bytes = new TextEncoder().encode(value);
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    return btoa(binary);
+  };
+  const encodedSubject = "=?UTF-8?B?" + encodeBase64(subject) + "?=";
+  const message = [
+    "To: " + recipient,
+    "From: Uzmantech <" + sender + ">",
+    "Subject: " + encodedSubject,
+    "MIME-Version: 1.0",
+    'Content-Type: text/plain; charset="UTF-8"',
+    "Content-Transfer-Encoding: base64",
+    "",
+    encodeBase64(body),
+  ].join("\\r\\n");
+  const raw = b64url(new TextEncoder().encode(message));
+
+  const sendResponse = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + tokenData.access_token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ raw }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!sendResponse.ok) {
+    const errorData = await sendResponse.json().catch(() => ({}));
+    console.error("Gmail API send failed", sendResponse.status, errorData.error?.status || "");
+    throw new Error("Gmail doğrulama e-postasını gönderemedi.");
+  }
+  return true;
+}
 async function verifyPassword(password: string, stored: string): Promise<boolean> {
   try {
     const parts = String(stored || "").split("$");
@@ -48,6 +132,15 @@ async function verifyPassword(password: string, stored: string): Promise<boolean
     );
     return safeEqual(new Uint8Array(bits), decode64url(parts[3]));
   } catch { return false; }
+}
+
+async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 310000, hash: "SHA-256" }, key, 256,
+  );
+  return "pbkdf2_sha256$310000$" + b64url(salt) + "$" + b64url(new Uint8Array(bits));
 }
 async function signSession(user: { id: string; role: string }) {
   if (!sessionSecret) throw new Error("Oturum anahtarı yapılandırılmamış.");
@@ -452,18 +545,96 @@ Deno.serve(async (req: Request) => {
     const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
     const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 310000, hash: "SHA-256" }, key, 256);
     const passwordHash = "pbkdf2_sha256$310000$" + b64url(salt) + "$" + b64url(new Uint8Array(bits));
+    const code = makeOtp();
+    const codeHash = await sha256Hex(code);
     const now = new Date().toISOString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+    const languageCode = String(body.language_code || "tr").toLowerCase() === "en" ? "en" : "tr";
 
+    const { error: verificationError } = await db.from("registration_verifications").upsert({
+      username, email, phone, country_code: countryCode, language_code: languageCode,
+      password_hash: passwordHash, code_hash: codeHash, expires_at: expiresAt,
+      attempts: 0, created_at: now,
+    }, { onConflict: "email" });
+    if (verificationError) {
+      console.error("portal registration verification upsert failed", verificationError);
+      return response({ success: false, message: "Doğrulama isteği oluşturulamadı. Lütfen tekrar deneyin." }, 503);
+    }
+
+    const mailBody =
+      "Merhaba " + username + ",\n\n" +
+      "Uzmantech üyelik başvurunuzu tamamlamak için e-posta doğrulama kodunuz:\n\n" +
+      "    " + code + "\n\n" +
+      "Bu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir.\n\n" +
+      "Bu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\n\nUzmantech";
+    try {
+      await sendPortalEmail(email, "Uzmantech - E-posta Doğrulama Kodu", mailBody);
+    } catch (mailError) {
+      await db.from("registration_verifications").delete().eq("email", email);
+      console.error("portal registration Gmail send failed", mailError);
+      return response({ success: false, message: "Doğrulama e-postası gönderilemedi. Sunucu e-posta ayarlarını kontrol edin." }, 503);
+    }
+
+    await db.from("portal_registration_attempts").delete().lt("created_at", new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString());
+    return response({
+      success: true,
+      verification_required: true,
+      email: maskEmail(email),
+      message: "6 haneli doğrulama kodu e-posta adresinize gönderildi.",
+    }, 200);
+  }
+
+  if (body.action === "register_verify") {
+    const email = String(body.email || "").trim().toLowerCase();
+    const code = String(body.code || "").trim();
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email) || !/^\\d{6}$/.test(code)) {
+      return response({ success: false, message: "E-posta veya doğrulama kodu geçersiz." }, 400);
+    }
+
+    const { data: verification, error: verificationLookupError } = await db.from("registration_verifications")
+      .select("id,username,email,phone,country_code,language_code,password_hash,code_hash,expires_at,attempts")
+      .eq("email", email).maybeSingle();
+    if (verificationLookupError || !verification) {
+      return response({ success: false, message: "Kod geçersiz veya süresi dolmuş. Yeni kod isteyin." }, 400);
+    }
+
+    const attempts = Number(verification.attempts || 0);
+    if (attempts >= 5) return response({ success: false, message: "Çok fazla hatalı deneme yapıldı. Yeni kod isteyin." }, 429);
+    if (new Date(verification.expires_at).getTime() <= Date.now()) {
+      await db.from("registration_verifications").delete().eq("id", verification.id);
+      return response({ success: false, message: "Doğrulama kodunun süresi doldu. Yeni kod isteyin." }, 400);
+    }
+
+    const suppliedHash = await sha256Hex(code);
+    if (!safeEqual(new TextEncoder().encode(suppliedHash), new TextEncoder().encode(String(verification.code_hash || "").toLowerCase()))) {
+      await db.from("registration_verifications").update({ attempts: attempts + 1 }).eq("id", verification.id);
+      return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
+    }
+
+    const [byUsername, byEmail, byPhone] = await Promise.all([
+      db.from("users").select("id").eq("username", verification.username).maybeSingle(),
+      db.from("users").select("id").eq("email", verification.email).maybeSingle(),
+      db.from("users").select("id").eq("phone", verification.phone).maybeSingle(),
+    ]);
+    if (byUsername.error || byEmail.error || byPhone.error) {
+      return response({ success: false, message: "Kayıt bilgileri doğrulanamadı." }, 503);
+    }
+    if (byUsername.data || byEmail.data || byPhone.data) {
+      await db.from("registration_verifications").delete().eq("id", verification.id);
+      return response({ success: false, message: "Kullanıcı adı, e-posta veya telefon artık kullanılıyor." }, 409);
+    }
+
+    const now = new Date().toISOString();
     const { data: newUser, error: createError } = await db.from("users").insert({
-      username,
-      email,
-      phone,
-      country_code: countryCode,
-      language_code: String(body.language_code || "tr").toLowerCase() === "en" ? "en" : "tr",
-      password_hash: passwordHash,
+      username: verification.username,
+      email: verification.email,
+      phone: verification.phone,
+      country_code: verification.country_code,
+      language_code: verification.language_code,
+      password_hash: verification.password_hash,
       role: "user",
       status: "pending",
-      email_verified: false,
+      email_verified: true,
       expiry_date: null,
       license_plan: "none",
       license_days: 0,
@@ -474,18 +645,161 @@ Deno.serve(async (req: Request) => {
     }).select("id,username,email,phone,country_code,language_code,role,status,email_verified,created_at").single();
 
     if (createError) {
-      console.error("portal registration insert failed", createError);
+      console.error("portal verified registration insert failed", createError);
       if (createError.code === "23505") return response({ success: false, message: "Kullanıcı adı, e-posta veya telefon zaten kayıtlı." }, 409);
-      return response({ success: false, message: "Kayıt oluşturulamadı. Lütfen tekrar deneyin." }, 503);
+      return response({ success: false, message: "Kayıt tamamlanamadı. Lütfen tekrar deneyin." }, 503);
     }
 
-    await db.from("portal_registration_attempts").delete().lt("created_at", new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString());
+    await db.from("registration_verifications").delete().eq("id", verification.id);
     return response({
       success: true,
-      message: "Başvurunuz alındı. Hesabınız yönetici onayına gönderildi.",
-      email_verification: "not_configured",
+      message: "E-posta doğrulandı. Üyelik başvurunuz yönetici onayına gönderildi.",
       user: newUser,
     }, 201);
+  }
+
+
+  if (body.action === "email_queue_claim") {
+    const admin = await verifySession(tokenFrom(req));
+    if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") {
+      return response({ success: false, message: "E-posta kuyruğu için yönetici yetkisi gerekli." }, 403);
+    }
+    const now = new Date().toISOString();
+    const { data: queued, error: queuedError } = await db.from("portal_email_outbox")
+      .select("id,recipient,subject,body,status,attempts,expires_at")
+      .eq("status", "queued").gt("expires_at", now)
+      .order("created_at", { ascending: true }).limit(1);
+    if (queuedError) return response({ success: false, message: "E-posta kuyruğu okunamadı." }, 503);
+
+    let job = queued?.[0] || null;
+    if (!job) {
+      const { data: stale, error: staleError } = await db.from("portal_email_outbox")
+        .select("id,recipient,subject,body,status,attempts,expires_at")
+        .eq("status", "sending").lte("lease_until", now).gt("expires_at", now)
+        .order("created_at", { ascending: true }).limit(1);
+      if (staleError) return response({ success: false, message: "E-posta kuyruğu okunamadı." }, 503);
+      job = stale?.[0] || null;
+    }
+    if (!job) return response({ success: true, email: null });
+
+    let claim = db.from("portal_email_outbox").update({
+      status: "sending",
+      attempts: Number(job.attempts || 0) + 1,
+      lease_until: new Date(Date.now() + 3 * 60 * 1000).toISOString(),
+      last_error: null,
+    }).eq("id", job.id).eq("status", job.status);
+    if (job.status === "sending") claim = claim.lte("lease_until", now);
+    const { data: claimed, error: claimError } = await claim
+      .select("id,recipient,subject,body,attempts").maybeSingle();
+    if (claimError) return response({ success: false, message: "E-posta işi alınamadı." }, 503);
+    return response({ success: true, email: claimed || null });
+  }
+
+  if (body.action === "email_queue_complete") {
+    const admin = await verifySession(tokenFrom(req));
+    if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") {
+      return response({ success: false, message: "E-posta kuyruğu için yönetici yetkisi gerekli." }, 403);
+    }
+    const id = String(body.email_id || "").trim();
+    const sent = body.sent === true;
+    if (!id) return response({ success: false, message: "E-posta işi kimliği gerekli." }, 400);
+    const { data: job, error: lookupError } = await db.from("portal_email_outbox")
+      .select("id,attempts,expires_at").eq("id", id).eq("status", "sending").maybeSingle();
+    if (lookupError || !job) return response({ success: false, message: "E-posta işi bulunamadı veya artık size ait değil." }, 404);
+
+    const now = new Date().toISOString();
+    const attempts = Number(job.attempts || 0);
+    const patch = sent
+      ? { status: "sent", body: null, sent_at: now, lease_until: null, last_error: null }
+      : (attempts < 3 && new Date(job.expires_at).getTime() > Date.now()
+        ? { status: "queued", lease_until: null, last_error: String(body.error || "Gönderim başarısız.").slice(0, 500) }
+        : { status: "failed", body: null, lease_until: null, last_error: String(body.error || "Gönderim başarısız.").slice(0, 500) });
+    const { error: updateError } = await db.from("portal_email_outbox").update(patch).eq("id", id).eq("status", "sending");
+    if (updateError) return response({ success: false, message: "E-posta sonucu kaydedilemedi." }, 503);
+    return response({ success: true });
+  }
+
+
+  if (body.action === "password_reset_request") {
+    const email = String(body.email || "").trim().toLowerCase();
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email) || email.length > 254) {
+      return response({ success: false, message: "Geçerli bir e-posta adresi girin." }, 400);
+    }
+    const { data: user, error } = await db.from("users")
+      .select("id,username,status,reset_code_sent_at").eq("email", email).maybeSingle();
+    if (error) return response({ success: false, message: "Şifre sıfırlama servisi şu anda kullanılamıyor." }, 503);
+    if (!user || user.status === "disabled") return response({ success: true, accepted: true });
+    const lastSent = user.reset_code_sent_at ? new Date(user.reset_code_sent_at).getTime() : 0;
+    if (lastSent && Date.now() - lastSent < 60000) return response({ success: true, accepted: true });
+
+    const code = makeOtp();
+    const codeHash = await sha256Hex(code);
+    const now = new Date().toISOString();
+    const { error: updateError } = await db.from("users").update({
+      reset_code_hash: codeHash,
+      reset_code_expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+      reset_code_attempts: 0,
+      reset_code_sent_at: now,
+      updated_at: now,
+    }).eq("id", user.id);
+    if (updateError) return response({ success: false, message: "Doğrulama isteği kaydedilemedi." }, 503);
+
+    const mailBody =
+      "Merhaba " + String(user.username || "") + ",\\n\\n" +
+      "Uzmantech şifre sıfırlama kodunuz:\\n\\n    " + code +
+      "\\n\\nBu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir." +
+      "\\n\\nBu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\\n\\nUzmantech";
+    try {
+      await sendPortalEmail(email, "Uzmantech - Şifre Sıfırlama Kodu", mailBody);
+    } catch (mailError) {
+      await db.from("users").update({
+        reset_code_hash: null, reset_code_expires_at: null,
+        reset_code_attempts: 0, reset_code_sent_at: null, updated_at: new Date().toISOString(),
+      }).eq("id", user.id);
+      console.error("portal password reset Gmail send failed", mailError);
+      // Keep the response generic so account existence is not disclosed.
+      return response({ success: true, accepted: true });
+    }
+    return response({ success: true, accepted: true });
+  }
+
+  if (body.action === "password_reset_confirm") {
+    const email = String(body.email || "").trim().toLowerCase();
+    const code = String(body.code || "").trim();
+    const newPassword = String(body.new_password || "");
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email) || !/^\\d{6}$/.test(code)) {
+      return response({ success: false, message: "E-posta veya doğrulama kodu geçersiz." }, 400);
+    }
+    if (newPassword.length < 8 || newPassword.length > 128) {
+      return response({ success: false, message: "Yeni şifre 8-128 karakter arasında olmalıdır." }, 400);
+    }
+    const { data: user, error } = await db.from("users")
+      .select("id,status,reset_code_hash,reset_code_expires_at,reset_code_attempts")
+      .eq("email", email).maybeSingle();
+    if (error) return response({ success: false, message: "Hesap bilgileri okunamadı." }, 503);
+    if (!user || user.status === "disabled") return response({ success: false, message: "Kod geçersiz veya süresi dolmuş." }, 400);
+    const attempts = Number(user.reset_code_attempts || 0);
+    if (attempts >= 5) return response({ success: false, message: "Çok fazla hatalı deneme yapıldı. Yeni kod isteyin." }, 429);
+    const expiresAt = user.reset_code_expires_at ? new Date(user.reset_code_expires_at).getTime() : 0;
+    if (!user.reset_code_hash || !expiresAt || expiresAt <= Date.now()) {
+      return response({ success: false, message: "Kod geçersiz veya süresi dolmuş." }, 400);
+    }
+    const suppliedHash = await sha256Hex(code);
+    if (!safeEqual(new TextEncoder().encode(suppliedHash), new TextEncoder().encode(String(user.reset_code_hash).toLowerCase()))) {
+      await db.from("users").update({ reset_code_attempts: attempts + 1, updated_at: new Date().toISOString() }).eq("id", user.id);
+      return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
+    }
+    const passwordHash = await hashPassword(newPassword);
+    const { error: updateError } = await db.from("users").update({
+      password_hash: passwordHash,
+      reset_code_hash: null,
+      reset_code_expires_at: null,
+      reset_code_attempts: 0,
+      reset_code_sent_at: null,
+      updated_at: new Date().toISOString(),
+    }).eq("id", user.id);
+    if (updateError) return response({ success: false, message: "Yeni şifre kaydedilemedi." }, 503);
+    return response({ success: true, message: "Şifreniz başarıyla güncellendi." });
   }
 
   if (body.action === "login") {

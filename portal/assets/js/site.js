@@ -125,7 +125,7 @@
   }
 
   function openLogin(){
-    modal("Üye girişi",'<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required maxlength="254"></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required maxlength="256"></label><button class="button button-primary" id="loginSubmit" type="submit" style="width:100%">Giriş Yap</button><p class="muted">Masaüstü uygulamasındaki cihaz kilidinden bağımsız web oturumu kullanılır.</p><p class="muted">Henüz hesabın yok mu? <button type="button" class="text-button" data-open="register">Üye ol</button></p></form>');
+    modal("Üye girişi",'<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required maxlength="254"></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required maxlength="256"></label><button class="button button-primary" id="loginSubmit" type="submit" style="width:100%">Giriş Yap</button><p class="muted">Masaüstü uygulamasındaki cihaz kilidinden bağımsız web oturumu kullanılır.</p><p class="muted"><button type="button" class="text-button" data-open="forgot">Şifremi unuttum?</button></p><p class="muted">Henüz hesabın yok mu? <button type="button" class="text-button" data-open="register">Üye ol</button></p></form>');
     $("#loginForm").addEventListener("submit",async e=>{
       e.preventDefault(); const btn=$("#loginSubmit");btn.disabled=true;btn.textContent="Kontrol ediliyor…";
       const form=new FormData(e.currentTarget);
@@ -144,9 +144,8 @@
       '<label class="field"><span>Telefon numarası</span><input name="phone" type="tel" autocomplete="tel" required maxlength="24" placeholder="05XXXXXXXXX"></label>'+
       '<label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
       '<label class="field"><span>Şifre tekrar</span><input name="password_confirm" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
-      '<label class="register-consent"><input name="consent" type="checkbox" required><span>Kayıt talebimin yönetici incelemesine alınacağını ve e-posta doğrulama kodunun şu anda otomatik gönderilmediğini anlıyorum.</span></label>'+
-      '<div class="notice">Kayıt sonrası hesabın <strong>Yönetici Onayı Bekliyor</strong> durumunda oluşturulur. Yönetici onaylayana kadar giriş yapamazsın. E-posta adresi otomatik doğrulanmaz.</div>'+
-      '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Üyelik Başvurusu Gönder</button>'+
+      '<div class="notice">Kayıt işlemini tamamlamak için e-posta adresinize gönderilen 6 haneli kodu doğrulamanız gerekir. Ardından hesabınız yönetici onayına gönderilir.</div>'+
+      '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Doğrulama Kodu Gönder</button>'+
       '<p class="muted">Zaten hesabın var mı? <button type="button" class="text-button" data-open="login">Giriş yap</button></p>'+
       '</form>';
     modal("Yeni üyelik",body);
@@ -157,25 +156,78 @@
       const password=String(data.get("password")||"");
       const passwordConfirm=String(data.get("password_confirm")||"");
       if(password!==passwordConfirm){toast("Şifreler aynı değil.");return;}
+      const email=String(data.get("email")||"").trim().toLowerCase();
       const btn=$("#registerSubmit");
-      btn.disabled=true;
-      btn.textContent="Başvuru gönderiliyor…";
+      btn.disabled=true;btn.textContent="Kod hazırlanıyor…";
       try{
         const lang=(document.documentElement.lang||"tr").toLowerCase().startsWith("en")?"en":"tr";
         const result=await window.UzmantechAPI.register({
-          username:String(data.get("username")||"").trim(),
-          email:String(data.get("email")||"").trim().toLowerCase(),
+          username:String(data.get("username")||"").trim(),email,
           phone:String(data.get("phone")||"").trim(),
           country_code:String(data.get("country_code")||"TR"),
-          language_code:lang,
-          password
+          language_code:lang,password
         });
-        modal("Başvurun alındı",'<div class="notice"><strong>'+esc(result.message||"Üyelik başvurun oluşturuldu.")+'</strong></div><p>Hesabın yönetici onayına alındı. Onay verildiğinde kullanıcı adı veya e-posta adresinle giriş yapabilirsin.</p><p class="muted">E-posta adresin otomatik doğrulanmadı. Yanlış bilgi girdiysen yöneticiyle iletişime geç.</p><button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş ekranına dön</button>');
-      }catch(error){
-        toast(error.message);
-        btn.disabled=false;
-        btn.textContent="Üyelik Başvurusu Gönder";
-      }
+        if(!result.verification_required)throw new Error("E-posta doğrulaması başlatılamadı.");
+        modal("E-posta doğrulama",
+          '<p><strong>'+esc(result.email||email)+'</strong> adresine 6 haneli doğrulama kodu gönderilmek üzere sıraya alındı.</p>'+
+          '<form id="registerVerifyForm">'+
+          '<label class="field"><span>Doğrulama kodu</span><input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required placeholder="000000"></label>'+
+          '<p class="muted">Kod 10 dakika geçerlidir. Gelen kutunuzu kontrol edin.</p>'+
+          '<button class="button button-primary" id="registerVerifySubmit" type="submit" style="width:100%">E-postayı Doğrula ve Başvuruyu Tamamla</button></form>');
+        $("#registerVerifyForm").addEventListener("submit",async ev=>{
+          ev.preventDefault();
+          const verifyBtn=$("#registerVerifySubmit");
+          verifyBtn.disabled=true;verifyBtn.textContent="Doğrulanıyor…";
+          try{
+            const code=String(new FormData(ev.currentTarget).get("code")||"").trim();
+            const verified=await window.UzmantechAPI.verifyRegistration({email,code});
+            modal("Başvurun alındı",
+              '<div class="notice"><strong>'+esc(verified.message||"E-posta doğrulandı. Üyelik başvurunuz alındı.")+'</strong></div>'+
+              '<p>Hesabınız yönetici onayına gönderildi. Onay verildiğinde giriş yapabilirsiniz.</p>'+
+              '<button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş ekranına dön</button>');
+          }catch(error){toast(error.message);verifyBtn.disabled=false;verifyBtn.textContent="E-postayı Doğrula ve Başvuruyu Tamamla";}
+        });
+      }catch(error){toast(error.message);btn.disabled=false;btn.textContent="Doğrulama Kodu Gönder";}
+    });
+  }
+
+  function openForgotPassword(){
+    modal("Şifremi unuttum",
+      '<form id="forgotRequestForm">'+
+      '<label class="field"><span>Hesabınıza kayıtlı e-posta</span><input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="ornek@eposta.com"></label>'+
+      '<p class="muted">E-posta adresiniz kayıtlıysa tek kullanımlık doğrulama kodu gönderilir.</p>'+
+      '<button class="button button-primary" id="forgotRequestSubmit" type="submit" style="width:100%">Doğrulama Kodu Gönder</button></form>');
+    $("#forgotRequestForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const email=String(new FormData(e.currentTarget).get("email")||"").trim().toLowerCase();
+      const btn=$("#forgotRequestSubmit");
+      btn.disabled=true;btn.textContent="Kod hazırlanıyor…";
+      try{
+        await window.UzmantechAPI.requestPasswordReset({email});
+        modal("Şifre sıfırlama",
+          '<p>Bu e-posta bir Uzmantech hesabına kayıtlıysa doğrulama kodu gönderilmek üzere sıraya alındı.</p>'+
+          '<form id="forgotConfirmForm">'+
+          '<label class="field"><span>6 haneli doğrulama kodu</span><input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required></label>'+
+          '<label class="field"><span>Yeni şifre</span><input name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>'+
+          '<label class="field"><span>Yeni şifre tekrar</span><input name="password_confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>'+
+          '<button class="button button-primary" id="forgotConfirmSubmit" type="submit" style="width:100%">Şifremi Güncelle</button></form>');
+        $("#forgotConfirmForm").addEventListener("submit",async ev=>{
+          ev.preventDefault();
+          const data=new FormData(ev.currentTarget);
+          const password=String(data.get("password")||"");
+          if(password!==String(data.get("password_confirm")||"")){toast("Şifreler aynı değil.");return;}
+          const confirmBtn=$("#forgotConfirmSubmit");
+          confirmBtn.disabled=true;confirmBtn.textContent="Güncelleniyor…";
+          try{
+            const result=await window.UzmantechAPI.confirmPasswordReset({
+              email,code:String(data.get("code")||"").trim(),new_password:password
+            });
+            modal("Şifre güncellendi",
+              '<div class="notice"><strong>'+esc(result.message||"Şifreniz başarıyla güncellendi.")+'</strong></div>'+
+              '<button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş Yap</button>');
+          }catch(error){toast(error.message);confirmBtn.disabled=false;confirmBtn.textContent="Şifremi Güncelle";}
+        });
+      }catch(error){toast(error.message);btn.disabled=false;btn.textContent="Doğrulama Kodu Gönder";}
     });
   }
 
@@ -353,6 +405,7 @@
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();
     if(opener?.dataset.open==="register")openRegister();
+    if(opener?.dataset.open==="forgot")openForgotPassword();
     if(opener?.dataset.open==="plans")openPlans();
     if(e.target.closest("#paymentHistoryBtn"))openPaymentHistory();
     if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();

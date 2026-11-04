@@ -41,7 +41,8 @@
     ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Onayla + lisans ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
     :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat / aç</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
-   const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';\n   return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
+   const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
+   return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
   }).join("")||'<tr><td colspan="5">Kayıt bulunamadı.</td></tr>';
  }
  async function loadUsers(){

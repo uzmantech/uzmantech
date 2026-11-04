@@ -546,7 +546,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const suppliedHash = await sha256Hex(code);
-    if (suppliedHash !== String(verification.code_hash || "").toLowerCase()) {
+    if (!safeEqual(new TextEncoder().encode(suppliedHash), new TextEncoder().encode(String(verification.code_hash || "").toLowerCase()))) {
       await db.from("registration_verifications").update({ attempts: attempts + 1 }).eq("id", verification.id);
       return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
     }
@@ -723,7 +723,7 @@ Deno.serve(async (req: Request) => {
       return response({ success: false, message: "Kod geçersiz veya süresi dolmuş." }, 400);
     }
     const suppliedHash = await sha256Hex(code);
-    if (suppliedHash !== String(user.reset_code_hash).toLowerCase()) {
+    if (!safeEqual(new TextEncoder().encode(suppliedHash), new TextEncoder().encode(String(user.reset_code_hash).toLowerCase()))) {
       await db.from("users").update({ reset_code_attempts: attempts + 1, updated_at: new Date().toISOString() }).eq("id", user.id);
       return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
     }

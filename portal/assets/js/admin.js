@@ -3,9 +3,10 @@
  const api=window.UzmantechAPI;
  let users=[];
  let payments=[];
+ let tickets=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="archive"?"Arşiv durumu":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Arşiv durumu":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
@@ -24,6 +25,28 @@
  async function loadPayments(){
   const body=$("#paymentsBody");if(body)body.innerHTML='<tr><td colspan="7">Ödeme bildirimleri yükleniyor…</td></tr>';
   const result=await api.portalAdmin({action:"payment_list"});payments=result.payments||[];renderPayments();
+ }
+
+
+ function renderSupport(){
+  const body=$("#supportBody");if(!body)return;
+  const labels={open:"Yeni",in_progress:"İşlemde",resolved:"Çözüldü"};
+  const categoryNames={technical:"Teknik",license:"Lisans",payment:"Ödeme",archive:"Arşiv",other:"Diğer"};
+  body.innerHTML=tickets.map(t=>{
+   const user=t.user||{},date=t.created_at?new Date(t.created_at).toLocaleString("tr-TR"):"-";
+   const status=t.status||"open";
+   const actions=status==="resolved"
+    ?'<button class="btn" data-support-status="open" data-id="'+esc(t.id)+'">Yeniden Aç</button>'
+    :'<button class="btn" data-support-status="in_progress" data-id="'+esc(t.id)+'">İşleme Al</button> <button class="btn" data-support-status="resolved" data-id="'+esc(t.id)+'">Çözüldü</button>';
+   return '<tr><td>'+esc(user.username||"Üye")+'<br><small>'+esc(user.email||"")+'</small></td>'+
+    '<td><strong>'+esc(t.subject)+'</strong><br><small>'+esc(categoryNames[t.category]||t.category)+'</small></td>'+
+    '<td><details><summary>Mesajı görüntüle</summary><p class="ticket-message">'+esc(t.message)+'</p>'+(t.admin_note?'<p class="ticket-note"><b>Yanıt:</b> '+esc(t.admin_note)+'</p>':'')+'</details></td>'+
+    '<td>'+esc(date)+'</td><td><span class="status '+(status==="resolved"?"active":status==="in_progress"?"pending":"expired")+'">'+esc(labels[status]||status)+'</span></td><td>'+actions+'</td></tr>';
+  }).join("")||'<tr><td colspan="6">Henüz destek talebi yok.</td></tr>';
+ }
+ async function loadSupport(){
+  const body=$("#supportBody");if(body)body.innerHTML='<tr><td colspan="6">Destek talepleri yükleniyor…</td></tr>';
+  const result=await api.supportList();tickets=result.tickets||[];renderSupport();
  }
 
  function renderUsers(){
@@ -69,11 +92,24 @@
  $("#refreshBtn").addEventListener("click",()=>loadDashboard().catch(e=>toast(e.message)));
  $("#reloadUsers").addEventListener("click",()=>loadUsers().catch(e=>toast(e.message)));
  $("#reloadPayments")?.addEventListener("click",()=>loadPayments().catch(e=>toast(e.message)));
+ $("#reloadSupport")?.addEventListener("click",()=>loadSupport().catch(e=>toast(e.message)));
  $("#userSearch").addEventListener("input",renderUsers);
  $("#adminNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  document.addEventListener("click",async e=>{
   const jump=e.target.closest("[data-jump]");if(jump)navigate(jump.dataset.jump);
   if(e.target.id==="navToggle")$("#sidebar").classList.toggle("open");
+
+  const supportBtn=e.target.closest("[data-support-status]");
+  if(supportBtn){
+   const id=supportBtn.dataset.id,status=supportBtn.dataset.supportStatus,t=tickets.find(x=>x.id===id);if(!t)return;
+   const note=prompt("Yönetici yanıtı / notu (üyenin destek geçmişinde görünür):",t.admin_note||"");
+   if(note===null)return;
+   supportBtn.disabled=true;
+   try{await api.supportUpdate({ticket_id:id,status,admin_note:note});toast("Destek talebi güncellendi.");await loadSupport();}
+   catch(err){toast(err.message);}
+   finally{supportBtn.disabled=false;}
+   return;
+  }
   const paymentBtn=e.target.closest("[data-payment-action]");
   if(paymentBtn){
    const id=paymentBtn.dataset.id,status=paymentBtn.dataset.paymentAction,p=payments.find(x=>x.id===id);if(!p)return;

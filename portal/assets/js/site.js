@@ -13,11 +13,45 @@
   function closeModal(){ $("#modal").classList.remove("open"); }
   function syncHeader(){
     const actions=$(".header-actions");
-    if(!actions) return;
-    if(state.user){
-      actions.innerHTML='<span class="muted header-user">'+esc(state.user.username)+'</span><button class="button button-quiet" id="logoutBtn">Çıkış Yap</button>';
-    }else{
-      actions.innerHTML='<button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button>';
+    if(actions){
+      if(state.user){
+        actions.innerHTML='<span class="muted header-user">'+esc(state.user.username)+'</span><button class="button button-quiet" id="logoutBtn">Çıkış Yap</button>';
+      }else{
+        actions.innerHTML='<button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button>';
+      }
+    }
+
+    const account=$("#accountName");
+    if(account){
+      const user=state.user;
+      const username=user?.username||"UZMAN";
+      const expired=!!user?.membership_expired;
+      const role=user?(expired?"Üyelik Süresi Doldu":"Premium Üye"):"Premium Üye";
+      account.textContent=username;
+      if($("#welcomeName"))$("#welcomeName").textContent="Merhaba, "+username;
+      if($("#accountRole"))$("#accountRole").textContent=role;
+      if($("#welcomeRole"))$("#welcomeRole").textContent=role;
+      const licenseType=$("#licenseType"),licenseEnd=$("#licenseEnd"),remaining=$("#licenseRemaining");
+      if(user){
+        if(licenseType)licenseType.textContent=user.membership_type||user.license_type||(expired?"Süresi Doldu":"Premium");
+        const expiry=user.membership_expires_at||user.membership_end_date||user.license_expires_at||user.license_end||user.expires_at||null;
+        if(expiry){
+          const date=new Date(expiry);
+          if(!Number.isNaN(date.getTime())){
+            if(licenseEnd)licenseEnd.textContent=date.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"});
+            const days=Math.ceil((date.getTime()-Date.now())/86400000);
+            if(remaining)remaining.textContent=days>=0?days+" Gün":"Süresi Doldu";
+          }
+        }else{
+          if(licenseEnd)licenseEnd.textContent="Bilgi yok";
+          if(remaining)remaining.textContent="-";
+        }
+      }
+      const profile=$(".top-profile");
+      if(profile){
+        if(user){profile.removeAttribute("data-open");profile.id="logoutBtn";profile.title="Oturumu kapat";}
+        else{profile.id="";profile.setAttribute("data-open","login");profile.title="Hesabım";}
+      }
     }
   }
   function recordView(entry){
@@ -161,6 +195,9 @@
     if(e.target.id==="modalClose"||e.target.id==="modal")closeModal();
     if(e.target.id==="logoutBtn"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();toast("Oturum kapatıldı.");loadArchive();}
     if(e.target.id==="menuToggle")$(".main-nav")?.classList.toggle("open");
+    const tool=e.target.closest("[data-tool]");
+    if(tool){modal(tool.dataset.tool,'<div class="notice">Bu işlem Uzmantech masaüstü uygulamasında gerçekleştirilir. Web portalı cihaz üzerinde ADB veya Fastboot komutu çalıştırmaz.</div><p class="muted">Masaüstü uygulamasındaki ilgili bölümü kullanabilirsin.</p>');}
+    if(e.target.closest("#supportRequest")){modal("Hızlı Destek",'<div class="notice">Destek talebi formu bu portal sürümüne henüz bağlanmadı.</div><p class="muted">Çalışmayan bir e-posta adresine yönlendirmek yerine bu bağlantıyı şimdilik bilgilendirme olarak bıraktım.</p>');}
     if(e.target.closest("[data-file]")&&!state.user){openLogin();}
     if(e.target.closest("[data-file]")&&state.user){toast("Bu kayıt için indirme bağlantısı henüz tanımlanmamış.");}
     const course=e.target.closest("[data-course]");if(course){modal(course.dataset.course,'<div class="notice">Bu eğitimin video içeriği henüz yayınlanmadı.</div><p class="muted">Eğitim kataloğu ve video erişimi sonraki aşamada bağlanacak.</p>');}

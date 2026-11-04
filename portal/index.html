@@ -58,7 +58,7 @@
 <main class="dash-content">
   <div class="dash-layout">
     <div class="dash-primary">
-      <section class="dash-hero dash-image-hero" aria-label="Uzmantech tanıtım görseli"><img src="assets/images/uzmantech-hero.png" alt="Uzmantech Mobil Servis Çözümü"></section>
+      <section class="dash-hero dash-image-hero" aria-label="Uzmantech tanıtım görseli"><img src="assets/images/uzmantech-hero.png" alt="Uzmantech Mobil Servis Çözümü" width="2048" height="682" fetchpriority="high"></section>
       <section class="dash-shortcuts" aria-label="Hızlı erişim">
         <button type="button" data-tool="ADB İşlemleri"><svg class="shortcut-icon android" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 8-2-3m12 3 2-3M5 10h14v7a2 2 0 0 1-2 2h-1v2h-2v-2h-4v2H8v-2H7a2 2 0 0 1-2-2z"/><path d="M9 12h.01M15 12h.01"/></svg><b>ADB İşlemleri</b></button>
         <button type="button" data-tool="Fastboot"><svg class="shortcut-icon fastboot" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7 4 5-4 5m6 0h4"/></svg><b>Fastboot</b></button>
@@ -106,9 +106,7 @@
 </div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script>
-<script>
-(()=>{const root=document.querySelector('.dash-slider');if(!root)return;const slides=[...root.querySelectorAll('.dash-slide')],dots=[...root.querySelectorAll('[data-slide-to]')],prev=root.querySelector('[data-slide-prev]'),next=root.querySelector('[data-slide-next]'),pause=root.querySelector('[data-slide-pause]');let index=0,timer=null,paused=false;const show=n=>{index=(n+slides.length)%slides.length;slides.forEach((el,i)=>{el.classList.toggle('is-active',i===index);el.setAttribute('aria-hidden',i===index?'false':'true')});dots.forEach((el,i)=>{el.classList.toggle('is-active',i===index);el.setAttribute('aria-selected',i===index?'true':'false')})};const stop=()=>{if(timer)clearInterval(timer);timer=null};const start=()=>{stop();if(!paused&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>show(index+1),6500)};prev.addEventListener('click',()=>{show(index-1);start()});next.addEventListener('click',()=>{show(index+1);start()});dots.forEach((el,i)=>el.addEventListener('click',()=>{show(i);start()}));pause.addEventListener('click',()=>{paused=!paused;pause.textContent=paused?'▶':'Ⅱ';pause.setAttribute('aria-label',paused?'Slayt gösterisini başlat':'Slayt gösterisini duraklat');if(paused)stop();else start()});root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);root.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){show(index+1);start()}if(e.key==='ArrowLeft'){show(index-1);start()}});document.addEventListener('visibilitychange',()=>document.hidden?stop():start());show(0);start()})();
-</script>
+
 <script>
 (()=>{const side=document.querySelector('.dash-sidebar');document.querySelector('#menuToggle')?.addEventListener('click',()=>side.classList.toggle('open'));document.querySelector('#downloadLink')?.addEventListener('click',e=>{e.preventDefault();const toast=document.querySelector('#toast');toast.textContent='İndirme bağlantısı henüz tanımlanmadı.';toast.classList.add('show');});})();
 </script>

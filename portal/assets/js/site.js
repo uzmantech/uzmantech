@@ -63,7 +63,7 @@
     if(historyButton)historyButton.hidden=!user || admin;
 
     const registerButton=$("#headerRegister");
-    if(registerButton)registerButton.hidden=!!user;
+    if(registerButton)registerButton.hidden=false;
 
     const profile=$(".top-profile");
     if(profile){

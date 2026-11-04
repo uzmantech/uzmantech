@@ -253,3 +253,19 @@
  .support-wide .support-heading{margin-bottom:14px}
  .support-wide .support-button{width:100%}
 }
+
+/* Premium visual polish: consistent line icons, depth and restrained glow */
+.shortcut-icon{width:38px;height:38px;filter:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.dash-shortcuts a{position:relative;overflow:hidden;background:linear-gradient(145deg,#192b43,#101b2c);box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 22px rgba(0,0,0,.16);transition:transform .22s,border-color .22s,box-shadow .22s}
+.dash-shortcuts a:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0,rgba(58,142,255,.16),transparent 65%);pointer-events:none}
+.dash-shortcuts a:hover{transform:translateY(-4px);border-color:#4388d8;box-shadow:0 13px 28px rgba(0,0,0,.25)}
+.dash-shortcuts b{position:relative;z-index:1;letter-spacing:.15px}
+.premium-symbol{width:46px;height:46px;border:1px solid #365274;background:linear-gradient(145deg,#203b5d,#13243a);box-shadow:inset 0 1px rgba(255,255,255,.08),0 7px 18px rgba(0,0,0,.2)}
+.premium-symbol svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.premium-symbol.android{color:#72e3a2}.premium-symbol.tool{color:#c0a2ff}.premium-symbol.backup{color:#65d0ff}.premium-symbol.customers{color:#ffd08b}.premium-symbol.archive{color:#9bc5ff}.premium-symbol.cloud{color:#7de0d2}
+.premium-card{position:relative;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
+.premium-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 100% 0,rgba(55,132,235,.13),transparent 55%);pointer-events:none}
+.premium-card:hover{transform:translateY(-3px);border-color:#4778aa;box-shadow:0 14px 28px rgba(0,0,0,.24)}
+.dash-package{box-shadow:inset 0 1px rgba(255,255,255,.035),0 9px 22px rgba(0,0,0,.16);transition:transform .2s,border-color .2s,box-shadow .2s}
+.dash-package:hover{transform:translateY(-3px);border-color:#4c91df;box-shadow:0 14px 26px rgba(0,0,0,.23)}
+.dash-hero{background:radial-gradient(ellipse at 78% 42%,rgba(20,105,220,.28),transparent 44%),radial-gradient(ellipse at 15% 5%,rgba(91,111,230,.14),transparent 42%),linear-gradient(115deg,#122344,#091729 72%)}

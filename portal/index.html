@@ -108,6 +108,6 @@
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script>
 
 <script>
-(()=>{const side=document.querySelector('.dash-sidebar');document.querySelector('#menuToggle')?.addEventListener('click',()=>side.classList.toggle('open'));document.querySelector('#downloadLink')?.addEventListener('click',e=>{e.preventDefault();const toast=document.querySelector('#toast');toast.textContent='İndirme bağlantısı henüz tanımlanmadı.';toast.classList.add('show');});})();
+(()=>{const side=document.querySelector('.dash-sidebar');document.querySelector('#menuToggle')?.addEventListener('click',()=>{const opened=side.classList.toggle('open');document.querySelector('#menuToggle')?.setAttribute('aria-expanded',String(opened));});})();
 </script>
 </body></html>

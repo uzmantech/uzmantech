@@ -29,7 +29,7 @@
  function renderUsers(){
   const q=$("#userSearch").value.trim().toLocaleLowerCase("tr-TR");
   const list=users.filter(u=>[u.username,u.email,u.phone].join(" ").toLocaleLowerCase("tr-TR").includes(q));
-  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"Özel Lisans","none":"Lisans Yok"};
+  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
   $( "#usersBody" ).innerHTML=list.map(u=>{
    const expiry=u.expiry_date?new Date(u.expiry_date):null;
    const dateText=expiry&&!Number.isNaN(expiry.getTime())?expiry.toLocaleDateString("tr-TR"):"-";

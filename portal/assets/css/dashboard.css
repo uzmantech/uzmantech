@@ -190,3 +190,8 @@
  .license-actions{display:grid;grid-template-columns:1fr 1fr}
  .license-actions .dash-button{width:100%}
 }
+
+.header-register{border:1px solid #347fd0;background:#142d49;color:#dceeff;border-radius:9px;padding:9px 14px;font:inherit;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}
+.header-register:hover{background:#1b4168;border-color:#56a6ff}
+.header-register[hidden]{display:none}
+@media(max-width:570px){.header-register{padding:8px 10px;font-size:12px}.dash-top-actions{gap:7px}}

@@ -295,3 +295,18 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .archive-brand-search button[type=button]{border-color:#3a4659;background:#202838;color:#c2cee0}
 .archive-brand-card[hidden]{display:none!important}
 @media(max-width:560px){.archive-brand-search{flex-wrap:wrap}.archive-brand-search input{flex-basis:100%}.archive-brand-search button{flex:1}}
+
+/* Archive content stays hidden until the server confirms a current license */
+.archive-shell .archive-stage[hidden]{display:none!important}
+.archive-license-gate{display:none;min-height:calc(100vh - 70px);width:100%;padding:42px 18px;align-items:center;justify-content:center}
+.archive-shell:not(.archive-authorized) .archive-license-gate:not([hidden]){display:flex}
+.archive-license-card{width:min(560px,100%);padding:38px 30px;border:1px solid #39465b;border-radius:18px;background:linear-gradient(145deg,#1b2332,#101621);box-shadow:0 24px 70px #0007;text-align:center}
+.archive-license-lock{width:76px;height:76px;display:grid;place-items:center;margin:0 auto 20px;border:1px solid #e6385855;border-radius:22px;background:#e6385818;font-size:35px}
+.archive-license-card>span{color:#ff5b76;font-size:10px;font-weight:900;letter-spacing:1.7px}
+.archive-license-card h1{margin:12px 0;color:#f7f8fc;font:700 25px "Space Grotesk",sans-serif}
+.archive-license-card p{margin:0 auto 22px;max-width:430px;color:#aab8cc;font-size:13px;line-height:1.8}
+.archive-license-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.archive-license-actions button,.archive-license-actions a{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:0 20px;border:1px solid #e63858;border-radius:9px;background:#e63858;color:#fff;font-size:11px;font-weight:900;text-decoration:none;cursor:pointer}
+.archive-license-actions a{border-color:#43536b;background:#202b3b;color:#e8f1ff}
+.archive-license-card>small{color:#8495ac;font-size:10px;line-height:1.7}
+@media(max-width:500px){.archive-license-card{padding:28px 18px}.archive-license-card h1{font-size:21px}}

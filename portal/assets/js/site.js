@@ -54,7 +54,7 @@
     const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
     const expiry=user?.expiry_date?new Date(user.expiry_date):null;
     const expiryValid=expiry&&!Number.isNaN(expiry.getTime());
-    const expired=!!(user&&!user.role==="admin"&&(!expiryValid||expiry.getTime()<=Date.now()));
+    const expired=!!(user&&user.role!=="admin"&&(!expiryValid||expiry.getTime()<=Date.now()));
     const remainingDays=expiryValid?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
     const admin=user?.role==="admin";
     const licenseType=$("#licenseType"),licenseEnd=$("#licenseEnd"),remaining=$("#licenseRemaining");

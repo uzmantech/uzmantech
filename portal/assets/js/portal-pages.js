@@ -65,10 +65,10 @@ help.innerHTML+=`
  <div class="support-reference-art" role="img" aria-label="Uzmantech destek görevlisi ve destek merkezi görseli"></div>
 </section>
 <nav class="support-quick-actions" aria-label="Hızlı destek işlemleri">
- <button type="button" data-support-open><span>♧</span><b>Destek Talebi Oluştur<small>Teknik destek talebi gönderin.</small></b><i>›</i></button>
- <button type="button" data-support-open><span>☏</span><b>Canlı Destek<small>Destek ekibine ulaşın.</small></b><i>›</i></button>
- <button type="button" data-support-faq><span>▣</span><b>Bilgi Bankası<small>Rehber ve çözüm içerikleri.</small></b><i>›</i></button>
- <a href="archive.html"><span>⇩</span><b>Gerekli Dosyalar<small>Sürücü, araç ve ek dosyalar.</small></b><i>›</i></a>
+ <button type="button" data-support-open><span class="support-quick-icon quick-ticket">♧</span><b>Destek Talebi Oluştur<small>Teknik destek talebi gönderin.</small></b><i>›</i></button>
+ <button type="button" data-support-open><span class="support-quick-icon quick-chat">☏</span><b>Canlı Destek<small>Anlık destek alın.</small></b><i>›</i></button>
+ <button type="button" data-support-faq><span class="support-quick-icon quick-knowledge">▣</span><b>Bilgi Bankası<small>Rehber ve çözüm içerikleri.</small></b><i>›</i></button>
+ <a href="archive.html"><span class="support-quick-icon quick-download">⇩</span><b>Gerekli Dosyalar<small>Sürücü, araç ve ek dosyalar.</small></b><i>›</i></a>
 </nav>
 <div class="support-reference-layout">
  <div class="support-reference-main">
@@ -90,8 +90,8 @@ help.innerHTML+=`
   </div>
  </div>
  <aside class="support-reference-sidebar">
-  <section class="support-side-card support-contact-card"><div class="support-side-heading"><span>♧</span><div><b>İletişim Kanalları</b><small>Bize dilediğiniz kanaldan ulaşabilirsiniz.</small></div></div><button type="button" data-support-open><i class="contact-whatsapp">◉</i><span><b>Destek Talebi</b><small>Hızlı ve doğrudan iletişim.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-telegram">➤</i><span><b>Canlı Destek</b><small>Destek ekibine ulaşın.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-email">✉</i><span><b>E-Posta Destek</b><small>Destek talebi gönderin.</small></span><strong>→</strong></button></section>
-  <section class="support-side-card support-status-card"><div class="support-side-heading"><span>⌁</span><div><b>Destek Bilgisi</b><small>Yardım merkezine hızlı erişim.</small></div></div><div class="support-status-row"><i></i><b>Web Portal</b><small>Yardım</small></div><div class="support-status-row"><i></i><b>Dosya Arşivi</b><small>Arşiv</small></div><div class="support-status-row"><i></i><b>Lisans İşlemleri</b><small>Hesap</small></div><div class="support-status-row"><i></i><b>Destek Talepleri</b><small>Destek</small></div></section>
+  <section class="support-side-card support-contact-card"><div class="support-side-heading"><span>♧</span><div><b>İletişim Kanalları</b><small>Bize dilediğiniz kanaldan ulaşabilirsiniz.</small></div></div><button type="button" data-support-open><i class="contact-whatsapp">◉</i><span><b>WhatsApp Destek</b><small>Hızlı ve doğrudan iletişim.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-telegram">➤</i><span><b>Telegram Destek</b><small>Güncel duyurular ve destek.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-email">✉</i><span><b>E-Posta Destek</b><small>destek@uzmantech.com</small></span><strong>→</strong></button></section>
+  <section class="support-side-card support-status-card"><div class="support-side-heading"><span>⌁</span><div><b>Sistem Durumu</b><small>Hizmetlerimizin anlık çalışma durumu.</small></div><strong class="support-all-online">✓ Tüm Sistemler Çalışıyor</strong></div><div class="support-status-row"><i></i><b>Web Portal</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Dosya Arşivi</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Lisans Sunucusu</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Destek Sistemi</b><small>Çevrimiçi</small></div></section>
  </aside>
 </div>`;
 help.addEventListener("click",e=>{

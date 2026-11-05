@@ -134,3 +134,13 @@
 .support-reference-sidebar{min-width:0}
 .support-side-card{box-shadow:0 8px 20px #0002}
 @media(max-width:1100px){.support-reference-page{max-width:none}}
+
+
+/* Reference icon artwork: crisp vector strokes, no substitute text glyphs */
+.support-quick-actions .support-quick-icon svg,.support-cat-icon svg{display:block;width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.support-quick-actions .support-quick-icon svg{width:28px;height:28px;filter:drop-shadow(0 0 5px currentColor)}
+.support-cat-icon svg{width:27px;height:27px}
+.support-cat-icon.cat-android svg{fill:currentColor;stroke:currentColor;stroke-width:1.5}
+.support-cat-icon.cat-android svg path{fill:none}
+.support-cat-icon.cat-apple svg{fill:currentColor;stroke:currentColor;stroke-width:1}
+.support-cat-icon.cat-apple svg path{stroke:currentColor}

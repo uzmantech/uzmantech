@@ -50,25 +50,25 @@
    <div class="package-icon">▦</div><h2>Haftalık Paket</h2><p class="package-desc">Kısa süreli erişim, hızlı çözüm.</p>
    <div class="package-price" data-usd="5"><small class="price-usd">$5</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">7 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Temel teknik destek</li></ul>
-   <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
+   <button type="button" class="package-buy" data-open="register" data-plan="weekly">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card monthly">
    <div class="package-icon">▦</div><h2>Aylık Paket</h2><p class="package-desc">En çok tercih edilen paket.</p>
    <div class="package-price" data-usd="10"><small class="price-usd">$10</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">30 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Standart teknik destek</li></ul>
-   <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
+   <button type="button" class="package-buy" data-open="register" data-plan="monthly">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card halfyear">
    <span class="package-ribbon">%17 Avantaj</span><div class="package-icon">▦</div><h2>6 Aylık Paket</h2><p class="package-desc">Daha uzun süre, daha avantajlı.</p>
    <div class="package-price" data-usd="20"><small class="price-usd">$20</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">180 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li></ul>
-   <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
+   <button type="button" class="package-buy" data-open="register" data-plan="half_year">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card yearly">
    <span class="package-ribbon">%27 Avantaj</span><div class="package-icon">♛</div><h2>1 Yıllık Paket</h2><p class="package-desc">En avantajlı ve tam erişim paketi.</p>
    <div class="package-price" data-usd="40"><small class="price-usd">$40</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">365 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li><li>Yeni özelliklere erken erişim</li></ul>
-   <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
+   <button type="button" class="package-buy" data-open="register" data-plan="annual">🛒 &nbsp;Paketi Satın Al</button>
   </article>
  </section>
  <section class="packages-assurance">
@@ -81,6 +81,19 @@
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/site.js?v=support-inline-20261105"></script><script src="assets/js/user-panel.js?v=accountmenu2"></script><script src="assets/js/language.js"></script><script src="assets/js/portal-pages.js?v=news-center-20261105-2"></script>
+<script>
+document.addEventListener("click",function(event){
+ const button=event.target.closest(".package-buy[data-plan]");
+ if(!button)return;
+ const plan=button.dataset.plan;
+ try{sessionStorage.setItem("uzmantech_pending_plan",plan);}catch(_){}
+ const token=window.UzmantechAPI?.getToken?.();
+ if(token){
+  event.preventDefault();event.stopImmediatePropagation();
+  location.href="odeme.html?plan="+encodeURIComponent(plan)+"&v=5";
+ }
+},true);
+</script>
 <script>
 (async function(){
  const priceNodes=[...document.querySelectorAll(".package-price[data-usd]")];

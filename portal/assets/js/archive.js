@@ -127,7 +127,7 @@ async function enforceArchiveLicense(){
  try{
   const result=await UzmantechAPI.session();
   const user=result.user||{};
-  if(user.role!=="admin"&&user.license_status!=="active")throw new Error("Aktif lisans gerekli");
+  if(user.role!=="admin"&&user.license_status!=="active"){location.replace("odeme.html");return;}
   document.body.classList.add("archive-authorized");
   if(stage)stage.hidden=false;
   if(gate)gate.hidden=true;
@@ -136,6 +136,7 @@ async function enforceArchiveLicense(){
   document.body.classList.remove("archive-authorized");
   if(stage)stage.hidden=true;
   if(gate)gate.hidden=false;
+  location.replace("kayit.html");
  }
 }
 enforceArchiveLicense();

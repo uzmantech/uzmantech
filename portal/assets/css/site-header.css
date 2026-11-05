@@ -28,3 +28,60 @@ body.dashboard-page .dash-topbar.site-global-header{width:100%;left:0;right:0}
 body.dashboard-page .dash-content{width:100%;max-width:none;margin:0;padding:23px clamp(18px,2vw,38px) 24px}
 body.dashboard-page .dash-layout{width:100%;max-width:none;margin:0;grid-template-columns:minmax(0,2.15fr) minmax(300px,.88fr)}
 body.dashboard-page .dash-primary,body.dashboard-page .dash-secondary{min-width:0}
+
+
+/* Responsive viewport fit: remove inherited sidebar/container offsets */
+html,body.dashboard-page,body.archive-shell{width:100%;min-width:320px;max-width:100%;margin:0}
+body.dashboard-page{overflow-x:clip}
+body.dashboard-page .dash-sidebar{display:none!important}
+body.dashboard-page .dash-main,
+body.dashboard-page .dash-main:where(*){position:relative;left:auto!important;right:auto!important;float:none!important;margin-left:0!important;margin-right:0!important;width:100%!important;max-width:none!important;min-width:0!important}
+body.dashboard-page .dash-topbar.site-global-header{position:sticky;inset-inline:0;width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box}
+body.dashboard-page .dash-content{width:100%!important;max-width:none!important;margin:0!important;padding-inline:clamp(12px,2vw,32px)!important;box-sizing:border-box}
+body.dashboard-page .dash-layout{width:100%!important;max-width:none!important;margin:0!important;min-width:0!important}
+body.dashboard-page .dash-primary,
+body.dashboard-page .dash-secondary,
+body.dashboard-page .dash-account-grid,
+body.dashboard-page .premium-grid,
+body.dashboard-page .dash-package-grid,
+body.dashboard-page .pro-download,
+body.dashboard-page .pro-detail-grid{min-width:0;max-width:100%}
+body.dashboard-page .pro-download{width:100%!important;margin-inline:0!important}
+body.dashboard-page .dash-footer{width:100%;max-width:none;padding-inline:clamp(12px,2vw,32px);box-sizing:border-box}
+body.dashboard-page img,body.archive-shell img{max-width:100%;height:auto}
+body.dashboard-page .dash-layout>*,
+body.dashboard-page .dash-account-grid>*,
+body.dashboard-page .premium-grid>*,
+body.dashboard-page .dash-package-grid>*{min-width:0}
+body.archive-shell{overflow-x:clip}
+body.archive-shell .site-global-header{width:100%;max-width:none;margin:0;box-sizing:border-box}
+body.archive-shell .archive-stage{width:calc(100% - clamp(20px,3vw,56px))!important;max-width:none!important;margin-inline:auto!important;grid-template-columns:minmax(0,1fr)!important;min-width:0}
+body.archive-shell .archive-main-column{grid-column:1!important;width:100%!important;min-width:0}
+@media(min-width:761px){
+ body.dashboard-page .dash-content{padding-top:clamp(14px,1.4vw,24px)!important}
+ body.dashboard-page .dash-layout{display:block!important}
+ body.dashboard-page .dash-primary{width:100%}
+ body.dashboard-page .dash-account-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ body.dashboard-page .premium-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ body.dashboard-page .dash-package-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:1100px) and (min-width:761px){
+ body.dashboard-page .dash-account-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.dashboard-page .premium-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.dashboard-page .dash-package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ body.dashboard-page .dash-content{padding:12px!important}
+ body.dashboard-page .dash-account-grid,
+ body.dashboard-page .premium-grid,
+ body.dashboard-page .dash-package-grid{grid-template-columns:1fr!important}
+ body.dashboard-page .dash-topbar.site-global-header{height:auto;min-height:68px}
+ body.dashboard-page .dash-top-actions{min-width:0}
+ body.dashboard-page .dash-footer{padding-inline:12px}
+}
+@media(max-width:420px){
+ body.dashboard-page .site-header-brand{flex-basis:150px}
+ body.dashboard-page .site-header-brand small{letter-spacing:.4px}
+ body.dashboard-page .dash-top-actions .language-control{padding-inline:7px}
+ body.dashboard-page .dash-top-actions .notification-button{width:26px}
+}

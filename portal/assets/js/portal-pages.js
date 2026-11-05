@@ -24,10 +24,11 @@ upd.innerHTML+=`
   <div class="news-masthead-actions"><a href="#download" data-page="download">Uygulamayı keşfet <b>↗</b></a><span><i></i> Resmî haber ve duyuru merkezi</span></div>
  </div>
  <div class="news-masthead-visual" aria-hidden="true">
-  <div class="news-glow-ring ring-a"></div><div class="news-glow-ring ring-b"></div>
+  <div class="news-visual-grid"></div><div class="news-glow-ring ring-a"></div><div class="news-glow-ring ring-b"></div>
   <div class="news-orbit-dot dot-a"></div><div class="news-orbit-dot dot-b"></div>
-  <div class="news-glass-panel"><span>UZMANTECH</span><b>NEWS<span>.</span></b><small>UPDATE · INNOVATION · SUPPORT</small><div class="news-panel-lines"><i></i><i></i><i></i></div></div>
-  <div class="news-floating-chip chip-update">↻ <span>Güncellemeler</span></div><div class="news-floating-chip chip-tech">⌘ <span>Teknik içerikler</span></div>
+  <div class="news-dashboard-card"><div class="news-dashboard-top"><span>● UZMANTECH</span><small>NEWS CENTER / 2026</small></div><div class="news-dashboard-main"><div class="news-dashboard-side"><i></i><i></i><i></i><i></i></div><div class="news-dashboard-content"><b>GÜNCEL<br><em>GELİŞMELER</em></b><div class="news-dashboard-bars"><i></i><i></i><i></i></div><div class="news-dashboard-tags"><span>ADB</span><span>FASTBOOT</span><span>ROM</span></div></div></div><div class="news-dashboard-footer"><span>ÜRÜN HABERLERİ</span><span>● CANLI AKIŞ</span></div></div>
+  <div class="news-floating-chip chip-update">↻ <span>Yeni güncellemeler</span></div><div class="news-floating-chip chip-tech">⌘ <span>Teknik içerikler</span></div>
+  <div class="news-float-version"><small>SON SÜRÜM</small><b>v1.1.8</b><i>RELEASE</i></div>
  </div>
  <div class="news-masthead-bottom"><span><b>01</b> Resmî duyurular</span><span><b>02</b> Sürüm notları</span><span><b>03</b> Teknik içerikler</span></div>
 </section>

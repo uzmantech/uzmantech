@@ -51,28 +51,62 @@ upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");
 
 
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
-const help=make("help","Yardım ve Destek","Uzmantool kullanımı, lisans işlemleri ve teknik destek için ihtiyacınız olan her şey tek noktada.");
-help.classList.add("help-center-page");
-help.insertAdjacentHTML("beforeend", `
-<section class="help-center-hero">
- <div class="help-center-copy">
-  <span class="help-center-eyebrow"><i></i> UZMANTOOL YARDIM MERKEZİ</span>
-  <h2>İhtiyacınız olduğunda<br><em>yanınızdayız.</em></h2>
-  <p>Hesabınız, lisansınız veya masaüstü uygulamanızla ilgili sorularınızın yanıtlarını bulun. Çözüm bulamazsanız destek ekibimize doğrudan ulaşın.</p>
+const help=make("help","Destek","Teknik Destek ve Yardım Merkezi.");
+help.classList.add("help-center-page","support-reference-page");
+help.innerHTML+=`
+<section class="support-reference-hero">
+ <div class="support-reference-copy">
+  <span class="support-reference-eyebrow"><i></i> UZMANTECH DESTEK MERKEZİ</span>
+  <h2>Teknik Destek <em>ve Yardım Merkezi</em></h2>
+  <p>Uzmantech ve Uzmantool ile ilgili tüm sorularınız, teknik sorunlarınız ve çözüm talepleriniz için yanınızdayız.</p>
+  <form class="support-search" id="supportSearchForm"><span>⌕</span><input id="supportSearchInput" type="search" placeholder="Yardım veya çözüm arayın..." aria-label="Yardım veya çözüm arayın"><button type="submit">Ara</button></form>
+  <div class="support-popular-searches"><b>Popüler Aramalar:</b><button type="button" data-support-search="Kurulum">Kurulum</button><button type="button" data-support-search="Lisans">Lisans</button><button type="button" data-support-search="ADB">ADB</button><button type="button" data-support-search="Fastboot">Fastboot</button><button type="button" data-support-search="Yedekleme">Yedekleme</button><button type="button" data-support-search="Hata Çözümleri">Hata Çözümleri</button></div>
  </div>
- <div class="help-center-steps">
-  <article><b>01</b><span><strong>Konunuzu seçin</strong><small>İhtiyacınız olan yardım başlığını belirleyin.</small></span></article>
-  <article><b>02</b><span><strong>Talebinizi iletin</strong><small>Sorununuzu ayrıntılarıyla bize gönderin.</small></span></article>
-  <article><b>03</b><span><strong>Yanıtı takip edin</strong><small>Destek geçmişinizden süreci izleyin.</small></span></article>
- </div>
+ <div class="support-reference-art" role="img" aria-label="Uzmantech destek görevlisi ve destek merkezi görseli"></div>
 </section>
-<div class="help-topic-grid">
- <article><span>⌂</span><div><b>Hesap ve giriş</b><small>Giriş, parola ve hesap bilgileri</small></div></article>
- <article><span>⌑</span><div><b>Lisans ve ödeme</b><small>Lisans durumu, paketler ve ödemeler</small></div></article>
- <article><span>▣</span><div><b>Masaüstü uygulaması</b><small>Kurulum ve kullanım desteği</small></div></article>
-</div>
-<div class="help-contact-heading"><div><span>DOĞRUDAN DESTEK</span><h2>Bir konuda yardıma mı ihtiyacınız var?</h2><p>Destek talebi oluşturun ve yanıtları bu sayfadan takip edin.</p></div></div>
-`);
+<nav class="support-quick-actions" aria-label="Hızlı destek işlemleri">
+ <button type="button" data-support-open><span>♧</span><b>Destek Talebi Oluştur<small>Teknik destek talebi gönderin.</small></b><i>›</i></button>
+ <button type="button" data-support-open><span>☏</span><b>Canlı Destek<small>Destek ekibine ulaşın.</small></b><i>›</i></button>
+ <button type="button" data-support-faq><span>▣</span><b>Bilgi Bankası<small>Rehber ve çözüm içerikleri.</small></b><i>›</i></button>
+ <a href="archive.html"><span>⇩</span><b>Gerekli Dosyalar<small>Sürücü, araç ve ek dosyalar.</small></b><i>›</i></a>
+</nav>
+<div class="support-reference-layout">
+ <div class="support-reference-main">
+  <div class="support-reference-section-head"><div><span>DESTEK MERKEZİ</span><h3>Yardım Kategorileri</h3><p>İhtiyacınıza uygun kategoriye göz atın.</p></div><a href="#support-faq">Tüm Kategorileri Gör　→</a></div>
+  <div class="support-category-grid">
+   <button type="button" data-support-search="Kurulum"><i class="support-cat-icon cat-install">▣</i><span><b>Kurulum ve İlk Ayarlar</b><small>Uzmantech kurulumu, lisans aktivasyonu ve ilk ayarlar.</small></span></button>
+   <button type="button" data-support-search="ADB Fastboot Android"><i class="support-cat-icon cat-android">♟</i><span><b>Android İşlemleri</b><small>ADB, Fastboot, yedekleme ve diğer Android araçları.</small></span></button>
+   <button type="button" data-support-search="Apple iOS"><i class="support-cat-icon cat-apple">●</i><span><b>Apple İşlemleri</b><small>iOS yedekleme, veri yönetimi ve cihaz işlemleri.</small></span></button>
+   <button type="button" data-support-search="Hata Çözümleri"><i class="support-cat-icon cat-errors">⚙</i><span><b>Hata Çözümleri</b><small>Sık karşılaşılan hatalar ve çözüm adımları.</small></span></button>
+   <button type="button" data-support-search="Araçlar Modüller"><i class="support-cat-icon cat-tools">▱</i><span><b>Araçlar ve Modüller</b><small>Uzmantool ve entegre araçlar hakkında destek.</small></span></button>
+   <button type="button" data-support-search="Güncellemeler"><i class="support-cat-icon cat-update">⟳</i><span><b>Güncellemeler</b><small>Sürüm notları, güncelleme adımları ve yenilikler.</small></span></button>
+  </div>
+  <div class="support-reference-section-head faq-heading" id="support-faq"><div><span>MERAK EDİLENLER</span><h3>Sıkça Sorulan Sorular</h3><p>En çok merak edilen sorular ve cevapları.</p></div><a href="#support-faq">Tüm Soruları Gör　→</a></div>
+  <div class="support-faq-grid">
+   <details data-support-faq><summary>Uzmantech nasıl kurulur?</summary><p>Uygulamanın kurulum dosyasını indirme bölümünden alın. Kurulum tamamlandığında programı yönetici olarak çalıştırıp hesabınızla giriş yapın.</p></details>
+   <details data-support-faq><summary>ADB cihazı görünmüyor, ne yapmalıyım?</summary><p>Telefonda USB hata ayıklamayı etkinleştirin, uygun USB sürücüsünü kurun ve bağlantı modunu kontrol edin. Ardından kabloyu yeniden takıp ADB cihaz listesini yenileyin.</p></details>
+   <details data-support-faq><summary>Lisans aktivasyonu nasıl yapılır?</summary><p>Hesabınıza giriş yapın ve Lisans Aktivasyonu sayfasındaki adımları izleyin. Lisans anahtarınızı kimseyle paylaşmayın.</p></details>
+   <details data-support-faq><summary>Yedekleme nerede saklanır?</summary><p>Yedekleme konumu kullandığınız modüle ve seçtiğiniz klasöre göre değişebilir. İşlem öncesinde hedef klasörü kontrol edin.</p></details>
+  </div>
+ </div>
+ <aside class="support-reference-sidebar">
+  <section class="support-side-card support-contact-card"><div class="support-side-heading"><span>♧</span><div><b>İletişim Kanalları</b><small>Bize dilediğiniz kanaldan ulaşabilirsiniz.</small></div></div><button type="button" data-support-open><i class="contact-whatsapp">◉</i><span><b>Destek Talebi</b><small>Hızlı ve doğrudan iletişim.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-telegram">➤</i><span><b>Canlı Destek</b><small>Destek ekibine ulaşın.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-email">✉</i><span><b>E-Posta Destek</b><small>Destek talebi gönderin.</small></span><strong>→</strong></button></section>
+  <section class="support-side-card support-status-card"><div class="support-side-heading"><span>⌁</span><div><b>Destek Bilgisi</b><small>Yardım merkezine hızlı erişim.</small></div></div><div class="support-status-row"><i></i><b>Web Portal</b><small>Yardım</small></div><div class="support-status-row"><i></i><b>Dosya Arşivi</b><small>Arşiv</small></div><div class="support-status-row"><i></i><b>Lisans İşlemleri</b><small>Hesap</small></div><div class="support-status-row"><i></i><b>Destek Talepleri</b><small>Destek</small></div></section>
+ </aside>
+</div>`;
+help.addEventListener("click",e=>{
+ const searchButton=e.target.closest("[data-support-search]");
+ if(searchButton){const input=help.querySelector("#supportSearchInput");input.value=searchButton.dataset.supportSearch;help.querySelector("#supportSearchForm").requestSubmit();return;}
+ if(e.target.closest("[data-support-open]")){document.getElementById("supportRequest")?.click();return;}
+ if(e.target.closest("[data-support-faq]")){help.querySelector("#support-faq")?.scrollIntoView({behavior:"smooth"});}
+});
+help.querySelector("#supportSearchForm")?.addEventListener("submit",e=>{
+ e.preventDefault();const q=help.querySelector("#supportSearchInput").value.trim().toLocaleLowerCase("tr");let count=0;
+ help.querySelectorAll("[data-support-faq]").forEach(item=>{const show=!q||item.textContent.toLocaleLowerCase("tr").includes(q);item.hidden=!show;if(show)count++;});
+ help.querySelector("#support-faq")?.scrollIntoView({behavior:"smooth",block:"start"});
+ if(!count)help.querySelector("#support-faq").insertAdjacentHTML("beforeend",'<p class="support-no-results">Bu arama için hazır bir cevap bulunamadı. Destek talebi oluşturabilirsiniz.</p>');
+});
+
 
 if(support)help.appendChild(support);
 const pages=[...main.querySelectorAll("[data-page-view]")];

@@ -30,3 +30,7 @@
 #archiveFilesBody .btn{margin:2px}
 .btn.danger{border:1px solid #a63850;background:#311722;color:#ffdce4}
 @media(max-width:760px){.file-manager-form{grid-template-columns:1fr}.file-upload-progress{grid-column:auto}.file-manager-form>button{width:100%}}
+
+/* Admin sidebar: enlarge and bold text only; preserve icon glyph sizing and appearance. */
+.sidebar nav button{font-size:14px;font-weight:400}
+.sidebar nav button>span{font-size:15px;font-weight:750;letter-spacing:.1px}

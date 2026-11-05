@@ -1,6 +1,6 @@
 (() => {
   const config = window.UZMANTECH_CONFIG || {};
-  const token = () => sessionStorage.getItem("uzmantech_web_session") || "";
+  const token = () => localStorage.getItem("uzmantech_web_session") || sessionStorage.getItem("uzmantech_web_session") || "";
   async function call(path, options = {}) {
     if (!config.apiBaseUrl || !config.publishableKey) throw new Error("Portal bağlantısı yapılandırılmamış.");
     const response = await fetch(config.apiBaseUrl + path, {
@@ -48,7 +48,7 @@
     supportHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_history" }) }),
     supportList: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_list" }) }),
     supportUpdate: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_update", ...data }) }),
-    setSession: value => value ? sessionStorage.setItem("uzmantech_web_session", value) : sessionStorage.removeItem("uzmantech_web_session"),
+    setSession: value => { if(value){ localStorage.setItem("uzmantech_web_session", value); sessionStorage.removeItem("uzmantech_web_session"); } else { localStorage.removeItem("uzmantech_web_session"); sessionStorage.removeItem("uzmantech_web_session"); } },
     getToken: token
   });
 })();

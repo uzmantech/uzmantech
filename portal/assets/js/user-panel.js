@@ -5,7 +5,7 @@ const dt=v=>v?new Date(v).toLocaleString(document.documentElement.lang==="en"?"e
 const row=(a,b)=>'<div class="account-info-row"><span>'+a+'</span><b>'+esc(b||"—")+'</b></div>';
 async function openPanel(){
  const body=$("#accountPage"),en=document.documentElement.lang==="en";
- document.body.classList.add("account-view"); body.hidden=false;
+ window.UzmantoolPages?.show("account"); document.body.classList.add("account-view"); body.hidden=false;
  body.innerHTML='<div class="empty-state">'+(en?"Loading account details…":"Hesap bilgileri yükleniyor…")+'</div>';
  try{
   const r=await UzmantechAPI.accountProfile(),u=r.user||{},events=r.login_events||[];

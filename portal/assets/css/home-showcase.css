@@ -138,3 +138,11 @@
 @media(prefers-reduced-motion:reduce){
  .latest-files-track{animation:none}
 }
+
+/* Mobilde boş AdSense alanları beyaz blok olarak görünmesin. */
+@media(max-width:700px){
+ .showcase-home .adsense-app-slot,
+ .showcase-home .adsense-archive-slot,
+ .showcase-home .adsense-models-slot,
+ .showcase-home .adsense-home-slot{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+}

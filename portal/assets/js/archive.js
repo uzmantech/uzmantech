@@ -53,7 +53,9 @@ function renderRecentSoftware(){
  const track=$("#archiveRecentTrack"),count=$("#archiveRecentCount");if(!track||!count)return;
  const recent=[...archiveItems].sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).slice(0,12);
  count.textContent=recent.length+" DOSYA";
- track.innerHTML=recent.length?recent.map(f=>'<a class="archive-recent-folder" href="models.html?brand='+encodeURIComponent(normBrand(f.brand)||"")+'&model='+encodeURIComponent(f.model||"")+'"><span class="archive-recent-folder-icon">📁</span><strong>'+archiveEsc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+archiveEsc((f.brand||"")+" "+(f.model||""))+'</small><em>'+archiveEsc(archiveCategory[f.category]||f.category||"Diğer")+'</em></a>').join(""):'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';
+ const cards=recent.map(f=>'<a class="archive-recent-folder" href="models.html?brand='+encodeURIComponent(normBrand(f.brand)||"")+'&model='+encodeURIComponent(f.model||"")+'"><span class="archive-recent-folder-icon">📁</span><span class="archive-recent-folder-info"><strong>'+archiveEsc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+archiveEsc((f.brand||"")+" "+(f.model||""))+'</small></span><em>'+archiveEsc(archiveCategory[f.category]||f.category||"Diğer")+'</em></a>').join("");
+ track.innerHTML=recent.length?cards+cards:'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';
+ track.classList.toggle("is-static",recent.length<4);
 }
 function renderLiveArchive(){
  const grid=$("#archiveLiveGrid"),count=$("#archiveFileCount"),head=$(".archive-live-head");

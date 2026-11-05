@@ -39,6 +39,7 @@ function renderRecentSoftware(){
 }
 function renderLiveArchive(){
  const grid=$("#archiveLiveGrid"),count=$("#archiveFileCount"),head=$(".archive-live-head");
+ if(!grid||!count||!head)return;
  const brand=selectedBrand;
  if(!brand){
   head.querySelector("h2").textContent="Cihaz markaları";

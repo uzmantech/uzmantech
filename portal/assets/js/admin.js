@@ -17,7 +17,7 @@
  function renderArchiveFiles(){
   const q=($("#archiveFileSearch")?.value||"").trim().toLocaleLowerCase("tr-TR");
   const rows=archiveFiles.filter(f=>[f.title,f.brand,f.model,f.category,f.original_filename].join(" ").toLocaleLowerCase("tr-TR").includes(q));
-  $("#archiveFilesBody").innerHTML=rows.map(f=>'<tr><td><strong>'+esc(f.title)+'</strong><br><small>'+esc(f.original_filename)+'</small></td><td>'+esc(f.brand)+'<br><small>'+esc(f.model||"-")+'</small></td><td>'+esc(f.category)+'</td><td>'+formatBytes(f.file_size)+'</td><td><span class="status '+(f.is_active?"active":"expired")+'">'+(f.is_active?"Yayında":"Pasif")+'</span></td><td><button class="btn" data-file-action="download" data-id="'+esc(f.id)+'">İndir</button> <button class="btn" data-file-action="toggle" data-id="'+esc(f.id)+'">'+(f.is_active?"Yayından kaldır":"Yayınla")+'</button> <button class="btn danger" data-file-action="delete" data-id="'+esc(f.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="6">Henüz arşive dosya eklenmemiş.</td></tr>';
+  $("#archiveFilesBody").innerHTML=rows.map(f=>'<tr><td><strong>'+esc(f.title)+'</strong><br><small>'+esc(f.original_filename)+'</small></td><td>'+esc(f.brand)+'<br><small>'+esc(f.model||"-")+'</small></td><td>'+esc(f.category)+'</td><td>'+formatBytes(f.file_size)+'</td><td><span class="status '+(f.is_active?"active":"expired")+'">'+(f.is_active?"Yayında":"Pasif")+'</span></td><td><button class="btn" data-file-action="download" data-id="'+esc(f.id)+'">İndir</button> <button class="btn" data-file-action="edit" data-id="'+esc(f.id)+'">Düzenle</button> <button class="btn" data-file-action="toggle" data-id="'+esc(f.id)+'">'+(f.is_active?"Yayından kaldır":"Yayınla")+'</button> <button class="btn danger" data-file-action="delete" data-id="'+esc(f.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="6">Henüz arşive dosya eklenmemiş.</td></tr>';
   $("#fileStatTotal").textContent=archiveFiles.length;$("#fileStatActive").textContent=archiveFiles.filter(f=>f.is_active).length;$("#fileStatInactive").textContent=archiveFiles.filter(f=>!f.is_active).length;
  }
  async function loadArchiveFiles(){
@@ -162,6 +162,7 @@
    fileBtn.disabled=true;
    try{
     if(fileBtn.dataset.fileAction==="download"){const r=await api.archiveAdmin({action:"file_download_url",id:f.id});window.open(r.url,"_blank","noopener");}
+    else if(fileBtn.dataset.fileAction==="edit"){const title=prompt("Dosya başlığı:",f.title);if(title===null)return;const model=prompt("Model:",f.model||"");if(model===null)return;const description=prompt("Açıklama:",f.description||"");if(description===null)return;await api.archiveAdmin({action:"file_update",id:f.id,title,model,description});toast("Dosya bilgileri güncellendi.");await loadArchiveFiles();}
     else if(fileBtn.dataset.fileAction==="toggle"){await api.archiveAdmin({action:"file_update",id:f.id,is_active:!f.is_active});toast(f.is_active?"Dosya yayından kaldırıldı.":"Dosya yayına alındı.");await loadArchiveFiles();}
     else if(fileBtn.dataset.fileAction==="delete"){if(!confirm('"'+f.title+'" dosyası depodan kalıcı olarak silinsin mi?'))return;await api.archiveAdmin({action:"file_delete",id:f.id});toast("Dosya kalıcı olarak silindi.");await loadArchiveFiles();}
    }catch(err){toast(err.message);}

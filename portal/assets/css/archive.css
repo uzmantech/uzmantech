@@ -228,3 +228,41 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
     grid-template-columns:1fr!important;
   }
 }
+
+
+/* Brand catalog cards: large, logo-led selection grid */
+.archive-brand-catalog{width:100%;min-width:0;padding:22px;border:1px solid #303746;border-radius:16px;background:linear-gradient(145deg,#151b27,#10151f);box-shadow:0 12px 30px #0003}
+.archive-brand-catalog-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.archive-brand-catalog-head>div>span{color:#ff4966;font-size:10px;font-weight:900;letter-spacing:1.7px}
+.archive-brand-catalog-head h2{margin:5px 0;color:#f5f7fc;font:700 24px "Space Grotesk",sans-serif}
+.archive-brand-catalog-head p{margin:0;color:#9eafc4;font-size:12px}
+.archive-brand-catalog-head>strong{padding:8px 12px;border:1px solid #315778;border-radius:30px;color:#b8dfff;font-size:10px;white-space:nowrap}
+.archive-brand-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.archive-brand-card{min-width:0;min-height:158px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:17px 10px;border:1px solid #354154;border-radius:13px;background:linear-gradient(145deg,#202838,#151b27);color:#f6f8fc;cursor:pointer;text-align:center;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s}
+.archive-brand-card:hover,.archive-brand-card.active{transform:translateY(-2px);border-color:#e63858;background:linear-gradient(145deg,#292637,#1b202d);box-shadow:0 8px 22px #0004}
+.archive-brand-logo{width:58px;height:58px;display:grid;place-items:center;border-radius:15px;background:#10151e;border:1px solid #3a4658;color:#f5f7fc;font-size:23px;font-weight:900;letter-spacing:-1px;line-height:1}
+.archive-brand-logo.samsung{font-size:26px;font-style:italic;color:#72a9ff}
+.archive-brand-logo.xiaomi{background:#f26b21;border-color:#f26b21;color:#fff;font-size:21px}
+.archive-brand-logo.huawei{color:#ff5268;font-size:34px}
+.archive-brand-logo.oppo{color:#4bd58c;font-size:18px;letter-spacing:-1.4px}
+.archive-brand-logo.vivo{color:#6bbcff;font-size:20px}
+.archive-brand-logo.realme{background:#f4df25;border-color:#f4df25;color:#171717;font-size:14px;letter-spacing:-.8px}
+.archive-brand-logo.oneplus{font-size:27px}
+.archive-brand-logo.honor{font-size:13px;letter-spacing:-.8px}
+.archive-brand-logo.tecno{color:#35b5ff;font-size:13px}
+.archive-brand-logo.infinix{font-size:22px}
+.archive-brand-logo.google{font-size:35px;color:#4285f4}
+.archive-brand-logo.apple{font-size:30px}
+.archive-brand-logo.motorola{font-size:30px;color:#8bb8ff}
+.archive-brand-logo.nokia{font-size:32px;color:#55a8ff}
+.archive-brand-logo.sony{font-size:15px;letter-spacing:-1px}
+.archive-brand-logo.asus{font-size:15px}
+.archive-brand-logo.nothing{font-size:30px;color:#fff}
+.archive-brand-logo.zte{font-size:18px;color:#ff5268}
+.archive-brand-logo.blackshark{font-size:21px;color:#70baff}
+.archive-brand-card strong{font-size:14px;font-weight:800}
+.archive-brand-card small{color:#91a1b7;font-size:10px}
+@media(max-width:1200px){.archive-brand-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:900px){.archive-brand-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.archive-brand-catalog{padding:17px}}
+@media(max-width:560px){.archive-brand-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.archive-brand-card{min-height:140px}.archive-brand-logo{width:50px;height:50px}.archive-brand-catalog-head h2{font-size:20px}}
+.archive-brand-catalog:has(~ .archive-live-files) .archive-brand-grid{margin-bottom:0}

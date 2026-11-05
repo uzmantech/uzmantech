@@ -4,14 +4,14 @@ const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const dt=v=>v?new Date(v).toLocaleString(document.documentElement.lang==="en"?"en-US":"tr-TR",{dateStyle:"medium",timeStyle:"short"}):"—";
 const row=(a,b)=>'<div class="account-info-row"><span>'+a+'</span><b>'+esc(b||"—")+'</b></div>';
 async function openPanel(){
- const modal=$("#modal"),title=$("#modalTitle"),body=$("#modalBody"),en=document.documentElement.lang==="en";$("#modal .modal-card")?.classList.add("account-panel");
- title.textContent=en?"Account Center":"Kullanıcı Paneli";
- body.innerHTML='<div class="empty-state">'+(en?"Loading account details…":"Hesap bilgileri yükleniyor…")+'</div>';modal.classList.add("open");
+ const body=$("#accountPage"),en=document.documentElement.lang==="en";
+ document.body.classList.add("account-view"); body.hidden=false;
+ body.innerHTML='<div class="empty-state">'+(en?"Loading account details…":"Hesap bilgileri yükleniyor…")+'</div>';
  try{
   const r=await UzmantechAPI.accountProfile(),u=r.user||{},events=r.login_events||[];
   const plans={monthly:en?"1 Month":"1 Aylık",half_year:en?"6 Months":"6 Aylık",annual:en?"12 Months":"12 Aylık",trial_7:en?"7-day Trial":"7 Gün Deneme",none:en?"No License":"Lisans Yok"};
   const logs=events.length?events.map(x=>'<div class="account-login-event"><div><b>'+esc(x.result==="success"?(en?"Successful login":"Başarılı giriş"):(en?"Failed login":"Başarısız giriş"))+'</b><small>'+esc(dt(x.created_at))+'</small></div><span class="account-login-status '+(x.result==="success"?"success":"failed")+'">'+(x.result==="success"?(en?"Success":"Başarılı"):(en?"Failed":"Başarısız"))+'</span></div>').join(""):'<p class="muted">'+(en?"No login history recorded yet.":"Henüz giriş geçmişi kaydı bulunmuyor.")+'</p>';
-  body.innerHTML='<div class="account-panel-heading"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><div><h2>'+esc(u.username)+'</h2><p>'+(en?"Account and security settings":"Hesap ve güvenlik ayarları")+'</p></div></div>'+
+  body.innerHTML='<button class="account-back" id="accountBack" type="button">‹ Ana sayfaya dön</button><h1 class="account-page-title">Hesabım</h1><div class="account-panel-heading"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><div><h2>'+esc(u.username)+'</h2><p>'+(en?"Account and security settings":"Hesap ve güvenlik ayarları")+'</p></div></div>'+
   '<div class="account-panel-grid">'+
   '<section class="account-panel-card"><h3>'+(en?"User Information":"Kullanıcı Bilgileri")+'</h3>'+row(en?"Username":"Kullanıcı adı",u.username)+row("E-mail",u.email)+row(en?"Phone":"Telefon",u.phone)+row(en?"Registered":"Kayıt tarihi",dt(u.created_at))+'</section>'+
   '<section class="account-panel-card"><h3>'+(en?"License Information":"Lisans Bilgileri")+'</h3>'+row(en?"License plan":"Lisans paketi",plans[u.license_plan]||u.license_plan)+row(en?"Expiry date":"Bitiş tarihi",u.role==="admin"?(en?"Unlimited":"Süresiz"):dt(u.expiry_date))+row(en?"Remaining days":"Kalan süre",u.role==="admin"?(en?"Unlimited":"Süresiz"):(u.expiry_date?Math.max(0,Math.ceil((new Date(u.expiry_date)-Date.now())/86400000))+(en?" days":" gün"):(en?"Not assigned":"Atanmamış")))+row(en?"Account status":"Hesap durumu",u.status)+'</section>'+
@@ -23,5 +23,5 @@ async function openPanel(){
   $("#passwordChangeForm").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);if(f.get("new_password")!==f.get("confirm_password")){alert(en?"Passwords do not match.":"Şifreler eşleşmiyor.");return;}const b=e.currentTarget.querySelector("button");b.disabled=true;try{const out=await UzmantechAPI.changePassword({current_password:f.get("current_password"),new_password:f.get("new_password")});alert(out.message);e.currentTarget.reset();}catch(err){alert(err.message);}finally{b.disabled=false;}});
  }catch(err){body.innerHTML='<div class="notice">'+esc(err.message)+'</div>';}
 }
-document.addEventListener("click",e=>{const b=e.target.closest("#profileBtn");if(b){e.preventDefault();e.stopPropagation();openPanel();}});
+document.addEventListener("click",e=>{const b=e.target.closest("#profileBtn,#accountNav");if(b){e.preventDefault();e.stopPropagation();if(window.UzmantechAPI?.getToken())openPanel();else document.querySelector("#headerLogin")?.click();}if(e.target.closest("#accountBack")){document.body.classList.remove("account-view");$("#accountPage").hidden=true;}});
 })();

@@ -21,5 +21,14 @@ const pages=[...main.querySelectorAll("[data-page-view]")];
 function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
 document.addEventListener("click",e=>{const a=e.target.closest(".dash-nav [data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
 document.addEventListener("portal:show-account",()=>show("account"));
+document.addEventListener("click",function(e){
+  if(e.target.closest("#licenseActivateBtn")){
+    const input=document.getElementById("licenseKeyInput");
+    const note=document.getElementById("activationNote");
+    if(!input||!note)return;
+    if(!input.value.trim()){note.textContent="Lütfen lisans anahtarınızı girin.";input.focus();return;}
+    note.textContent="Lisans anahtarı doğrulama servisi henüz portala bağlanmadı. Mevcut lisans işlemleri için hesabınıza giriş yapabilirsiniz.";
+  }
+});
 window.UzmantoolPages={show};show(location.hash.slice(1)||"home",false);
 })();

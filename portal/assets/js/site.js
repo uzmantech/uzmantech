@@ -415,7 +415,7 @@
     if(e.target.closest("#languageSelect"))return;
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();
-    if(opener?.dataset.open==="register")openRegister();
+    if(opener?.dataset.open==="register"){location.href=state.user?"odeme.html":"kayit.html";}
     if(opener?.dataset.open==="forgot")openForgotPassword();
     if(opener?.dataset.open==="plans")openPlans();
     if(e.target.closest("#paymentHistoryBtn"))openPaymentHistory();

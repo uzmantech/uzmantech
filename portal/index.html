@@ -129,13 +129,9 @@
         <a class="pro-download-button" href="https://drive.google.com/file/d/1Et1HWaqDpidMBitRkVVPd_eIWnJeIZ8-/view?usp=sharing" id="downloadLink" target="_blank" rel="noopener noreferrer"><span class="pro-download-symbol">↓</span><span><b>Uzmantech v1.1.8 İndir</b><small>Google Drive üzerinden indirme</small></span><strong>›</strong></a>
         <div class="pro-platform-facts"><div><span class="pro-windows-icon">⊞</span><span><small>İşletim Sistemi</small><b>Windows 10 / 11</b></span></div><div><span class="pro-chip-icon">▦</span><span><small>Mimari</small><b>64-bit (x64)</b></span></div></div>
       </div>
-      <div class="pro-laptop-scene" aria-label="Uzmantech uygulamasının dizüstü bilgisayar üzerinde tanıtım görseli">
+      <div class="pro-laptop-scene pro-laptop-image-scene" aria-label="Uzmantool logosu bulunan Uzmantech dizüstü bilgisayar tanıtım görseli">
         <div class="pro-laptop-halo"></div>
-        <div class="pro-laptop-screen">
-          <div class="pro-screen-top"><span class="pro-screen-logo"><img src="assets/logo.svg?v=20261105" alt="Uzmantool"></span><b>Uzmantech</b><span class="pro-screen-title"><img src="assets/logo.svg?v=20261105" alt=""> Uzmantool</span><span>⌕　○　×</span></div>
-          <div class="pro-screen-layout"><div class="pro-screen-nav"><b>⌂　 Ana Menü</b><span>▣　 Cihazlar</span><span>♧　 Müşteriler</span><span>▤　 Yedekleme</span><span>⚙　 Ayarlar</span></div><div class="pro-screen-content"><small>ÇALIŞMA ALANLARI</small><div class="pro-screen-tiles"><div><i>♟</i><b>ADB İşlemleri</b></div><div><i>➤</i><b>Fastboot İşlemleri</b></div><div><i>▯</i><b>Cihaz Bilgisi</b></div><div><i>▥</i><b>IMEI İşlemleri</b></div><div><i>▤</i><b>Yedekleme</b></div><div><i>♙</i><b>Müşteri Takibi</b></div><div><i>⚒</i><b>Servis Yönetimi</b></div><div><i>▦</i><b>Araçlar</b></div></div></div></div>
-        </div>
-        <div class="pro-laptop-base"><span></span></div><div class="pro-laptop-light"></div>
+        <img class="pro-laptop-image" id="proLaptopImage" alt="Uzmantool logosu ve Uzmantech uygulaması laptop ekranında">
       </div>
     </div>
   </div>
@@ -152,4 +148,14 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script><script src="assets/js/user-panel.js"></script><script src="assets/js/language.js"></script><script src="assets/js/portal-pages.js?v=20261105-2"></script><script>document.addEventListener("click",function(e){if(e.target.closest("#copyZipPassword")){const b=e.target.closest("#copyZipPassword");navigator.clipboard?.writeText("uzman").then(()=>{b.textContent="Kopyalandı";setTimeout(()=>b.textContent="Şifreyi kopyala",1800)}).catch(()=>{b.textContent="Şifre: uzman"})}});</script>
 
+<script>
+(function(){
+  var img=document.getElementById('proLaptopImage');
+  if(!img)return;
+  fetch('assets/images/uzmantool-laptop-reference.jpg.b64?v=20261105')
+    .then(function(r){if(!r.ok)throw new Error('Image asset unavailable');return r.text();})
+    .then(function(b64){img.src='data:image/jpeg;base64,'+b64.trim();})
+    .catch(function(err){console.error('Uzmantool laptop image could not load:',err);});
+})();
+</script>
 </body></html>

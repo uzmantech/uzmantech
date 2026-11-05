@@ -13,9 +13,40 @@ if(packages){packages.classList.add("license-packages-section");lic.appendChild(
 
 
 
-const upd=make("updates","Güncellemeler","Uzmantech sürüm bilgileri ve yayınlanan yenilikler.");
-upd.classList.add("updates-page");
-upd.innerHTML+='<section class="updates-hero"><div class="updates-hero-copy"><span class="updates-eyebrow"><i></i> UZMANTECH / YAZILIM GÜNCELLEMELERİ</span><h2>Her zaman<br><em>güncel kalın.</em></h2><p>Uygulamanız için yayınlanan sürümleri, yenilikleri ve iyileştirmeleri tek bir yerden takip edin.</p><div class="updates-hero-meta"><span><small>EN SON SÜRÜM</small><b>v1.1.8</b></span><span><small>ÜRÜN</small><b>Uzmantech Desktop</b></span></div></div><div class="updates-version-art"><div class="updates-orbit updates-orbit-one"></div><div class="updates-orbit updates-orbit-two"></div><div class="updates-version-tile"><small>UZMANTECH</small><b>1.1.8</b><span>RELEASE</span></div><div class="updates-live-pill"><i></i> Güncel sürüm</div></div></section><section class="updates-release-card"><div class="updates-release-head"><div><span class="updates-release-label">SON YAYIN</span><h3>Uzmantech v1.1.8</h3><p>En son yayınlanan masaüstü uygulaması sürümü.</p></div><span class="updates-current-badge"><i></i> Güncel</span></div><div class="updates-release-details"><article><span class="updates-detail-icon">✦</span><div><b>Yeni özellikler</b><small>Uygulamaya eklenen yeni işlevler ve geliştirmeler.</small></div></article><article><span class="updates-detail-icon">↗</span><div><b>İyileştirmeler</b><small>Mevcut ekranlarda ve kullanım akışlarında düzenlemeler.</small></div></article><article><span class="updates-detail-icon">✓</span><div><b>Hata düzeltmeleri</b><small>Daha kararlı ve tutarlı kullanım için düzeltmeler.</small></div></article></div><div class="updates-release-footer"><span><b>v1.1.8</b> · Uzmantech masaüstü uygulaması</span><a href="https://github.com/uzmantech/uzmantech/releases/tag/v1.1.8" target="_blank" rel="noopener">Sürüm sayfasını görüntüle <b>↗</b></a></div></section><div class="updates-note"><span>ⓘ</span><p>Yeni sürümleri yüklemeden önce mevcut verilerinizin yedeğini almanızı öneririz.</p></div>';
+const upd=make("updates","Haberler","Uzmantech dünyasından haberler, ürün duyuruları ve sürüm notları.");
+upd.classList.add("updates-page","news-page");
+upd.innerHTML+=`
+<section class="news-masthead">
+ <div class="news-masthead-copy">
+  <span class="news-eyebrow"><i></i> UZMANTECH HABER MERKEZİ</span>
+  <h2>Teknolojiden<br><em>haberdar olun.</em></h2>
+  <p>Uzmantech güncellemeleri, yeni özellikler, teknik ipuçları ve önemli duyurular. Hepsi tek bir yerde.</p>
+  <div class="news-masthead-actions"><a href="#download" data-page="download">Uygulamayı keşfet <b>↗</b></a><span><i></i> Resmî haber ve duyuru merkezi</span></div>
+ </div>
+ <div class="news-masthead-visual" aria-hidden="true">
+  <div class="news-glow-ring ring-a"></div><div class="news-glow-ring ring-b"></div>
+  <div class="news-orbit-dot dot-a"></div><div class="news-orbit-dot dot-b"></div>
+  <div class="news-glass-panel"><span>UZMANTECH</span><b>NEWS<span>.</span></b><small>UPDATE · INNOVATION · SUPPORT</small><div class="news-panel-lines"><i></i><i></i><i></i></div></div>
+  <div class="news-floating-chip chip-update">↻ <span>Güncellemeler</span></div><div class="news-floating-chip chip-tech">⌘ <span>Teknik içerikler</span></div>
+ </div>
+ <div class="news-masthead-bottom"><span><b>01</b> Resmî duyurular</span><span><b>02</b> Sürüm notları</span><span><b>03</b> Teknik içerikler</span></div>
+</section>
+<section class="news-featured">
+ <div class="news-featured-visual"><div class="news-featured-version"><small>UZMANTECH DESKTOP</small><b>1.1.8</b><span>RELEASE</span></div><div class="news-featured-spark"></div><span class="news-featured-label">ÖNE ÇIKAN</span></div>
+ <div class="news-featured-copy"><span class="news-category-tag">YAZILIM GÜNCELLEMESİ</span><h3>Uzmantech v1.1.8</h3><p>Uzmantech masaüstü uygulamasının sürüm bilgilerini ve yayın notlarını inceleyin. Yeni sürüm duyurularını resmî kaynak üzerinden takip edin.</p><div class="news-featured-meta"><span>Uzmantech Desktop</span><span>Resmî sürüm kaydı</span></div><a href="https://github.com/uzmantech/uzmantech/releases/tag/v1.1.8" target="_blank" rel="noopener">Sürüm notlarını görüntüle <b>↗</b></a></div>
+</section>
+<div class="news-section-heading"><div><span class="news-section-kicker">KEŞFET</span><h3>Haber başlıkları</h3><p>İhtiyacınız olan içeriğe hızlıca ulaşın.</p></div><span class="news-section-count">UZMANTECH / PORTAL</span></div>
+<div class="news-filter-row" role="group" aria-label="Haber kategorileri">
+ <button type="button" class="is-active" data-news-filter="all">Tümü</button><button type="button" data-news-filter="product">Ürün &amp; Özellikler</button><button type="button" data-news-filter="archive">Dosya Arşivi</button><button type="button" data-news-filter="support">Destek</button><button type="button" data-news-filter="release">Sürüm Notları</button>
+</div>
+<section class="news-card-grid" aria-label="Haber içerikleri">
+ <article class="news-card" data-news-category="product"><div class="news-card-art art-devices"><span>ADB</span><span>FASTBOOT</span><span>UZMANTOOL</span><i>⌘</i></div><div class="news-card-body"><span class="news-category-tag">ÜRÜN &amp; ÖZELLİKLER</span><h4>Teknik servis araçları tek merkezde</h4><p>ADB, Fastboot, cihaz bilgisi ve servis araçlarına Uzmantool içerisinden erişin.</p><a href="#download" data-page="download">Uzmantool'u keşfet <b>→</b></a></div></article>
+ <article class="news-card" data-news-category="archive"><div class="news-card-art art-archive"><i>▤</i><span>FIRMWARE<br>ARCHIVE</span><b>01 / 08</b></div><div class="news-card-body"><span class="news-category-tag">DOSYA ARŞİVİ</span><h4>Teknik dosyalar için merkezi arşiv</h4><p>Marka ve model bazlı firmware ve teknik dosya arşivini keşfedin.</p><a href="archive.html">Dosya arşivine git <b>→</b></a></div></article>
+ <article class="news-card" data-news-category="support"><div class="news-card-art art-support"><i>✳</i><span>DESTEK<br>MERKEZİ</span><b>7/24</b></div><div class="news-card-body"><span class="news-category-tag">DESTEK</span><h4>Yardım ve destek merkezi</h4><p>Hesap, lisans ve uygulama kullanımıyla ilgili destek kanallarına ulaşın.</p><a href="#help" data-page="help">Destek merkezini aç <b>→</b></a></div></article>
+ <article class="news-card" data-news-category="release"><div class="news-card-art art-release"><span>VERSION</span><b>1.1.8</b><i>↗</i></div><div class="news-card-body"><span class="news-category-tag">SÜRÜM NOTLARI</span><h4>Uzmantech sürüm geçmişi</h4><p>Yayınlanan sürümleri ve resmî değişiklik kayıtlarını GitHub üzerinden takip edin.</p><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Tüm sürümleri görüntüle <b>→</b></a></div></article>
+</section>
+<div class="news-bottom-banner"><div><span class="news-section-kicker">GÜNCEL KALIN</span><h3>Uzmantech'teki yenilikleri kaçırmayın.</h3><p>Yeni sürümler ve önemli duyurular için resmî kanalları takip edin.</p></div><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Yayınları takip et <b>↗</b></a></div>`;
+upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");if(!b)return;const key=b.dataset.newsFilter;upd.querySelectorAll("[data-news-filter]").forEach(x=>x.classList.toggle("is-active",x===b));upd.querySelectorAll("[data-news-category]").forEach(card=>card.hidden=key!=="all"&&card.dataset.newsCategory!==key);});
 
 
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);

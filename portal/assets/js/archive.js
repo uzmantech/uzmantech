@@ -80,7 +80,9 @@ document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");
  if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;renderLiveArchive();return;}
  const folder=e.target.closest("[data-archive-folder]");if(folder){selectedFolder=folder.dataset.archiveFolder;renderLiveArchive();return;}
- if(e.target.id==="archiveBackFolder"){selectedFolder=null;selectedFile=null;renderLiveArchive();return;}\n const fileCard=e.target.closest("[data-archive-file]");if(fileCard){selectedFile=fileCard.dataset.archiveFile;renderLiveArchive();return;}\n if(e.target.id==="archiveBackFile"){selectedFile=null;renderLiveArchive();return;}
+ if(e.target.id==="archiveBackFolder"){selectedFolder=null;selectedFile=null;renderLiveArchive();return;}
+ const fileCard=e.target.closest("[data-archive-file]");if(fileCard){selectedFile=fileCard.dataset.archiveFile;renderLiveArchive();return;}
+ if(e.target.id==="archiveBackFile"){selectedFile=null;renderLiveArchive();return;}
  if(e.target.id==="archiveBackDevices"){selectedDevice=null;renderLiveArchive();return;}
  const btn=e.target.closest("[data-archive-download]");if(!btn)return;
  const id=btn.dataset.archiveDownload;btn.disabled=true;const tab=window.open("about:blank","_blank");

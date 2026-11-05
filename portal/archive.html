@@ -8,44 +8,68 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/archive.css?v=clean-start-20261105">
+<link rel="stylesheet" href="assets/css/archive.css?v=reference-layout-20261105">
 </head>
 <body class="archive-shell">
 <header class="archive-topbar">
- <a class="archive-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"><span>UZMANTOOL <small>TEKNİK DOSYA MERKEZİ</small></span></a>
+ <a class="archive-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"><span>Profesyonel Cihaz Yazılım Merkezi</span></a>
  <form class="archive-global-search" id="archiveSearchForm"><input id="archiveQuery" type="search" placeholder="Marka veya model ara..." aria-label="Marka veya model ara"><button type="submit">ARA</button></form>
  <nav class="archive-top-actions" aria-label="Ana menü">
-  <a class="archive-nav-button" href="#new-files"><span>✦</span> Yeni Dosyalar</a>
-  <a class="archive-nav-button" href="index.html"><span>⌂</span> Ana Sayfa</a>
-  <button class="archive-nav-button" data-open="login"><span>♙</span> Giriş Yap</button>
-  <a class="archive-nav-button archive-nav-join" href="index.html#uyelik"><span>▣</span> Üye Ol</a>
+  <a class="archive-nav-button" href="#new-files"><span>🔔</span> Yeni Dosyalar</a>
+  <a class="archive-nav-button" href="index.html"><span>🏠</span> Ana Sayfa</a>
+  <button class="archive-nav-button" data-open="login"><span>🔐</span> Giriş Yap</button>
+  <a class="archive-nav-button archive-nav-join" href="index.html#uyelik"><span>📄</span> Üye Ol</a>
  </nav>
  <button class="archive-mobile-menu" id="menuToggle" aria-label="Menüyü aç">☰</button>
 </header>
 <main class="archive-stage">
  <aside class="archive-brand-rail">
   <div class="archive-rail-heading"><span>▦</span><h2>Cihaz Markaları</h2></div>
-  <div class="archive-brand-empty"><span class="archive-empty-symbol">＋</span><b>Marka listesi hazırlanıyor</b><p>Arşiv içeriği sıfırdan oluşturulacak. Henüz otomatik marka veya model aktarımı yapılmıyor.</p></div>
+  <div class="archive-brand-list">
+   <button><span class="brand-logo-text samsung">SAMSUNG</span><b>Samsung</b><i>›</i></button>
+   <button><span class="brand-logo-text xiaomi">mi</span><b>Xiaomi</b><i>›</i></button>
+   <button><span class="brand-logo-text huawei">HUAWEI</span><b>Huawei</b><i>›</i></button>
+   <button><span class="brand-logo-text oppo">oppo</span><b>Oppo</b><i>›</i></button>
+   <button><span class="brand-logo-text vivo">vivo</span><b>Vivo</b><i>›</i></button>
+   <button><span class="brand-logo-text realme">realme</span><b>Realme</b><i>›</i></button>
+   <button><span class="brand-logo-text oneplus">1+</span><b>OnePlus</b><i>›</i></button>
+   <button><span class="brand-logo-text honor">HONOR</span><b>Honor</b><i>›</i></button>
+   <button><span class="brand-logo-text tecno">TECNO</span><b>Tecno</b><i>›</i></button>
+   <button><span class="brand-logo-text infinix">IN</span><b>Infinix</b><i>›</i></button>
+   <button><span class="brand-logo-text google">G</span><b>Google</b><i>›</i></button>
+   <button><span class="brand-logo-text apple">●</span><b>Apple</b><i>›</i></button>
+  </div>
  </aside>
  <section class="archive-main-column">
-  <section class="archive-welcome-banner">
-   <div class="archive-banner-copy"><span class="archive-kicker">UZMANTOOL DOSYA ARŞİVİ</span><h1>Teknik dosyalarınız<br><em>tek merkezde.</em></h1><p>Marka, model ve dosya kategorilerini burada sıfırdan oluşturacağız. Şimdilik arşiv boş ve manuel içerik girişine hazır.</p><span class="archive-banner-note"><i></i> İçerik otomatik olarak çekilmez</span></div>
-   <div class="archive-banner-art" aria-hidden="true"><div class="archive-art-ring"></div><div class="archive-art-device"><div class="archive-device-camera"></div><div class="archive-device-screen"><span>UZMANTOOL</span><b>FILE<br>ARCHIVE</b><i></i></div></div><div class="archive-art-chip">MANUEL<br>YÖNETİM</div></div>
+  <section class="archive-reference-banner">
+   <img src="assets/images/uzmantool-laptop-hd.jpg" alt="Uzmantool teknik servis ve dosya arşivi" class="archive-banner-photo">
+   <div class="archive-banner-shade"></div>
+   <div class="archive-banner-copy"><span>UZMANTOOL TEKNİK DOSYA MERKEZİ</span><h1>Cihazınız için gereken<br><em>dosya burada.</em></h1><p>Firmware • ENG • IMEI • Test Point • Servis dosyaları</p><a href="#new-files" class="archive-banner-button">DOSYA ARŞİVİNİ AÇ <b>›</b></a></div>
+   <div class="archive-banner-brand">UZMANTOOL<small>PROFESYONEL TEKNİK ARŞİV</small></div>
   </section>
-  <section class="archive-stat-row" aria-label="Arşiv durumu">
-   <div class="archive-stat"><span class="stat-icon">◈</span><div><b>0</b><small>Aktif Ziyaretçi</small></div></div>
-   <div class="archive-stat"><span class="stat-icon">▦</span><div><b>0</b><small>Desteklenen Marka</small></div></div>
-   <div class="archive-stat"><span class="stat-icon">▣</span><div><b>0</b><small>Toplam Dosya</small></div></div>
-   <a class="archive-stat archive-stat-support" href="index.html#support"><span class="stat-icon">◉</span><div><b>WhatsApp</b><small>Canlı Destek</small></div></a>
-   <button class="archive-stat archive-stat-member" data-open="login"><span class="stat-icon">♙</span><div><b>Üyelik</b><small>Giriş yap</small></div></button>
+  <section class="archive-stat-row">
+   <div class="archive-stat stat-online"><span>🟢</span><div><b>7/24</b><small>Arşiv erişimi</small></div></div>
+   <div class="archive-stat"><span>▦</span><div><b>12+</b><small>Desteklenen marka</small></div></div>
+   <div class="archive-stat"><span>▣</span><div><b>Dosya Arşivi</b><small>Teknik servis kaynakları</small></div></div>
+   <a class="archive-stat stat-support" href="index.html#support"><span>☎</span><div><b>Canlı Destek</b><small>Destek ekibine ulaşın</small></div></a>
+   <button class="archive-stat stat-member" data-open="login"><span>♙</span><div><b>Üyelik</b><small>Giriş yap / Üye ol</small></div></button>
   </section>
   <section class="archive-lower-grid" id="new-files">
-   <div class="archive-panel archive-files-panel"><div class="archive-panel-heading"><h2><span>▤</span> Yeni Dosyalar</h2><span class="archive-panel-count">0 DOSYA</span></div><div class="archive-empty-content"><span class="archive-empty-file">▧</span><h3>Arşiv henüz oluşturulmadı</h3><p>Dosyalar, markalar ve modeller daha sonra yönetim panelinden manuel olarak eklenecek. Bu sayfa herhangi bir masaüstü uygulamasından veya harici katalogdan veri çekmez.</p></div><div class="archive-panel-footer">İçerik eklenmeye hazır</div></div>
-   <aside class="archive-panel archive-membership-panel"><div class="archive-panel-heading centered"><h2><span>◆</span> ÜYELİK PAKETLERİ</h2></div><div class="archive-membership-empty"><span>♢</span><b>Üyelik erişimi</b><p>Üyelik paketleri ve indirme yetkileri ayrı olarak yapılandırılacak.</p><a href="index.html#uyelik">Üyelik bilgileri <b>›</b></a></div></aside>
+   <div class="archive-panel archive-files-panel">
+    <div class="archive-panel-heading"><h2>▣ Dosya Arşivi</h2><span class="archive-panel-count">ARŞİV</span></div>
+    <div class="archive-file-preview"><div class="archive-lock">🔒</div><p>Dosyaları görüntülemek ve indirmek için aktif arşiv üyeliği gereklidir.</p><button data-open="login">🔐 Giriş Yap</button></div>
+    <div class="archive-panel-footer">Teknik dosyalar ve servis kaynakları</div>
+   </div>
+   <aside class="archive-panel archive-membership-panel">
+    <div class="archive-panel-heading centered"><h2>💎 ABONELİK PAKETLERİ</h2></div>
+    <div class="archive-membership-cards">
+     <a href="index.html#uyelik"><span>🥈</span><b>Aylık Üyelik</b><strong>Üyelik bilgisi</strong><small>Arşive erişim</small></a>
+     <a href="index.html#uyelik"><span>🥇</span><b>Yıllık Üyelik</b><strong>Üyelik bilgisi</strong><small>12 Ay Arşiv Erişimi</small></a>
+    </div>
+   </aside>
   </section>
-  <section class="archive-desktop-promo"><div><span>UZMANTECH DESKTOP</span><h2>Teknik servis işlemleri için<br>ayrı masaüstü çözümü.</h2><p>Uzmantech masaüstü uygulaması, Uzmantool dosya arşivinden bağımsızdır.</p><a href="index.html#download">Uygulamayı incele <b>›</b></a></div><img src="assets/images/uzmantech-hero.png" alt="Uzmantech masaüstü uygulaması" loading="lazy"></section>
  </section>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=clean-start-20261105"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=reference-layout-20261105"></script>
 </body></html>

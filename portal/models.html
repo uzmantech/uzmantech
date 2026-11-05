@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/archive.css?v=brand-model-pages-20261105">
+<link rel="stylesheet" href="assets/css/archive.css?v=archive-license-20261105">
 <link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=20261105"></head>
 <body class="archive-shell">
 <header class="archive-topbar">
@@ -22,7 +22,20 @@
  </nav>
  <button class="archive-mobile-menu" id="menuToggle" aria-label="Menüyü aç">☰</button>
 </header>
-<main class="archive-stage">
+<section class="archive-license-gate" id="archiveLicenseGate" aria-live="polite">
+ <div class="archive-license-card">
+  <div class="archive-license-lock" aria-hidden="true">🔒</div>
+  <span>UZMANTOOL TEKNİK DOSYA ARŞİVİ</span>
+  <h1>Bu arşiv lisans sahiplerine özeldir</h1>
+  <p>Marka, model ve teknik yazılım dosyalarına erişmek için hesabınızda aktif bir lisans bulunmalıdır.</p>
+  <div class="archive-license-actions">
+   <button type="button" data-open="login">GİRİŞ YAP</button>
+   <a href="index.html#uyelik">LİSANS SATIN AL</a>
+  </div>
+  <small>Aktif lisansınız varsa hesabınıza giriş yapın. Lisansınızın süresi dolduysa yenileyebilirsiniz.</small>
+ </div>
+</section>
+<main class="archive-stage" hidden>
  <aside class="archive-site-menu" aria-label="Site menüsü">
   <a class="archive-menu-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"></a>
   <span class="archive-menu-caption">SİTE MENÜSÜ</span>
@@ -51,5 +64,5 @@
 </main>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=brand-model-pages-20261105"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=archive-license-20261105"></script>
 </body></html>

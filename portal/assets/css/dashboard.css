@@ -669,3 +669,85 @@
 .utd-bottom b{color:#e8f2ff;font-size:12px}.utd-bottom span{color:#8ea4bf;font-size:10px}
 @media(max-width:900px){.utd-main{grid-template-columns:1fr;gap:28px}.utd-copy{max-width:720px}.utd-visual{max-width:620px;width:100%;margin:0 auto}.utd-product-card{transform:none}}
 @media(max-width:620px){.utd-shell{padding:23px 17px;border-radius:18px}.utd-topline{align-items:flex-start;flex-direction:column;margin-bottom:34px}.utd-copy h1{font-size:39px;letter-spacing:-1.3px}.utd-facts{gap:17px 23px;margin:23px 0}.utd-download,.utd-password{width:100%}.utd-bottom{grid-template-columns:1fr}.utd-product-body{padding:25px 18px}.utd-modules{grid-template-columns:1fr 1fr}}
+
+
+/* Pixel-focused Uzmantool download page, inspired by supplied reference */
+.pro-download{width:100%;margin:18px 0 22px;color:#f4f8ff;font-family:"DM Sans",Arial,sans-serif;scroll-margin-top:90px}
+.pro-download *{box-sizing:border-box}
+.pro-download-hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(22px,2.7vw,34px);border:1px solid #124b80;border-radius:20px;background:radial-gradient(ellipse at 78% 48%,#005bba40,transparent 38%),linear-gradient(115deg,#06172b 0%,#031225 58%,#061b34 100%)}
+.pro-hero-glow{position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 76% 60%,#007aff20,transparent 45%),linear-gradient(90deg,transparent 70%,#007cff0c)}
+.pro-download-brand{display:flex;align-items:center;gap:12px;position:relative;z-index:2}
+.pro-download-brand img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 4px 12px #008bff66)}
+.pro-download-brand>span:nth-child(2){display:flex;flex-direction:column;gap:2px}
+.pro-download-brand>span:nth-child(2) b{font:italic 700 25px "Space Grotesk",sans-serif;letter-spacing:-1px}
+.pro-download-brand>span:nth-child(2) small{color:#9db5d0;font-size:10px}
+.pro-download-pill{margin-left:clamp(12px,3vw,44px);padding:8px 15px;border:1px solid #1268b4;border-radius:24px;background:linear-gradient(110deg,#063d83,#082c61);color:#dceeff;font-size:11px;font-weight:700}
+.pro-hero-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(420px,1.05fr);align-items:center;gap:22px;margin-top:28px}
+.pro-hero-copy{position:relative;z-index:1;max-width:620px;padding:0 0 12px 4px}
+.pro-overline{color:#55c5ff;font-size:9px;font-weight:800;letter-spacing:2px}
+.pro-hero-copy h2{margin:15px 0 3px;color:#f5f8ff;font:italic 700 clamp(48px,5vw,68px)/1 "Space Grotesk",sans-serif;letter-spacing:-3px}
+.pro-hero-copy h2 span{color:#00b7ff}
+.pro-hero-lead{max-width:510px;margin:10px 0 21px;color:#e1eaf5;font-size:clamp(15px,1.4vw,19px);line-height:1.45}
+.pro-feature-checks{display:flex;flex-wrap:wrap;gap:12px 18px;margin:0 0 24px}
+.pro-feature-checks span{display:flex;align-items:center;gap:7px;color:#edf5ff;font-size:12px;white-space:nowrap}
+.pro-feature-checks i{width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#0c9dff,#0757d5);box-shadow:0 0 12px #008dff55;color:white;font-size:13px;font-style:normal;font-weight:800}
+.pro-download-button{width:min(100%,460px);min-height:76px;display:flex;align-items:center;gap:17px;padding:12px 20px;border:1px solid #39c8ff;border-radius:17px;background:linear-gradient(105deg,#0aaaff 0%,#0876ff 45%,#0647d6 100%);box-shadow:0 0 0 1px #147fff66 inset,0 10px 35px #007cff66,0 0 22px #00aaff55;color:#fff!important;text-decoration:none!important;transition:transform .2s,filter .2s}
+.pro-download-button:hover{transform:translateY(-3px);filter:brightness(1.1)}
+.pro-download-symbol{width:42px;height:42px;display:grid;place-items:center;border-right:1px solid #ffffff50;font-size:38px;line-height:1}
+.pro-download-button>span:nth-child(2){display:flex;flex-direction:column;gap:4px}
+.pro-download-button b{font:700 20px "Space Grotesk",sans-serif}
+.pro-download-button small{font-size:11px;color:#e3f3ff}
+.pro-download-button strong{margin-left:auto;font-size:34px;font-weight:400}
+.pro-platform-facts{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px}
+.pro-platform-facts>div{min-width:190px;display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #17436c;border-radius:13px;background:linear-gradient(145deg,#071d34,#061528)}
+.pro-platform-facts>div>span:last-child{display:flex;flex-direction:column;gap:4px}
+.pro-platform-facts small{color:#a7bed8;font-size:10px}
+.pro-platform-facts b{color:#fff;font-size:14px}
+.pro-windows-icon,.pro-chip-icon{color:#00c5ff;font-size:30px;line-height:1}
+.pro-laptop-scene{position:relative;min-width:0;min-height:390px;display:flex;align-items:center;justify-content:center;padding:18px 4px 44px}
+.pro-laptop-halo{position:absolute;left:4%;right:4%;bottom:25px;height:75px;border:3px solid #00aaff;border-radius:50%;box-shadow:0 0 12px #00baff,0 0 34px #007bff,0 0 70px #006dff66;transform:perspective(240px) rotateX(58deg)}
+.pro-laptop-screen{position:relative;z-index:2;width:min(100%,560px);aspect-ratio:1.42/1;padding:10px 10px 13px;border:3px solid #8abde8;border-bottom:5px solid #315d8c;border-radius:18px 18px 9px 9px;background:linear-gradient(145deg,#09172a,#020b17);box-shadow:0 0 0 1px #0b4b83,0 0 25px #008dff88,0 0 60px #007bff55;transform:perspective(1000px) rotateY(-7deg) rotateX(2deg)}
+.pro-laptop-screen:before{content:"";position:absolute;top:4px;left:50%;width:4px;height:4px;border-radius:50%;background:#153a5b}
+.pro-screen-top{height:12%;display:flex;align-items:center;gap:7px;padding:0 9px;border-bottom:1px solid #1c3b5b;background:#07162a;color:#dcecff;font-size:clamp(7px,.7vw,10px)}
+.pro-screen-logo{width:19px;height:19px;display:grid;place-items:center;border-radius:5px;background:linear-gradient(140deg,#08baff,#0752d5);font-weight:900}
+.pro-screen-title{margin-left:auto;color:#42c8ff;font-weight:800}
+.pro-screen-layout{height:88%;display:grid;grid-template-columns:23% 1fr;background:linear-gradient(145deg,#0b1e34,#071426)}
+.pro-screen-nav{display:flex;flex-direction:column;gap:9px;padding:12px 6px;border-right:1px solid #1d3b59;color:#91abc8;font-size:clamp(6px,.6vw,8px)}
+.pro-screen-nav b{padding:7px 5px;border-radius:5px;background:#075fd7;color:#fff}
+.pro-screen-content{padding:13px 12px}
+.pro-screen-content>small{color:#81a9d2;font-size:7px;letter-spacing:1.2px}
+.pro-screen-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
+.pro-screen-tiles div{min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px solid #1b4166;border-radius:7px;background:linear-gradient(145deg,#102d4b,#091d33);box-shadow:inset 0 1px #ffffff08}
+.pro-screen-tiles i{color:#00c9ff;font-size:23px;font-style:normal;text-shadow:0 0 12px #00aaff88}
+.pro-screen-tiles b{color:#dceeff;font-size:clamp(6px,.65vw,9px);font-weight:600;text-align:center}
+.pro-laptop-base{position:absolute;z-index:3;bottom:26px;width:108%;height:18px;border:1px solid #77b5eb;border-radius:2px 2px 50% 50%;background:linear-gradient(180deg,#a4c9e9 0%,#477ba9 24%,#112b48 70%,#061326 100%);box-shadow:0 7px 15px #0009,0 0 17px #008dff88}
+.pro-laptop-base span{position:absolute;left:42%;top:1px;width:16%;height:4px;border-radius:0 0 8px 8px;background:#426d97}
+.pro-laptop-light{position:absolute;z-index:1;bottom:0;width:70%;height:20px;border-radius:50%;background:#008cff;filter:blur(25px)}
+.pro-password-bar{display:grid;grid-template-columns:112px minmax(250px,.9fr) 1px minmax(320px,1.1fr);align-items:center;gap:22px;margin-top:16px;padding:19px 23px;border:1px solid #1b4b7b;border-radius:17px;background:linear-gradient(110deg,#0c2340,#07182c 65%,#0b2038);box-shadow:inset 0 1px #ffffff08}
+.pro-winrar-mark{position:relative;width:76px;height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.pro-winrar-mark i{width:64px;height:17px;border:1px solid #ffffff40;border-radius:5px;background:linear-gradient(90deg,#e0a5b0,#a92e58 25%,#ebc2d0 45%,#9b244d 68%,#df9cae);box-shadow:0 3px 4px #0008}
+.pro-winrar-mark i:nth-child(2){background:linear-gradient(90deg,#8dd1ec,#1674b8 30%,#c7edff 48%,#125b9a 70%,#7dc3e5)}
+.pro-winrar-mark i:nth-child(3){background:linear-gradient(90deg,#a7e7a2,#258d47 30%,#d3f4b9 48%,#267d3d 70%,#9bdc8c)}
+.pro-winrar-mark b{position:absolute;top:22px;left:31px;width:15px;height:15px;display:grid;place-items:center;border:2px solid #e2b24c;border-radius:3px;background:#1b3451;color:#f8d36b;font-size:10px}
+.pro-password-main>b{display:block;margin-bottom:9px;color:#f4f8ff;font-size:15px}
+.pro-password-actions{display:flex;flex-wrap:wrap;gap:9px}
+.pro-password-actions>span{min-width:190px;display:flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid #1884d8;border-radius:9px;background:#06182c;color:#ffb84b;font-size:21px;font-weight:800}
+.pro-password-actions>span i{font-size:22px;font-style:normal}
+.pro-password-actions button{display:flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid #147ac5;border-radius:9px;background:linear-gradient(145deg,#0c467b,#063263);color:#e7f5ff;font:600 12px "DM Sans",sans-serif;cursor:pointer;box-shadow:inset 0 1px #ffffff15}
+.pro-password-actions button:hover{background:#0b5796}
+.pro-password-divider{height:72px;background:#28618f}
+.pro-install-note{display:flex;align-items:center;gap:17px}
+.pro-info-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border:2px solid #00baff;border-radius:50%;box-shadow:0 0 15px #00aaff66;color:#38d1ff;font:700 24px Georgia}
+.pro-install-note b{font-size:15px}.pro-install-note p{margin:6px 0 0;color:#d4e2f1;font-size:12px;line-height:1.7}.pro-install-note strong{color:#fff}
+.pro-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:17px}
+.pro-detail-card{min-width:0;padding:19px 21px;border:1px solid #1a4b78;border-radius:16px;background:linear-gradient(145deg,#0d2340,#07172a);box-shadow:inset 0 1px #ffffff08}
+.pro-detail-heading{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+.pro-detail-heading>span{width:42px;height:42px;display:grid;place-items:center;color:#08c7ff;font-size:32px;text-shadow:0 0 13px #00aaffaa}
+.pro-detail-heading h3{margin:0;color:#f1f7ff;font:700 17px "Space Grotesk",sans-serif}
+.pro-detail-card dl{margin:0}.pro-detail-card dl>div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #1b3654;font-size:12px}.pro-detail-card dl>div:last-child{border-bottom:0}
+.pro-detail-card dt{color:#c0d1e4}.pro-detail-card dd{margin:0;color:#f5f8ff;font-weight:700;text-align:right}
+.pro-detail-card ul{display:grid;gap:13px;margin:0;padding:0;list-style:none}
+.pro-detail-card li{position:relative;padding-left:23px;color:#d5e3f2;font-size:12px;line-height:1.5}
+.pro-detail-card li:before{content:"✓";position:absolute;left:0;color:#00caff;font-size:17px;font-weight:800;text-shadow:0 0 10px #00aaff}
+@media(max-width:1050px){.pro-hero-grid{grid-template-columns:minmax(0,1fr) minmax(340px,.9fr);gap:10px}.pro-laptop-scene{min-height:330px}.pro-password-bar{grid-template-columns:75px 1fr;gap:15px}.pro-password-divider{display:none}.pro-install-note{grid-column:1/-1;padding-top:14px;border-top:1px solid #21405f}.pro-detail-grid{grid-template-columns:1fr 1fr}.pro-detail-card:last-child{grid-column:1/-1}}
+@media(max-width:720px){.pro-download-hero{padding:19px 15px}.pro-download-brand{flex-wrap:wrap}.pro-download-pill{margin:8px 0 0 60px}.pro-hero-grid{grid-template-columns:1fr;margin-top:24px}.pro-hero-copy h2{font-size:54px}.pro-laptop-scene{min-height:300px;margin-top:5px}.pro-laptop-screen{width:94%}.pro-platform-facts>div{flex:1;min-width:145px}.pro-password-bar{grid-template-columns:1fr;padding:17px}.pro-winrar-mark{display:none}.pro-install-note{grid-column:auto}.pro-detail-grid{grid-template-columns:1fr}.pro-detail-card:last-child{grid-column:auto}}

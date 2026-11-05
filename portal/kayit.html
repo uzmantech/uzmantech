@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#061326"><meta name="description" content="Uzmantech üyelik oluşturma sayfası">
+<title>Yeni Üyelik Oluştur | Uzmantech</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261104">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/dashboard.css"><link rel="stylesheet" href="assets/css/site-header.css?v=20261105-2">
+<link rel="stylesheet" href="assets/css/register-page.css?v=20261105-1">
+</head>
+<body class="dashboard-page register-page">
+<header class="dash-topbar site-global-header">
+ <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="index.html"><span class="site-nav-icon">⌂</span><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="archive.html"><span class="site-nav-icon">▣</span><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link" href="index.html#download"><span class="site-nav-icon">♧</span><b>İndirilenler</b></a>
+  <a class="site-nav-link" href="index.html#announcements"><span class="site-nav-icon">▣</span><b>Haberler</b></a>
+  <a class="site-nav-link" href="paketler.html"><span class="site-nav-icon">♛</span><b>Paketler</b></a>
+  <a class="site-nav-link" href="index.html#support"><span class="site-nav-icon">♧</span><b>Destek</b></a>
+ </nav>
+ <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+ <div class="dash-top-actions">
+  <label class="language-control" aria-label="Dil seçimi"><span class="language-globe">◎</span><select id="languageSelect" aria-label="Dil seçimi"><option value="tr">TR</option><option value="en">EN</option></select></label>
+  <span class="top-separator"></span>
+  <a class="header-login" href="index.html?login=1"><span>➜</span> Giriş Yap</a>
+  <a class="header-register active" href="kayit.html"><span>♙</span> Üye Ol</a>
+ </div>
+</header>
+<main class="register-main">
+ <section class="register-promo">
+  <div class="register-kicker">♟ UZMANTECH</div>
+  <h1>Yeni Üyelik <em>Oluştur</em></h1>
+  <p class="register-lead">Uzmantech’e üye olarak tüm teknik araçlara, yazılım arşivine ve özel servis içeriklerine kesintisiz erişim sağlayın.</p>
+  <div class="register-device" aria-label="Uzmantool uygulaması tanıtım görseli">
+   <div class="device-glow"></div>
+   <div class="device-laptop">
+    <div class="device-screen">
+     <div class="device-top"><span class="device-logo">U</span><b>UZMANTECH</b><small>TEKNİK TOOL V1.2.7</small><span class="device-search">⌕ Araç bul...</span></div>
+     <div class="device-content"><aside><b>⌂　Ana Sayfa</b><span>♧　Uzmantool</span><span>▣　ADB İşlemleri</span><span>▣　Fastboot İşlemleri</span><span>▣　IMEI İşlemleri</span><span>▣　Yedekleme</span><span>♙　Müşteri Takip</span><span>⚙　Ayarlar</span></aside>
+      <div class="device-tiles"><i>▣<small>ADB<br>Cihaz Yönetimi</small></i><i>⬇<small>Fastboot<br>İleri İşlemler</small></i><i>▤<small>IMEI<br>Okuma / Yazma</small></i><i>▣<small>Yedekleme<br>Android / iOS</small></i><i>♙<small>Müşteri Takip<br>Servis Yönetimi</small></i><i>◈<small>Ek Araçlar<br>Cihaz ve Servis</small></i></div>
+     </div>
+    </div>
+    <div class="device-base"></div>
+   </div>
+  </div>
+  <section class="register-benefits">
+   <h2>👑 Üyelik Avantajları</h2>
+   <div class="benefit-grid">
+    <article><i>ϟ</i><b>Tüm Araçlara Erişim</b><small>ADB, Fastboot, IMEI ve daha fazlası</small></article>
+    <article><i>☁</i><b>Geniş Dosya Arşivi</b><small>Binlerce yazılım ve dosya</small></article>
+    <article><i>⟳</i><b>Sürekli Güncelleme</b><small>Yeni içerikler ve araçlar</small></article>
+    <article><i>⬡</i><b>Güvenli Hesap</b><small>Lisanslı ve korumalı erişim</small></article>
+   </div>
+  </section>
+ </section>
+ <section class="register-form-panel">
+  <div class="register-form-heading"><span>♙</span><div><h2>Yeni Üyelik Oluştur</h2><p>Hemen ücretsiz hesap açın, Uzmantech’in tüm avantajlarından yararlanın.</p></div></div>
+  <form id="registerPageForm">
+   <div class="register-fields">
+    <label><b>♟　Adınız</b><input name="first_name" autocomplete="given-name" required maxlength="60" placeholder="Adınızı girin"></label>
+    <label><b>♟　Soyadınız</b><input name="last_name" autocomplete="family-name" required maxlength="60" placeholder="Soyadınızı girin"></label>
+    <label><b>♙　Kullanıcı Adı</b><input name="username" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_.-]+" placeholder="Benzersiz kullanıcı adınızı girin"></label>
+    <label><b>✉　E-posta Adresi</b><input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="E-posta adresinizi girin"></label>
+    <label><b>▣　Şifre</b><span class="password-wrap"><input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128" placeholder="En az 8 karakter"><button type="button" data-toggle-password aria-label="Şifreyi göster">◉</button></span></label>
+    <label><b>▣　Şifre Tekrar</b><span class="password-wrap"><input name="password_confirm" type="password" autocomplete="new-password" required minlength="8" maxlength="128" placeholder="Şifrenizi tekrar girin"><button type="button" data-toggle-password aria-label="Şifreyi göster">◉</button></span></label>
+    <label class="register-phone"><b>☎　Telefon Numarası</b><span class="phone-row"><select name="country_code" aria-label="Ülke kodu"><option value="TR">+90</option><option value="US">+1</option><option value="GB">+44</option><option value="DE">+49</option><option value="AZ">+994</option></select><input name="phone" type="tel" autocomplete="tel" required maxlength="24" placeholder="5XX XXX XX XX"></span></label>
+   </div>
+   <label class="register-terms"><input name="consent" type="checkbox" required><span><a href="kullanim-kosullari.html" target="_blank">Kullanım şartlarını</a> ve <a href="gizlilik-politikasi.html" target="_blank">gizlilik politikasını</a> okudum, kabul ediyorum.</span></label>
+   <div class="register-notice">Kayıt talebiniz yönetici onayına gönderilir. Hesabınız onaylandıktan sonra giriş yapabilirsiniz.</div>
+   <button class="register-submit" id="registerPageSubmit" type="submit"><span>♙</span> Üyelik Oluştur</button>
+  </form>
+  <div class="register-or"><span></span> veya <span></span></div>
+  <div class="register-login"><p>Zaten hesabınız var mı?</p><a href="index.html?login=1">➜　Giriş Yap</a></div>
+ </section>
+</main>
+<div class="register-toast" id="registerToast" role="status" aria-live="polite"></div>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/site.js?v=register-page-20261105-1"></script><script src="assets/js/language.js"></script>
+<script>
+(()=>{
+ const form=document.getElementById("registerPageForm"),btn=document.getElementById("registerPageSubmit"),toast=document.getElementById("registerToast");
+ const notify=m=>{toast.textContent=m;toast.classList.add("show");};
+ document.addEventListener("click",e=>{const b=e.target.closest("[data-toggle-password]");if(!b)return;const input=b.parentElement.querySelector("input");input.type=input.type==="password"?"text":"password";b.textContent=input.type==="password"?"◉":"◎";});
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();const d=new FormData(form),password=String(d.get("password")||"");
+  if(password!==String(d.get("password_confirm")||"")){notify("Şifreler aynı değil.");return;}
+  btn.disabled=true;btn.textContent="Başvurunuz gönderiliyor...";
+  try{
+   const result=await window.UzmantechAPI.register({username:String(d.get("username")||"").trim(),email:String(d.get("email")||"").trim().toLowerCase(),phone:String(d.get("phone")||"").trim(),country_code:String(d.get("country_code")||"TR"),language_code:"tr",password,first_name:String(d.get("first_name")||"").trim(),last_name:String(d.get("last_name")||"").trim()});
+   form.innerHTML='<div class="register-success"><span>✓</span><h2>Başvurunuz alındı</h2><p>'+String(result.message||"Üyelik başvurunuz yönetici onayına gönderildi.")+'</p><a href="index.html?login=1">Giriş sayfasına dön</a></div>';
+  }catch(error){notify(error.message);btn.disabled=false;btn.textContent="♙　Üyelik Oluştur";}
+ });
+})();
+</script>
+</body></html>

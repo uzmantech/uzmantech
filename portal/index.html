@@ -131,7 +131,7 @@
       </div>
       <div class="pro-laptop-scene pro-laptop-image-scene" aria-label="Uzmantool logosu bulunan Uzmantech dizüstü bilgisayar tanıtım görseli">
         <div class="pro-laptop-halo"></div>
-        <img class="pro-laptop-image" id="proLaptopImage" alt="Uzmantool logosu ve Uzmantech uygulaması laptop ekranında">
+        <img class="pro-laptop-image" src="assets/images/uzmantool-laptop-hd.jpg" alt="Uzmantool logosu ve Uzmantech uygulaması laptop ekranında" loading="eager" decoding="async">
       </div>
     </div>
   </div>
@@ -148,14 +148,5 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script><script src="assets/js/user-panel.js"></script><script src="assets/js/language.js"></script><script src="assets/js/portal-pages.js?v=20261105-2"></script><script>document.addEventListener("click",function(e){if(e.target.closest("#copyZipPassword")){const b=e.target.closest("#copyZipPassword");navigator.clipboard?.writeText("uzman").then(()=>{b.textContent="Kopyalandı";setTimeout(()=>b.textContent="Şifreyi kopyala",1800)}).catch(()=>{b.textContent="Şifre: uzman"})}});</script>
 
-<script>
-(function(){
-  var img=document.getElementById('proLaptopImage');
-  if(!img)return;
-  fetch('assets/images/uzmantool-laptop-reference.jpg.b64?v=20261105')
-    .then(function(r){if(!r.ok)throw new Error('Image asset unavailable');return r.text();})
-    .then(function(b64){img.src='data:image/jpeg;base64,'+b64.trim();})
-    .catch(function(err){console.error('Uzmantool laptop image could not load:',err);});
-})();
-</script>
+
 </body></html>

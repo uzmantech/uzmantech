@@ -24,22 +24,19 @@
   $("#archiveFilesBody").innerHTML='<tr><td colspan="6">Dosyalar yükleniyor…</td></tr>';
   const result=await api.archiveAdmin({action:"file_list"});archiveFiles=result.files||[];renderArchiveFiles();
  }
- function uploadWithProgress(url,file,token){
-  return new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("PUT",url);xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");xhr.setRequestHeader("x-upsert","false");if(token)xhr.setRequestHeader("x-signature",token);xhr.upload.onprogress=e=>{if(e.lengthComputable){const n=Math.round(e.loaded/e.total*100);$("#fileUploadBar").value=n;$("#fileUploadPercent").textContent=n+"%";}};xhr.onload=()=>xhr.status>=200&&xhr.status<300?resolve():reject(new Error("Dosya depoya yüklenemedi ("+xhr.status+")."));xhr.onerror=()=>reject(new Error("Yükleme sırasında bağlantı hatası."));xhr.send(file);});
- }
  $("#archiveFileForm")?.addEventListener("submit",async e=>{
-  e.preventDefault();const form=e.currentTarget,fd=new FormData(form),file=fd.get("file");if(!(file instanceof File)||!file.size){toast("Yüklenecek dosyayı seç.");return;}
-  if(file.size>512*1024*1024){toast("Dosya 512 MB sınırını aşıyor.");return;}
-  const btn=$("#archiveUploadBtn"),progress=$("#fileUploadProgress");btn.disabled=true;progress.hidden=false;$("#fileUploadBar").value=0;$("#fileUploadPercent").textContent="0%";$("#fileUploadStatus").textContent="Güvenli bağlantı hazırlanıyor…";$("#archiveUploadMessage").textContent="";
-  let uploadedPath="";
+  e.preventDefault();
+  const form=e.currentTarget,fd=new FormData(form),rawUrl=String(fd.get("external_url")||"").trim();
+  let link;
+  try{link=new URL(rawUrl);}catch{toast("Geçerli bir bağlantı gir.");return;}
+  if(link.protocol!=="https:"||!link.hostname||link.username||link.password){toast("Güvenlik için yalnızca kullanıcı bilgisi içermeyen HTTPS bağlantıları kabul edilir.");return;}
+  const btn=$("#archiveUploadBtn");btn.disabled=true;$("#archiveUploadMessage").textContent=""; 
   try{
-   const signed=await api.archiveAdmin({action:"file_upload_url",filename:file.name});uploadedPath=signed.path;
-   $("#fileUploadStatus").textContent="Dosya yükleniyor…";
-   await uploadWithProgress(signed.upload_url,file,signed.token||"");
-   $("#fileUploadStatus").textContent="Dosya kaydı oluşturuluyor…";
-   await api.archiveAdmin({action:"file_create",title:fd.get("title"),brand:fd.get("brand"),model:fd.get("model"),category:fd.get("category"),description:fd.get("description"),storage_path:uploadedPath,original_filename:file.name,file_size:file.size,mime_type:file.type||"application/octet-stream",is_active:fd.get("is_active")==="on"});
-   form.reset();form.querySelector('[name="is_active"]').checked=true;$("#fileUploadBar").value=100;$("#fileUploadPercent").textContent="100%";$("#fileUploadStatus").textContent="Yükleme tamamlandı";$("#archiveUploadMessage").textContent="Dosya güvenli depoya yüklendi ve arşiv kaydı oluşturuldu.";toast("Dosya arşive eklendi.");await loadArchiveFiles();
-  }catch(err){$("#archiveUploadMessage").textContent=err.message||"Dosya yüklenemedi.";toast(err.message||"Yükleme başarısız.");}
+   await api.archiveAdmin({action:"file_create",title:fd.get("title"),brand:fd.get("brand"),model:fd.get("model"),category:fd.get("category"),description:fd.get("description"),external_url:link.href,storage_path:null,original_filename:link.hostname,file_size:0,mime_type:"application/octet-stream",is_active:fd.get("is_active")==="on"});
+   form.reset();form.querySelector('[name="is_active"]').checked=true;
+   $("#archiveUploadMessage").textContent="Bağlantı kaydedildi ve arşiv kaydı oluşturuldu.";
+   toast("Bağlantı arşive eklendi.");await loadArchiveFiles();
+  }catch(err){$("#archiveUploadMessage").textContent=err.message||"Bağlantı kaydedilemedi.";toast(err.message||"Kayıt başarısız.");}
   finally{btn.disabled=false;}
  });
  $("#reloadArchiveFiles")?.addEventListener("click",()=>loadArchiveFiles().catch(e=>toast(e.message)));

@@ -4,7 +4,7 @@ const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const dt=v=>v?new Date(v).toLocaleString(document.documentElement.lang==="en"?"en-US":"tr-TR",{dateStyle:"medium",timeStyle:"short"}):"—";
 const row=(a,b)=>'<div class="account-info-row"><span>'+a+'</span><b>'+esc(b||"—")+'</b></div>';
 async function openPanel(){
- const modal=$("#modal"),title=$("#modalTitle"),body=$("#modalBody"),en=document.documentElement.lang==="en";
+ const modal=$("#modal"),title=$("#modalTitle"),body=$("#modalBody"),en=document.documentElement.lang==="en";$("#modal .modal-card")?.classList.add("account-panel");
  title.textContent=en?"Account Center":"Kullanıcı Paneli";
  body.innerHTML='<div class="empty-state">'+(en?"Loading account details…":"Hesap bilgileri yükleniyor…")+'</div>';modal.classList.add("open");
  try{

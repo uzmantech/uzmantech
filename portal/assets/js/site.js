@@ -41,7 +41,7 @@
     const lang=applyLanguage((()=>{try{return localStorage.getItem("uzmantech_portal_language")||document.documentElement.lang;}catch{return document.documentElement.lang;}})());
     if(auth){
       if(user){
-        auth.innerHTML='<button class="top-profile logged-in-profile" type="button" id="profileBtn" title="'+translations[lang].logout+'"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button>';
+        auth.innerHTML='<button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Account settings"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button>';
       }else{
         auth.innerHTML='<button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="login">'+translations[lang].login+'</span></button><button class="header-register" id="headerRegister" type="button" data-open="register"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span data-i18n="register">'+translations[lang].register+'</span></button>';
       }

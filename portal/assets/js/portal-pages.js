@@ -12,14 +12,37 @@ lic.insertAdjacentHTML("beforeend",'<div class="activation-feature-grid"><articl
 if(packages){packages.classList.add("license-packages-section");lic.appendChild(packages);}
 
 
-const sup=make("support","Destek Talepleri","Teknik sorunlarınızı iletin ve destek taleplerinizin durumunu takip edin.");if(support)sup.appendChild(support);
+
 const upd=make("updates","Güncellemeler","Uzmantech sürüm bilgileri ve yayınlanan yenilikler.");
 upd.classList.add("updates-page");
 upd.innerHTML+='<section class="updates-hero"><div class="updates-hero-copy"><span class="updates-eyebrow"><i></i> UZMANTECH / YAZILIM GÜNCELLEMELERİ</span><h2>Her zaman<br><em>güncel kalın.</em></h2><p>Uygulamanız için yayınlanan sürümleri, yenilikleri ve iyileştirmeleri tek bir yerden takip edin.</p><div class="updates-hero-meta"><span><small>EN SON SÜRÜM</small><b>v1.1.8</b></span><span><small>ÜRÜN</small><b>Uzmantech Desktop</b></span></div></div><div class="updates-version-art"><div class="updates-orbit updates-orbit-one"></div><div class="updates-orbit updates-orbit-two"></div><div class="updates-version-tile"><small>UZMANTECH</small><b>1.1.8</b><span>RELEASE</span></div><div class="updates-live-pill"><i></i> Güncel sürüm</div></div></section><section class="updates-release-card"><div class="updates-release-head"><div><span class="updates-release-label">SON YAYIN</span><h3>Uzmantech v1.1.8</h3><p>En son yayınlanan masaüstü uygulaması sürümü.</p></div><span class="updates-current-badge"><i></i> Güncel</span></div><div class="updates-release-details"><article><span class="updates-detail-icon">✦</span><div><b>Yeni özellikler</b><small>Uygulamaya eklenen yeni işlevler ve geliştirmeler.</small></div></article><article><span class="updates-detail-icon">↗</span><div><b>İyileştirmeler</b><small>Mevcut ekranlarda ve kullanım akışlarında düzenlemeler.</small></div></article><article><span class="updates-detail-icon">✓</span><div><b>Hata düzeltmeleri</b><small>Daha kararlı ve tutarlı kullanım için düzeltmeler.</small></div></article></div><div class="updates-release-footer"><span><b>v1.1.8</b> · Uzmantech masaüstü uygulaması</span><a href="https://github.com/uzmantech/uzmantech/releases/tag/v1.1.8" target="_blank" rel="noopener">Sürüm sayfasını görüntüle <b>↗</b></a></div></section><div class="updates-note"><span>ⓘ</span><p>Yeni sürümleri yüklemeden önce mevcut verilerinizin yedeğini almanızı öneririz.</p></div>';
 
 const tools=make("tools","Araçlar","Uzmantech masaüstü uygulamasındaki çalışma alanlarına hızlı erişim.");const shortcuts=$(".dash-shortcuts");if(shortcuts)tools.appendChild(shortcuts);
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
-const help=make("help","Yardım Merkezi","Portal, üyelik, lisans ve masaüstü uygulaması hakkında yardım.");help.innerHTML+='<div class="portal-info-grid"><article class="portal-info-card"><h2>Hesap ve giriş</h2><p>Hesabınıza giriş yapın. Şifrenizi unuttuysanız giriş penceresindeki şifre yenileme adımını kullanın.</p></article><article class="portal-info-card"><h2>Lisans ve ödeme</h2><p>Lisans durumunuzu Lisans İşlemleri sayfasından görüntüleyebilir, uygun paketi seçebilirsiniz.</p></article><article class="portal-info-card"><h2>Teknik destek</h2><p>Çözemediğiniz sorunlar için Destek Talepleri bölümünden bize ulaşabilirsiniz.</p></article></div>';
+const help=make("help","Yardım ve Destek","Uzmantool kullanımı, lisans işlemleri ve teknik destek için ihtiyacınız olan her şey tek noktada.");
+help.classList.add("help-center-page");
+help.insertAdjacentHTML("beforeend", `
+<section class="help-center-hero">
+ <div class="help-center-copy">
+  <span class="help-center-eyebrow"><i></i> UZMANTOOL YARDIM MERKEZİ</span>
+  <h2>İhtiyacınız olduğunda<br><em>yanınızdayız.</em></h2>
+  <p>Hesabınız, lisansınız veya masaüstü uygulamanızla ilgili sorularınızın yanıtlarını bulun. Çözüm bulamazsanız destek ekibimize doğrudan ulaşın.</p>
+ </div>
+ <div class="help-center-steps">
+  <article><b>01</b><span><strong>Konunuzu seçin</strong><small>İhtiyacınız olan yardım başlığını belirleyin.</small></span></article>
+  <article><b>02</b><span><strong>Talebinizi iletin</strong><small>Sorununuzu ayrıntılarıyla bize gönderin.</small></span></article>
+  <article><b>03</b><span><strong>Yanıtı takip edin</strong><small>Destek geçmişinizden süreci izleyin.</small></span></article>
+ </div>
+</section>
+<div class="help-topic-grid">
+ <article><span>⌂</span><div><b>Hesap ve giriş</b><small>Giriş, parola ve hesap bilgileri</small></div></article>
+ <article><span>⌑</span><div><b>Lisans ve ödeme</b><small>Lisans durumu, paketler ve ödemeler</small></div></article>
+ <article><span>▣</span><div><b>Masaüstü uygulaması</b><small>Kurulum ve kullanım desteği</small></div></article>
+</div>
+<div class="help-contact-heading"><div><span>DOĞRUDAN DESTEK</span><h2>Bir konuda yardıma mı ihtiyacınız var?</h2><p>Destek talebi oluşturun ve yanıtları bu sayfadan takip edin.</p></div></div>
+`);
+
+if(support)help.appendChild(support);
 const pages=[...main.querySelectorAll("[data-page-view]")];
 function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});

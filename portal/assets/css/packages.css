@@ -47,3 +47,12 @@
 .packages-footer a{color:#66cfff;text-decoration:none}
 @media(max-width:1050px){.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.packages-benefits{grid-template-columns:repeat(2,minmax(0,1fr));max-width:700px}.packages-assurance{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.packages-shell{padding:18px 14px 28px}.packages-intro{padding-bottom:22px}.packages-intro>p{font-size:13px;line-height:1.6}.packages-benefits{gap:14px 10px}.packages-benefits i{width:40px;height:40px;flex-basis:40px;font-size:19px}.packages-benefits b{font-size:12px}.packages-benefits small{font-size:10px}.packages-grid{grid-template-columns:1fr;gap:18px}.package-card{min-height:0;padding:20px}.package-card ul{max-width:340px}.packages-assurance{grid-template-columns:1fr;padding:17px}.packages-shell:before,.packages-shell:after{top:300px;width:70vw}}
+
+/* Clear two-line dual-currency price display */
+.packages-page .package-price{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;line-height:1.15}
+.packages-page .package-price .price-usd{display:block;font:700 25px/1.2 "Space Grotesk",sans-serif;color:#f4f8ff;letter-spacing:0}
+.packages-page .package-price .price-try{display:block;font:700 19px/1.25 "DM Sans",sans-serif;color:#39d5f0;letter-spacing:0}
+.packages-page .halfyear .package-price .price-try{color:#e18cff}
+.packages-page .yearly .package-price .price-usd{color:#ffe19a}
+.packages-page .yearly .package-price .price-try{color:#ffd37a}
+@media(max-width:650px){.packages-page .package-price .price-usd{font-size:25px}.packages-page .package-price .price-try{font-size:19px}}

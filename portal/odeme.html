@@ -1,16 +1,43 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061326"><title>Enpara Ödeme | Uzmantech</title><link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css"><link rel="stylesheet" href="assets/css/uzmantool-theme.css"><link rel="stylesheet" href="assets/css/payment-page.css?v=20261105-1"></head><body class="payment-page"><header class="site-global-header"><a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>ÜYELİK ÖDEME</small></span></a><nav class="site-global-nav"><a class="site-nav-link" href="index.html">Ana Sayfa</a><a class="site-nav-link" href="archive.html">Dosya Arşivi</a><a class="site-nav-link active" href="paketler.html">Paketler</a></nav><a class="header-login" href="index.html">Hesabım</a></header><main class="payment-wrap"><section class="payment-heading"><span>GÜVENLİ ÜYELİK ÖDEMESİ</span><h1>Ödeme ve <em>Hesap Bilgileri</em></h1><p>Paketi seçin, Enpara hesabına havale yapın ve dekontunuzu hesabınızdan gönderin.</p></section><section class="payment-grid"><article class="payment-bank"><div class="bank-top"><b>ENPARA</b><span>HAVALE / EFT</span></div><h2>Havale yapılacak hesap</h2><div class="bank-field"><small>HESAP SAHİBİ</small><strong>Ömer Özen</strong></div><div class="bank-field"><small>BANKA</small><strong>Enpara</strong></div><div class="bank-field"><small>IBAN</small><strong class="iban">TR65 0015 7000 0000 0091 1012 51</strong><button type="button" id="copyIban">IBAN'I KOPYALA</button></div><div class="warning-note"><b>ÖNEMLİ: AÇIKLAMA ALANINI BOŞ BIRAKIN</b><p>Havale/EFT yaparken açıklama alanına hiçbir şey yazmayın. Kullanıcı ve ödeme eşleştirmesi, hesabınıza giriş yaptıktan sonra yükleyeceğiniz dekont üzerinden yapılır.</p></div></article><article class="payment-form-card"><h2>Paket ve ödeme bildirimi</h2><label class="payment-label">Üyelik paketi<select id="paymentPlan"><option value="weekly">Haftalık · 7 gün · $5</option><option value="monthly">Aylık · 30 gün · $10</option><option value="half_year">6 aylık · 180 gün · $20</option><option value="annual">1 yıllık · 365 gün · $40</option></select></label><div class="payment-total"><small>ÖDENECEK TUTAR</small><strong id="paymentUsd">$5 USD</strong><b id="paymentTry">TL kuru hesaplanıyor...</b><small id="paymentRate"></small></div><form id="paymentReceiptForm"><label class="payment-label">Ödeyen adı soyadı<input name="payer_name" required minlength="2" maxlength="120" autocomplete="name" placeholder="Havale yapan kişinin adı soyadı"></label><label class="payment-label">Banka dekontu <small>PDF, JPG, PNG veya WEBP · en fazla 5 MB</small><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="payment-submit" id="paymentSubmit" type="submit">Dekontu gönder</button><p class="payment-footnote">Dekont gönderiminiz yönetici incelemesine alınır. Ödeme onaylandığında seçtiğiniz paket hesabınıza tanımlanır.</p></form></article></section></main><div class="payment-toast" id="paymentToast" role="status"></div><script src="assets/js/config.js"></script><script src="assets/js/api.js?v=payment-rate-fix-20261105-2"></script><script>
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061326"><title>Enpara Ödeme | Uzmantech</title><link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css"><link rel="stylesheet" href="assets/css/uzmantool-theme.css"><link rel="stylesheet" href="assets/css/payment-page.css?v=20261105-1"></head><body class="payment-page"><header class="site-global-header"><a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>ÜYELİK ÖDEME</small></span></a><nav class="site-global-nav"><a class="site-nav-link" href="index.html">Ana Sayfa</a><a class="site-nav-link" href="archive.html">Dosya Arşivi</a><a class="site-nav-link active" href="paketler.html">Paketler</a></nav><a class="header-login" href="index.html">Hesabım</a></header><main class="payment-wrap"><section class="payment-heading"><span>GÜVENLİ ÜYELİK ÖDEMESİ</span><h1>Ödeme ve <em>Hesap Bilgileri</em></h1><p>Paketi seçin, Enpara hesabına havale yapın ve dekontunuzu hesabınızdan gönderin.</p></section><section class="payment-grid"><article class="payment-bank"><div class="bank-top"><b>ENPARA</b><span>HAVALE / EFT</span></div><h2>Havale yapılacak hesap</h2><div class="bank-field"><small>HESAP SAHİBİ</small><strong>Ömer Özen</strong></div><div class="bank-field"><small>BANKA</small><strong>Enpara</strong></div><div class="bank-field"><small>IBAN</small><strong class="iban">TR65 0015 7000 0000 0091 1012 51</strong><button type="button" id="copyIban">IBAN'I KOPYALA</button></div><div class="warning-note"><b>ÖNEMLİ: AÇIKLAMA ALANINI BOŞ BIRAKIN</b><p>Havale/EFT yaparken açıklama alanına hiçbir şey yazmayın. Kullanıcı ve ödeme eşleştirmesi, hesabınıza giriş yaptıktan sonra yükleyeceğiniz dekont üzerinden yapılır.</p></div></article><article class="payment-form-card"><h2>Paket ve ödeme bildirimi</h2><label class="payment-label">Üyelik paketi<select id="paymentPlan"><option value="weekly">Haftalık · 7 gün · $5</option><option value="monthly">Aylık · 30 gün · $10</option><option value="half_year">6 aylık · 180 gün · $20</option><option value="annual">1 yıllık · 365 gün · $40</option></select></label><div class="payment-total"><small>ÖDENECEK TUTAR</small><strong id="paymentUsd">$5 USD</strong><b id="paymentTry">Enpara kuruna bağlanılıyor...</b><small id="paymentRate"></small></div><form id="paymentReceiptForm"><label class="payment-label">Ödeyen adı soyadı<input name="payer_name" required minlength="2" maxlength="120" autocomplete="name" placeholder="Havale yapan kişinin adı soyadı"></label><label class="payment-label">Banka dekontu <small>PDF, JPG, PNG veya WEBP · en fazla 5 MB</small><input name="receipt" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required></label><button class="payment-submit" id="paymentSubmit" type="submit">Dekontu gönder</button><p class="payment-footnote">Dekont gönderiminiz yönetici incelemesine alınır. Ödeme onaylandığında seçtiğiniz paket hesabınıza tanımlanır.</p></form></article></section></main><div class="payment-toast" id="paymentToast" role="status"></div><script src="assets/js/config.js"></script><script src="assets/js/api.js?v=payment-rate-fix-20261105-3"></script><script>
 (async function initPaymentPage(){
  const plans={weekly:{usd:5,days:7},monthly:{usd:10,days:30},half_year:{usd:20,days:180},annual:{usd:40,days:365}};
  const select=document.getElementById("paymentPlan"),form=document.getElementById("paymentReceiptForm"),toast=document.getElementById("paymentToast"),btn=document.getElementById("paymentSubmit");
+ const display=document.getElementById("paymentTry"),rateLabel=document.getElementById("paymentRate");
  let rate=0,amount=0;
  const say=m=>{toast.textContent=m;toast.classList.add("show");};
  const money=n=>new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY"}).format(n);
  const timeout=(promise,ms,label)=>Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label)),ms))]);
+ const selectedPlan=()=>plans[select.value]||plans.weekly;
+ async function calc(){
+  const p=selectedPlan();
+  display.textContent="Enpara kuruna bağlanılıyor...";
+  rateLabel.textContent="Güncel USD satış kuru alınıyor";
+  rateLabel.onclick=null;rateLabel.style.cursor="default";
+  try{
+   if(!window.UzmantechAPI)throw new Error("Ödeme bağlantısı yüklenemedi. Sayfayı yenileyin.");
+   const result=await timeout(UzmantechAPI.exchangeRate(),12000,"Kur servisi 12 saniyede yanıt vermedi.");
+   const raw=result?.usd_sell??result?.data?.usd_sell;
+   const parsed=Number(raw);
+   if(result?.success===false||!Number.isFinite(parsed)||parsed<1||parsed>10000)throw new Error(result?.message||"Kur servisi geçerli USD satış kuru döndürmedi.");
+   rate=parsed;amount=Math.round(p.usd*rate*100)/100;
+   document.getElementById("paymentUsd").textContent="$"+p.usd+" USD";
+   display.textContent=money(amount);
+   rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:3,maximumFractionDigits:6})+" TL";
+  }catch(e){
+   rate=0;amount=0;display.textContent="Kur alınamadı";
+   rateLabel.textContent=(e?.message||"Bilinmeyen bağlantı hatası")+" · Yeniden denemek için dokunun";
+   rateLabel.style.cursor="pointer";rateLabel.onclick=calc;
+   console.error("Payment exchange-rate error:",e);
+  }
+ }
+ // Kur isteğini oturum kontrolünden bağımsız başlat. Oturum isteği takılsa bile tutar alanı boşta kalmaz.
+ display.textContent="Enpara kuruna bağlanılıyor...";
+ const rateTask=calc();
  try{
   if(!window.UzmantechAPI)throw new Error("Ödeme servisi yüklenemedi. Sayfayı yenileyin.");
   if(!UzmantechAPI.getToken()){location.replace("kayit.html");return;}
   const session=await timeout(UzmantechAPI.session(),10000,"Oturum kontrolü zaman aşımına uğradı. Yeniden giriş yapın.");
-  if(!session.user)throw new Error("Oturum doğrulanamadı. Yeniden giriş yapın.");
+  if(!session?.user)throw new Error("Oturum doğrulanamadı. Yeniden giriş yapın.");
   if(session.user.role==="admin")throw new Error("Yönetici hesapları paket satın alamaz.");
   if(session.user.license_status==="active"){location.replace("archive.html");return;}
  }catch(e){
@@ -19,45 +46,24 @@
   document.querySelector(".payment-grid").hidden=true;
   return;
  }
- async function calc(){
-  const p=plans[select.value]||plans.weekly;
-  const display=document.getElementById("paymentTry"),rateLabel=document.getElementById("paymentRate");
-  display.textContent="Enpara kuru alınıyor...";
-  rateLabel.textContent="Enpara USD satış kuru sorgulanıyor";
-  try{
-   const result=await timeout(UzmantechAPI.exchangeRate(),10000,"Enpara kur servisi 10 saniyede yanıt vermedi.");
-   const raw=result.usd_sell??result.data?.usd_sell;
-   const parsed=Number(raw);
-   if(!Number.isFinite(parsed)||parsed<=0)throw new Error("Enpara kur servisi geçerli USD satış kuru döndürmedi.");
-   rate=parsed;amount=Math.round(p.usd*rate*100)/100;
-   document.getElementById("paymentUsd").textContent="$"+p.usd+" USD";
-   display.textContent=money(amount);
-   rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:3,maximumFractionDigits:6})+" TL";
-  }catch(e){
-   rate=0;amount=0;display.textContent="Kur şu anda alınamıyor";
-   rateLabel.textContent=e.message+" Tekrar denemek için dokunun.";
-   rateLabel.style.cursor="pointer";rateLabel.onclick=calc;
-   console.error("Enpara rate error:",e);
-  }
- }
  const requested=new URLSearchParams(location.search).get("plan");
  select.value=Object.prototype.hasOwnProperty.call(plans,requested)?requested:"weekly";
- select.addEventListener("change",calc);
- document.getElementById("copyIban").addEventListener("click",()=>navigator.clipboard.writeText("TR650015700000000091101251").then(()=>say("IBAN kopyalandı.")));
+ select.addEventListener("change",()=>{rateTask.catch(()=>{});calc();});
+ if(select.value!==(requested&&plans[requested]?requested:"weekly"))calc();
+ document.getElementById("copyIban").addEventListener("click",()=>navigator.clipboard.writeText("TR650015700000000091101251").then(()=>say("IBAN kopyalandı.")).catch(()=>say("IBAN kopyalanamadı.")));
  form.addEventListener("submit",async e=>{
   e.preventDefault();
-  if(!rate||!amount){say("Önce Enpara kurunun yüklenmesini bekleyin.");return;}
+  if(!rate||!amount){say("Güncel Enpara kuru alınmadan dekont gönderilemez.");return;}
   const file=form.elements.receipt.files[0];
   if(!file||file.size>5*1024*1024||!["application/pdf","image/jpeg","image/png","image/webp"].includes(file.type)){say("Geçerli bir dekont seçin. En fazla 5 MB.");return;}
   btn.disabled=true;btn.textContent="Dekont yükleniyor...";
   try{
-   const latest=await UzmantechAPI.exchangeRate(),current=Number(latest.usd_sell);
-   const next=Math.round(plans[select.value].usd*current*100)/100;
+   const latest=await UzmantechAPI.exchangeRate(),current=Number(latest?.usd_sell??latest?.data?.usd_sell);
+   const next=Math.round(selectedPlan().usd*current*100)/100;
    if(!Number.isFinite(current)||Math.abs(current-rate)>.01||Math.abs(next-amount)>.02){await calc();throw new Error("Kur değişti. Yeni tutarı kontrol edip dekontu tekrar gönderin.");}
-   const result=await UzmantechAPI.paymentReceipt({plan:select.value,amountUsd:plans[select.value].usd,amountTry:amount,rate,payerName:form.elements.payer_name.value.trim(),file});
+   const result=await UzmantechAPI.paymentReceipt({plan:select.value,amountUsd:selectedPlan().usd,amountTry:amount,rate,payerName:form.elements.payer_name.value.trim(),file});
    form.reset();say(result.message||"Ödeme bildiriminiz alındı.");
-  }catch(err){say(err.message);}finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
+  }catch(err){say(err.message||"Dekont gönderilemedi.");}finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
  });
- await calc();
-})().catch(error=>{console.error("Payment page initialization failed:",error);const p=document.querySelector(".payment-heading p");if(p)p.textContent="Ödeme sayfası başlatılamadı: "+error.message;});
+})().catch(error=>{console.error("Payment page initialization failed:",error);const d=document.getElementById("paymentTry");if(d)d.textContent="Ödeme sayfası başlatılamadı";const r=document.getElementById("paymentRate");if(r)r.textContent=error.message||"Bilinmeyen hata";});
 </script></body></html>

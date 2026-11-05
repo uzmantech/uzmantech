@@ -34,19 +34,3 @@
 /* Admin sidebar: enlarge and bold text only; preserve icon glyph sizing and appearance. */
 .sidebar nav button{font-size:14px;font-weight:400}
 .sidebar nav button>span{font-size:15px;font-weight:750;letter-spacing:.1px}
-
-/* Full-width admin workspace, especially the archive file upload screen */
-html,body{width:100%;min-width:0;overflow-x:hidden}
-.layout{width:100%;max-width:none;grid-template-columns:clamp(205px,16vw,260px) minmax(0,1fr)}
-.main{width:100%;min-width:0}
-.content{width:100%;max-width:none;margin:0;padding:clamp(14px,1.35vw,24px)}
-#appView,.view{width:100%;min-width:0}
-#archive{width:100%;max-width:none}
-#archive .file-manager-panel{width:100%;max-width:none;margin:12px 0 18px;padding:clamp(14px,1.5vw,24px)!important}
-#archive .file-manager-form{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,1vw,16px)}
-#archive .table-scroll{width:100%;max-width:none}
-#archive .toolbar{width:100%}
-@media(min-width:1500px){.content{padding:18px 22px}}
-@media(max-width:950px){.layout{grid-template-columns:205px minmax(0,1fr)}.content{padding:16px 13px}}
-@media(max-width:760px){#archive .file-manager-form{grid-template-columns:1fr}}
-@media(max-width:650px){.layout{display:block}.content{padding:14px 10px}}

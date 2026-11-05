@@ -22,6 +22,7 @@
     register: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register", ...data }) }),
     registerVerify: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register_verify", ...data }) }),
     registerVerify: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register_verify", ...data }) }),
+    registerVerify: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "register_verify", ...data }) }),
     requestPasswordReset: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "password_reset_request", ...data }) }),
     confirmPasswordReset: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "password_reset_confirm", ...data }) }),
     session: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "session" }) }),

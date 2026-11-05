@@ -21,3 +21,10 @@ body.dashboard-page .dash-main{margin-left:0}body.dashboard-page .dash-content{p
 .site-content-search{width:min(560px,100%);margin:0 0 18px auto}
 .site-content-search input{font-size:12px}
 @media(max-width:980px){.site-content-search{margin:12px 0 16px}}
+
+/* Full-bleed layout: override legacy dashboard sidebar offset and centered max width */
+body.dashboard-page .dash-main{margin-left:0!important;width:100%;max-width:none}
+body.dashboard-page .dash-topbar.site-global-header{width:100%;left:0;right:0}
+body.dashboard-page .dash-content{width:100%;max-width:none;margin:0;padding:23px clamp(18px,2vw,38px) 24px}
+body.dashboard-page .dash-layout{width:100%;max-width:none;margin:0;grid-template-columns:minmax(0,2.15fr) minmax(300px,.88fr)}
+body.dashboard-page .dash-primary,body.dashboard-page .dash-secondary{min-width:0}

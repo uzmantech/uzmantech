@@ -85,6 +85,10 @@ help.innerHTML+=`
    <button type="button" data-support-search="Araçlar Modüller"><i class="support-cat-icon cat-tools"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7h22l-4 18H2z"/></svg></i><span><b>Araçlar ve Modüller</b><small>Uzmantool ve entegre araçlar hakkında destek.</small></span></button>
    <button type="button" data-support-search="Güncellemeler"><i class="support-cat-icon cat-update"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 13a11 11 0 1 0 1 7M26 5v8h-8"/></svg></i><span><b>Güncellemeler</b><small>Sürüm notları, güncelleme adımları ve yenilikler.</small></span></button>
   </div>
+  <div class="adsense-guides-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
+   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="6651798470" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   <div class="support-reference-section-head faq-heading" id="support-faq"><div><span>MERAK EDİLENLER</span><h3>Sıkça Sorulan Sorular</h3><p>En çok merak edilen sorular ve cevapları.</p></div><a href="#support-faq">Tüm Soruları Gör　→</a></div>
   <div class="support-faq-grid">
    <details data-support-faq><summary>Uzmantech nasıl kurulur?</summary><p>Uygulamanın kurulum dosyasını indirme bölümünden alın. Kurulum tamamlandığında programı yönetici olarak çalıştırıp hesabınızla giriş yapın.</p></details>

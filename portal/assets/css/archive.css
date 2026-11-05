@@ -186,3 +186,18 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .archive-folder-icon{font-size:43px;line-height:1;filter:drop-shadow(0 5px 7px #0006)}
 .archive-folder-card strong{font-size:13px}
 .archive-folder-card small{color:#9eafc4;font-size:10px}
+
+/* Files inside a software category are presented as folders, opening a dedicated download detail view */
+.archive-file-folder-card{min-height:150px}
+.archive-file-folder-card .archive-folder-icon{font-size:48px}
+.archive-file-folder-card strong{max-width:100%;overflow-wrap:anywhere;line-height:1.4}
+.archive-file-folder-card small{max-width:100%;overflow-wrap:anywhere;text-align:center}
+.archive-file-detail{grid-column:1/-1;max-width:760px;width:100%;justify-self:center;padding:28px;border:1px solid #3b465a;border-radius:16px;background:linear-gradient(145deg,#1d2433,#121722);text-align:center}
+.archive-file-detail-icon{font-size:64px;line-height:1.2;margin:5px auto 14px}
+.archive-file-detail-category{display:inline-block;padding:6px 12px;border:1px solid #4a5670;border-radius:30px;color:#9fcaff;font-size:10px;font-weight:800}
+.archive-file-detail h3{margin:14px 0 8px;color:#fff;font-size:21px}
+.archive-file-detail>p{color:#aebbd0;font-size:12px;line-height:1.7}
+.archive-file-detail-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0;padding:15px;border:1px solid #303b4d;border-radius:10px;text-align:left;color:#9eacc0;font-size:11px}
+.archive-file-detail-meta b{color:#f2f5fb}
+.archive-file-detail .archive-live-download{max-width:360px}
+@media(max-width:560px){.archive-file-detail{padding:18px}.archive-file-detail-meta{grid-template-columns:1fr}}

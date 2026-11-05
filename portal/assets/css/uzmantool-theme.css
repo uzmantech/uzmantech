@@ -48,3 +48,20 @@ body.dashboard-page .archive-style-foot{margin:auto 8px 8px!important;padding:14
 body.dashboard-page .archive-style-foot small{font-size:7px!important;letter-spacing:.7px!important;color:#71839c!important}
 @media(max-width:900px){body.dashboard-page .dash-sidebar.archive-style-sidebar{width:232px!important}body.dashboard-page .dash-main{margin-left:232px!important}}
 @media(max-width:700px){body.dashboard-page .dash-sidebar.archive-style-sidebar{width:min(82vw,260px)!important}body.dashboard-page .dash-main{margin-left:0!important}}
+
+/* Site-wide menu typography: larger, heavier labels without changing icon sizing. */
+body.dashboard-page .dash-nav a,
+body.dashboard-page .dash-nav button{
+  font-size:15px!important;
+  font-weight:750!important;
+}
+.archive-site-menu nav a{
+  font-size:15px!important;
+  font-weight:750!important;
+}
+@media(max-width:1150px){
+  .archive-site-menu nav a{font-size:14px!important}
+}
+@media(max-width:900px){
+  .archive-site-menu nav a{font-size:14px!important}
+}

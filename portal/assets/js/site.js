@@ -11,65 +11,64 @@
     $("#modalTitle").textContent=title; $("#modalBody").innerHTML=body; $("#modal").classList.add("open");
   }
   function closeModal(){ $("#modal").classList.remove("open"); }
+  const translations={
+    tr:{login:"Giriş Yap",register:"Üye Ol",logout:"Çıkış Yap",language:"Dil seçimi"},
+    en:{login:"Log In",register:"Sign Up",logout:"Log Out",language:"Language"}
+  };
+  function applyLanguage(lang){
+    const selected=lang==="en"?"en":"tr";
+    document.documentElement.lang=selected;
+    try{localStorage.setItem("uzmantech_portal_language",selected);}catch{}
+    const t=translations[selected];
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const key=el.dataset.i18n;
+      if(t[key])el.textContent=t[key];
+    });
+    const select=$("#languageSelect");
+    if(select)select.value=selected;
+    if(select)select.setAttribute("aria-label",t.language);
+    const login=$("#headerLogin");
+    if(login)login.setAttribute("aria-label",t.login);
+    const register=$("#headerRegister");
+    if(register)register.setAttribute("aria-label",t.register);
+    const logout=$("#logoutBtn");
+    if(logout)logout.setAttribute("aria-label",t.logout);
+    return selected;
+  }
   function syncHeader(){
-    const actions=$(".header-actions");
-    if(actions){
-      if(state.user){
-        actions.innerHTML='<span class="muted header-user">'+esc(state.user.username)+'</span><button class="button button-quiet" id="logoutBtn">Çıkış Yap</button>';
+    const user=state.user;
+    const auth=$("#headerAuth");
+    const lang=applyLanguage((()=>{try{return localStorage.getItem("uzmantech_portal_language")||document.documentElement.lang;}catch{return document.documentElement.lang;}})());
+    if(auth){
+      if(user){
+        auth.innerHTML='<button class="top-profile logged-in-profile" type="button" id="logoutBtn" title="'+translations[lang].logout+'"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button>';
       }else{
-        actions.innerHTML='<button class="button button-quiet" data-open="login">Giriş Yap</button><button class="button button-primary" data-open="register">Üye Ol</button><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç">☰</button>';
+        auth.innerHTML='<button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="login">'+translations[lang].login+'</span></button><button class="header-register" id="headerRegister" type="button" data-open="register"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span data-i18n="register">'+translations[lang].register+'</span></button>';
       }
     }
-
-    const user=state.user;
     const account=$("#accountName");
-    const username=user?.username||"Misafir";
-    const admin=user?.role==="admin";
-    const expiry=user?.expiry_date?new Date(user.expiry_date):null;
-    const expiryValid=expiry && !Number.isNaN(expiry.getTime());
-    const expired=!!(user && !admin && (!expiryValid || expiry.getTime()<=Date.now()));
-    const remainingDays=expiryValid?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
-    const roleLabel=!user?"Portal Ziyaretçisi":admin?"Yönetici":expired?"Lisans Süresi Doldu":"Premium Üye";
-
-    if(account)account.textContent=username;
-    if($("#welcomeName"))$("#welcomeName").textContent=user?"Merhaba, "+username:"Merhaba!";
-    if($("#accountRole"))$("#accountRole").textContent=roleLabel;
-    if($("#welcomeRole"))$("#welcomeRole").textContent=!user?"Uzmantech Portal'a hoş geldiniz":roleLabel;
-
+    if(account)account.textContent=user?.username||"Misafir";
+    if($("#accountRole"))$("#accountRole").textContent=!user?"Portal Ziyaretçisi":user.role==="admin"?"Yönetici":"Premium Üye";
+    if($("#welcomeName"))$("#welcomeName").textContent=user?"Merhaba, "+user.username:"Merhaba!";
+    if($("#welcomeRole"))$("#welcomeRole").textContent=!user?"Uzmantech Portal'a hoş geldiniz":user.role==="admin"?"Yönetici":"Premium Üye";
     const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
+    const expiry=user?.expiry_date?new Date(user.expiry_date):null;
+    const expiryValid=expiry&&!Number.isNaN(expiry.getTime());
+    const expired=!!(user&&!user.role==="admin"&&(!expiryValid||expiry.getTime()<=Date.now()));
+    const remainingDays=expiryValid?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
+    const admin=user?.role==="admin";
     const licenseType=$("#licenseType"),licenseEnd=$("#licenseEnd"),remaining=$("#licenseRemaining");
-    if(licenseType){
-      licenseType.textContent=!user?"Giriş yapın":admin?"Yönetici":expired?(expiryValid?"Süresi Doldu":"Lisans Atanmamış"):(planNames[user.license_plan]||"Aktif Lisans");
-    }
-    if(licenseEnd){
-      licenseEnd.textContent=expiryValid?expiry.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"}):(admin?"Süresiz":"-");
-    }
-    if(remaining){
-      remaining.textContent=!user?"-":admin?"Süresiz":!expiryValid?"Lisans Yok":remainingDays<=0?"Süresi Doldu":remainingDays+" Gün";
-    }
+    if(licenseType)licenseType.textContent=!user?"Giriş yapın":admin?"Yönetici":expired?(expiryValid?"Süresi Doldu":"Lisans Atanmamış"):(planNames[user.license_plan]||"Aktif Lisans");
+    if(licenseEnd)licenseEnd.textContent=expiryValid?expiry.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"}):(admin?"Süresiz":"-");
+    if(remaining)remaining.textContent=!user?"-":admin?"Süresiz":!expiryValid?"Lisans Yok":remainingDays<=0?"Süresi Doldu":remainingDays+" Gün";
     const licenseAction=$("#licenseAction");
     if(licenseAction){
-      if(admin){
-        licenseAction.textContent="Yönetici hesabı";
-        licenseAction.removeAttribute("data-open");
-        licenseAction.disabled=true;
-      }else{
-        licenseAction.disabled=false;
-        licenseAction.textContent=user?"Lisansı Yenile":"Giriş Yap";
-        licenseAction.dataset.open=user?"plans":"login";
-      }
+      licenseAction.disabled=!!admin;
+      licenseAction.textContent=admin?"Yönetici hesabı":user?"Lisansı Yenile":"Giriş Yap";
+      licenseAction.dataset.open=user?"plans":"login";
     }
     const historyButton=$("#paymentHistoryBtn");
-    if(historyButton)historyButton.hidden=!user || admin;
-
-    const registerButton=$("#headerRegister");
-    if(registerButton)registerButton.hidden=false;
-
-    const profile=$(".top-profile");
-    if(profile){
-      if(user){profile.removeAttribute("data-open");profile.id="logoutBtn";profile.title="Oturumu kapat";}
-      else{profile.id="";profile.setAttribute("data-open","login");profile.title="Hesabım";}
-    }
+    if(historyButton)historyButton.hidden=!user||admin;
   }
   function recordView(entry){
     const d=entry.data;
@@ -390,6 +389,7 @@
   }
 
   document.addEventListener("click",e=>{
+    if(e.target.closest("#languageSelect"))return;
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();
     if(opener?.dataset.open==="register")openRegister();
@@ -412,7 +412,16 @@
   $("#modalClose")?.addEventListener("click",closeModal);
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
   (async()=>{
-    const token=window.UzmantechAPI.getToken();
+  
+  document.addEventListener("change",e=>{
+    if(e.target.id==="languageSelect"){
+      const lang=applyLanguage(e.target.value);
+      syncHeader();
+      if(lang==="en")toast("Language set to English. Some portal sections may still appear in Turkish.");
+      else toast("Dil Türkçe olarak ayarlandı.");
+    }
+  });
+  const token=window.UzmantechAPI.getToken();
     if(token){try{const result=await window.UzmantechAPI.session();state.user=result.user;}catch{window.UzmantechAPI.setSession("");}}
     syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadRecent();await loadArchive();
   })();

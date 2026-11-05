@@ -368,3 +368,19 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
  .archive-recent-folder em{max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 @media(prefers-reduced-motion:reduce){.archive-recent-track{animation:none!important}}
+
+
+/* Homepage live statistics strip */
+.site-live-stats.archive-stat-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px auto 18px;padding:0 clamp(14px,3.6vw,60px);box-sizing:border-box}
+.site-live-stats .archive-stat{min-height:78px;justify-content:flex-start;padding:12px clamp(12px,1.8vw,24px);border-color:#245078;background:linear-gradient(125deg,#0c2036,#111a2c)}
+.site-live-stats .archive-stat>span{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border:1px solid #176da4;border-radius:50%;background:#0b3454;color:#43d2ff;font-size:17px}
+.site-live-stats .archive-stat div b{color:#f2f7ff;font-size:21px;line-height:1.1;font-variant-numeric:tabular-nums}
+.site-live-stats .archive-stat small{font-size:10px;color:#a9bfd5}
+.site-live-stats .archive-stat.stat-online{border-color:#176d58;background:linear-gradient(125deg,#0d2c26,#102a30)}
+.site-live-stats .archive-stat.stat-online>span{border-color:#167d65;background:#0c3b35;color:#3be0a1}
+.site-live-stats .archive-stat.stat-support{border-color:#245b82;background:linear-gradient(125deg,#10283e,#111b2d);text-decoration:none}
+.site-live-stats .archive-stat.stat-support>span{border-color:#176da4;background:#0b3454;color:#43d2ff}
+.site-live-stats .archive-stat.stat-visitors{border-color:#713b59;background:linear-gradient(125deg,#27172c,#171a2b)}
+.site-live-stats .archive-stat.stat-visitors>span{border-color:#8a4b73;background:#3a1e3b;color:#ff8ec5;font-size:12px;box-shadow:0 0 14px #ff4aa533}
+@media(max-width:900px){.site-live-stats.archive-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.site-live-stats.archive-stat-row{gap:8px;padding:0 12px}.site-live-stats .archive-stat{min-height:68px;padding:9px}.site-live-stats .archive-stat>span{width:32px;height:32px;flex-basis:32px}.site-live-stats .archive-stat div b{font-size:18px}.site-live-stats .archive-stat small{font-size:9px}}

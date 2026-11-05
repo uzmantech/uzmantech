@@ -1,6 +1,6 @@
 (() => {
   const config = window.UZMANTECH_CONFIG || {};
-  const token = () => localStorage.getItem("uzmantech_web_session") || sessionStorage.getItem("uzmantech_web_session") || "";
+  const token = () => { const saved = localStorage.getItem("uzmantech_web_session"); if(saved) return saved; const legacy = sessionStorage.getItem("uzmantech_web_session") || ""; if(legacy){ localStorage.setItem("uzmantech_web_session", legacy); sessionStorage.removeItem("uzmantech_web_session"); } return legacy; };
   async function call(path, options = {}) {
     if (!config.apiBaseUrl || !config.publishableKey) throw new Error("Portal bağlantısı yapılandırılmamış.");
     const response = await fetch(config.apiBaseUrl + path, {

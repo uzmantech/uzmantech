@@ -28,3 +28,82 @@
 .help-center-page .support-hub{margin-top:0!important}
 @media(max-width:850px){.help-center-hero{grid-template-columns:1fr}.help-center-steps{max-width:none}}
 @media(max-width:650px){.help-center-hero{padding:28px 18px}.help-center-copy h2{font-size:38px}.help-topic-grid{grid-template-columns:1fr}.help-topic-grid article{min-height:70px}.help-contact-heading h2{font-size:19px}}
+
+
+/* Support center: faithful implementation of approved reference */
+.support-reference-page>.portal-page-heading{display:none}
+.support-reference-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);align-items:center;min-height:295px;overflow:hidden;margin:0 0 18px;padding:27px 36px;border:1px solid #087fba;border-radius:17px;background:radial-gradient(ellipse at 75% 45%,#007bdc32,transparent 40%),linear-gradient(110deg,#03162b,#061d36 55%,#04162a)}
+.support-reference-copy{position:relative;z-index:2;max-width:670px}
+.support-reference-eyebrow{display:flex;align-items:center;gap:9px;color:#32cafa;font-size:10px;font-weight:800;letter-spacing:2px}
+.support-reference-eyebrow i{width:7px;height:7px;border-radius:50%;background:#22d5a0;box-shadow:0 0 12px #22d5a0}
+.support-reference-copy h2{margin:12px 0 8px;color:#f3f8ff;font:800 clamp(30px,3vw,43px)/1.08 "Space Grotesk",sans-serif;letter-spacing:-1.2px}
+.support-reference-copy h2 em{color:#4acfff;font-style:normal}
+.support-reference-copy>p{max-width:540px;margin:0;color:#b1c8df;font-size:12px;line-height:1.7}
+.support-search{display:flex;align-items:center;gap:10px;margin-top:16px;padding:4px 5px 4px 13px;border:1px solid #168fe1;border-radius:11px;background:#03172c;box-shadow:0 0 18px #008bff20}
+.support-search>span{color:#55cfff;font-size:22px}
+.support-search input{flex:1;min-width:0;height:36px;border:0;outline:0;background:transparent;color:#e8f5ff;font:12px "DM Sans",sans-serif}
+.support-search input::placeholder{color:#91abc6}
+.support-search button{height:37px;padding:0 22px;border:0;border-radius:8px;background:linear-gradient(110deg,#05b8f4,#0873eb);color:white;font-weight:800;font-size:11px;cursor:pointer}
+.support-popular-searches{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:11px}
+.support-popular-searches>b{margin-right:3px;color:#a9c2db;font-size:10px}
+.support-popular-searches button{padding:6px 10px;border:1px solid #155a91;border-radius:20px;background:#061d35;color:#d5eaff;font-size:9px;cursor:pointer;transition:.2s}
+.support-popular-searches button:hover{border-color:#29bfff;background:#0b3b60;color:#fff}
+.support-reference-art{align-self:stretch;min-height:260px;margin:-15px -25px -15px 0;background-image:url("../images/uzmantech-destek-hero-gorseli.png");background-position:center;background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 22px #008cff35)}
+.support-quick-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:hidden;margin-bottom:18px;border:1px solid #0789c8;border-radius:13px;background:linear-gradient(100deg,#061d34,#082441)}
+.support-quick-actions>button,.support-quick-actions>a{display:flex;align-items:center;gap:12px;min-width:0;min-height:72px;padding:11px 16px;border:0;border-right:1px solid #155078;background:transparent;text-align:left;text-decoration:none;cursor:pointer;transition:background .2s}
+.support-quick-actions>*:last-child{border-right:0}
+.support-quick-actions>*:hover{background:#0b3a60}
+.support-quick-actions>*>span{flex:0 0 38px;color:#28bfff;font-size:29px;text-align:center;text-shadow:0 0 14px #009cff88}
+.support-quick-actions b{display:flex;flex-direction:column;gap:5px;min-width:0;color:#f0f7ff;font-size:11px}
+.support-quick-actions small{color:#a7c0d9;font-size:9px;font-weight:400}
+.support-quick-actions>*>i{margin-left:auto;color:#20baff;font-size:20px;font-style:normal}
+.support-reference-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.support-reference-main{min-width:0}
+.support-reference-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 0 13px}
+.support-reference-section-head>div>span{color:#36caff;font-size:8px;font-weight:800;letter-spacing:1.6px}
+.support-reference-section-head h3{margin:3px 0;color:#f1f7ff;font:700 20px "Space Grotesk",sans-serif}
+.support-reference-section-head p{margin:0;color:#9bb4cd;font-size:10px}
+.support-reference-section-head>a{flex-shrink:0;color:#23c8ff;font-size:10px;font-weight:700;text-decoration:none}
+.support-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:25px}
+.support-category-grid>button{display:flex;align-items:center;gap:11px;min-width:0;min-height:90px;padding:12px;border:1px solid #174d78;border-radius:12px;background:linear-gradient(145deg,#0a2948,#04182d);text-align:left;cursor:pointer;transition:.2s}
+.support-category-grid>button:hover{border-color:#16a8ee;background:linear-gradient(145deg,#0e3c64,#071e37);transform:translateY(-2px);box-shadow:0 9px 20px #00152c88}
+.support-cat-icon{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border:1px solid #146da8;border-radius:13px;background:#07345a;color:#2fc6ff;font-size:27px;font-style:normal;box-shadow:0 0 17px #008cff24}
+.cat-android{color:#25dc78}.cat-apple{color:#f3f7ff}.cat-errors{color:#a985ff}.cat-tools{color:#48baff}.cat-update{color:#24caff}
+.support-category-grid button>span{display:flex;flex-direction:column;gap:5px;min-width:0}
+.support-category-grid b{color:#edf6ff;font-size:11px}
+.support-category-grid small{color:#a1bad2;font-size:9px;line-height:1.5}
+.faq-heading{margin-top:3px}
+.support-faq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.support-faq-grid details{overflow:hidden;border:1px solid #17466d;border-radius:10px;background:linear-gradient(120deg,#0a2440,#06182c)}
+.support-faq-grid summary{position:relative;padding:13px 35px 13px 15px;color:#eaf4ff;font-size:11px;font-weight:700;cursor:pointer;list-style:none}
+.support-faq-grid summary::-webkit-details-marker{display:none}
+.support-faq-grid summary:after{content:"⌄";position:absolute;right:14px;top:10px;color:#cfe9ff;font-size:17px;transition:transform .2s}
+.support-faq-grid details[open] summary:after{transform:rotate(180deg)}
+.support-faq-grid details p{margin:0;padding:0 15px 14px;color:#9fb8d0;font-size:10px;line-height:1.7}
+.support-faq-grid details[hidden]{display:none}
+.support-no-results{grid-column:1/-1;color:#a9c2da;font-size:11px}
+.support-reference-sidebar{display:grid;gap:13px}
+.support-side-card{padding:13px;border:1px solid #155c94;border-radius:14px;background:linear-gradient(145deg,#0a2b4b,#04182d);box-shadow:0 9px 24px #0003}
+.support-side-heading{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.support-side-heading>span{display:grid;place-items:center;width:37px;height:37px;border:1px solid #1879b4;border-radius:10px;background:#0a3459;color:#49ceff;font-size:21px}
+.support-side-heading>div{display:flex;flex-direction:column;gap:4px}
+.support-side-heading b{color:#f0f7ff;font:700 15px "Space Grotesk",sans-serif}
+.support-side-heading small{color:#9cb6cf;font-size:9px}
+.support-contact-card>button{display:flex;align-items:center;gap:10px;width:100%;margin-top:7px;padding:7px 9px;border:1px solid #17618e;border-radius:9px;background:#061d34;text-align:left;cursor:pointer;transition:.2s}
+.support-contact-card>button:hover{border-color:#1cbaff;background:#0a3152}
+.support-contact-card>button>i{display:grid;place-items:center;flex:0 0 35px;height:30px;border-radius:8px;color:white;font-size:17px;font-style:normal}
+.contact-whatsapp{background:#10a968}.contact-telegram{background:#168bd0}.contact-email{background:#6556d9}
+.support-contact-card>button>span{display:flex;flex:1;flex-direction:column;gap:3px}
+.support-contact-card>button b{color:#f0f7ff;font-size:10px}
+.support-contact-card>button small{color:#9db8d1;font-size:8px}
+.support-contact-card>button>strong{color:#27c2ff;font-size:17px}
+.support-status-card{border-color:#155c94}
+.support-status-row{display:flex;align-items:center;gap:8px;padding:9px 7px;border:1px solid #17446a;border-radius:8px;background:#061e35}
+.support-status-row+.support-status-row{margin-top:5px}
+.support-status-row>i{width:7px;height:7px;border-radius:50%;background:#24d5a1;box-shadow:0 0 8px #24d5a1}
+.support-status-row>b{flex:1;color:#e7f2ff;font-size:10px}
+.support-status-row>small{color:#53caff;font-size:8px}
+.support-reference-page .support-hub{display:none!important}
+@media(max-width:1100px){.support-reference-layout{grid-template-columns:minmax(0,1fr) 290px}.support-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.support-quick-actions>button,.support-quick-actions>a{padding:10px}.support-quick-actions b{font-size:10px}}
+@media(max-width:820px){.support-reference-hero{grid-template-columns:1fr;padding:24px 22px}.support-reference-art{min-height:220px;margin:0;background-position:center}.support-reference-layout{grid-template-columns:1fr}.support-reference-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.support-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.support-quick-actions>*:nth-child(2){border-right:0}.support-quick-actions>*:nth-child(n+3){border-top:1px solid #155078}}
+@media(max-width:560px){.support-reference-hero{padding:22px 16px}.support-reference-copy h2{font-size:30px}.support-reference-art{min-height:180px}.support-popular-searches>b{width:100%}.support-quick-actions{grid-template-columns:1fr}.support-quick-actions>*{border-right:0;border-top:1px solid #155078}.support-quick-actions>*:first-child{border-top:0}.support-category-grid,.support-faq-grid,.support-reference-sidebar{grid-template-columns:1fr}.support-category-grid>button{min-height:76px}.support-reference-section-head{align-items:flex-start;flex-direction:column}.support-reference-section-head>a{align-self:flex-start}}

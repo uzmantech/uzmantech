@@ -689,7 +689,6 @@ Deno.serve(async (req: Request) => {
       "Uzmantech şifre sıfırlama kodunuz:\n\n    " + code +
       "\n\nBu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir." +
       "\n\nBu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\n\nUzmantech";
-      "\\n\\nBu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.\\n\\nUzmantech";
     const { error: mailError } = await queuePortalEmail(email, "Uzmantech - Şifre Sıfırlama Kodu", mailBody);
     if (mailError) {
       await db.from("users").update({

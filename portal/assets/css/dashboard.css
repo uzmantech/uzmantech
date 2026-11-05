@@ -788,3 +788,47 @@
 @media(max-width:720px){
  .pro-laptop-image{-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 6%,#000 95%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 6%,#000 95%,transparent 100%)}
 }
+
+
+/* Premium license center page */
+.license-page{padding-bottom:28px}
+.license-page>.portal-page-heading{margin-bottom:18px}
+.license-hero{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:26px;min-height:330px;margin:12px 0 22px;padding:clamp(24px,3.2vw,42px);border:1px solid #14558d;border-radius:22px;background:radial-gradient(ellipse at 72% 50%,#0879df36,transparent 40%),linear-gradient(115deg,#071a31,#06152a 60%,#082345);box-shadow:inset 0 1px #ffffff0c,0 18px 45px #00112655}
+.license-hero:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(100deg,transparent 55%,#008cff0b)}
+.license-hero-copy{position:relative;z-index:2;max-width:620px}
+.license-kicker{color:#24c6ff;font-size:10px;font-weight:800;letter-spacing:2.5px}
+.license-hero-copy h2{margin:15px 0 12px;color:#f4f8ff;font:700 clamp(30px,3.5vw,48px)/1.12 "Space Grotesk",sans-serif;letter-spacing:-1.6px}
+.license-hero-copy h2 em{color:#65bfff;font-style:normal}
+.license-hero-copy>p{max-width:530px;margin:0;color:#b6cbe1;font-size:14px;line-height:1.8}
+.license-benefits{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:23px}
+.license-benefits span{display:flex;align-items:center;gap:7px;color:#e2efff;font-size:11px}
+.license-benefits i{width:19px;height:19px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#09baff,#075bdb);color:white;font-size:12px;font-style:normal;font-weight:800}
+.license-product-art{position:relative;min-height:270px;display:flex;align-items:center;justify-content:center}
+.license-orbit{position:absolute;width:90%;height:85px;bottom:28px;border:2px solid #00caff;border-radius:50%;box-shadow:0 0 12px #00caff,0 0 35px #007bff88;transform:perspective(220px) rotateX(58deg)}
+.license-box{position:relative;z-index:2;width:175px;height:225px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;border:1px solid #64caff;border-radius:12px;background:linear-gradient(145deg,#0d3155,#061327 65%,#0b2a4a);box-shadow:0 0 0 3px #0879d522,0 15px 35px #0008,0 0 32px #008cff66;transform:perspective(700px) rotateY(-10deg) rotateX(2deg)}
+.license-box:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#ffffff12,transparent 35%),repeating-linear-gradient(160deg,transparent 0 22px,#0b8cff19 23px 24px)}
+.license-box-top{position:absolute;top:15px;color:#75cfff;font-size:9px;font-weight:800;letter-spacing:2px}
+.license-box-logo{width:58px;height:58px;display:grid;place-items:center;margin:8px 0 12px;border:2px solid #25c9ff;border-radius:17px;background:linear-gradient(145deg,#0d9dff,#0648bb);box-shadow:0 0 22px #00aaff66;color:#fff;font:700 38px "Space Grotesk",sans-serif}
+.license-box>b{color:#fff;font:700 23px "Space Grotesk",sans-serif}.license-box>small{margin-top:6px;color:#a9c9e7;font-size:9px}
+.license-box-wave{position:absolute;bottom:0;left:0;right:0;height:45px;background:linear-gradient(160deg,transparent 40%,#008dff44 41%,transparent 45%),linear-gradient(170deg,transparent 55%,#00caff55 56%,transparent 60%)}
+.license-art-caption{position:absolute;z-index:3;right:0;bottom:12px;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #1b5a8a;border-radius:12px;background:#071a2deF;box-shadow:0 10px 25px #0005}
+.license-art-caption>span{color:#28caff;font-size:24px}.license-art-caption>div{display:flex;flex-direction:column;gap:3px}.license-art-caption b{color:#eef7ff;font-size:11px}.license-art-caption small{color:#8eaccb;font-size:9px}
+.license-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:8px 0 12px}
+.license-section-label{display:flex;align-items:center;gap:12px;padding:14px 17px;border:1px solid #1c456a;border-radius:13px;background:linear-gradient(120deg,#0d2440,#091a2e)}
+.license-section-label>span{width:35px;height:35px;display:grid;place-items:center;border:1px solid #087cc2;border-radius:10px;background:#07335a;color:#55caff;font:700 13px "Space Grotesk"}
+.license-section-label>div{display:flex;flex-direction:column;gap:4px}.license-section-label b{color:#f1f7ff;font-size:12px}.license-section-label small{color:#92abc5;font-size:10px}
+.license-status-card{margin:0 0 22px;padding:22px;border:1px solid #1b4d78;border-radius:16px;background:linear-gradient(145deg,#0c2340,#07172a);box-shadow:inset 0 1px #ffffff09}
+.license-status-card h2{display:flex;align-items:center;gap:9px;margin:0 0 15px;color:#f1f7ff;font:700 18px "Space Grotesk",sans-serif}
+.license-status-card .license-line{padding:12px 0;border-bottom:1px solid #1c3855;color:#b6cbe0;font-size:12px}
+.license-status-card .license-line b{color:#fff}
+.license-status-card .license-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
+.license-packages-section{margin-top:12px}
+.license-packages-section .dash-section-heading h2{color:#f4f8ff}
+.license-packages-section .dash-package-grid{gap:16px}
+.license-packages-section .dash-package{border:1px solid #1d4c75;border-radius:16px;background:linear-gradient(145deg,#0d2440,#07172a);box-shadow:inset 0 1px #ffffff08;transition:transform .2s,border-color .2s}
+.license-packages-section .dash-package:hover{transform:translateY(-3px);border-color:#168bd2}
+.license-packages-section .dash-package.featured{border-color:#078dff;box-shadow:0 0 0 1px #078dff33,0 12px 28px #006bca22}
+.license-packages-section .dash-package strong{color:#70c5ff}
+.license-packages-section .dash-package .dash-button{border-radius:10px}
+@media(max-width:900px){.license-hero{grid-template-columns:1fr}.license-product-art{min-height:245px}.license-art-caption{right:5%}}
+@media(max-width:620px){.license-hero{padding:22px 17px}.license-hero-copy h2{font-size:32px}.license-content-grid{grid-template-columns:1fr}.license-product-art{min-height:230px}.license-box{width:150px;height:195px}.license-status-card{padding:17px}}

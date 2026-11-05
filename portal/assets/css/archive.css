@@ -110,3 +110,27 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .archive-main-column>.archive-brand-rail>.archive-brand-list>button{display:flex!important;flex:0 0 125px!important;width:125px!important;min-width:125px!important;max-width:125px!important;min-height:54px!important;justify-content:flex-start!important}
 .archive-main-column>.archive-brand-rail>.archive-brand-list>button b{white-space:nowrap!important}
 @media(max-width:600px){.archive-main-column>.archive-brand-rail>.archive-brand-list>button{flex-basis:108px!important;width:108px!important;min-width:108px!important;max-width:108px!important}}
+
+/* Live archive entries populated from the admin archive manager */
+.archive-live-files{width:min(1440px,calc(100% - 48px));margin:24px auto 60px;padding:26px;border:1px solid #303d52;border-radius:18px;background:linear-gradient(145deg,#151e2b,#101722);box-shadow:0 16px 40px #0003}
+.archive-live-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}
+.archive-live-head>div>span{color:#45baff;font-size:10px;font-weight:800;letter-spacing:1.8px}
+.archive-live-head h2{margin:6px 0;color:#f3f7fc;font:700 25px "Space Grotesk",sans-serif}
+.archive-live-head p{margin:0;color:#9eafc4;font-size:12px}
+.archive-live-head>strong{padding:8px 12px;border:1px solid #315778;border-radius:30px;color:#b8dfff;font-size:10px;white-space:nowrap}
+.archive-live-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.archive-live-card{display:flex;flex-direction:column;min-width:0;padding:17px;border:1px solid #34445a;border-radius:13px;background:linear-gradient(145deg,#1b2636,#141c29)}
+.archive-live-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.archive-live-card-top span{color:#7dc4ff;font-size:10px;font-weight:800}
+.archive-live-card-top small{padding:5px 8px;border-radius:20px;background:#263d57;color:#b6d8f4;font-size:9px}
+.archive-live-card h3{margin:15px 0 5px;color:#f3f6fb;font-size:15px;line-height:1.4}
+.archive-live-model{margin:0;color:#83b9e8;font-size:11px;font-weight:700}
+.archive-live-description{min-height:38px;margin:12px 0;color:#aab8ca;font-size:11px;line-height:1.6}
+.archive-live-meta{display:flex;justify-content:space-between;gap:10px;margin-top:auto;padding-top:12px;border-top:1px solid #2c3b50;color:#8094ad;font-size:9px;overflow-wrap:anywhere}
+.archive-live-download{width:100%;min-height:41px;margin-top:14px;border:1px solid #268cda;border-radius:9px;background:linear-gradient(110deg,#087fc2,#1459bd);color:#fff;font-size:12px;font-weight:800;cursor:pointer}
+.archive-live-download:hover{filter:brightness(1.12)}
+.archive-live-download:disabled{opacity:.55;cursor:wait}
+.archive-live-empty{grid-column:1/-1;padding:30px;border:1px dashed #3a4c63;border-radius:12px;color:#9aacc1;text-align:center}
+.archive-brand-list button.active{border-color:#3a9ce9!important;background:#203a56!important}
+@media(max-width:950px){.archive-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.archive-live-files{width:calc(100% - 24px);padding:17px;margin:16px auto 35px}.archive-live-head{align-items:flex-start}.archive-live-head h2{font-size:21px}.archive-live-grid{grid-template-columns:1fr}}

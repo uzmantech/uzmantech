@@ -34,6 +34,8 @@
     archiveAdmin: data => call("/archive-service", { method: "POST", body: JSON.stringify(data) }),
     archiveFiles: () => call("/archive-service?resource=files"),
     archiveFileDownload: id => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "archive_file_download_url", id }) }),
+    siteStats: () => call("/archive-service?resource=stats"),
+    visitorPing: visitorId => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "visitor_ping", visitor_id: visitorId }) }),
     portalAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
     exchangeRate: () => call("/portal-api/exchange-rate"),
     paymentReceipt: ({plan, amountUsd, amountTry, rate, payerName, file}) => {
@@ -54,4 +56,21 @@
     setSession: value => { if(value){ localStorage.setItem("uzmantech_web_session", value); sessionStorage.removeItem("uzmantech_web_session"); } else { localStorage.removeItem("uzmantech_web_session"); sessionStorage.removeItem("uzmantech_web_session"); } },
     getToken: token
   });
+
+  // Anonymous live visitor heartbeat. A browser is counted once while active.
+  try {
+    let visitorId = localStorage.getItem("uzmantech_visitor_id");
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      localStorage.setItem("uzmantech_visitor_id", visitorId);
+    }
+    const ping = () => {
+      if (document.visibilityState === "visible") {
+        window.UzmantechAPI.visitorPing(visitorId).catch(() => {});
+      }
+    };
+    ping();
+    window.setInterval(ping, 30000);
+    document.addEventListener("visibilitychange", ping);
+  } catch { /* Storage may be disabled; public pages remain usable. */ }
 })();

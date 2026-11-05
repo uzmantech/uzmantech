@@ -18,9 +18,10 @@ const tools=make("tools","Araçlar","Uzmantech masaüstü uygulamasındaki çal�
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
 const help=make("help","Yardım Merkezi","Portal, üyelik, lisans ve masaüstü uygulaması hakkında yardım.");help.innerHTML+='<div class="portal-info-grid"><article class="portal-info-card"><h2>Hesap ve giriş</h2><p>Hesabınıza giriş yapın. Şifrenizi unuttuysanız giriş penceresindeki şifre yenileme adımını kullanın.</p></article><article class="portal-info-card"><h2>Lisans ve ödeme</h2><p>Lisans durumunuzu Lisans İşlemleri sayfasından görüntüleyebilir, uygun paketi seçebilirsiniz.</p></article><article class="portal-info-card"><h2>Teknik destek</h2><p>Çözemediğiniz sorunlar için Destek Talepleri bölümünden bize ulaşabilirsiniz.</p></article></div>';
 const pages=[...main.querySelectorAll("[data-page-view]")];
-function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
-document.addEventListener("click",e=>{const a=e.target.closest(".dash-nav [data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
+function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
 document.addEventListener("portal:show-account",()=>show("account"));
+document.addEventListener("click",e=>{if(e.target.closest("#activationAccountLink"))document.dispatchEvent(new CustomEvent("portal:show-account"));});
 document.addEventListener("click",function(e){
   if(e.target.closest("#licenseActivateBtn")){
     const input=document.getElementById("licenseKeyInput");

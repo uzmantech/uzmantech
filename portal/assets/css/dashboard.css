@@ -751,3 +751,9 @@
 .pro-detail-card li:before{content:"✓";position:absolute;left:0;color:#00caff;font-size:17px;font-weight:800;text-shadow:0 0 10px #00aaff}
 @media(max-width:1050px){.pro-hero-grid{grid-template-columns:minmax(0,1fr) minmax(340px,.9fr);gap:10px}.pro-laptop-scene{min-height:330px}.pro-password-bar{grid-template-columns:75px 1fr;gap:15px}.pro-password-divider{display:none}.pro-install-note{grid-column:1/-1;padding-top:14px;border-top:1px solid #21405f}.pro-detail-grid{grid-template-columns:1fr 1fr}.pro-detail-card:last-child{grid-column:1/-1}}
 @media(max-width:720px){.pro-download-hero{padding:19px 15px}.pro-download-brand{flex-wrap:wrap}.pro-download-pill{margin:8px 0 0 60px}.pro-hero-grid{grid-template-columns:1fr;margin-top:24px}.pro-hero-copy h2{font-size:54px}.pro-laptop-scene{min-height:300px;margin-top:5px}.pro-laptop-screen{width:94%}.pro-platform-facts>div{flex:1;min-width:145px}.pro-password-bar{grid-template-columns:1fr;padding:17px}.pro-winrar-mark{display:none}.pro-install-note{grid-column:auto}.pro-detail-grid{grid-template-columns:1fr}.pro-detail-card:last-child{grid-column:auto}}
+
+/* Real Uzmantool brand marks inside the laptop interface */
+.pro-screen-logo{width:22px;height:22px;display:grid;place-items:center;overflow:hidden;border-radius:5px;background:linear-gradient(145deg,#0b9cff,#064fcb)}
+.pro-screen-logo img{width:20px;height:20px;object-fit:contain;filter:brightness(0) invert(1)}
+.pro-screen-title{display:flex;align-items:center;gap:4px}
+.pro-screen-title img{width:17px;height:17px;object-fit:contain;filter:drop-shadow(0 0 4px #00aaff)}

@@ -684,6 +684,7 @@ Deno.serve(async (req: Request) => {
     }).eq("id", user.id);
     if (updateError) return response({ success: false, message: "Doğrulama isteği kaydedilemedi." }, 503);
 
+    const mailBody =
       "Merhaba " + String(user.username || "") + ",\n\n" +
       "Uzmantech şifre sıfırlama kodunuz:\n\n    " + code +
       "\n\nBu kod 10 dakika geçerlidir ve yalnızca bir kez kullanılabilir." +

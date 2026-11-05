@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261104">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/dashboard.css?v=support-premium-20261105">
+<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css?v=20261105-1"><link rel="stylesheet" href="assets/css/dashboard.css?v=support-premium-20261105">
 <link rel="stylesheet" href="assets/css/support-center.css?v=20261105-1">
 <link rel="stylesheet" href="assets/css/updates-page.css?v=20261105-1">
 <link rel="stylesheet" href="assets/css/help-center.css?v=20261105-1">
@@ -89,23 +89,18 @@
 <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/></symbol>
 <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h8"/></symbol>
 </svg>
-<aside class="dash-sidebar archive-style-sidebar">
-  <a class="dash-brand archive-style-brand" href="./"><img src="assets/logo.svg?v=20261104" alt="Uzmantool"><span><b>UZMANTOOL</b><small>TEKNİK DOSYA MERKEZİ</small></span></a>
-  <div class="archive-style-caption">SİTE MENÜSÜ</div>
-  <nav class="dash-nav archive-style-nav" aria-label="Site menüsü">
-    <a class="active" href="./" data-page="home"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg>Ana Sayfa</a>
-    <a href="archive.html"><svg viewBox="0 0 24 24"><use href="#i-folder"/></svg>Dosya Arşivi</a>
-    <a href="#download" data-page="download"><svg viewBox="0 0 24 24"><use href="#i-download"/></svg>Uzmantech İndir</a>
-    <a href="#packages"><svg viewBox="0 0 24 24"><use href="#i-key"/></svg>Üyelik</a>
-    <a href="#updates" data-page="updates"><svg viewBox="0 0 24 24"><use href="#i-refresh"/></svg>Güncellemeler</a>
-    <a href="#announcements" data-page="announcements"><svg viewBox="0 0 24 24"><use href="#i-megaphone"/></svg>Duyurular</a>
-    <a href="#help" data-page="help"><svg viewBox="0 0 24 24"><use href="#i-help"/></svg>Yardım ve Destek</a>
-  </nav>
-  <div class="dash-side-foot archive-style-foot">UZMANTOOL<br><small>TEKNİK DOSYA MERKEZİ</small></div>
-</aside>
+
 <div class="dash-main">
-<header class="dash-topbar">
-  <div class="dash-top-actions">
+<header class="dash-topbar site-global-header">
+ <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"><span><b>UZMANTOOL</b><small>TEKNİK DOSYA MERKEZİ</small></span></a><nav class="site-global-nav" aria-label="Ana menü"><a class="site-nav-link active" href="index.html"><span class="site-nav-icon">⌂</span><b>Ana Sayfa</b></a>
+<a class="site-nav-link" href="archive.html"><span class="site-nav-icon">▣</span><b>Dosya Arşivi</b><span class="site-nav-chevron">⌄</span></a>
+<a class="site-nav-link" href="index.html#premium"><span class="site-nav-icon">⚒</span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></a>
+<a class="site-nav-link" href="index.html#help"><span class="site-nav-icon">▤</span><b>Rehberler</b><span class="site-nav-chevron">⌄</span></a>
+<a class="site-nav-link" href="index.html#download"><span class="site-nav-icon">♧</span><b>İndirilenler</b></a>
+<a class="site-nav-link" href="index.html#updates"><span class="site-nav-icon">▣</span><b>Haberler</b></a>
+<a class="site-nav-link" href="index.html#help"><span class="site-nav-icon">♧</span><b>Destek</b><span class="site-nav-chevron">⌄</span></a></nav>
+ <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+ <div class="dash-top-actions">
     <label class="language-control" aria-label="Site language">
       <span class="language-globe" aria-hidden="true">◎</span>
       <select id="languageSelect" aria-label="Dil seçimi">

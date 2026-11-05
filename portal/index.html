@@ -95,8 +95,6 @@
 <header class="dash-topbar site-global-header">
  <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a><nav class="site-global-nav" aria-label="Ana menü"><a class="site-nav-link active" href="index.html"><span class="site-nav-icon">⌂</span><b>Ana Sayfa</b></a>
 <a class="site-nav-link" href="archive.html"><span class="site-nav-icon">▣</span><b>Dosya Arşivi</b><span class="site-nav-chevron">⌄</span></a>
-<a class="site-nav-link" href="index.html#premium"><span class="site-nav-icon">⚒</span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></a>
-<a class="site-nav-link" href="index.html#help"><span class="site-nav-icon">▤</span><b>Rehberler</b><span class="site-nav-chevron">⌄</span></a>
 <a class="site-nav-link" href="index.html#download"><span class="site-nav-icon">♧</span><b>İndirilenler</b></a>
 <a class="site-nav-link" href="index.html#updates"><span class="site-nav-icon">▣</span><b>Haberler</b></a>
 <a class="site-nav-link" href="index.html#help"><span class="site-nav-icon">♧</span><b>Destek</b><span class="site-nav-chevron">⌄</span></a></nav>
@@ -190,21 +188,10 @@
         <article class="announcement-row"><span class="announcement-icon">▣</span><span class="announcement-tag orange">Önemli</span><div><b>Lisans Süreleri Hakkında</b><p>Lisans yenileme ve süre uzatma işlemleri için bilgilendirme.</p></div><time>20 Ekim 2026</time></article>
       </section>
     </div>
-      <section class="dash-account-grid" aria-label="Hesap ve lisans">
+      <section class="dash-account-grid" aria-label="Hesap ve lisans" hidden style="display:none!important">
         <section class="dash-panel welcome-card"><span class="avatar large"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><div><h2 id="welcomeName">Merhaba, UZMAN</h2><p id="welcomeRole">Uzmantech Portal'a hoş geldiniz</p></div><span class="crown"><svg viewBox="0 0 24 24"><use href="#i-crown"/></svg></span></section>
         <section class="dash-panel license-card" id="license"><h2><svg class="card-title-icon" viewBox="0 0 24 24"><use href="#i-key"/></svg> Lisans Bilgilerim</h2><div class="license-line"><span><svg viewBox="0 0 24 24"><use href="#i-user"/></svg> Lisans Türü</span><b class="license-value" id="licenseType">Giriş yapın</b></div><div class="license-line"><span><svg viewBox="0 0 24 24"><use href="#i-calendar"/></svg> Bitiş Tarihi</span><b id="licenseEnd">-</b></div><div class="license-line"><span><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg> Kalan Süre</span><b class="license-value" id="licenseRemaining">-</b></div><div class="license-actions"><button class="dash-button" id="licenseAction" data-open="login" type="button">Giriş Yap</button><button class="dash-button dash-button-outline" id="paymentHistoryBtn" type="button" hidden>Ödeme Geçmişim</button></div></section>
         
-      </section>
-      <section class="dash-section" id="premium">
-        <div class="dash-section-heading"><div><span class="eyebrow">UZMANTECH PREMIUM</span><h2>Teknik servisiniz için güçlü araçlar</h2><p>Günlük servis işlemlerini tek merkezden yönetin.</p></div></div>
-        <div class="premium-grid">
-          <article class="premium-card"><span class="premium-symbol android"><svg viewBox="0 0 24 24"><path d="m7 8-2-3m12 3 2-3M5 10h14v7a2 2 0 0 1-2 2h-1v2h-2v-2h-4v2H8v-2H7a2 2 0 0 1-2-2z"/><path d="M9 12h.01M15 12h.01"/></svg></span><h3>ADB ve Fastboot</h3><p>Cihaz bağlantısı, komutlar ve temel servis işlemleri için tek çalışma alanı.</p></article>
-          <article class="premium-card"><span class="premium-symbol tool"><svg viewBox="0 0 24 24"><path d="M14.5 6.5a5 5 0 0 0-6.8 6.8L3 18l3 3 4.7-4.7a5 5 0 0 0 6.8-6.8l-3 3-3-3z"/></svg></span><h3>UZMANTOOL</h3><p>Telefon yazılımı ve bakım araçlarına uygulama içinden hızlı erişim.</p></article>
-          <article class="premium-card"><span class="premium-symbol backup"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .4-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9Z"/><path d="M12 12v7m-3-3 3 3 3-3"/></svg></span><h3>Yedekleme ve Geri Yükleme</h3><p>Android ve Apple cihaz verileri için yedekleme iş akışları.</p></article>
-          <article class="premium-card"><span class="premium-symbol customers"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1zm13-9a3 3 0 1 0-1-5.8M18 14a5 5 0 0 1 3 5v1h-3"/></svg></span><h3>Müşteri Takibi</h3><p>Müşteri, cihaz, servis kaydı ve iş takibini düzenli tutun.</p></article>
-          <article class="premium-card"><span class="premium-symbol archive"><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM5 8v12h14V8M9 12h6m-6 4h6"/></svg></span><h3>Teknik Dosya Arşivi</h3><p>Firmware, ENG, IMEI ve diğer teknik kayıtları kategorilere göre keşfedin.</p></article>
-          <article class="premium-card"><span class="premium-symbol cloud"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg></span><h3>Bulut ve İşletme Araçları</h3><p>Servis süreçlerinizi destekleyen ek araçlar ve veri yönetimi.</p></article>
-        </div>
       </section>
       <section class="dash-section" id="packages">
         <div class="dash-section-heading"><div><span class="eyebrow">ÜYELİK PAKETLERİ</span><h2>İhtiyacınıza uygun lisansı seçin</h2><p>Premium özellikler, yönetici ödeme onayından sonra etkinleştirilir.</p></div></div>

@@ -4,13 +4,46 @@
  let users=[];
  let payments=[];
  let tickets=[];
+ let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Arşiv durumu":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
  const statusNames={pending:"Onay bekliyor",approved:"Onaylandı",rejected:"Reddedildi"};
+
+ function formatBytes(n){n=Number(n||0);if(!n)return "0 B";const u=["B","KB","MB","GB"];const i=Math.min(Math.floor(Math.log(n)/Math.log(1024)),3);return (n/Math.pow(1024,i)).toFixed(i?1:0)+" "+u[i];}
+ function renderArchiveFiles(){
+  const q=($("#archiveFileSearch")?.value||"").trim().toLocaleLowerCase("tr-TR");
+  const rows=archiveFiles.filter(f=>[f.title,f.brand,f.model,f.category,f.original_filename].join(" ").toLocaleLowerCase("tr-TR").includes(q));
+  $("#archiveFilesBody").innerHTML=rows.map(f=>'<tr><td><strong>'+esc(f.title)+'</strong><br><small>'+esc(f.original_filename)+'</small></td><td>'+esc(f.brand)+'<br><small>'+esc(f.model||"-")+'</small></td><td>'+esc(f.category)+'</td><td>'+formatBytes(f.file_size)+'</td><td><span class="status '+(f.is_active?"active":"expired")+'">'+(f.is_active?"Yayında":"Pasif")+'</span></td><td><button class="btn" data-file-action="download" data-id="'+esc(f.id)+'">İndir</button> <button class="btn" data-file-action="toggle" data-id="'+esc(f.id)+'">'+(f.is_active?"Yayından kaldır":"Yayınla")+'</button> <button class="btn danger" data-file-action="delete" data-id="'+esc(f.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="6">Henüz arşive dosya eklenmemiş.</td></tr>';
+  $("#fileStatTotal").textContent=archiveFiles.length;$("#fileStatActive").textContent=archiveFiles.filter(f=>f.is_active).length;$("#fileStatInactive").textContent=archiveFiles.filter(f=>!f.is_active).length;
+ }
+ async function loadArchiveFiles(){
+  $("#archiveFilesBody").innerHTML='<tr><td colspan="6">Dosyalar yükleniyor…</td></tr>';
+  const result=await api.archiveAdmin({action:"file_list"});archiveFiles=result.files||[];renderArchiveFiles();
+ }
+ function uploadWithProgress(url,file,token){
+  return new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("PUT",url);xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");xhr.setRequestHeader("x-upsert","false");if(token)xhr.setRequestHeader("x-signature",token);xhr.upload.onprogress=e=>{if(e.lengthComputable){const n=Math.round(e.loaded/e.total*100);$("#fileUploadBar").value=n;$("#fileUploadPercent").textContent=n+"%";}};xhr.onload=()=>xhr.status>=200&&xhr.status<300?resolve():reject(new Error("Dosya depoya yüklenemedi ("+xhr.status+")."));xhr.onerror=()=>reject(new Error("Yükleme sırasında bağlantı hatası."));xhr.send(file);});
+ }
+ $("#archiveFileForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();const form=e.currentTarget,fd=new FormData(form),file=fd.get("file");if(!(file instanceof File)||!file.size){toast("Yüklenecek dosyayı seç.");return;}
+  if(file.size>512*1024*1024){toast("Dosya 512 MB sınırını aşıyor.");return;}
+  const btn=$("#archiveUploadBtn"),progress=$("#fileUploadProgress");btn.disabled=true;progress.hidden=false;$("#fileUploadBar").value=0;$("#fileUploadPercent").textContent="0%";$("#fileUploadStatus").textContent="Güvenli bağlantı hazırlanıyor…";$("#archiveUploadMessage").textContent="";
+  let uploadedPath="";
+  try{
+   const signed=await api.archiveAdmin({action:"file_upload_url",filename:file.name});uploadedPath=signed.path;
+   $("#fileUploadStatus").textContent="Dosya yükleniyor…";
+   await uploadWithProgress(signed.upload_url,file,signed.token||"");
+   $("#fileUploadStatus").textContent="Dosya kaydı oluşturuluyor…";
+   await api.archiveAdmin({action:"file_create",title:fd.get("title"),brand:fd.get("brand"),model:fd.get("model"),category:fd.get("category"),description:fd.get("description"),storage_path:uploadedPath,original_filename:file.name,file_size:file.size,mime_type:file.type||"application/octet-stream",is_active:fd.get("is_active")==="on"});
+   form.reset();form.querySelector('[name="is_active"]').checked=true;$("#fileUploadBar").value=100;$("#fileUploadPercent").textContent="100%";$("#fileUploadStatus").textContent="Yükleme tamamlandı";$("#archiveUploadMessage").textContent="Dosya güvenli depoya yüklendi ve arşiv kaydı oluşturuldu.";toast("Dosya arşive eklendi.");await loadArchiveFiles();
+  }catch(err){$("#archiveUploadMessage").textContent=err.message||"Dosya yüklenemedi.";toast(err.message||"Yükleme başarısız.");}
+  finally{btn.disabled=false;}
+ });
+ $("#reloadArchiveFiles")?.addEventListener("click",()=>loadArchiveFiles().catch(e=>toast(e.message)));
+ $("#archiveFileSearch")?.addEventListener("input",renderArchiveFiles);
  function renderPayments(){
   const body=$("#paymentsBody");if(!body)return;
   body.innerHTML=payments.map(p=>{
@@ -120,6 +153,19 @@
    try{await api.portalAdmin({action:"payment_review",payment_id:id,status,admin_note:adminNote});toast(status==="approved"?"Ödeme onaylandı, lisans eklendi.":"Ödeme reddedildi.");await loadPayments();await loadUsers();}
    catch(err){toast(err.message);}
    finally{paymentBtn.disabled=false;}
+   return;
+  }
+
+  const fileBtn=e.target.closest("[data-file-action]");
+  if(fileBtn){
+   const f=archiveFiles.find(x=>x.id===fileBtn.dataset.id);if(!f)return;
+   fileBtn.disabled=true;
+   try{
+    if(fileBtn.dataset.fileAction==="download"){const r=await api.archiveAdmin({action:"file_download_url",id:f.id});window.open(r.url,"_blank","noopener");}
+    else if(fileBtn.dataset.fileAction==="toggle"){await api.archiveAdmin({action:"file_update",id:f.id,is_active:!f.is_active});toast(f.is_active?"Dosya yayından kaldırıldı.":"Dosya yayına alındı.");await loadArchiveFiles();}
+    else if(fileBtn.dataset.fileAction==="delete"){if(!confirm('"'+f.title+'" dosyası depodan kalıcı olarak silinsin mi?'))return;await api.archiveAdmin({action:"file_delete",id:f.id});toast("Dosya kalıcı olarak silindi.");await loadArchiveFiles();}
+   }catch(err){toast(err.message);}
+   finally{fileBtn.disabled=false;}
    return;
   }
   const btn=e.target.closest("[data-action]");if(!btn)return;

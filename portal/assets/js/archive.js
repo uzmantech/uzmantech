@@ -1,4 +1,22 @@
 (()=>{const $=s=>document.querySelector(s);const toast=m=>{const el=$("#toast");if(!el)return;el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)};function showLogin(){$("#modalTitle").textContent="Üye girişi";$("#modalBody").innerHTML='<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required></label><button class="button button-primary" type="submit" style="width:100%">Giriş Yap</button></form>';$("#modal").classList.add("open");$("#loginForm").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);try{const r=await UzmantechAPI.login({identifier:f.get("identifier"),password:f.get("password")});UzmantechAPI.setSession(r.session_token);$("#modal").classList.remove("open");toast("Giriş başarılı.");}catch(err){toast(err.message||"Giriş yapılamadı.");}})}document.addEventListener("click",e=>{if(e.target.closest('[data-open="login"]'))showLogin();if(e.target.id==="modalClose"||e.target.id==="modal")$("#modal").classList.remove("open");if(e.target.id==="menuToggle")$(".archive-top-actions")?.classList.toggle("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal").classList.remove("open")});
+
+const brandSearchForm=$("#archiveBrandSearchForm"),brandSearchInput=$("#archiveBrandQuery");
+function filterBrandCards(){
+ const q=(brandSearchInput?.value||"").trim().toLocaleLowerCase("tr-TR");
+ let visible=0;
+ document.querySelectorAll(".archive-brand-card").forEach(card=>{
+  const name=(card.dataset.brand||"").toLocaleLowerCase("tr-TR");
+  const match=!q||name.includes(q);
+  card.hidden=!match;
+  if(match)visible++;
+ });
+ const count=document.querySelector(".archive-brand-catalog-head>strong");
+ if(count)count.textContent=q?visible+" MARKA":"19 MARKA";
+}
+brandSearchForm?.addEventListener("submit",e=>{e.preventDefault();filterBrandCards();const first=[...document.querySelectorAll(".archive-brand-card")].find(card=>!card.hidden);if(first&&brandSearchInput.value.trim()&&first.dataset.brand.toLocaleLowerCase("tr-TR")===brandSearchInput.value.trim().toLocaleLowerCase("tr-TR"))first.click();});
+brandSearchInput?.addEventListener("input",filterBrandCards);
+$("#archiveBrandSearchClear")?.addEventListener("click",()=>{if(brandSearchInput)brandSearchInput.value="";filterBrandCards();brandSearchInput?.focus();});
+
 const pageParams=new URLSearchParams(location.search);
 let archiveItems=[],selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"";
 

@@ -1,0 +1,18 @@
+(()=>{const $=s=>document.querySelector(s);const main=$(".dash-content");if(!main)return;
+const layout=$(".dash-layout"),download=$("#download"),account=$("#accountPage");
+const primary=$(".dash-primary"),license=$("#license"),support=$("#support"),announcements=$("#announcements"),premium=$("#premium"),packages=$("#packages"),welcome=$(".welcome-card");
+const make=(id,title,sub)=>{const el=document.createElement("section");el.className="portal-page";el.dataset.pageView=id;el.innerHTML='<div class="portal-page-heading"><span class="eyebrow">UZMANTOOL PORTAL</span><h1>'+title+'</h1><p>'+sub+'</p></div>';main.appendChild(el);return el;};
+const home=make("home","Ana Sayfa","Hesabınızın ve Uzmantool hizmetlerinin genel görünümü.");home.prepend(layout);
+const dl=make("download","Uzmantech İndir","Windows masaüstü uygulamasının resmî indirme merkezi.");dl.appendChild(download);
+const lic=make("license","Lisans İşlemleri","Lisans durumunuzu görüntüleyin, paketleri inceleyin ve ödeme işlemlerinizi yönetin.");if(license)lic.appendChild(license);if(packages)lic.appendChild(packages);
+const sup=make("support","Destek Talepleri","Teknik sorunlarınızı iletin ve destek taleplerinizin durumunu takip edin.");if(support)sup.appendChild(support);
+const upd=make("updates","Güncellemeler","Uzmantech masaüstü uygulamasının sürüm geçmişi ve yenilikleri.");upd.innerHTML+='<div class="portal-info-card"><span class="announcement-tag green">GÜNCEL SÜRÜM</span><h2>Uzmantech v1.1.8</h2><p>Yeni özellikler, iyileştirmeler ve hata düzeltmeleri.</p><a class="dash-button" href="https://github.com/uzmantech/uzmantech/releases/tag/v1.1.8" target="_blank" rel="noopener">Sürüm notlarını görüntüle</a></div>';
+const tools=make("tools","Araçlar","Uzmantech masaüstü uygulamasındaki çalışma alanlarına hızlı erişim.");const shortcuts=$(".dash-shortcuts");if(shortcuts)tools.appendChild(shortcuts);
+const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
+const help=make("help","Yardım Merkezi","Portal, üyelik, lisans ve masaüstü uygulaması hakkında yardım.");help.innerHTML+='<div class="portal-info-grid"><article class="portal-info-card"><h2>Hesap ve giriş</h2><p>Hesabınıza giriş yapın. Şifrenizi unuttuysanız giriş penceresindeki şifre yenileme adımını kullanın.</p></article><article class="portal-info-card"><h2>Lisans ve ödeme</h2><p>Lisans durumunuzu Lisans İşlemleri sayfasından görüntüleyebilir, uygun paketi seçebilirsiniz.</p></article><article class="portal-info-card"><h2>Teknik destek</h2><p>Çözemediğiniz sorunlar için Destek Talepleri bölümünden bize ulaşabilirsiniz.</p></article></div>';
+const pages=[...main.querySelectorAll("[data-page-view]")];
+function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
+document.addEventListener("click",e=>{const a=e.target.closest(".dash-nav [data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
+document.addEventListener("portal:show-account",()=>show("account"));
+window.UzmantoolPages={show};show(location.hash.slice(1)||"home",false);
+})();

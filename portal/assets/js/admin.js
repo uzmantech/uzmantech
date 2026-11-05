@@ -43,7 +43,7 @@
  let archiveBulkRows=[];
  function previewArchiveBulk(){
   const raw=$("#archiveBulkInput")?.value||"";
-  const lines=raw.split(/\\r?\\n/).map(x=>x.trim()).filter(Boolean);
+  const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
   archiveBulkRows=lines.map((line,index)=>{
    const parts=line.split("|").map(x=>x.trim());
    const [title,brand,model,url,...descriptionParts]=parts;
@@ -56,7 +56,7 @@
    try{parsed=new URL(url)}catch{error=error||"Bağlantı geçersiz"}
    if(parsed&&(parsed.protocol!=="https:"||!parsed.hostname||parsed.username||parsed.password))error=error||"Yalnızca güvenli HTTPS bağlantısı";
    const duplicate=!!(!error&&archiveFiles.some(f=>
-    String(f.external_url||"").replace(/\\/$/,"").toLowerCase()===parsed.href.replace(/\\/$/,"").toLowerCase()||
+    String(f.external_url||"").replace(/\/$/,"").toLowerCase()===parsed.href.replace(/\/$/,"").toLowerCase()||
     (String(f.brand||"").toLowerCase()===brand.toLowerCase()&&String(f.model||"").toLowerCase()===model.toLowerCase()&&String(f.title||"").toLowerCase()===title.toLowerCase())
    ));
    return {line:index+1,title,brand,model,url:parsed?.href||url,description,status:error?"HATA":duplicate?"TEKRAR":"EKLENECEK",error};

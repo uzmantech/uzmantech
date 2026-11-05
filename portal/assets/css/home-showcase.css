@@ -10,7 +10,7 @@
 .showcase-btn{min-height:62px;display:flex;align-items:center;gap:13px;padding:10px 17px;border:1px solid #078de9;border-radius:13px;text-decoration:none;color:#fff;box-sizing:border-box}
 .showcase-btn>span{font-size:27px;color:#56d9ff}.showcase-btn b{display:flex;flex-direction:column;gap:3px;font-size:15px}.showcase-btn small{font-size:10px;font-weight:500;color:#b5d5ef}
 .showcase-btn.primary{background:linear-gradient(125deg,#00a8ef,#1459ef);box-shadow:0 8px 28px #008cff45}
-.showcase-btn.secondary{background:#061629;border-color:#00a8ed}.showcase-checks{display:flex;flex-wrap:wrap;gap:12px 18px;color:#dceaf8;font-size:11px;font-weight:600}.showcase-checks span: first-letter{color:#2ee69d}
+.showcase-btn.secondary{background:#061629;border-color:#00a8ed}.showcase-checks{display:flex;flex-wrap:wrap;gap:12px 18px;color:#dceaf8;font-size:11px;font-weight:600}.showcase-checks span::first-letter{color:#2ee69d}
 .showcase-art{position:relative;min-height:370px;display:flex;align-items:center;justify-content:center;gap:12px;isolation:isolate}
 .showcase-glow{position:absolute;z-index:-1;width:70%;height:70%;border-radius:50%;background:#007dff3b;filter:blur(65px)}
 .showcase-screen{width:76%;max-width:660px;filter:drop-shadow(0 18px 24px #008bff55)}

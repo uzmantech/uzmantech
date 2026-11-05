@@ -41,7 +41,7 @@
     const lang=applyLanguage((()=>{try{return localStorage.getItem("uzmantech_portal_language")||document.documentElement.lang;}catch{return document.documentElement.lang;}})());
     if(auth){
       if(user){
-        auth.innerHTML='<button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Account settings"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button>';
+        auth.innerHTML='<div class="profile-menu-wrap"><button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Kullanıcı menüsü" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdown"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button><div class="profile-dropdown" id="profileDropdown" hidden><button type="button" data-profile-action="account"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Hesabım</span></button><button type="button" class="profile-logout" data-profile-action="logout"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span>Çıkış</span></button></div></div>';
       }else{
         auth.innerHTML='<button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="login">'+translations[lang].login+'</span></button><button class="header-register" id="headerRegister" type="button" data-open="register"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span data-i18n="register">'+translations[lang].register+'</span></button>';
       }
@@ -389,6 +389,18 @@
   }
 
   document.addEventListener("click",e=>{
+    const profileToggle=e.target.closest("#profileBtn");
+    const dropdown=$("#profileDropdown");
+    if(profileToggle&&dropdown){const opening=dropdown.hidden;dropdown.hidden=!opening;profileToggle.setAttribute("aria-expanded",String(opening));e.stopPropagation();return;}
+    if(dropdown&&!e.target.closest(".profile-menu-wrap")){dropdown.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");}
+    const profileAction=e.target.closest("[data-profile-action]");
+    if(profileAction){
+      const action=profileAction.dataset.profileAction;
+      dropdown.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");
+      if(action==="account"){document.dispatchEvent(new CustomEvent("portal:show-account"));}
+      if(action==="logout"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();document.body.classList.remove("account-view");window.UzmantoolPages?.show("home");toast("Güvenli çıkış yapıldı.");}
+      return;
+    }
     if(e.target.closest("#languageSelect"))return;
     const opener=e.target.closest("[data-open]");
     if(opener?.dataset.open==="login")openLogin();
@@ -409,7 +421,7 @@
   });
   $("#deviceSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=$("#deviceQuery").value.trim();location.href="archive.html"+(q?"?q="+encodeURIComponent(q):"");});
   $("#modalClose")?.addEventListener("click",closeModal);
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();const d=$("#profileDropdown");if(d)d.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");}});
   (async()=>{
   
   document.addEventListener("change",e=>{

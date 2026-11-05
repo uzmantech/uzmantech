@@ -92,6 +92,10 @@ help.innerHTML+=`
    <details data-support-faq><summary>Lisans aktivasyonu nasıl yapılır?</summary><p>Hesabınıza giriş yapın ve Lisans Aktivasyonu sayfasındaki adımları izleyin. Lisans anahtarınızı kimseyle paylaşmayın.</p></details>
    <details data-support-faq><summary>Yedekleme nerede saklanır?</summary><p>Yedekleme konumu kullandığınız modüle ve seçtiğiniz klasöre göre değişebilir. İşlem öncesinde hedef klasörü kontrol edin.</p></details>
   </div>
+  <div class="adsense-support-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
+   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="2820364674" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
  </div>
  <aside class="support-reference-sidebar">
   <section class="support-side-card support-contact-card"><div class="support-side-heading"><span>♧</span><div><b>İletişim Kanalları</b><small>Bize dilediğiniz kanaldan ulaşabilirsiniz.</small></div></div><button type="button" data-support-open><i class="contact-whatsapp">◉</i><span><b>WhatsApp Destek</b><small>Hızlı ve doğrudan iletişim.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-telegram">➤</i><span><b>Telegram Destek</b><small>Güncel duyurular ve destek.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-email">✉</i><span><b>E-Posta Destek</b><small>destek@uzmantech.com</small></span><strong>→</strong></button></section>

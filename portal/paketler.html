@@ -48,25 +48,25 @@
  <section class="packages-grid" aria-label="Üyelik seçenekleri">
   <article class="package-card weekly">
    <div class="package-icon">▦</div><h2>Haftalık Paket</h2><p class="package-desc">Kısa süreli erişim, hızlı çözüm.</p>
-   <div class="package-price">₺149</div><div class="package-duration">7 Gün</div>
+   <div class="package-price" data-usd="5"><span class="price-try">Hesaplanıyor...</span><small class="price-usd">5 USD</small></div><div class="package-duration">7 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Temel teknik destek</li></ul>
    <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card monthly">
    <div class="package-icon">▦</div><h2>Aylık Paket</h2><p class="package-desc">En çok tercih edilen paket.</p>
-   <div class="package-price">₺399</div><div class="package-duration">30 Gün</div>
+   <div class="package-price" data-usd="10"><span class="price-try">Hesaplanıyor...</span><small class="price-usd">10 USD</small></div><div class="package-duration">30 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Standart teknik destek</li></ul>
    <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card halfyear">
    <span class="package-ribbon">%17 Avantaj</span><div class="package-icon">▦</div><h2>6 Aylık Paket</h2><p class="package-desc">Daha uzun süre, daha avantajlı.</p>
-   <div class="package-price">₺1.999</div><div class="package-duration">180 Gün</div>
+   <div class="package-price" data-usd="20"><span class="price-try">Hesaplanıyor...</span><small class="price-usd">20 USD</small></div><div class="package-duration">180 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li></ul>
    <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
   </article>
   <article class="package-card yearly">
    <span class="package-ribbon">%27 Avantaj</span><div class="package-icon">♛</div><h2>1 Yıllık Paket</h2><p class="package-desc">En avantajlı ve tam erişim paketi.</p>
-   <div class="package-price">₺3.499</div><div class="package-duration">365 Gün</div>
+   <div class="package-price" data-usd="40"><span class="price-try">Hesaplanıyor...</span><small class="price-usd">40 USD</small></div><div class="package-duration">365 Gün</div>
    <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li><li>Yeni özelliklere erken erişim</li></ul>
    <button type="button" class="package-buy" data-open="register">🛒 &nbsp;Paketi Satın Al</button>
   </article>
@@ -81,4 +81,23 @@
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/site.js?v=support-inline-20261105"></script><script src="assets/js/user-panel.js?v=accountmenu2"></script><script src="assets/js/language.js"></script><script src="assets/js/portal-pages.js?v=news-center-20261105-2"></script>
+<script>
+(async function(){
+ const priceNodes=[...document.querySelectorAll(".package-price[data-usd]")];
+ const rateLabel=document.createElement("p"); rateLabel.className="packages-rate-note"; rateLabel.textContent="Enpara USD satış kuru alınıyor...";
+ document.querySelector(".packages-intro").appendChild(rateLabel);
+ try {
+  if(!window.UzmantechAPI?.exchangeRate) throw new Error("Kur servisi kullanılamıyor.");
+  const data=await window.UzmantechAPI.exchangeRate();
+  const rate=Number(data.usd_sell);
+  if(!Number.isFinite(rate)||rate<=0) throw new Error("Geçersiz kur bilgisi.");
+  const money=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2,maximumFractionDigits:2});
+  priceNodes.forEach(node=>{const usd=Number(node.dataset.usd);node.querySelector(".price-try").textContent=money.format(Math.round(usd*rate*100)/100);});
+  rateLabel.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:3,maximumFractionDigits:3})+" TL · Güncelleme: "+new Date(data.fetched_at||Date.now()).toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"});
+ } catch(error) {
+  priceNodes.forEach(node=>{node.querySelector(".price-try").textContent="Kur alınamadı";});
+  rateLabel.textContent="Güncel Enpara kuru şu anda alınamıyor. Lütfen sayfayı daha sonra yenileyin.";
+ }
+})();
+</script>
 </body></html>

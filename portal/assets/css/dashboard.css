@@ -482,3 +482,99 @@
   .top-separator{display:none}
   .header-register{padding:0 7px;font-size:10px}
 }
+
+
+/* 2026-11-05: Header actions refreshed, no brand mark, clear login/register actions */
+.dash-topbar{
+  justify-content:flex-end;
+  min-height:78px;
+  height:78px;
+  padding:0 clamp(18px,3.2vw,54px);
+  background:linear-gradient(110deg,#061426 0%,#071a2d 48%,#061426 100%);
+  border-bottom:1px solid rgba(49,145,255,.2);
+  box-shadow:0 8px 28px rgba(0,0,0,.16);
+}
+.dash-top-actions{gap:15px}
+.language-control{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-height:42px;
+  padding:0 13px;
+  border:1px solid #244568;
+  border-radius:13px;
+  background:linear-gradient(145deg,#102943,#0a1c30);
+  color:#eff7ff;
+  box-shadow:inset 0 1px rgba(255,255,255,.05);
+}
+.language-globe{font-size:22px;line-height:1;color:#d8ecff}
+.language-control select{
+  appearance:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#f2f7ff;
+  font:700 13px "DM Sans",sans-serif;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+.language-control select option{background:#102238;color:#fff}
+.language-control .top-chevron{width:14px!important;height:14px!important;pointer-events:none}
+.top-separator{height:28px;background:#29425d;margin:0 1px}
+.notification-button{
+  width:43px;height:43px;border-radius:12px;
+  display:grid;place-items:center;
+  border:1px solid transparent;
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.notification-button:hover{background:#142d49;border-color:#294d72;transform:translateY(-1px)}
+.notification-button svg{width:24px;height:24px}
+.notification-button i{
+  min-width:18px;height:18px;display:grid;place-items:center;
+  right:0;top:0;border:2px solid #071629;padding:0 4px;font-size:10px;
+}
+.header-auth{display:flex;align-items:center;gap:11px}
+.header-login,.header-register{
+  min-height:45px;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:0 20px;border-radius:13px;
+  font:700 14px "DM Sans",sans-serif;white-space:nowrap;cursor:pointer;
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+}
+.header-login svg,.header-register svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.header-login{
+  color:#f1f8ff;background:linear-gradient(145deg,#0b2035,#0b1a2d);
+  border:1px solid #1688df;box-shadow:inset 0 0 0 1px rgba(61,164,255,.08),0 0 18px rgba(19,132,230,.13);
+}
+.header-login:hover{background:#102d49;border-color:#36a9ff;box-shadow:0 0 22px rgba(19,145,255,.28);transform:translateY(-1px)}
+.header-register{
+  color:#fff;background:linear-gradient(135deg,#268cff,#0864e8);
+  border:1px solid #3c9cff;box-shadow:0 7px 20px rgba(0,105,235,.27),inset 0 1px rgba(255,255,255,.2);
+}
+.header-register:hover{background:linear-gradient(135deg,#48a2ff,#1475f5);box-shadow:0 9px 25px rgba(0,105,235,.38);transform:translateY(-1px)}
+.header-login:focus-visible,.header-register:focus-visible,.language-control:focus-within{outline:2px solid #71bdff;outline-offset:3px}
+.logged-in-profile{display:flex;align-items:center;gap:11px;padding:3px 8px 3px 3px;border:1px solid #203e5e;border-radius:13px;background:#0c2035;color:#f2f7ff;cursor:pointer}
+.logged-in-profile:hover{background:#132e4a;border-color:#347ab5}
+.logged-in-profile .avatar{width:41px;height:41px}
+.logged-in-profile .top-account b{font-size:14px}
+.logged-in-profile .top-account small{font-size:11px;color:#9eb6d0}
+.logged-in-profile .top-chevron{width:15px!important;height:15px!important}
+@media(max-width:760px){
+ .dash-topbar{height:64px;min-height:64px;padding:0 12px}
+ .dash-top-actions{gap:6px}
+ .language-control{min-height:35px;padding:0 8px;gap:5px}
+ .language-globe{font-size:18px}
+ .language-control select{font-size:11px}
+ .top-separator{height:22px}
+ .notification-button{width:34px;height:36px}
+ .notification-button svg{width:20px;height:20px}
+ .header-auth{gap:6px}
+ .header-login,.header-register{min-height:36px;padding:0 10px;gap:6px;font-size:11px;border-radius:10px}
+ .header-login svg,.header-register svg{width:15px;height:15px}
+}
+@media(max-width:390px){
+ .dash-top-actions{gap:4px}
+ .language-control{padding:0 5px}
+ .top-separator{display:none}
+ .header-login,.header-register{padding:0 7px;font-size:10px}
+}

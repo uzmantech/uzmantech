@@ -31,6 +31,7 @@
     catalog: () => call("/portal-api/catalog"),
     recent: () => call("/portal-api/recent"),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
+    archiveAdmin: data => call("/archive-service", { method: "POST", body: JSON.stringify(data) }),
     portalAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
     exchangeRate: () => call("/portal-api/exchange-rate"),
     paymentReceipt: ({plan, amountUsd, amountTry, rate, payerName, file}) => {

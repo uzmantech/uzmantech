@@ -65,7 +65,7 @@
 @media(max-width:560px){.updates-hero{padding:26px 18px}.updates-hero-copy h2{font-size:38px}.updates-hero-meta{gap:20px}.updates-release-head{align-items:flex-start;padding:19px 17px}.updates-release-head h3{font-size:20px}.updates-release-details article{padding:16px 10px}.updates-release-footer{align-items:flex-start;flex-direction:column;padding:14px 17px}}
 
 </style>
-<link rel="stylesheet" href="assets/css/archive-home.css?v=yvz-layout-20261105">
+<link rel="stylesheet" href="assets/css/archive-home.css?v=yvz-layout-20261105"><link rel="stylesheet" href="assets/css/packages.css?v=packages-20261105-1">
 <link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=viewport-fix-20261105-2"><link rel="stylesheet" href="assets/css/archive.css?v=site-live-stats-20261105-4"><link rel="stylesheet" href="assets/css/home-showcase.css?v=20261105-2"></head>
 <body class="dashboard-page">
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -189,19 +189,39 @@
       <section class="support-hub" id="support"><div class="support-hub-main"><div class="support-hub-copy"><span class="support-hub-eyebrow"><i></i> UZMANTOOL DESTEK MERKEZİ</span><h2>İşiniz yarım kalmasın.<br><em>Yanınızdayız.</em></h2><p>Teknik sorunlarınız, lisans işlemleriniz ve portal kullanımıyla ilgili taleplerinizi tek noktadan yönetin.</p><div class="support-hub-points"><span><b>01</b> Talebinizi oluşturun</span><span><b>02</b> Ekibimiz incelesin</span><span><b>03</b> Yanıtınızı takip edin</span></div></div><div class="support-hub-action"><div class="support-hub-orbit"><span>?</span></div><div class="support-hub-action-copy"><b>Size nasıl yardımcı olabiliriz?</b><small>Destek kaydınızı birkaç adımda oluşturun.</small></div><button class="support-button" id="supportRequest" type="button"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebi Oluştur <span>›</span></button><small class="support-hub-footnote">Taleplerinizi hesabınızdan takip edebilirsiniz.</small></div></div><div class="support-hub-bottom"><span><i class="support-dot"></i> Kişisel destek alanınız</span><span>Teknik destek</span><span>Lisans ve üyelik</span><span>Ödeme işlemleri</span></div></section>
 
 
-    <section class="archive-lower-grid" id="new-files">
-   <div class="archive-panel archive-files-panel">
-    <div class="archive-panel-heading"><h2>▣ Dosya Arşivi</h2><span class="archive-panel-count">ARŞİV</span></div>
-    <div class="archive-file-preview"><div class="archive-lock">🔒</div><p>Dosyaları görüntülemek ve indirmek için aktif arşiv üyeliği gereklidir.</p><button data-open="login">🔐 Giriş Yap</button></div>
-    <div class="archive-panel-footer">Teknik dosyalar ve servis kaynakları</div>
+    <section class="home-membership-showcase" id="new-files" aria-label="Abonelik paketleri">
+   <div class="home-membership-heading">
+    <span>💎 UZMANTECH ÜYELİKLERİ</span>
+    <h2>İhtiyacınıza uygun paketi seçin</h2>
+    <p>Tüm paketler USD bazındadır. TL karşılığı Enpara güncel USD satış kuruyla hesaplanır.</p>
    </div>
-   <aside class="archive-panel archive-membership-panel">
-    <div class="archive-panel-heading centered"><h2>💎 ABONELİK PAKETLERİ</h2></div>
-    <div class="archive-membership-cards">
-     <a href="index.html#uyelik"><span>🥈</span><b>Aylık Üyelik</b><strong>Üyelik bilgisi</strong><small>Arşive erişim</small></a>
-     <a href="index.html#uyelik"><span>🥇</span><b>Yıllık Üyelik</b><strong>Üyelik bilgisi</strong><small>12 Ay Arşiv Erişimi</small></a>
-    </div>
-   </aside>
+   <div class="packages-grid home-packages-grid">
+    <article class="package-card weekly">
+     <div class="package-icon">▦</div><h2>Haftalık Paket</h2><p class="package-desc">Kısa süreli erişim, hızlı çözüm.</p>
+     <div class="package-price" data-usd="5"><small class="price-usd">$5</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">7 Gün</div>
+     <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Temel teknik destek</li></ul>
+     <a class="package-buy" href="paketler.html">Paketi İncele</a>
+    </article>
+    <article class="package-card monthly">
+     <div class="package-icon">▦</div><h2>Aylık Paket</h2><p class="package-desc">En çok tercih edilen paket.</p>
+     <div class="package-price" data-usd="10"><small class="price-usd">$10</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">30 Gün</div>
+     <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Standart teknik destek</li></ul>
+     <a class="package-buy" href="paketler.html">Paketi İncele</a>
+    </article>
+    <article class="package-card halfyear">
+     <span class="package-ribbon">%17 Avantaj</span><div class="package-icon">▦</div><h2>6 Aylık Paket</h2><p class="package-desc">Daha uzun süre, daha avantajlı.</p>
+     <div class="package-price" data-usd="20"><small class="price-usd">$20</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">180 Gün</div>
+     <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li></ul>
+     <a class="package-buy" href="paketler.html">Paketi İncele</a>
+    </article>
+    <article class="package-card yearly">
+     <span class="package-ribbon">%27 Avantaj</span><div class="package-icon">♛</div><h2>1 Yıllık Paket</h2><p class="package-desc">En avantajlı ve tam erişim paketi.</p>
+     <div class="package-price" data-usd="40"><small class="price-usd">$40</small><span class="price-try">TL hesaplanıyor...</span></div><div class="package-duration">365 Gün</div>
+     <ul><li>Tüm teknik araçlara erişim</li><li>Dosya arşivine tam erişim</li><li>Güncel yazılımlar</li><li>Öncelikli teknik destek</li><li>Yeni özelliklere erken erişim</li></ul>
+     <a class="package-buy" href="paketler.html">Paketi İncele</a>
+    </article>
+   </div>
+   <div class="home-membership-footer"><span>Enpara USD satış kuru ile canlı fiyatlandırma</span><a href="paketler.html">Tüm paketleri görüntüle <b>→</b></a></div>
   </section>
 
 
@@ -286,6 +306,30 @@ load();
  }
  refresh();
  window.setInterval(refresh,30000);
+})();
+</script>
+<script>
+(()=> {
+ const section=document.querySelector(".home-membership-showcase");
+ if(!section)return;
+ const label=document.createElement("small");label.className="packages-rate-note";label.textContent="Enpara güncel kuru alınıyor...";
+ section.querySelector(".home-membership-heading").appendChild(label);
+ (async()=>{
+  try{
+   const data=await window.UzmantechAPI.exchangeRate();
+   const rate=Number(data.usd_sell);
+   if(!Number.isFinite(rate)||rate<=0)throw new Error("invalid rate");
+   const money=new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",minimumFractionDigits:2,maximumFractionDigits:2});
+   section.querySelectorAll(".package-price[data-usd]").forEach(node=>{
+    const usd=Number(node.dataset.usd);
+    node.querySelector(".price-try").textContent=money.format(Math.round(usd*rate*100)/100);
+   });
+   label.textContent="Enpara USD satış kuru: "+rate.toLocaleString("tr-TR",{minimumFractionDigits:3,maximumFractionDigits:3})+" TL";
+  }catch(_){
+   section.querySelectorAll(".price-try").forEach(node=>node.textContent="Kur alınamadı");
+   label.textContent="Güncel Enpara kuru şu anda alınamıyor.";
+  }
+ })();
 })();
 </script>
 </body></html>

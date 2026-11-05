@@ -1,4 +1,4 @@
-(()=>{const $=s=>document.querySelector(s);const toast=m=>{const el=$("#toast");if(!el)return;el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)};function showLogin(){$("#modalTitle").textContent="Üye girişi";$("#modalBody").innerHTML='<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required></label><button class="button button-primary" type="submit" style="width:100%">Giriş Yap</button></form>';$("#modal").classList.add("open");$("#loginForm").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);try{const r=await UzmantechAPI.login({identifier:f.get("identifier"),password:f.get("password")});UzmantechAPI.setSession(r.session_token);$("#modal").classList.remove("open");toast("Giriş başarılı.");}catch(err){toast(err.message||"Giriş yapılamadı.");}})}document.addEventListener("click",e=>{if(e.target.closest('[data-open="login"]'))showLogin();if(e.target.id==="modalClose"||e.target.id==="modal")$("#modal").classList.remove("open");if(e.target.id==="menuToggle")$(".archive-top-actions")?.classList.toggle("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal").classList.remove("open")});
+(()=>{const $=s=>document.querySelector(s);const toast=m=>{const el=$("#toast");if(!el)return;el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)};function showLogin(){$("#modalTitle").textContent="Üye girişi";$("#modalBody").innerHTML='<form id="loginForm"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required></label><button class="button button-primary" type="submit" style="width:100%">Giriş Yap</button></form>';$("#modal").classList.add("open");$("#loginForm").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);try{const r=await UzmantechAPI.login({identifier:f.get("identifier"),password:f.get("password")});UzmantechAPI.setSession(r.session_token);location.reload();}catch(err){toast(err.message||"Giriş yapılamadı.");}})}document.addEventListener("click",e=>{if(e.target.closest('[data-open="login"]'))showLogin();if(e.target.id==="modalClose"||e.target.id==="modal")$("#modal").classList.remove("open");if(e.target.id==="menuToggle")$(".archive-top-actions")?.classList.toggle("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal").classList.remove("open")});
 
 const brandSearchForm=$("#archiveBrandSearchForm"),brandSearchInput=$("#archiveBrandQuery");
 function filterBrandCards(){
@@ -119,5 +119,22 @@ document.addEventListener("click",async e=>{
  finally{btn.disabled=false;}
 });
 if($("#archiveModelsPage")){if(!selectedBrand||!MODEL_CATALOG[selectedBrand]){location.replace("archive.html");}else{const label=$("#archiveModelBrandLabel");if(label)label.textContent=selectedBrand.toLocaleUpperCase("tr-TR")+" MODEL KATALOĞU";const title=$("#archiveModelPageTitle");if(title)title.textContent=selectedBrand+" Cihaz Modelleri";}}
-loadLiveArchive();
+async function enforceArchiveLicense(){
+ const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
+ if(stage)stage.hidden=true;
+ try{
+  const result=await UzmantechAPI.session();
+  const user=result.user||{};
+  if(user.role!=="admin"&&user.license_status!=="active")throw new Error("Aktif lisans gerekli");
+  document.body.classList.add("archive-authorized");
+  if(stage)stage.hidden=false;
+  if(gate)gate.hidden=true;
+  await loadLiveArchive();
+ }catch(error){
+  document.body.classList.remove("archive-authorized");
+  if(stage)stage.hidden=true;
+  if(gate)gate.hidden=false;
+ }
+}
+enforceArchiveLicense();
 })();

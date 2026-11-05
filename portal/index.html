@@ -152,9 +152,13 @@
    </div><div class="showcase-feature-art"><div class="reference-portal-art" role="img" aria-label="Onaylanan tasarımdaki Uzmantech portal ekran görseli"></div></div>
   </article>
  </div>
- <nav class="showcase-categories" aria-label="Teknik kategoriler">
-  <a href="archive.html">🤖 Android Araçları</a><a href="archive.html"> Apple Araçları</a><a href="archive.html">🟠 Xiaomi Araçları</a><a href="archive.html">▣ Samsung Araçları</a><a href="archive.html">🌺 Huawei Araçları</a><a href="archive.html">⚙ Genel Araçlar</a><a href="index.html#help">▤ Rehberler</a><a href="archive.html">☁ İndirilenler</a>
- </nav>
+ <div class="showcase-categories" aria-label="Teknik kategoriler">
+  <span>🤖 Android Araçları</span><span> Apple Araçları</span><span>🟠 Xiaomi Araçları</span><span>▣ Samsung Araçları</span><span>🌺 Huawei Araçları</span><span>⚙ Genel Araçlar</span><span>▤ Rehberler</span><span>☁ İndirilenler</span>
+ </div>
+ <section class="latest-files" aria-labelledby="latestFilesTitle">
+  <div class="latest-files-heading"><div><span class="latest-files-kicker">ARŞİVE YENİ EKLENENLER</span><h2 id="latestFilesTitle">Son Eklenen Dosyalar</h2><p>Arşive en son eklenen teknik dosyalar.</p></div><span class="latest-files-live"><i></i> GÜNCEL</span></div>
+  <div class="latest-files-window"><div class="latest-files-track" id="latestFilesTrack"><div class="latest-file-placeholder">Son eklenen dosyalar yükleniyor...</div></div></div>
+ </section>
 </section>
       <section class="support-hub" id="support"><div class="support-hub-main"><div class="support-hub-copy"><span class="support-hub-eyebrow"><i></i> UZMANTOOL DESTEK MERKEZİ</span><h2>İşiniz yarım kalmasın.<br><em>Yanınızdayız.</em></h2><p>Teknik sorunlarınız, lisans işlemleriniz ve portal kullanımıyla ilgili taleplerinizi tek noktadan yönetin.</p><div class="support-hub-points"><span><b>01</b> Talebinizi oluşturun</span><span><b>02</b> Ekibimiz incelesin</span><span><b>03</b> Yanıtınızı takip edin</span></div></div><div class="support-hub-action"><div class="support-hub-orbit"><span>?</span></div><div class="support-hub-action-copy"><b>Size nasıl yardımcı olabiliriz?</b><small>Destek kaydınızı birkaç adımda oluşturun.</small></div><button class="support-button" id="supportRequest" type="button"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebi Oluştur <span>›</span></button><small class="support-hub-footnote">Taleplerinizi hesabınızdan takip edebilirsiniz.</small></div></div><div class="support-hub-bottom"><span><i class="support-dot"></i> Kişisel destek alanınız</span><span>Teknik destek</span><span>Lisans ve üyelik</span><span>Ödeme işlemleri</span></div></section>
   <section class="archive-stat-row">
@@ -234,6 +238,17 @@
 </div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js?v=support-inline-20261105"></script><script src="assets/js/user-panel.js?v=accountmenu2"></script><script src="assets/js/language.js"></script><script src="assets/js/portal-pages.js?v=help-center-20261105-1"></script><script>document.addEventListener("click",function(e){if(e.target.closest("#copyZipPassword")){const b=e.target.closest("#copyZipPassword");navigator.clipboard?.writeText("uzman").then(()=>{b.textContent="Kopyalandı";setTimeout(()=>b.textContent="Şifreyi kopyala",1800)}).catch(()=>{b.textContent="Şifre: uzman"})}});</script>
-
+<script>
+(()=>{const track=document.getElementById("latestFilesTrack");if(!track)return;
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const date=v=>{if(!v)return "Yeni";const d=new Date(v);return Number.isNaN(d.getTime())?"Yeni":d.toLocaleDateString("tr-TR",{day:"2-digit",month:"short"});};
+async function load(){try{if(!window.UzmantechAPI?.archiveFiles)throw new Error("API hazır değil");const r=await UzmantechAPI.archiveFiles();const files=(r.files||[]).sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).slice(0,10);
+if(!files.length){track.innerHTML='<div class="latest-file-placeholder">Henüz yeni dosya eklenmedi.</div>';return;}
+const cards=files.map(f=>'<article class="latest-file-card"><span class="latest-file-icon">📁</span><div class="latest-file-info"><strong>'+esc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+esc([f.brand,f.model].filter(Boolean).join(" · ")||"Teknik arşiv")+'</small></div><span class="latest-file-date">'+date(f.created_at)+'</span></article>').join("");
+track.innerHTML=cards+cards;track.classList.toggle("is-static",files.length===1);
+}catch(e){track.innerHTML='<div class="latest-file-placeholder">Son eklenen dosyaları görüntülemek için arşiv erişimi gerekiyor.</div>';}}
+load();
+})();
+</script>
 
 </body></html>

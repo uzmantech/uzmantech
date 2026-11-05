@@ -609,3 +609,63 @@
 .download-feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.download-feature-strip>div{display:flex;align-items:center;gap:13px;padding:17px;border:1px solid #203650;border-radius:13px;background:#0d1a2b}.download-feature-strip>div>b{color:#438fdf;font:700 20px "Space Grotesk"}.download-feature-strip span{display:flex;flex-direction:column;gap:4px}.download-feature-strip strong{color:#e4eefc;font-size:12px}.download-feature-strip small{color:#8197b2;font-size:10px}
 @media(max-width:850px){.download-page-grid{grid-template-columns:1fr}.download-art-card{transform:none}.download-art-screen{min-height:230px}}
 @media(max-width:600px){.download-hero{padding:23px 17px;border-radius:18px}.download-page-top{align-items:flex-start;flex-direction:column;gap:12px}.download-page-copy h1{font-size:40px}.download-version-row{gap:18px}.download-primary{width:100%}.download-feature-strip{grid-template-columns:1fr}.download-art-screen{min-height:210px}}
+
+
+/* Uzmantool download page v2: isolated, responsive layout */
+.ut-download-v2{width:100%;margin:24px 0 18px;color:#eef5ff;font-family:"DM Sans",Arial,sans-serif;scroll-margin-top:96px}
+.ut-download-v2 *{box-sizing:border-box}
+.utd-shell{position:relative;overflow:hidden;padding:clamp(26px,4vw,54px);border:1px solid #263e5b;border-radius:24px;background:linear-gradient(120deg,#0d1c30 0%,#102742 54%,#0a1728 100%)}
+.utd-shell:before{content:"";position:absolute;width:520px;height:520px;right:-190px;top:-300px;border:1px solid #2d79c52b;border-radius:50%;box-shadow:0 0 0 55px #2d79c510,0 0 0 110px #2d79c508;pointer-events:none}
+.utd-topline{position:relative;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(36px,5vw,66px)}
+.utd-brand{display:flex;align-items:center;gap:11px;color:#f4f8ff!important;text-decoration:none!important;font-size:12px;font-weight:800;letter-spacing:1.5px}
+.utd-brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#2698ff,#0758ce);font:700 21px "Space Grotesk",sans-serif;box-shadow:0 8px 24px #0879ff44}
+.utd-brand small{display:block;margin-top:3px;color:#809bb9;font-size:8px;letter-spacing:2px}
+.utd-ready{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #28553f;border-radius:30px;background:#102b25;color:#9ae4bd;font-size:11px;white-space:nowrap}
+.utd-ready i,.utd-product-foot i{width:7px;height:7px;border-radius:50%;background:#51d597;box-shadow:0 0 10px #51d597}
+.utd-main{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);align-items:center;gap:clamp(35px,6vw,88px)}
+.utd-copy{min-width:0;max-width:620px}
+.utd-eyebrow{display:inline-block;color:#69b3ff;font-size:10px;font-weight:800;letter-spacing:2.1px}
+.utd-copy h1{margin:17px 0 17px;color:#f5f8ff;font:700 clamp(38px,4.7vw,61px)/1.08 "Space Grotesk",sans-serif;letter-spacing:-2px}
+.utd-copy h1 em{color:#66b3ff;font-style:normal}
+.utd-lead{max-width:535px;margin:0;color:#a9bdd5;font-size:15px;line-height:1.85}
+.utd-facts{display:flex;flex-wrap:wrap;gap:30px;margin:29px 0}
+.utd-facts div{display:flex;flex-direction:column;gap:7px}
+.utd-facts small{color:#7692b1;font-size:9px;font-weight:700;letter-spacing:1.3px}
+.utd-facts b{color:#f1f6ff;font-size:14px}
+.utd-download{width:min(100%,390px);min-height:76px;display:flex;align-items:center;gap:14px;padding:13px 17px;border:1px solid #4b9fff;border-radius:14px;background:linear-gradient(110deg,#168aff,#0756d2);color:#fff!important;text-decoration:none!important;box-shadow:0 14px 32px #006dff38;transition:transform .2s,filter .2s}
+.utd-download:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.utd-download-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid #ffffff45;border-radius:11px;background:#ffffff1b;font-size:26px}
+.utd-download>span:nth-child(2){display:flex;flex-direction:column;gap:5px}
+.utd-download>span:nth-child(2) b{font-size:15px}
+.utd-download>span:nth-child(2) small{color:#d7eaff;font-size:10px}
+.utd-download-arrow{margin-left:auto;font-size:21px}
+.utd-password{width:min(100%,390px);min-height:66px;display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 13px;border:1px solid #2b4562;border-radius:13px;background:#081729}
+.utd-lock{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:#183653;color:#9acbff;font-size:19px}
+.utd-password>span:nth-child(2){display:flex;flex-direction:column;gap:4px}
+.utd-password small{color:#809ab7;font-size:8px;font-weight:700;letter-spacing:1.1px}
+.utd-password b{color:#f3f7ff;font-size:15px;letter-spacing:1.2px}
+.utd-password button{margin-left:auto;padding:9px 11px;border:1px solid #355474;border-radius:8px;background:#142d47;color:#c8e2ff;font:600 10px "DM Sans",sans-serif;cursor:pointer}
+.utd-password button:hover{background:#1d4165}
+.utd-visual{position:relative;min-width:0;padding:12px 4px}
+.utd-glow{position:absolute;inset:12% 4%;border-radius:50%;background:#087bff24;filter:blur(55px)}
+.utd-product-card{position:relative;overflow:hidden;border:1px solid #315477;border-radius:19px;background:linear-gradient(145deg,#132b47,#091727);box-shadow:0 28px 70px #0006;transform:rotate(1.2deg)}
+.utd-product-head{height:47px;display:flex;align-items:center;gap:12px;padding:0 17px;border-bottom:1px solid #29435f;background:#10243b;color:#91abc8;font-size:9px;font-weight:800;letter-spacing:1.5px}
+.utd-window-dots{display:flex;gap:5px}.utd-window-dots i{width:7px;height:7px;border-radius:50%;background:#47627e}.utd-window-dots i:first-child{background:#398ee8}
+.utd-version{margin-left:auto;color:#75baff}
+.utd-product-body{padding:clamp(25px,3vw,38px)}
+.utd-emblem{width:54px;height:54px;display:grid;place-items:center;margin-bottom:24px;border-radius:15px;background:linear-gradient(145deg,#218fff,#0754c5);box-shadow:0 10px 28px #087bff55;color:#fff;font:700 29px "Space Grotesk",sans-serif}
+.utd-product-label{color:#70b6ff;font-size:9px;font-weight:800;letter-spacing:2px}
+.utd-product-body h2{margin:10px 0 25px;color:#f4f8ff;font:700 clamp(25px,3vw,36px)/1.15 "Space Grotesk",sans-serif;letter-spacing:-.8px}
+.utd-modules{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.utd-modules span{display:flex;align-items:center;gap:9px;padding:12px 10px;border:1px solid #29445f;border-radius:9px;background:#10243a;color:#c5d6e9;font-size:10px}
+.utd-modules i{color:#70baff;font-size:15px;font-style:normal}
+.utd-product-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 19px;border-top:1px solid #29435e;background:#0d1d30;color:#8ca7c4;font-size:9px}
+.utd-product-foot span{display:flex;align-items:center;gap:8px}.utd-product-foot b{color:#72b6ff;letter-spacing:1.3px}
+.utd-install{position:relative;display:flex;align-items:center;gap:12px;width:max-content;max-width:90%;margin:15px 0 0 auto;padding:11px 15px;border:1px solid #2c4a69;border-radius:12px;background:#10243a;box-shadow:0 12px 28px #0004}
+.utd-install>span{color:#69b4ff;font:700 19px "Space Grotesk"}
+.utd-install p{display:flex;flex-direction:column;gap:3px;margin:0}.utd-install b{color:#edf5ff;font-size:11px}.utd-install small{color:#8ea7c2;font-size:9px}
+.utd-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.utd-bottom>div{display:flex;flex-direction:column;gap:5px;padding:17px 19px;border:1px solid #203954;border-radius:12px;background:#0d1b2c}
+.utd-bottom b{color:#e8f2ff;font-size:12px}.utd-bottom span{color:#8ea4bf;font-size:10px}
+@media(max-width:900px){.utd-main{grid-template-columns:1fr;gap:28px}.utd-copy{max-width:720px}.utd-visual{max-width:620px;width:100%;margin:0 auto}.utd-product-card{transform:none}}
+@media(max-width:620px){.utd-shell{padding:23px 17px;border-radius:18px}.utd-topline{align-items:flex-start;flex-direction:column;margin-bottom:34px}.utd-copy h1{font-size:39px;letter-spacing:-1.3px}.utd-facts{gap:17px 23px;margin:23px 0}.utd-download,.utd-password{width:100%}.utd-bottom{grid-template-columns:1fr}.utd-product-body{padding:25px 18px}.utd-modules{grid-template-columns:1fr 1fr}}

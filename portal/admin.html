@@ -27,6 +27,14 @@
 
 <button class="btn" id="archiveUploadBtn" type="submit">Bağlantıyı kaydet</button><p class="muted" id="archiveUploadMessage"></p>
 </form></div>
+<div class="panel" id="archiveBulkPanel">
+<h2>Toplu ENG aktarımı</h2>
+<p class="muted">Her satıra bir kayıt gir. Biçim: <b>Başlık | Marka | Model (codename) | HTTPS bağlantı | Açıklama</b>. Kategori otomatik ENG olur. Ücretli kaynakları ve reklam yönlendirme bağlantılarını kullanma.</p>
+<textarea id="archiveBulkInput" rows="8" placeholder="Redmi Note 7 Lavender ENG | Xiaomi | Redmi Note 7 (lavender) | https://sourceforge.net/.../download | Factory ENG firmware" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #304965;border-radius:10px;background:#07111f;color:#fff;resize:vertical"></textarea>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="archiveBulkPreviewBtn" type="button">Önizle ve doğrula</button><button class="btn" id="archiveBulkImportBtn" type="button" disabled>Doğrulananları ENG arşivine ekle</button></div>
+<p class="muted" id="archiveBulkMessage">Önce bağlantıları önizle. Tekrarlar otomatik atlanır.</p>
+<div class="table-scroll"><table><thead><tr><th>SATIR</th><th>MODEL</th><th>SONUÇ</th></tr></thead><tbody id="archiveBulkPreview"><tr><td colspan="3">Henüz önizleme yapılmadı.</td></tr></tbody></table></div>
+</div>
 <div class="panel table-scroll"><div class="page-head"><div><h2>Arşiv kayıtları</h2><p class="muted">Düzenle, yayından kaldır veya kalıcı sil.</p></div><input id="archiveFileSearch" placeholder="Dosya, marka veya model ara"></div><table><thead><tr><th>DOSYA</th><th>MARKA / MODEL</th><th>KATEGORİ</th><th>BOYUT</th><th>DURUM</th><th>İŞLEM</th></tr></thead><tbody id="archiveFilesBody"><tr><td colspan="6">Yükleniyor…</td></tr></tbody></table></div>
 </section>
 <section class="view" id="content"><div class="page-head"><div><h1>Site İçeriği</h1><p>Duyurular, marka/model listeleri, ana sayfa alanları ve üyelik paketleri için merkezi kontrol.</p></div></div><div class="panel"><h2>İçerik yönetimi</h2><p class="muted">Dosya yükleme ve arşiv kaydı yönetimi aktif. Duyuru, menü, ana sayfa ve paket ayarlarını da aynı panelde yönetilebilir hale getireceğim. Bunları mevcut üyelik ve ödeme akışını bozmadan ayrı kontroller olarak bağlamak gerekiyor.</p></div></section>

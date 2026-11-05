@@ -907,3 +907,62 @@
 .license-packages-section .dash-price-note{margin-top:15px;color:#829bb4;font-size:10px}
 @media(max-width:900px){.license-hero{grid-template-columns:1fr}.license-visual{min-height:275px}.license-floating-chip{right:5%}}
 @media(max-width:650px){.license-hero{padding:23px 18px}.license-hero-copy h2{font-size:34px}.license-visual{min-height:255px}.license-brand-card{width:180px;height:220px}.license-orbit-ring{width:270px}.license-status-card{padding:18px}.license-status-card .license-actions{justify-content:stretch}.license-status-card .license-actions .dash-button{flex:1;min-width:0}.license-packages-section .dash-package-grid{grid-template-columns:1fr}.license-packages-section .dash-package{min-height:0}}
+
+
+/* Screenshot-matched Uzmantool license activation page */
+.license-reference-layout{padding:0!important}
+.license-reference-layout>.portal-page-heading{display:none!important}
+.activation-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(300px,1.05fr) minmax(220px,.72fr) minmax(390px,1.08fr);align-items:center;gap:26px;min-height:500px;padding:48px 36px 40px;margin:0 0 28px;overflow:hidden;border:1px solid #075da5;border-radius:0;background:radial-gradient(ellipse at 53% 62%,#007cff39,transparent 29%),radial-gradient(ellipse at 98% 12%,#073c7c48,transparent 35%),linear-gradient(112deg,#03152e 0%,#041b3a 53%,#03152b 100%);box-shadow:inset 0 1px #ffffff10}
+.activation-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,transparent 50%,#009dff08 100%),repeating-linear-gradient(0deg,transparent 0 58px,#36aaff07 59px 60px)}
+.activation-copy{position:relative;z-index:2;max-width:540px}
+.activation-brandline{display:flex;align-items:center;gap:17px;margin-bottom:18px;color:#17d5f3;font-size:13px;font-weight:800;letter-spacing:5px}
+.activation-brandline i{display:block;width:min(180px,35%);height:1px;background:#00bff4}
+.activation-copy h2{margin:0 0 15px;color:#f4f8ff;font:italic 800 clamp(38px,4vw,62px)/1.06 "Space Grotesk",sans-serif;letter-spacing:-2px}
+.activation-copy h2 em{color:#49caff;font-style:italic}
+.activation-copy>p{max-width:510px;margin:0 0 28px;color:#d1e2f6;font-size:clamp(15px,1.25vw,20px);line-height:1.48}
+.activation-benefits{display:flex;flex-direction:column;gap:15px}
+.activation-benefit{display:flex;align-items:center;gap:15px;min-height:66px}
+.activation-icon{width:55px;height:55px;flex:0 0 55px;display:grid;place-items:center;border:1px solid #0876bd;border-radius:50%;background:radial-gradient(circle at 35% 25%,#075b9c,#031c3e 70%);box-shadow:0 0 18px #008dff25;color:#18caff;font-size:32px;font-weight:700}
+.activation-benefit>div{display:flex;flex-direction:column;gap:5px}
+.activation-benefit b{color:#f1f7ff;font-size:16px;font-weight:800}
+.activation-benefit small{color:#d0dfef;font-size:13px}
+.activation-product{position:relative;min-height:360px;display:flex;align-items:center;justify-content:center;perspective:900px}
+.activation-product-glow{position:absolute;width:120%;height:72%;border-radius:50%;background:radial-gradient(ellipse,#008eff38,transparent 66%);filter:blur(16px)}
+.activation-platform-ring{position:absolute;bottom:40px;width:125%;height:82px;border:3px solid #00caff;border-radius:50%;transform:rotateX(62deg);box-shadow:0 0 10px #00caff,0 0 28px #008bff, inset 0 0 14px #00caff66}
+.activation-product-box{position:relative;z-index:2;width:190px;height:310px;transform:rotateY(-13deg) rotateX(2deg);transform-style:preserve-3d;filter:drop-shadow(0 18px 24px #0009)}
+.activation-box-front{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;border:1px solid #5bcfff;border-radius:8px;background:linear-gradient(145deg,#061a35,#031126 60%,#073665);box-shadow:inset 0 0 35px #0878c433,0 0 22px #009dff44}
+.activation-box-front:before{content:"";position:absolute;inset:0;background:linear-gradient(130deg,#ffffff16,transparent 35%),repeating-linear-gradient(155deg,transparent 0 26px,#16aaff18 27px 28px)}
+.activation-box-front:after{content:"";position:absolute;left:-20%;right:-20%;bottom:22px;height:82px;background:repeating-linear-gradient(170deg,transparent 0 13px,#00aaff99 14px 16px,transparent 17px 25px);filter:drop-shadow(0 0 5px #00caff)}
+.activation-box-front img{position:relative;z-index:1;width:78px;height:78px;object-fit:contain;margin:0 0 8px;filter:drop-shadow(0 0 15px #00aaff77)}
+.activation-box-front>b{position:relative;z-index:1;color:white;font:700 23px "Space Grotesk",sans-serif}
+.activation-box-front>small{position:relative;z-index:1;margin-top:8px;color:#c6def2;font-size:10px;text-align:center;line-height:1.4}
+.activation-box-side{position:absolute;left:-31px;top:0;width:31px;height:100%;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);border:1px solid #4ab9ee;border-right:0;background:linear-gradient(90deg,#020b1a,#092c50);color:#e8f7ff;font-weight:800;letter-spacing:2px}
+.activation-platforms{position:relative;z-index:1;display:flex;gap:9px;margin-top:24px}
+.activation-platforms span{width:29px;height:29px;display:grid;place-items:center;border:1px solid #167ca7;border-radius:7px;background:#061a2d;color:#25d6ff;font-size:16px}
+.activation-panel{position:relative;z-index:3;padding:30px 28px 27px;border:2px solid #078eff;border-radius:28px;background:linear-gradient(145deg,#0a2b54ed,#061a37f5);box-shadow:0 0 28px #007bff3a,inset 0 1px #ffffff19}
+.activation-panel-title{display:flex;align-items:center;gap:15px;margin-bottom:13px}
+.activation-key-icon{color:#18d4f5;font-size:42px;line-height:1}
+.activation-panel-title h3{margin:0;color:#f5f8ff;font:700 clamp(22px,2vw,31px) "Space Grotesk",sans-serif;letter-spacing:-.7px}
+.activation-panel>p{margin:0 0 25px;color:#d2e1f2;font-size:14px;line-height:1.6}
+.activation-input-wrap{height:64px;display:flex;align-items:center;gap:13px;padding:0 18px;border:2px solid #087dff;border-radius:18px;background:#061c38;color:#9bb9d6}
+.activation-input-wrap>span{font-size:25px}
+.activation-input-wrap input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#fff;font:500 16px "DM Sans",sans-serif}
+.activation-input-wrap input::placeholder{color:#a9bad0}
+.activation-submit,.activation-buy{width:100%;height:62px;display:flex;align-items:center;justify-content:center;gap:13px;margin-top:26px;border:1px solid #18baff;border-radius:18px;background:linear-gradient(100deg,#04b8ef,#0753ed);box-shadow:0 8px 20px #007aff35;color:white;font-size:18px;font-weight:800;cursor:pointer;transition:filter .18s,transform .18s}
+.activation-submit:hover,.activation-buy:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.activation-submit span{font-size:28px}
+.activation-or{display:flex;align-items:center;gap:14px;margin:20px 0;color:#b7cce3;font-size:16px}
+.activation-or i{height:1px;flex:1;background:#315579}
+.activation-buy{position:relative;height:64px;margin-top:0;border:2px solid #11db74;background:linear-gradient(100deg,#073d3d,#052a3d);box-shadow:0 0 15px #00c8791a}
+.activation-buy>span{font-size:23px}.activation-buy>b{position:absolute;right:20px;font-size:30px;font-weight:400}
+.activation-note{display:block;min-height:14px;margin-top:10px;color:#9fc6e6;font-size:10px;text-align:center}
+.activation-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:0 0 28px}
+.activation-feature-grid article{min-height:130px;display:flex;align-items:center;gap:16px;padding:20px 22px;border:1px solid #075da5;border-radius:24px;background:linear-gradient(130deg,#061d3b,#04152d);box-shadow:inset 0 1px #ffffff0b}
+.activation-feature-grid article>span{width:70px;height:70px;flex:0 0 70px;display:grid;place-items:center;border:1px solid #087bc5;border-radius:50%;background:radial-gradient(circle at 35% 25%,#075b9c,#031b3b 72%);box-shadow:0 0 22px #007bff22;color:#13c9f5;font-size:36px}
+.activation-feature-grid article>div{display:flex;flex-direction:column;gap:8px}
+.activation-feature-grid b{color:#f1f7ff;font-size:15px}.activation-feature-grid small{color:#b9cce0;font-size:12px;line-height:1.5}
+.license-reference-layout .license-status-card{margin:0 0 28px}
+.license-reference-layout .license-packages-section{margin-top:34px}
+@media(max-width:1250px){.activation-hero{grid-template-columns:minmax(260px,1fr) minmax(180px,.65fr) minmax(340px,1.05fr);gap:17px;padding:38px 25px}.activation-panel{padding:24px 20px}.activation-product-box{transform:scale(.88) rotateY(-13deg)}.activation-feature-grid{gap:12px}.activation-feature-grid article{padding:16px;gap:12px}.activation-feature-grid article>span{width:56px;height:56px;flex-basis:56px}}
+@media(max-width:980px){.activation-hero{grid-template-columns:1fr 1fr;gap:28px}.activation-copy{grid-column:1}.activation-product{grid-column:2;grid-row:1}.activation-panel{grid-column:1/-1;max-width:none}.activation-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.activation-hero{grid-template-columns:1fr;padding:28px 18px;gap:24px}.activation-copy,.activation-product,.activation-panel{grid-column:1;grid-row:auto}.activation-copy h2{font-size:42px}.activation-product{min-height:310px}.activation-product-box{transform:scale(.85) rotateY(-13deg)}.activation-panel{padding:22px 16px;border-radius:20px}.activation-panel-title h3{font-size:22px}.activation-feature-grid{grid-template-columns:1fr}.activation-feature-grid article{min-height:100px}.activation-benefit b{font-size:14px}}

@@ -1,0 +1,32 @@
+/* Uzmantool unified visual system: archive reference */
+:root{--ut-bg:#080a10;--ut-panel:#171b26;--ut-panel2:#1d2330;--ut-line:#303746;--ut-blue:#2584ed;--ut-blue2:#58a6ff;--ut-red:#e52d50;--ut-text:#f5f6fb;--ut-muted:#aab6c7;--ut-green:#20c879}
+html{background:var(--ut-bg)}
+body{background:radial-gradient(ellipse at 90% 0%,#250d191c 0,transparent 38%),var(--ut-bg);color:var(--ut-text)}
+button,input,select,textarea{font-family:inherit}
+button,.btn,.button,.dash-button,.primary-button,.submit-button{border-radius:9px!important;font-weight:800!important;transition:background .18s,border-color .18s,transform .18s,filter .18s}
+button:hover,.btn:hover,.button:hover,.dash-button:hover{filter:brightness(1.1)}
+input,select,textarea{border-radius:8px!important;border-color:#3b4658!important;background:#0d121c!important;color:#f5f6fb!important}
+input:focus,select:focus,textarea:focus{outline:0!important;border-color:var(--ut-blue2)!important;box-shadow:0 0 0 3px #2584ed24!important}
+.card,.panel,.dash-panel,.content-card,.feature-card,.price-card,.package-card,.support-card,.license-card,.download-card,.welcome-card{background:var(--ut-panel)!important;border:1px solid var(--ut-line)!important;border-radius:13px!important;box-shadow:0 8px 25px #0003!important}
+table{border-collapse:separate;border-spacing:0}
+th{background:#202633!important;color:#a9c9ed!important}
+td,th{border-color:#303746!important}
+a{transition:color .16s,border-color .16s}
+.site-header,.dash-topbar,.topbar{background:#10131c!important;border-color:#36303c!important}
+.dash-sidebar,.sidebar,.site-sidebar{background:#111722!important;border-color:#303746!important}
+.dash-brand,.brand{border-color:#303746!important}
+.dash-nav a,.dash-nav button,.sidebar nav button,.sidebar nav a{border-radius:9px!important;font-weight:700!important}
+.dash-nav a.active,.sidebar nav .active{background:#192a3e!important;border:1px solid #28527b!important;box-shadow:none!important}
+.dash-nav a:hover,.dash-nav button:hover,.sidebar nav button:hover,.sidebar nav a:hover{background:#202b3a!important}
+.dash-nav a.active span,.dash-nav a span{color:#72baff!important}
+.dash-hero,.help-center-hero,.updates-hero,.support-hub{border-radius:15px!important;border-color:#713047!important}
+.dash-button,.button-primary,.btn-primary,.primary-button{background:linear-gradient(120deg,#2278e9,#1554b6)!important;border:1px solid #58a6ff!important;color:#fff!important;box-shadow:0 7px 20px #1267d936!important}
+.button-secondary,.btn-secondary,.dash-button-outline{background:#1a1f2a!important;border:1px solid #394354!important;color:#f5f6fb!important}
+.badge,.pill,.status-badge{border-radius:20px!important}
+.portal-page-heading h1,.page-head h1{color:#fff!important}
+.portal-page-heading p,.page-head p{color:var(--ut-muted)!important}
+.toast{border:1px solid #285b49!important;border-radius:10px!important;background:#10281f!important;color:#e5fff2!important}
+.modal-card{border:1px solid #713047!important;border-radius:14px!important;background:#171b26!important;color:#f5f6fb!important}
+.modal-heading{border-color:#303746!important}
+.dash-footer{border-color:#303746!important;color:#9ba9bc!important}
+@media(max-width:700px){.dash-sidebar{box-shadow:10px 0 35px #0008}.dash-topbar{padding-inline:14px!important}}

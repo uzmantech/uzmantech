@@ -119,12 +119,11 @@
     </div>
   </div>
 </header>
-  <section class="archive-stat-row">
-   <div class="archive-stat stat-online"><span>🟢</span><div><b>7/24</b><small>Arşiv erişimi</small></div></div>
-   <div class="archive-stat"><span>▦</span><div><b>12+</b><small>Desteklenen marka</small></div></div>
-   <div class="archive-stat"><span>▣</span><div><b>Dosya Arşivi</b><small>Teknik servis kaynakları</small></div></div>
-   <a class="archive-stat stat-support" href="index.html#support"><span>☎</span><div><b>Canlı Destek</b><small>Destek ekibine ulaşın</small></div></a>
-   <button class="archive-stat stat-member" data-open="login"><span>♙</span><div><b>Üyelik</b><small>Giriş yap / Üye ol</small></div></button>
+  <section class="archive-stat-row site-live-stats" aria-label="Uzmantech site istatistikleri">
+   <div class="archive-stat stat-online"><span>▦</span><div><b id="siteBrandCount">--</b><small>Marka</small></div></div>
+   <div class="archive-stat"><span>▣</span><div><b id="siteModelCount">--</b><small>Cihaz modeli</small></div></div>
+   <div class="archive-stat stat-support"><span>⇩</span><div><b id="siteSoftwareCount">--</b><small>Yayındaki yazılım</small></div></div>
+   <div class="archive-stat stat-visitors"><span>●</span><div><b id="siteVisitorCount">--</b><small>Anlık ziyaretçi · son 2 dk.</small></div></div>
   </section>
 <main class="dash-content">
   <section id="accountPage" class="account-page portal-page" data-page-view="account" hidden></section>
@@ -272,4 +271,20 @@ load();
 })();
 </script>
 
+<script>
+(()=> {
+ const ids={brands:"siteBrandCount",models:"siteModelCount",software:"siteSoftwareCount",visitors:"siteVisitorCount"};
+ const format=n=>Number(n||0).toLocaleString("tr-TR");
+ async function refresh(){
+  if(!window.UzmantechAPI?.siteStats)return;
+  try{
+   const result=await UzmantechAPI.siteStats();
+   if(!result?.success)return;
+   for(const [key,id] of Object.entries(ids)){const el=document.getElementById(id);if(el)el.textContent=format(result[key]);}
+  }catch(error){console.warn("Site istatistikleri alınamadı.",error);}
+ }
+ refresh();
+ window.setInterval(refresh,30000);
+})();
+</script>
 </body></html>

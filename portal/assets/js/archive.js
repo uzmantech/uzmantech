@@ -40,7 +40,7 @@ function renderLiveArchive(){
   return;
  }
  if(selectedDevice){
-  const deviceItems=archiveItems.filter(f=>normBrand(f.brand)===brand&&f.model===selectedDevice);
+  const deviceItems=archiveItems.filter(f=>normBrand(f.brand)===brand&&f.model&&(f.model===selectedDevice||selectedDevice.endsWith(" "+f.model)||f.model.endsWith(" "+selectedDevice)));
   count.textContent=deviceItems.length+" DOSYA";
   head.querySelector("h2").textContent=selectedDevice;
   head.querySelector("p").textContent=brand+" cihazına ait teknik dosyalar";

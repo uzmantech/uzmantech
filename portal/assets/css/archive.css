@@ -164,3 +164,18 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 @media(max-width:1100px){.archive-live-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:760px){.archive-live-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:500px){.archive-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Layout correction: keep the brand selector and model catalogue in the content column beside the site menu */
+.archive-stage{display:grid!important;grid-template-columns:210px minmax(0,1fr)!important;align-items:start!important;gap:18px!important;width:min(1600px,calc(100% - 32px))!important;margin:18px auto 48px!important}
+.archive-site-menu{position:sticky!important;top:82px!important;grid-column:1!important;grid-row:1!important;width:100%!important;min-height:calc(100vh - 100px)!important}
+.archive-main-column{grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;min-width:0!important;width:100%!important;gap:14px!important}
+.archive-main-column>.archive-brand-rail{display:flex!important;position:relative!important;top:auto!important;max-height:none!important;overflow:visible!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;min-width:0!important;margin:0!important;padding:14px!important}
+.archive-main-column>.archive-brand-rail>.archive-brand-list{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;width:100%!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;gap:8px!important}
+.archive-main-column>.archive-brand-rail>.archive-brand-list>button{flex:0 0 125px!important;width:125px!important;min-width:125px!important;max-width:125px!important}
+.archive-main-column>.archive-live-files{width:100%!important;max-width:none!important;margin:0!important;padding:20px 4px 35px!important}
+@media(max-width:760px){
+ .archive-stage{grid-template-columns:1fr!important;width:calc(100% - 20px)!important;margin:10px auto 30px!important}
+ .archive-site-menu{position:relative!important;top:auto!important;grid-column:1!important;grid-row:auto!important;min-height:0!important}
+ .archive-main-column{grid-column:1!important;grid-row:auto!important}
+ .archive-main-column>.archive-live-files{padding:15px 0 25px!important}
+}

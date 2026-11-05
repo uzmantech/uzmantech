@@ -384,3 +384,6 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .site-live-stats .archive-stat.stat-visitors>span{border-color:#8a4b73;background:#3a1e3b;color:#ff8ec5;font-size:12px;box-shadow:0 0 14px #ff4aa533}
 @media(max-width:900px){.site-live-stats.archive-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.site-live-stats.archive-stat-row{gap:8px;padding:0 12px}.site-live-stats .archive-stat{min-height:68px;padding:9px}.site-live-stats .archive-stat>span{width:32px;height:32px;flex-basis:32px}.site-live-stats .archive-stat div b{font-size:18px}.site-live-stats .archive-stat small{font-size:9px}}
+
+/* Keep homepage statistics centered despite dashboard-wide archive row overrides */
+body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px),1120px)!important;max-width:1120px!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}

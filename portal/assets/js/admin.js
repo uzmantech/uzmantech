@@ -39,6 +39,54 @@
   }catch(err){$("#archiveUploadMessage").textContent=err.message||"Bağlantı kaydedilemedi.";toast(err.message||"Kayıt başarısız.");}
   finally{btn.disabled=false;}
  });
+
+ let archiveBulkRows=[];
+ function previewArchiveBulk(){
+  const raw=$("#archiveBulkInput")?.value||"";
+  const lines=raw.split(/\\r?\\n/).map(x=>x.trim()).filter(Boolean);
+  archiveBulkRows=lines.map((line,index)=>{
+   const parts=line.split("|").map(x=>x.trim());
+   const [title,brand,model,url,...descriptionParts]=parts;
+   const description=descriptionParts.join(" | ");
+   let error="";
+   if(parts.length<4)error="4 zorunlu alan gerekli";
+   else if(!title||!brand||!model||!url)error="Başlık, marka, model ve bağlantı zorunlu";
+   else if(brand.toLocaleLowerCase("tr-TR")!=="xiaomi")error="Bu aktarım yalnızca Xiaomi içindir";
+   let parsed=null;
+   try{parsed=new URL(url)}catch{error=error||"Bağlantı geçersiz"}
+   if(parsed&&(parsed.protocol!=="https:"||!parsed.hostname||parsed.username||parsed.password))error=error||"Yalnızca güvenli HTTPS bağlantısı";
+   const duplicate=!!(!error&&archiveFiles.some(f=>
+    String(f.external_url||"").replace(/\\/$/,"").toLowerCase()===parsed.href.replace(/\\/$/,"").toLowerCase()||
+    (String(f.brand||"").toLowerCase()===brand.toLowerCase()&&String(f.model||"").toLowerCase()===model.toLowerCase()&&String(f.title||"").toLowerCase()===title.toLowerCase())
+   ));
+   return {line:index+1,title,brand,model,url:parsed?.href||url,description,status:error?"HATA":duplicate?"TEKRAR":"EKLENECEK",error};
+  });
+  $("#archiveBulkPreview").innerHTML=archiveBulkRows.map(r=>'<tr><td>'+r.line+'</td><td>'+esc(r.title||"-")+'<br><small>'+esc(r.model||"")+'</small></td><td>'+esc(r.error||r.status)+'</td></tr>').join("")||'<tr><td colspan="3">Aktarılacak satır bulunamadı.</td></tr>';
+  const ready=archiveBulkRows.filter(r=>r.status==="EKLENECEK").length,skipped=archiveBulkRows.length-ready;
+  $("#archiveBulkMessage").textContent=ready+" kayıt eklenecek, "+skipped+" satır atlanacak.";
+  $("#archiveBulkImportBtn").disabled=ready===0;
+ }
+ $("#archiveBulkPreviewBtn")?.addEventListener("click",previewArchiveBulk);
+ $("#archiveBulkImportBtn")?.addEventListener("click",async()=>{
+  const ready=archiveBulkRows.filter(r=>r.status==="EKLENECEK");
+  if(!ready.length)return;
+  if(!confirm(ready.length+" Xiaomi ENG kaydı canlı arşive eklensin mi?"))return;
+  const btn=$("#archiveBulkImportBtn");btn.disabled=true;
+  let added=0,failed=[];
+  for(const row of ready){
+   try{
+    await api.archiveAdmin({action:"file_create",title:row.title,brand:row.brand,model:row.model,category:"eng",description:row.description||"",external_url:row.url,storage_path:null,original_filename:new URL(row.url).pathname.split("/").filter(Boolean).pop()||new URL(row.url).hostname,file_size:0,mime_type:"application/octet-stream",is_active:true});
+    added++;
+    $("#archiveBulkMessage").textContent=added+"/"+ready.length+" kayıt eklendi…";
+   }catch(err){failed.push("Satır "+row.line+": "+err.message);}
+  }
+  $("#archiveBulkMessage").textContent="Tamamlandı: "+added+" eklendi, "+failed.length+" başarısız. "+(failed.length?failed.join(" • "):"");
+  toast(added+" ENG kaydı eklendi"+(failed.length?", "+failed.length+" hata":"")+".");
+  await loadArchiveFiles();
+  previewArchiveBulk();
+  btn.disabled=archiveBulkRows.every(r=>r.status!=="EKLENECEK");
+ });
+
  $("#reloadArchiveFiles")?.addEventListener("click",()=>loadArchiveFiles().catch(e=>toast(e.message)));
  $("#archiveFileSearch")?.addEventListener("input",renderArchiveFiles);
  function renderPayments(){

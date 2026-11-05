@@ -447,4 +447,5 @@
     if(token){try{const result=await window.UzmantechAPI.session();state.user=result.user;}catch{window.UzmantechAPI.setSession("");}}
     syncHeader();await refreshExchangeRate().catch(error=>{document.querySelectorAll("[data-price]").forEach(el=>el.textContent="Kur alınamadı");console.warn(error);});await loadRecent();await loadArchive();
   })();
+document.addEventListener("click",e=>{const b=e.target.closest(".site-mobile-nav-toggle");if(!b)return;const nav=document.querySelector(".site-global-nav");const open=nav?.classList.toggle("is-open")||false;b.setAttribute("aria-expanded",String(open));});
 })();

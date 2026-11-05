@@ -22,5 +22,5 @@ async function openPanel(){
   $("#passwordChangeForm").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);if(f.get("new_password")!==f.get("confirm_password")){alert(en?"Passwords do not match.":"Şifreler eşleşmiyor.");return;}const b=e.currentTarget.querySelector("button");b.disabled=true;try{const out=await UzmantechAPI.changePassword({current_password:f.get("current_password"),new_password:f.get("new_password")});alert(out.message);e.currentTarget.reset();}catch(err){alert(err.message);}finally{b.disabled=false;}});
  }catch(err){body.innerHTML='<div class="notice">'+esc(err.message)+'</div>';}
 }
-document.addEventListener("click",e=>{const b=e.target.closest("#profileBtn,#accountNav");if(b){e.preventDefault();e.stopPropagation();if(window.UzmantechAPI?.getToken())openPanel();else document.querySelector("#headerLogin")?.click();}if(e.target.closest("#accountBack")){document.body.classList.remove("account-view");$("#accountPage").hidden=true;}});
+document.addEventListener("click",e=>{const b=e.target.closest("#accountNav");if(b){e.preventDefault();e.stopPropagation();if(window.UzmantechAPI?.getToken())openPanel();else document.querySelector("#headerLogin")?.click();}if(e.target.closest("#accountBack")){document.body.classList.remove("account-view");$("#accountPage").hidden=true;}});
 })();

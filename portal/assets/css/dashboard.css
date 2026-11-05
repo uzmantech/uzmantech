@@ -832,3 +832,14 @@
 .license-packages-section .dash-package .dash-button{border-radius:10px}
 @media(max-width:900px){.license-hero{grid-template-columns:1fr}.license-product-art{min-height:245px}.license-art-caption{right:5%}}
 @media(max-width:620px){.license-hero{padding:22px 17px}.license-hero-copy h2{font-size:32px}.license-content-grid{grid-template-columns:1fr}.license-product-art{min-height:230px}.license-box{width:150px;height:195px}.license-status-card{padding:17px}}
+
+.profile-menu-wrap{position:relative;display:inline-flex;align-items:center}
+.profile-dropdown{position:absolute;z-index:100;top:calc(100% + 12px);right:0;width:196px;padding:7px;border:1px solid #244766;border-radius:13px;background:linear-gradient(145deg,#10243b,#081729);box-shadow:0 18px 40px #0009,0 0 20px #007bff18;animation:profileDropIn .16s ease-out}
+.profile-dropdown[hidden]{display:none}
+.profile-dropdown:before{content:"";position:absolute;right:20px;top:-6px;width:10px;height:10px;transform:rotate(45deg);border-left:1px solid #244766;border-top:1px solid #244766;background:#10243b}
+.profile-dropdown button{position:relative;width:100%;display:flex;align-items:center;gap:11px;padding:12px 11px;border:0;border-radius:8px;background:transparent;color:#e6f2ff;text-align:left;font:600 13px "DM Sans",sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.profile-dropdown button:hover{background:#163653;color:#fff}
+.profile-dropdown button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.profile-dropdown .profile-logout{margin-top:4px;border-top:1px solid #203c58;border-radius:0 0 8px 8px;padding-top:13px;color:#ff9b9b}
+.profile-dropdown .profile-logout:hover{background:#3a1c2a;color:#ffc1c1}
+@keyframes profileDropIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}

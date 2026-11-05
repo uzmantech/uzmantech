@@ -36,6 +36,8 @@
   }
  }
  // Paket URL'den önce seçildi; kur hesabı doğrudan doğru paket üzerinden başlar.
+ // Değişiklik dinleyicisini oturum kontrolünü beklemeden bağla; kullanıcı erken seçim yaparsa kaçırılmasın.
+ select.addEventListener("change",calc);
  const rateTask=calc();
  try{
   if(!window.UzmantechAPI)throw new Error("Ödeme servisi yüklenemedi. Sayfayı yenileyin.");
@@ -50,7 +52,6 @@
   document.querySelector(".payment-grid").hidden=true;
   return;
  }
- select.addEventListener("change",calc);
  document.getElementById("copyIban").addEventListener("click",()=>navigator.clipboard.writeText("TR650015700000000091101251").then(()=>say("IBAN kopyalandı.")).catch(()=>say("IBAN kopyalanamadı.")));
  form.addEventListener("submit",async e=>{
   e.preventDefault();

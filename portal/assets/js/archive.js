@@ -69,7 +69,9 @@ document.querySelectorAll(".archive-brand-list button").forEach(btn=>btn.addEven
 document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
 document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");
- if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;renderLiveArchive();return;}\n const folder=e.target.closest("[data-archive-folder]");if(folder){selectedFolder=folder.dataset.archiveFolder;renderLiveArchive();return;}\n if(e.target.id==="archiveBackFolder"){selectedFolder=null;renderLiveArchive();return;}
+ if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;renderLiveArchive();return;}
+ const folder=e.target.closest("[data-archive-folder]");if(folder){selectedFolder=folder.dataset.archiveFolder;renderLiveArchive();return;}
+ if(e.target.id==="archiveBackFolder"){selectedFolder=null;renderLiveArchive();return;}
  if(e.target.id==="archiveBackDevices"){selectedDevice=null;renderLiveArchive();return;}
  const btn=e.target.closest("[data-archive-download]");if(!btn)return;
  const id=btn.dataset.archiveDownload;btn.disabled=true;const tab=window.open("about:blank","_blank");

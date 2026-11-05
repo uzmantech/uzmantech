@@ -310,3 +310,61 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .archive-license-actions a{border-color:#43536b;background:#202b3b;color:#e8f1ff}
 .archive-license-card>small{color:#8495ac;font-size:10px;line-height:1.7}
 @media(max-width:500px){.archive-license-card{padding:28px 18px}.archive-license-card h1{font-size:21px}}
+
+
+/* Vertical animated recent software list */
+.archive-recent-software{border-color:#315578;background:linear-gradient(135deg,#111c2b,#171b2a 62%,#241624);box-shadow:0 12px 30px #0003}
+.archive-recent-head>div>span{color:#ff6682}
+.archive-recent-head>strong{border-color:#315778;background:#10243a;color:#b8dfff}
+.archive-recent-track{
+ display:flex;
+ flex-direction:column;
+ gap:10px;
+ height:238px;
+ overflow:hidden;
+ padding:4px 3px;
+ position:relative;
+ mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%);
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%);
+}
+.archive-recent-track:not(.is-static){animation:archiveRecentVertical 34s linear infinite}
+.archive-recent-track:hover{animation-play-state:paused}
+.archive-recent-track.is-static{animation:none}
+.archive-recent-folder{
+ box-sizing:border-box;
+ display:flex;
+ flex:0 0 68px;
+ flex-direction:row;
+ align-items:center;
+ justify-content:flex-start;
+ gap:12px;
+ width:100%;
+ min-height:68px;
+ padding:10px 14px;
+ border-color:#354c68;
+ border-radius:12px;
+ background:linear-gradient(105deg,#142b43,#101b2c 68%,#1c2033);
+}
+.archive-recent-folder:hover{transform:translateX(3px);border-color:#e63858;background:linear-gradient(105deg,#203b57,#1b2033)}
+.archive-recent-folder-icon{
+ display:grid;
+ place-items:center;
+ flex:0 0 40px;
+ width:40px;
+ height:40px;
+ border:1px solid #41678b;
+ border-radius:10px;
+ background:#102f4a;
+ font-size:21px;
+}
+.archive-recent-folder-info{display:flex;flex:1;min-width:0;flex-direction:column;gap:4px}
+.archive-recent-folder strong{width:100%;overflow:hidden;font-size:12px;line-height:1.3;text-overflow:ellipsis;white-space:nowrap}
+.archive-recent-folder small{overflow:hidden;color:#91a9c2;font-size:10px;text-overflow:ellipsis;white-space:nowrap}
+.archive-recent-folder em{flex:0 0 auto;padding:6px 9px;border:1px solid #6a3448;border-radius:20px;background:#321b2b;color:#ff9aae;font-size:9px;font-style:normal}
+@keyframes archiveRecentVertical{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media(max-width:600px){
+ .archive-recent-track{height:220px}
+ .archive-recent-folder{padding:9px 10px;gap:9px}
+ .archive-recent-folder em{max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){.archive-recent-track{animation:none!important}}

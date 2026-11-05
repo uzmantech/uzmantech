@@ -69,7 +69,7 @@
     <label class="register-phone"><b>☎　Telefon Numarası</b><span class="phone-row"><select name="country_code" aria-label="Ülke kodu"><option value="TR">+90</option><option value="US">+1</option><option value="GB">+44</option><option value="DE">+49</option><option value="AZ">+994</option></select><input name="phone" type="tel" autocomplete="tel" required maxlength="24" placeholder="5XX XXX XX XX"></span></label>
    </div>
    <label class="register-terms"><input name="consent" type="checkbox" required><span><a href="kullanim-kosullari.html" target="_blank">Kullanım şartlarını</a> ve <a href="gizlilik-politikasi.html" target="_blank">gizlilik politikasını</a> okudum, kabul ediyorum.</span></label>
-   <div class="register-notice">Kayıt talebiniz yönetici onayına gönderilir. Hesabınız onaylandıktan sonra giriş yapabilirsiniz.</div>
+   <div class="register-notice">E-posta adresinize gönderilen doğrulama kodunu girerek hesabınızı hemen etkinleştirebilirsiniz.</div>
    <button class="register-submit" id="registerPageSubmit" type="submit"><span>♙</span> Üyelik Oluştur</button>
   </form>
   <div class="register-or"><span></span> veya <span></span></div>
@@ -89,7 +89,13 @@
   btn.disabled=true;btn.textContent="Başvurunuz gönderiliyor...";
   try{
    const result=await window.UzmantechAPI.register({username:String(d.get("username")||"").trim(),email:String(d.get("email")||"").trim().toLowerCase(),phone:String(d.get("phone")||"").trim(),country_code:String(d.get("country_code")||"TR"),language_code:"tr",password,first_name:String(d.get("first_name")||"").trim(),last_name:String(d.get("last_name")||"").trim()});
-   form.innerHTML='<div class="register-success"><span>✓</span><h2>Başvurunuz alındı</h2><p>'+String(result.message||"Üyelik başvurunuz yönetici onayına gönderildi.")+'</p><a href="index.html?login=1">Giriş sayfasına dön</a></div>';
+   form.innerHTML='<div class="register-success"><span>✉</span><h2>E-posta doğrulaması</h2><p>'+String(result.message||"E-posta adresinize gönderilen 6 haneli kodu girin.")+'</p><label class="field"><b>Doğrulama kodu</b><input id="registerOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required></label><button class="register-submit" id="verifyRegister" type="button">Hesabı etkinleştir</button></div>';
+   document.getElementById("verifyRegister").addEventListener("click",async()=>{
+    const code=document.getElementById("registerOtp").value.trim();if(!/^\\d{6}$/.test(code)){notify("6 haneli doğrulama kodunu girin.");return;}
+    const verify=document.getElementById("verifyRegister");verify.disabled=true;verify.textContent="Doğrulanıyor...";
+    try{const done=await window.UzmantechAPI.registerVerify({email:String(d.get("email")||"").trim().toLowerCase(),code});window.UzmantechAPI.setSession(done.session_token);notify(done.message||"Hesabınız aktif.");location.href="odeme.html";}
+    catch(err){notify(err.message);verify.disabled=false;verify.textContent="Hesabı etkinleştir";}
+   });
   }catch(error){notify(error.message);btn.disabled=false;btn.textContent="♙　Üyelik Oluştur";}
  });
 })();

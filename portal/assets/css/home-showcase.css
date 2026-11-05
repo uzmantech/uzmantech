@@ -94,3 +94,47 @@
 .latest-file-card:focus-visible{outline:2px solid #35caff;outline-offset:3px}
 .latest-files-access-message{margin:0 0 18px;color:#b8cce1;line-height:1.7}
 .latest-files-access-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+
+/* Vertical latest files ticker */
+.latest-files-window{
+ height:238px;
+ overflow:hidden;
+ position:relative;
+ mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%);
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%);
+}
+.latest-files-track{
+ display:flex;
+ flex-direction:column;
+ align-items:stretch;
+ width:100%;
+ gap:10px;
+ animation:latestFilesVertical 34s linear infinite;
+}
+.latest-files-track:hover{animation-play-state:paused}
+.latest-files-track.is-static{animation:none}
+.latest-file-card{
+ box-sizing:border-box;
+ width:100%;
+ min-height:66px;
+ flex:0 0 66px;
+ padding:11px 14px;
+ border-radius:13px;
+ background:linear-gradient(105deg,#102b47,#0b1b31 68%,#102744);
+}
+.latest-file-icon{flex-basis:40px;width:40px;height:40px;font-size:19px}
+.latest-file-info strong{font-size:12px}
+.latest-file-info small{font-size:10px}
+.latest-file-date{font-size:10px}
+@keyframes latestFilesVertical{
+ from{transform:translateY(0)}
+ to{transform:translateY(-50%)}
+}
+@media(max-width:560px){
+ .latest-files-window{height:220px}
+ .latest-file-card{width:100%;min-height:62px;flex-basis:62px;padding:9px 10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .latest-files-track{animation:none}
+}

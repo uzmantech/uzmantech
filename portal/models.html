@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19"><meta name="description" content="Uzmantool teknik dosya arşivi">
+<title>Cihaz Modelleri | Uzmantool</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261104">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/archive.css?v=brand-model-pages-20261105">
+<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=20261105"></head>
+<body class="archive-shell">
+<header class="archive-topbar">
+ <a class="archive-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"><span>Profesyonel Cihaz Yazılım Merkezi</span></a>
+ <form class="archive-global-search" id="archiveSearchForm"><input id="archiveQuery" type="search" placeholder="Marka veya model ara..." aria-label="Marka veya model ara"><button type="submit">ARA</button></form>
+ <nav class="archive-top-actions" aria-label="Ana menü">
+  <a class="archive-nav-button" href="#new-files"><span>🔔</span> Yeni Dosyalar</a>
+  <a class="archive-nav-button" href="index.html"><span>🏠</span> Ana Sayfa</a>
+  <button class="archive-nav-button" data-open="login"><span>🔐</span> Giriş Yap</button>
+  <a class="archive-nav-button archive-nav-join" href="index.html#uyelik"><span>📄</span> Üye Ol</a>
+ </nav>
+ <button class="archive-mobile-menu" id="menuToggle" aria-label="Menüyü aç">☰</button>
+</header>
+<main class="archive-stage">
+ <aside class="archive-site-menu" aria-label="Site menüsü">
+  <a class="archive-menu-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantool"></a>
+  <span class="archive-menu-caption">SİTE MENÜSÜ</span>
+  <nav>
+   <a href="index.html"><span>⌂</span>Ana Sayfa</a>
+   <a class="active" href="archive.html"><span>▣</span>Dosya Arşivi</a>
+   <a href="index.html#download"><span>↓</span>Uzmantech İndir</a>
+   <a href="index.html#uyelik"><span>♢</span>Üyelik</a>
+   <a href="index.html#updates"><span>↻</span>Güncellemeler</a>
+   <a href="index.html#announcements"><span>▤</span>Duyurular</a>
+   <a href="index.html#help"><span>?</span>Yardım ve Destek</a>
+  </nav>
+  <div class="archive-menu-foot">UZMANTOOL<br><small>TEKNİK DOSYA MERKEZİ</small></div>
+ </aside>
+ <section class="archive-main-column">
+   <section class="archive-models-page" id="archiveModelsPage">
+    <a class="archive-back-brands" href="archive.html">← Tüm markalara dön</a>
+    <section class="archive-live-files" id="new-files">
+     <div class="archive-live-head"><div><span id="archiveModelBrandLabel">MARKA MODEL KATALOĞU</span><h2 id="archiveModelPageTitle">Cihaz Modelleri</h2><p>Aradığınız modeli seçin.</p></div><strong id="archiveFileCount">Yükleniyor…</strong></div>
+     <div class="archive-live-grid" id="archiveLiveGrid"><p class="archive-live-empty">Modeller yükleniyor…</p></div>
+    </section>
+   </section>
+
+   <section class="archive-recent-software" id="new-files">
+    <div class="archive-recent-head"><div><span>GÜNCEL ARŞİV</span><h2>Son Eklenen Yazılımlar</h2><p>Arşive en son eklenen teknik dosyalar.</p></div><strong id="archiveRecentCount">Yükleniyor…</strong></div>
+    <div class="archive-recent-track" id="archiveRecentTrack"><p class="archive-live-empty">Dosyalar yükleniyor…</p></div>
+   </section>
+
+ </section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=brand-model-pages-20261105"></script>
+</body></html>

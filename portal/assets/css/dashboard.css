@@ -763,3 +763,28 @@
 .pro-laptop-image-scene .pro-laptop-halo{z-index:1;bottom:10%;left:5%;right:5%}
 @media(max-width:1050px){.pro-laptop-image-scene{min-height:310px}}
 @media(max-width:720px){.pro-laptop-image-scene{min-height:0;padding:5px 0 22px}.pro-laptop-image{width:100%}.pro-laptop-image-scene .pro-laptop-halo{bottom:8%}}
+
+/* Seamless blend for the laptop artwork: feather image edges into the hero background */
+.pro-laptop-image-scene{isolation:isolate;overflow:visible}
+.pro-laptop-image{
+  width:100%;
+  max-width:650px;
+  height:auto;
+  object-fit:contain;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  -webkit-mask-image:
+    linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%),
+    linear-gradient(to bottom,transparent 0%,#000 9%,#000 92%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%),
+    linear-gradient(to bottom,transparent 0%,#000 9%,#000 92%,transparent 100%);
+  mask-composite:intersect;
+  filter:drop-shadow(0 18px 34px #007bff38);
+}
+@media(max-width:720px){
+ .pro-laptop-image{-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 6%,#000 95%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 6%,#000 95%,transparent 100%)}
+}

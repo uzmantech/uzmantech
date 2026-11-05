@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/archive.css?v=brand-model-pages-20261105">
+<link rel="stylesheet" href="assets/css/archive.css?v=brand-search-20261105">
 <link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=20261105"></head>
 <body class="archive-shell">
 <header class="archive-topbar">
@@ -40,6 +40,11 @@
  <section class="archive-main-column">
    <section class="archive-brand-catalog" aria-label="Cihaz markaları">
   <div class="archive-brand-catalog-head"><div><span>MARKA KATALOĞU</span><h2>Cihaz Markaları</h2><p>İşlem yapmak istediğiniz markayı seçin.</p></div><strong>19 MARKA</strong></div>
+  <form class="archive-brand-search" id="archiveBrandSearchForm" role="search">
+   <input id="archiveBrandQuery" type="search" placeholder="Marka ara... (Samsung, Xiaomi, Apple)" aria-label="Marka ara">
+   <button type="submit">MARKA ARA</button>
+   <button type="button" id="archiveBrandSearchClear" aria-label="Aramayı temizle">TEMİZLE</button>
+  </form>
   <div class="archive-brand-grid">
    <button type="button" class="archive-brand-card" data-brand="Samsung"><span class="archive-brand-logo samsung">S</span><strong>Samsung</strong><small>Galaxy serisi</small></button>
    <button type="button" class="archive-brand-card" data-brand="Xiaomi"><span class="archive-brand-logo xiaomi">mi</span><strong>Xiaomi</strong><small>Mi · Redmi · POCO</small></button>
@@ -72,5 +77,5 @@
 </main>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=brand-model-pages-20261105"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/archive.js?v=brand-search-20261105"></script>
 </body></html>

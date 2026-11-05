@@ -757,3 +757,9 @@
 .pro-screen-logo img{width:20px;height:20px;object-fit:contain;filter:brightness(0) invert(1)}
 .pro-screen-title{display:flex;align-items:center;gap:4px}
 .pro-screen-title img{width:17px;height:17px;object-fit:contain;filter:drop-shadow(0 0 4px #00aaff)}
+
+.pro-laptop-image-scene{min-height:390px;position:relative;overflow:visible}
+.pro-laptop-image{position:relative;z-index:2;display:block;width:100%;height:auto;max-width:650px;object-fit:contain;filter:drop-shadow(0 12px 28px #007bff55)}
+.pro-laptop-image-scene .pro-laptop-halo{z-index:1;bottom:10%;left:5%;right:5%}
+@media(max-width:1050px){.pro-laptop-image-scene{min-height:310px}}
+@media(max-width:720px){.pro-laptop-image-scene{min-height:0;padding:5px 0 22px}.pro-laptop-image{width:100%}.pro-laptop-image-scene .pro-laptop-halo{bottom:8%}}

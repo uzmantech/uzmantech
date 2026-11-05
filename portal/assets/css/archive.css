@@ -41,3 +41,5 @@
 .archive-empty{grid-column:1/-1;text-align:center;padding:45px 18px;border:1px dashed #304863;border-radius:12px;color:#91a6c0}
 @media(max-width:850px){.archive-layout{grid-template-columns:240px minmax(0,1fr);gap:13px}.archive-content{padding:14px}.archive-toolbar{grid-template-columns:1fr}.archive-toolbar select{width:100%}}
 @media(max-width:620px){.archive-page{padding:22px 0 50px}.archive-intro{align-items:flex-start;flex-direction:column;padding-bottom:17px}.archive-layout{grid-template-columns:1fr}.brand-sidebar{position:relative;top:auto;max-height:360px}.brand-list{max-height:240px}.archive-content{padding:12px}.archive-search .button{padding:8px 10px}.archive-results{grid-template-columns:1fr}.archive-count{display:none}}
+
+.archive-language{display:inline-flex;align-items:center;padding:0 9px;border:1px solid rgba(111,151,201,.25);border-radius:9px;background:#102238}.archive-language select{appearance:none;border:0;background:transparent;color:#fff;font-weight:700;padding:9px 2px;cursor:pointer}.archive-language option{background:#102238;color:#fff}

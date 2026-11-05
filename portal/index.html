@@ -52,8 +52,15 @@
 </aside>
 <div class="dash-main">
 <header class="dash-topbar">
-  <button class="dash-menu-toggle" id="menuToggle" aria-label="Menüyü aç" aria-expanded="false">☰</button>
-  <div class="dash-top-actions"><span class="language-mark">🇹🇷</span><span class="language-label">TR</span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg><span class="top-separator"></span><button class="notification-button" aria-label="Bildirimler"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg><i>3</i></button><button class="header-register" id="headerRegister" type="button" data-open="register">Üye Ol</button><span class="top-separator"></span><button class="top-profile" type="button" data-open="login"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b id="accountName">UZMAN</b><small id="accountRole">Premium Üye</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button></div>
+  <a class="topbar-brand" href="./" aria-label="Uzmantech Portal ana sayfa"><img src="assets/logo.svg?v=20261105" alt=""><span><b>Uzmantech</b><small>PORTAL</small></span></a>
+  <div class="dash-top-actions">
+    <span class="language-control" aria-label="Seçili dil Türkçe"><b>TR</b><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></span>
+    <span class="top-separator"></span>
+    <button class="notification-button" type="button" aria-label="Bildirimler"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg><i>3</i></button>
+    <button class="header-register" id="headerRegister" type="button" data-open="register">Üye Ol</button>
+    <span class="top-separator"></span>
+    <button class="top-profile" type="button" data-open="login"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b id="accountName">UZMAN</b><small id="accountRole">Premium Üye</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button>
+  </div>
 </header>
 <main class="dash-content">
   <div class="dash-layout">
@@ -107,7 +114,4 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js"></script>
 
-<script>
-(()=>{const side=document.querySelector('.dash-sidebar');document.querySelector('#menuToggle')?.addEventListener('click',()=>{const opened=side.classList.toggle('open');document.querySelector('#menuToggle')?.setAttribute('aria-expanded',String(opened));});})();
-</script>
 </body></html>

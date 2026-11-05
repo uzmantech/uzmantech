@@ -286,3 +286,12 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 .archive-recent-folder small{color:#91a1b7;font-size:10px}
 .archive-recent-folder em{color:#ff9aae;font-size:9px;font-style:normal}
 @media(max-width:600px){.archive-recent-software{padding:15px 12px}.archive-recent-folder{flex-basis:160px}}
+
+/* Brand search placed directly above the brand card grid */
+.archive-brand-search{display:flex;align-items:center;gap:9px;margin:0 0 17px;padding:10px;border:1px solid #303b4d;border-radius:12px;background:#101722}
+.archive-brand-search input{flex:1;min-width:0;height:43px;padding:0 14px;border:1px solid #3a4659;border-radius:8px;outline:none;background:#0b111b;color:#f5f7fc;font:500 13px "DM Sans",sans-serif}
+.archive-brand-search input:focus{border-color:#e63858;box-shadow:0 0 0 3px #e6385820}
+.archive-brand-search button{height:43px;padding:0 17px;border:1px solid #e63858;border-radius:8px;background:#e63858;color:white;font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap}
+.archive-brand-search button[type=button]{border-color:#3a4659;background:#202838;color:#c2cee0}
+.archive-brand-card[hidden]{display:none!important}
+@media(max-width:560px){.archive-brand-search{flex-wrap:wrap}.archive-brand-search input{flex-basis:100%}.archive-brand-search button{flex:1}}

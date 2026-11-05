@@ -850,3 +850,60 @@
 .profile-dropdown[hidden]{display:none!important}
 .profile-dropdown button{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;min-height:42px;white-space:nowrap}
 .profile-dropdown .profile-logout{margin-top:4px}
+
+
+/* License center redesign v2 */
+.license-page>.portal-page-heading{display:none}
+.license-page{padding:0 0 36px}
+.license-hero{min-height:350px;margin:2px 0 22px;padding:clamp(25px,3.2vw,48px);grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);border-radius:24px;border-color:#164b77;background:radial-gradient(ellipse at 77% 52%,#006fc52b 0,transparent 38%),linear-gradient(118deg,#07182c 0%,#081d36 52%,#06152a 100%);box-shadow:inset 0 1px #ffffff0b,0 22px 55px #0003}
+.license-hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.24;background-image:linear-gradient(#2b83bd12 1px,transparent 1px),linear-gradient(90deg,#2b83bd12 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(90deg,transparent,#000)}
+.license-kicker{display:inline-flex;align-items:center;gap:9px;color:#54d7ff;font-size:10px;letter-spacing:2.4px}
+.license-kicker i{width:7px;height:7px;border-radius:50%;background:#20c9ff;box-shadow:0 0 12px #20c9ff}
+.license-hero-copy h2{font-size:clamp(32px,3.8vw,51px);line-height:1.08;letter-spacing:-2px;margin:20px 0 15px}
+.license-hero-copy h2 em{background:linear-gradient(90deg,#65c7ff,#16b9ec);background-clip:text;-webkit-background-clip:text;color:transparent}
+.license-hero-copy>p{max-width:490px;color:#a9bfd5;font-size:14px;line-height:1.85}
+.license-trust-row{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:27px}
+.license-trust-row span{display:flex;align-items:center;gap:8px;color:#d7e8f8;font-size:11px}
+.license-trust-row b{display:grid;place-items:center;width:23px;height:23px;border:1px solid #176d9e;border-radius:7px;background:#0a3150;color:#4fd4ff;font-size:9px}
+.license-visual{position:relative;min-height:285px;display:grid;place-items:center;isolation:isolate}
+.license-visual-glow{position:absolute;width:280px;height:210px;border-radius:50%;background:#007bff35;filter:blur(65px);z-index:-1}
+.license-orbit-ring{position:absolute;width:310px;height:105px;border:1px solid #08b9f5;border-radius:50%;transform:rotate(-13deg);box-shadow:0 0 16px #008eff55,inset 0 0 14px #008eff22}
+.license-orbit-ring:after{content:"";position:absolute;inset:12px;border:1px solid #1678bc;border-radius:50%}
+.license-brand-card{position:relative;width:205px;height:244px;padding:17px 18px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #3485b9;border-radius:17px;background:linear-gradient(150deg,#123958 0%,#071a30 60%,#0b2945 100%);box-shadow:0 22px 50px #0007,0 0 35px #008dff30;transform:rotate(-5deg)}
+.license-brand-card:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(130deg,#ffffff13,transparent 38%),repeating-linear-gradient(155deg,transparent 0 28px,#37a9e51a 29px 30px);pointer-events:none}
+.license-card-top,.license-card-bottom{position:absolute;left:15px;right:15px;display:flex;justify-content:space-between;color:#8bbbd9;font-size:7px;font-weight:800;letter-spacing:1.1px}
+.license-card-top{top:15px}.license-card-bottom{bottom:13px;font-size:6px}
+.license-card-bottom span:last-child{color:#50d9ae}
+.license-brand-card img{width:72px;height:72px;object-fit:contain;margin:12px 0 8px;filter:drop-shadow(0 0 13px #00aaff66)}
+.license-brand-card>b{color:#f4faff;font:700 23px "Space Grotesk",sans-serif;letter-spacing:-.6px}
+.license-brand-card>small{margin-top:5px;color:#9bbbd4;font-size:9px}
+.license-floating-chip{position:absolute;right:-2px;bottom:21px;display:flex;align-items:center;gap:10px;padding:11px 15px;border:1px solid #1d5d87;border-radius:12px;background:#071a2cef;box-shadow:0 12px 25px #0005}
+.license-floating-chip>span{color:#28caff;font-size:22px}.license-floating-chip>div{display:flex;flex-direction:column;gap:3px}.license-floating-chip b{color:#f1f8ff;font-size:11px}.license-floating-chip small{color:#91abc4;font-size:9px}
+.license-content-grid{display:none}
+.license-status-card{margin:0 0 28px;padding:24px 26px;border:1px solid #1c4e74;border-radius:18px;background:linear-gradient(120deg,#0c2139,#091a2d);box-shadow:inset 0 1px #ffffff09}
+.license-status-card h2{margin:0 0 18px;font-size:17px}
+.license-status-card .license-line{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:54px;padding:12px 4px;border-bottom:1px solid #1b3852}
+.license-status-card .license-line>span{display:flex;align-items:center;gap:10px;color:#9fb8d0;font-size:12px}
+.license-status-card .license-line>span svg{width:17px;height:17px;color:#57bfff}
+.license-status-card .license-line>b{color:#eef7ff;font-size:12px}
+.license-status-card .license-line .license-value{padding:6px 12px;border:1px solid #1b6990;border-radius:20px;background:#07324a;color:#6fd8ff}
+.license-status-card .license-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.license-status-card .license-actions .dash-button{min-width:150px;min-height:42px;border-radius:10px}
+.license-packages-section{margin-top:30px}
+.license-packages-section .dash-section-heading{margin-bottom:18px}
+.license-packages-section .dash-section-heading .eyebrow{color:#36c9ff;letter-spacing:2.3px}
+.license-packages-section .dash-section-heading h2{font-size:clamp(23px,2.4vw,31px);letter-spacing:-.7px}
+.license-packages-section .dash-section-heading p{color:#9eb4ca}
+.license-packages-section .dash-package-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.license-packages-section .dash-package{position:relative;min-height:230px;padding:23px;border:1px solid #1b4568;border-radius:17px;background:linear-gradient(145deg,#0d233b,#08182a);box-shadow:inset 0 1px #ffffff08;transition:transform .2s,border-color .2s,box-shadow .2s}
+.license-packages-section .dash-package:hover{transform:translateY(-4px);border-color:#168bd2;box-shadow:0 14px 30px #00152c88}
+.license-packages-section .dash-package>span{display:inline-flex;padding:6px 9px;border:1px solid #1b5c85;border-radius:20px;background:#0b2b45;color:#7bcfff;font-size:9px;font-weight:800;letter-spacing:1px}
+.license-packages-section .dash-package h3{margin:18px 0 5px;color:#f2f7ff;font-size:22px}
+.license-packages-section .dash-package p{color:#9db4ca;font-size:12px}
+.license-packages-section .dash-package strong{display:block;margin:17px 0;color:#75caff;font:700 27px "Space Grotesk",sans-serif}
+.license-packages-section .dash-package .dash-button{width:100%;min-height:42px;border-radius:10px}
+.license-packages-section .dash-package.featured{border-color:#159fe0;background:radial-gradient(ellipse at 50% 0%,#0b77bb33,transparent 60%),linear-gradient(145deg,#102c49,#081a2e);box-shadow:0 0 0 1px #078dff20,0 15px 34px #006bca18}
+.license-packages-section .dash-package.featured:after{content:"ÖNERİLEN";position:absolute;right:16px;top:17px;color:#5ed5ff;font-size:8px;font-weight:800;letter-spacing:1.2px}
+.license-packages-section .dash-price-note{margin-top:15px;color:#829bb4;font-size:10px}
+@media(max-width:900px){.license-hero{grid-template-columns:1fr}.license-visual{min-height:275px}.license-floating-chip{right:5%}}
+@media(max-width:650px){.license-hero{padding:23px 18px}.license-hero-copy h2{font-size:34px}.license-visual{min-height:255px}.license-brand-card{width:180px;height:220px}.license-orbit-ring{width:270px}.license-status-card{padding:18px}.license-status-card .license-actions{justify-content:stretch}.license-status-card .license-actions .dash-button{flex:1;min-width:0}.license-packages-section .dash-package-grid{grid-template-columns:1fr}.license-packages-section .dash-package{min-height:0}}

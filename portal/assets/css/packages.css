@@ -75,3 +75,51 @@
 .home-membership-footer a b{font-size:16px;margin-left:5px}
 @media(max-width:1050px){.home-packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.home-membership-showcase{padding:22px 13px}.home-packages-grid{grid-template-columns:1fr}.home-packages-grid .package-card{min-height:0}.home-membership-footer{align-items:flex-start;flex-direction:column}}
+
+
+/* FIX: homepage dual-currency prices must be stacked, never run together */
+.home-membership-showcase .home-packages-grid .package-price{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  width:100%;
+  min-height:72px;
+  margin:2px 0 0;
+  padding:0;
+  line-height:1.15!important;
+  white-space:normal!important;
+  text-decoration:none!important;
+  overflow:visible;
+}
+.home-membership-showcase .home-packages-grid .package-price .price-usd{
+  display:block!important;
+  position:static!important;
+  margin:0!important;
+  padding:0!important;
+  color:#f4f8ff!important;
+  font:700 25px/1.2 "Space Grotesk",sans-serif!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  text-decoration:none!important;
+}
+.home-membership-showcase .home-packages-grid .package-price .price-try{
+  display:block!important;
+  position:static!important;
+  margin:0!important;
+  padding:0!important;
+  color:#39d5f0!important;
+  font:700 19px/1.25 "DM Sans",sans-serif!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  text-decoration:none!important;
+}
+.home-membership-showcase .home-packages-grid .halfyear .package-price .price-try{color:#e18cff!important}
+.home-membership-showcase .home-packages-grid .yearly .package-price .price-usd{color:#ffe19a!important}
+.home-membership-showcase .home-packages-grid .yearly .package-price .price-try{color:#ffd37a!important}
+@media(max-width:600px){
+ .home-membership-showcase .home-packages-grid .package-price{min-height:68px}
+ .home-membership-showcase .home-packages-grid .package-price .price-usd{font-size:25px!important}
+ .home-membership-showcase .home-packages-grid .package-price .price-try{font-size:19px!important}
+}

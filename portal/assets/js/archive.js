@@ -136,7 +136,8 @@ async function enforceArchiveLicense(){
   const user=result.user||{};
   const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
   const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
-  if(!hasPaidAccess){document.body.classList.remove("archive-authorized");showPackageRequired();return;}
+  if(!hasPaidAccess){document.body.classList.remove("archive-authorized");document.body.classList.add("archive-preview-locked");if(stage)stage.hidden=false;if(gate)gate.hidden=true;showPackageRequired();return;}
+  document.body.classList.remove("archive-preview-locked");
   document.body.classList.add("archive-authorized");
   if(stage)stage.hidden=false;
   if(gate)gate.hidden=true;
@@ -145,7 +146,8 @@ async function enforceArchiveLicense(){
   // Ziyaretçi veya oturumu olmayan kullanıcı kayıt sayfasına atılmaz.
   // Dosya deposunun kilitli olduğunu görür; yalnızca Tamam ile paketlere gider.
   document.body.classList.remove("archive-authorized");
-  if(stage)stage.hidden=true;
+  document.body.classList.add("archive-preview-locked");
+  if(stage)stage.hidden=false;
   if(gate)gate.hidden=true;
   showPackageRequired();
  }

@@ -399,3 +399,9 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 @media(max-width:1100px){body.dashboard-page .site-live-stats.archive-stat-row{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:680px){body.dashboard-page .site-live-stats.archive-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:420px){.site-live-stats .stat-live-help div b{font-size:15px}}
+
+
+/* WhatsApp live contact tile */
+.site-live-stats .stat-live-help>span.whatsapp-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid #168b58;border-radius:50%;background:#073c2c;color:#35e58c}
+.site-live-stats .stat-live-help .whatsapp-icon svg{display:block;width:23px;height:23px}
+.site-live-stats .stat-live-help:hover .whatsapp-icon{background:#07583d;color:#6affb1}

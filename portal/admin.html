@@ -29,12 +29,13 @@
 <button class="btn" id="archiveUploadBtn" type="submit">Bağlantıyı kaydet</button><p class="muted" id="archiveUploadMessage"></p>
 </form></div>
 <div class="panel" id="archiveBulkPanel">
-<h2>Toplu ENG aktarımı</h2>
-<p class="muted">Her satıra bir kayıt gir. Biçim: <b>Başlık | Marka | Model (codename) | HTTPS bağlantı | Açıklama</b>. Kategori otomatik ENG olur. Ücretli kaynakları ve reklam yönlendirme bağlantılarını kullanma.</p>
-<textarea id="archiveBulkInput" rows="8" placeholder="Redmi Note 7 Lavender ENG | Xiaomi | Redmi Note 7 (lavender) | https://sourceforge.net/.../download | Factory ENG firmware" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #304965;border-radius:10px;background:#07111f;color:#fff;resize:vertical"></textarea>
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="archiveBulkPreviewBtn" type="button">Önizle ve doğrula</button><button class="btn" id="archiveBulkImportBtn" type="button" disabled>Doğrulananları ENG arşivine ekle</button></div>
-<p class="muted" id="archiveBulkMessage">Önce bağlantıları önizle. Tekrarlar otomatik atlanır.</p>
-<div class="table-scroll"><table><thead><tr><th>SATIR</th><th>MODEL</th><th>SONUÇ</th></tr></thead><tbody id="archiveBulkPreview"><tr><td colspan="3">Henüz önizleme yapılmadı.</td></tr></tbody></table></div>
+<h2>Toplu dış bağlantı aktarımı</h2>
+<p class="muted">Her satıra bir kayıt gir. Biçim: <b>Başlık | Marka | Model (codename) | HTTPS bağlantı | Açıklama</b>. Yalnızca güvenilir kaynağa giden bağlantıları ekle. Ücretli kaynakları, reklam yönlendirmelerini ve izinsiz yeniden dağıtımları kullanma.</p>
+<label class="field"><span>Aktarılacak kategori</span><select id="archiveBulkCategory"><option value="firmware">Firmware</option><option value="eng">ENG</option><option value="imei">IMEI</option><option value="test_point">Test Point</option><option value="resistor">Direnç</option><option value="usb">USB sürücüleri</option><option value="other">Diğer</option></select></label>
+<textarea id="archiveBulkInput" rows="8" placeholder="Redmi Note 13 Pro Global ROM | Xiaomi | Redmi Note 13 Pro (garnet) | https://... | Recovery ROM, Global" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #304965;border-radius:10px;background:#07111f;color:#fff;resize:vertical"></textarea>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="archiveBulkPreviewBtn" type="button">Önizle ve doğrula</button><button class="btn" id="archiveBulkImportBtn" type="button" disabled>Doğrulanan bağlantıları ekle</button></div>
+<p class="muted" id="archiveBulkMessage">Önce bağlantıları önizle. Tekrarlar otomatik atlanır. Supabase'e dosyanın kendisi değil, bağlantı ve bilgileri kaydedilir.</p>
+<div class="table-scroll"><table><thead><tr><th>SATIR</th><th>DOSYA / MODEL</th><th>SONUÇ</th></tr></thead><tbody id="archiveBulkPreview"><tr><td colspan="3">Henüz önizleme yapılmadı.</td></tr></tbody></table></div>
 </div>
 <div class="panel table-scroll"><div class="page-head"><div><h2>Arşiv kayıtları</h2><p class="muted">Düzenle, yayından kaldır veya kalıcı sil.</p></div><input id="archiveFileSearch" placeholder="Dosya, marka veya model ara"></div><table><thead><tr><th>DOSYA</th><th>MARKA / MODEL</th><th>KATEGORİ</th><th>BOYUT</th><th>DURUM</th><th>İŞLEM</th></tr></thead><tbody id="archiveFilesBody"><tr><td colspan="6">Yükleniyor…</td></tr></tbody></table></div>
 </section>

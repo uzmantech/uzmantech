@@ -224,3 +224,37 @@ body.glass-code-page{margin:0;min-height:100vh;padding:0;background-color:#07091
 @media(max-width:1050px){.glass-code-brands{grid-template-columns:repeat(5,minmax(0,1fr))}.glass-code-hero{padding:35px;gap:15px}}
 @media(max-width:760px){.glass-code-container{width:calc(100% - 26px);margin:20px auto 45px}.glass-code-hero{grid-template-columns:1fr;padding:27px 22px}.glass-code-visual{min-height:250px}.glass-code-features{grid-template-columns:1fr}.glass-code-brands{grid-template-columns:repeat(3,minmax(0,1fr))}.glass-code-page .glass-results{padding:17px}.glass-code-page .glass-results-head{align-items:flex-start;flex-direction:column}.glass-code-search{padding:7px 7px 7px 13px}.glass-code-search .search-box{font-size:12px;padding:12px 4px}.glass-code-search .search-btn{padding:12px 13px;font-size:11px}}
 @media(max-width:420px){.glass-code-brands{grid-template-columns:repeat(2,minmax(0,1fr))}.glass-code-copy h1{font-size:35px}.glass-code-search-icon{display:none}.glass-code-search .search-btn{padding:11px 10px}}
+
+/* Full viewport layout and readable responsive typography */
+body.glass-code-page{padding:0!important}
+.glass-code-container{width:calc(100% - clamp(24px,3vw,72px))!important;max-width:none!important;margin:clamp(18px,2.2vw,34px) auto 64px!important}
+.glass-code-hero{grid-template-columns:minmax(0,1.15fr) minmax(320px,1fr);gap:clamp(24px,3.5vw,64px);min-height:clamp(390px,34vw,560px);padding:clamp(32px,4vw,70px)}
+.glass-code-copy h1{font-size:clamp(42px,4.4vw,72px);letter-spacing:-.045em}
+.glass-code-copy>p{max-width:720px;font-size:clamp(15px,1.15vw,19px)}
+.glass-code-badge{padding:clamp(10px,.9vw,15px) clamp(13px,1.15vw,19px);font-size:clamp(17px,1.35vw,22px)}
+.glass-code-badge span{font-size:clamp(12px,.9vw,15px)}
+.glass-code-visual{min-height:clamp(330px,30vw,490px)}
+.glass-code-phone{width:clamp(165px,14vw,230px);height:clamp(280px,24vw,390px)}
+.glass-code-glass{width:clamp(160px,14vw,225px);height:clamp(275px,23.5vw,380px)}
+.glass-code-orbit{width:clamp(290px,27vw,440px);height:clamp(290px,27vw,440px)}
+.glass-code-orbit.orbit-b{width:clamp(350px,33vw,540px);height:clamp(350px,33vw,540px)}
+.glass-code-search{margin-bottom:clamp(24px,2vw,36px);padding:10px 12px 10px 26px}
+.glass-code-search .search-box{font-size:clamp(16px,1.2vw,20px);padding:16px 14px}
+.glass-code-search .search-btn{font-size:clamp(14px,1vw,17px);padding:16px 32px}
+.glass-code-brands{gap:clamp(12px,1.2vw,20px);margin-bottom:clamp(28px,2vw,38px)}
+.glass-code-brands .brand-card{min-height:clamp(82px,6.2vw,108px);padding:18px 12px}
+.glass-code-brands .brand-card b{font-size:clamp(13px,1.05vw,17px)}
+.glass-code-page .glass-results{padding:clamp(24px,2vw,36px);margin:clamp(28px,2.2vw,42px) 0}
+.glass-code-page .glass-results-head h2{font-size:clamp(23px,1.8vw,32px)}
+.glass-code-page .glass-step{font-size:clamp(10px,.8vw,13px)}
+.glass-code-page .glass-live{font-size:clamp(11px,.85vw,14px)}
+.glass-code-page .glass-group{padding:clamp(18px,1.5vw,26px)}
+.glass-code-page .glass-group-top h3{font-size:clamp(16px,1.15vw,20px)}
+.glass-code-page .glass-model{font-size:clamp(12px,.9vw,15px);padding:9px 13px}
+.glass-code-features{gap:clamp(18px,1.5vw,26px)}
+.glass-code-features .feature-card{padding:clamp(24px,2vw,36px)}
+.glass-code-features h3{font-size:clamp(16px,1.15vw,20px)}
+.glass-code-features p{font-size:clamp(13px,.95vw,16px)}
+@media(max-width:1100px){.glass-code-container{width:calc(100% - 28px)!important}.glass-code-hero{grid-template-columns:minmax(0,1fr) minmax(260px,.85fr);padding:30px;gap:18px}}
+@media(max-width:760px){.glass-code-container{width:calc(100% - 24px)!important;margin:16px auto 42px!important}.glass-code-hero{grid-template-columns:1fr;min-height:0;padding:28px 22px}.glass-code-copy h1{font-size:clamp(38px,8vw,52px)}.glass-code-visual{min-height:280px}.glass-code-brands{grid-template-columns:repeat(3,minmax(0,1fr))}.glass-code-search .search-box{font-size:14px}.glass-code-search .search-btn{font-size:12px;padding:12px 14px}.glass-code-page .glass-results{padding:18px}.glass-code-features{grid-template-columns:1fr}}
+@media(max-width:420px){.glass-code-container{width:calc(100% - 18px)!important}.glass-code-brands{grid-template-columns:repeat(2,minmax(0,1fr))}.glass-code-search{border-radius:18px;flex-wrap:wrap}.glass-code-search .search-box{flex:1 1 100%}.glass-code-search .search-btn{width:100%}}

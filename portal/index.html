@@ -75,14 +75,14 @@
 #uz-intro:after{width:min(58vw,440px);border-color:#42bfff20;animation-direction:reverse;animation-duration:13s}
 .uz-intro-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:min(90vw,420px);text-align:center}
 .uz-intro-mark{position:relative;display:grid;place-items:center;width:116px;height:116px;margin-bottom:30px}
-.uz-intro-mark:before,.uz-intro-mark:after{content:"";position:absolute;inset:0;border:2px solid transparent;border-top-color:#38c7ff;border-right-color:#1678d5;border-radius:50%;filter:drop-shadow(0 0 9px #16aaff88);animation:uz-spin 2.4s linear infinite}
-.uz-intro-mark:after{inset:9px;border-top-color:#8be5ff;border-right-color:transparent;border-bottom-color:#176fbd;animation-duration:1.8s;animation-direction:reverse}
+.uz-intro-mark:before,.uz-intro-mark:after{content:"";position:absolute;inset:0;border:2px solid transparent;border-top-color:#38c7ff;border-right-color:#1678d5;border-radius:50%;filter:drop-shadow(0 0 9px #16aaff88);animation:uz-spin 3.6s linear infinite}
+.uz-intro-mark:after{inset:9px;border-top-color:#8be5ff;border-right-color:transparent;border-bottom-color:#176fbd;animation-duration:2.8s;animation-direction:reverse}
 .uz-intro-mark img{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 0 16px #139fff66);animation:uz-pulse 2.2s ease-in-out infinite}
 .uz-intro-name{margin:0;font:700 clamp(23px,5vw,30px)/1.1 "Space Grotesk",sans-serif;letter-spacing:4px;color:#f3f9ff}
 .uz-intro-name span{color:#37bdff}
 .uz-intro-tag{margin:10px 0 27px;color:#7e9dbb;font:600 9px "DM Sans",sans-serif;letter-spacing:3px}
 .uz-intro-progress{width:min(280px,78vw);height:3px;overflow:hidden;border-radius:8px;background:#19324a}
-.uz-intro-progress i{display:block;width:38%;height:100%;border-radius:8px;background:linear-gradient(90deg,#0879d5,#52d5ff);box-shadow:0 0 12px #23baff;animation:uz-progress 1.35s ease-in-out infinite}
+.uz-intro-progress i{display:block;width:38%;height:100%;border-radius:8px;background:linear-gradient(90deg,#0879d5,#52d5ff);box-shadow:0 0 12px #23baff;animation:uz-progress 2.6s ease-in-out infinite}
 .uz-intro-status{min-height:17px;margin:15px 0 0;color:#8ba9c6;font:500 10px "DM Sans",sans-serif;letter-spacing:1.2px}
 .uz-intro-status:after{content:"";display:inline-block;width:13px;text-align:left;animation:uz-dots 1.1s steps(4,end) infinite}
 @keyframes uz-spin{to{transform:rotate(360deg)}}@keyframes uz-orbit{to{transform:rotate(360deg)}}@keyframes uz-pulse{50%{transform:scale(1.07);opacity:.82}}@keyframes uz-progress{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}@keyframes uz-dots{0%{content:""}25%{content:"."}50%{content:".."}75%,100%{content:"..."}}
@@ -369,9 +369,9 @@ load();
 <script id="uz-intro-controller">
 (()=>{const loader=document.getElementById("uz-intro");if(!loader)return;
 let closed=false;const close=()=>{if(closed)return;closed=true;loader.classList.add("is-leaving");window.setTimeout(()=>loader.remove(),650);};
-const start=Date.now();const finish=()=>window.setTimeout(close,Math.max(0,850-(Date.now()-start)));
+const start=Date.now();const finish=()=>window.setTimeout(close,Math.max(0,2800-(Date.now()-start)));
 if(document.readyState==="complete")finish();else window.addEventListener("load",finish,{once:true});
-window.setTimeout(close,4200);
+window.setTimeout(close,7000);
 })();
 </script>
 </body></html>

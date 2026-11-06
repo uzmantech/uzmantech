@@ -387,3 +387,15 @@ body.archive-shell{margin:0;min-height:100vh;background:radial-gradient(ellipse 
 
 /* Keep homepage statistics centered despite dashboard-wide archive row overrides */
 body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px),1120px)!important;max-width:1120px!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}
+
+
+/* Fifth homepage stats tile: support entry point */
+body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px),1450px)!important;max-width:1450px!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.site-live-stats .stat-live-help{position:relative;border-color:#176b75;background:linear-gradient(125deg,#0b2a34,#102437);text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.site-live-stats .stat-live-help:hover{border-color:#2ad5ca;background:linear-gradient(125deg,#0d3740,#113047);transform:translateY(-2px)}
+.site-live-stats .stat-live-help>span:first-child{border-color:#158b85;background:#0a3c43;color:#54f3dd}
+.site-live-stats .stat-live-help div b{font-size:17px;white-space:nowrap}
+.site-live-stats .stat-live-help .live-help-arrow{margin-left:auto;color:#67e8db;font-size:24px;width:auto;height:auto;flex:0 0 auto;border:0;background:none}
+@media(max-width:1100px){body.dashboard-page .site-live-stats.archive-stat-row{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:680px){body.dashboard-page .site-live-stats.archive-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:420px){.site-live-stats .stat-live-help div b{font-size:15px}}

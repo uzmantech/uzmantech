@@ -432,3 +432,23 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 .archive-lock-continue:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .archive-lock-footnote{display:block;margin-top:13px;color:#8fa1b8;font-size:10px;line-height:1.5}
 @media(max-width:500px){.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{padding:24px 19px 21px}.archive-lock-heading{font-size:22px}.archive-lock-visual{height:98px}.archive-lock-halo{width:88px;height:88px}.archive-lock-icon{width:68px;height:68px}}
+
+
+/* Refined archive access dialog */
+.archive-shell.archive-preview-locked .archive-stage{opacity:.92!important;filter:none!important}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue){background:rgba(4,9,17,.34)!important;backdrop-filter:blur(0)!important}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{width:min(430px,calc(100% - 28px))!important;padding:30px 32px 25px!important;text-align:center!important;border:1px solid #35465f!important;border-radius:16px!important;background:#111c2d!important;box-shadow:0 22px 65px #0008!important;overflow:hidden!important}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card:before{display:none!important}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-heading{justify-content:center!important;margin-bottom:8px!important}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-heading h2{font-size:0!important;margin:0!important}
+.archive-access-symbol{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 17px;border-radius:50%;border:1px solid #3c5678;background:#192b43;color:#83b8ff}
+.archive-access-symbol svg{width:34px;height:34px}
+.archive-access-kicker{display:block;margin-bottom:8px;color:#8ebaff;font-size:9px;font-weight:800;letter-spacing:1.7px}
+.archive-access-title{margin:0 0 9px;color:#f4f7fc;font:700 23px "Space Grotesk",sans-serif;letter-spacing:-.45px}
+.archive-access-copy{max-width:340px;margin:0 auto;color:#b2bfd1;font-size:13px;line-height:1.7}
+.archive-access-divider{height:1px;margin:22px 0 18px;background:#2a3b52}
+.archive-access-button{width:100%;min-height:46px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 18px;border:1px solid #4388df;border-radius:9px;background:#2876d5;color:#fff;font-size:12px;font-weight:800;cursor:pointer;transition:background .15s ease,border-color .15s ease}
+.archive-access-button:hover{background:#3487e8;border-color:#66a7f4}
+.archive-access-button span{font-size:18px;line-height:1}
+.archive-access-note{display:block;margin-top:13px;color:#8293aa;font-size:10px;line-height:1.55}
+@media(max-width:500px){.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{padding:25px 21px 22px!important}.archive-access-title{font-size:21px}}

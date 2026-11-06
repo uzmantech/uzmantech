@@ -1,34 +1,81 @@
 <!doctype html>
-<html lang="tr"><head>
+<html lang="tr">
+<head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07121d">
+<meta name="theme-color" content="#070913">
 <meta name="description" content="Telefon modelleri arasında ortak kırılmaz cam kalıbı uyumluluğunu bulun.">
 <title>Cam Uyumluluk Merkezi | Uzmantech</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css">
-<link rel="stylesheet" href="assets/css/glass-compatibility.css?v=20261106-visual">
+<link rel="stylesheet" href="assets/css/glass-compatibility.css?v=20261106-code-design">
 </head>
-<body class="dashboard-page glass-lab">
-<main class="glass-page glass-image-page">
- <div class="glass-artboard"><header class="glass-hotspot-nav" aria-label="Uzmantech ana menü">
- <a class="hotspot-logo" href="index.html" aria-label="Uzmantech ana sayfa"></a>
- <a class="hotspot-home" href="index.html" aria-label="Ana Sayfa"></a>
- <a class="hotspot-archive" href="archive.html" aria-label="Dosya Arşivi"></a>
- <a class="hotspot-glass" href="cam-uyumluluk.html" aria-label="Cam Uyumluluğu"></a>
- <a class="hotspot-tools" href="index.html#premium" aria-label="Araçlar"></a>
- <a class="hotspot-support" href="destek.html" aria-label="Destek"></a>
- <a class="hotspot-language" href="cam-uyumluluk.html?lang=en" aria-label="Dil seçimi"></a>
- <a class="hotspot-login" href="index.html?login=1" aria-label="Giriş Yap"></a>
-</header>
-  <img class="glass-concept-image" src="assets/images/cam-uyumluluk-tasarim.png" alt="Uzmantech Cam Uyumluluk Merkezi tasarımı">
-  <label class="glass-image-search-label" for="glassQuery">Telefon modeli ara</label>
-  <input id="glassQuery" class="glass-image-search-input" type="search" minlength="2" maxlength="80" autocomplete="off" aria-label="Telefon marka veya modeli" placeholder="">
-  <button id="glassSearch" class="glass-image-search-button" type="button" aria-label="Uyumluluğu sorgula"></button>
-  <select id="glassLanguage" class="glass-image-language" aria-label="Language"><option value="tr">TR</option><option value="en">EN</option></select>
+<body class="glass-code-page">
+<header class="site-global-header">
+ <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK SERVİS ÇÖZÜMLERİ</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="index.html"><span class="site-nav-icon">⌂</span><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="archive.html"><span class="site-nav-icon">▣</span><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link active" href="cam-uyumluluk.html"><span class="site-nav-icon">▣</span><b>Cam Uyumluluğu</b></a>
+  <a class="site-nav-link" href="index.html#premium"><span class="site-nav-icon">⚒</span><b>Araçlar</b></a>
+  <a class="site-nav-link" href="destek.html"><span class="site-nav-icon">ⓘ</span><b>Destek</b></a>
+ </nav>
+ <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+ <div class="site-header-actions">
+  <label class="language-control" aria-label="Dil seçimi"><span class="language-globe">◎</span><select id="glassLanguage" aria-label="Dil seçimi"><option value="tr">TR</option><option value="en">EN</option></select><span class="top-chevron">⌄</span></label>
+  <a class="glass-header-login" href="index.html?login=1">Giriş Yap</a>
  </div>
+</header>
+<main class="glass-code-container">
+ <section class="glass-code-hero">
+  <div class="glass-code-copy">
+   <span class="glass-code-kicker"><i></i> UZMANTECH SMART CATALOG</span>
+   <h1>CAM UYUMLULUK<br><span>MERKEZİ</span></h1>
+   <p>Ekran Jelatini / Kırılmaz Cam Uyum Sorgulama ve Kalıp Eşleştirme Sistemi</p>
+   <div class="glass-code-badges">
+    <div class="glass-code-badge">◎ <span>Doğru Eşleşme</span></div>
+    <div class="glass-code-badge">▱ <span>Uyumlu Modeller</span></div>
+    <div class="glass-code-badge">ϟ <span>Hızlı Arama</span></div>
+    <div class="glass-code-badge">▤ <span>Güncel Katalog</span></div>
+   </div>
+  </div>
+  <div class="glass-code-visual" aria-hidden="true">
+   <div class="glass-code-orbit orbit-a"></div><div class="glass-code-orbit orbit-b"></div>
+   <div class="glass-code-phone"><div class="glass-code-screen"></div><div class="glass-code-camera"></div></div>
+   <div class="glass-code-glass"></div><span class="glass-code-chip chip-one">GLASS / 01</span><span class="glass-code-chip chip-two">DEVICE MATCH</span>
+  </div>
+ </section>
+ <form class="glass-code-search" id="glassSearchForm">
+  <span class="glass-code-search-icon">⌕</span>
+  <input id="glassQuery" class="search-box" type="search" minlength="2" maxlength="80" autocomplete="off" placeholder="Telefon marka veya modelini yazın... (Örn: Samsung A52)" aria-label="Telefon marka veya modeli">
+  <button id="glassSearch" class="search-btn" type="submit">Uyumluluğu Bul</button>
+ </form>
+ <section class="glass-code-brands" aria-label="Marka seçimi">
+  <button class="brand-card" type="button" data-brand="Samsung"><b class="brand-samsung">SAMSUNG</b></button>
+  <button class="brand-card" type="button" data-brand="iPhone"><b class="brand-apple">● iPhone</b></button>
+  <button class="brand-card" type="button" data-brand="Xiaomi"><b class="brand-xiaomi">mi Xiaomi</b></button>
+  <button class="brand-card" type="button" data-brand="OPPO"><b class="brand-oppo">OPPO</b></button>
+  <button class="brand-card" type="button" data-brand="realme"><b class="brand-realme">realme</b></button>
+  <button class="brand-card" type="button" data-brand="vivo"><b class="brand-vivo">vivo</b></button>
+  <button class="brand-card" type="button" data-brand="HUAWEI"><b class="brand-huawei">HUAWEI</b></button>
+  <button class="brand-card" type="button" data-brand="HONOR"><b class="brand-honor">HONOR</b></button>
+  <button class="brand-card" type="button" data-brand=""><b>▦ Diğer Markalar</b></button>
+ </section>
  <section class="glass-results" aria-live="polite">
   <div class="glass-results-head"><div><span class="glass-step">02 / MATCH RESULTS</span><h2 id="glassResultTitle">Uyumluluk sonuçları burada</h2></div><span class="glass-live"><i></i><span>Katalog bağlantısı hazır</span></span></div>
-  <div id="glassResultBody" class="glass-result-body"><div class="glass-empty"><b>Aramaya hazırız</b><p>Görseldeki arama alanına telefon modelini yazıp sorgulayın.</p></div></div>
+  <div id="glassResultBody" class="glass-result-body"><div class="glass-empty"><b>Aramaya hazırız</b><p>Telefon modelini yazıp sorgulayın veya marka seçin.</p></div></div>
+ </section>
+ <section class="glass-code-features">
+  <article class="feature-card"><div class="feature-symbol">▱</div><h3>Kalıp Eşleşmesi</h3><p>Aynı cam kalıbını kullanan uyumlu cihazları keşfedin, stoğunuzu optimize edin.</p></article>
+  <article class="feature-card"><div class="feature-symbol">⬡</div><h3>Doğru Ürün Seçimi</h3><p>Yanlış ürün riskini azaltın, zamandan ve maliyetten tasarruf edin.</p></article>
+  <article class="feature-card"><div class="feature-symbol">⟳</div><h3>Sürekli Güncel</h3><p>Simkon katalog verileriyle daima güncel ve güvenilir sonuçlar elde edin.</p></article>
  </section>
 </main>
-<script src="assets/js/config.js"></script><script src="assets/js/glass-compatibility.js?v=20261106-visual-2"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/glass-compatibility.js?v=20261106-code-design"></script>
+<script>
+document.querySelector("#glassSearchForm")?.addEventListener("submit",e=>{e.preventDefault();document.querySelector("#glassSearch")?.click();});
+document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.brand;const input=document.querySelector("#glassQuery");if(q){input.value=q;input.focus();document.querySelector("#glassSearch").click();}else{input.focus();}}));
+document.querySelector(".site-mobile-nav-toggle")?.addEventListener("click",e=>{const nav=document.querySelector(".site-global-nav");const opened=nav.classList.toggle("is-open");e.currentTarget.setAttribute("aria-expanded",String(opened));});
+</script>
 </body></html>

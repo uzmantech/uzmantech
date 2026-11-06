@@ -89,7 +89,7 @@
    const actions=p.status==="pending"?'<button class="btn" data-payment-action="approved" data-id="'+esc(p.id)+'">Onayla</button> <button class="btn" data-payment-action="rejected" data-id="'+esc(p.id)+'">Reddet</button>':'-';
    const usd='$'+Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})+' USD';
    const tryAmount=p.amount_try==null?'<small class="muted">Eski kayıt: TL tutarı yok</small>':'<small>₺'+Number(p.amount_try).toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+' · Kur '+Number(p.exchange_rate||0).toLocaleString("tr-TR",{minimumFractionDigits:4,maximumFractionDigits:4})+'</small>';
-   return '<tr><td>'+esc(user.username||"Bilinmeyen")+'<br><small>'+esc(user.email||"")+'</small></td><td>'+esc(planNames[p.plan]||p.plan)+'<br><small>'+esc(p.license_days)+' gün</small></td><td><strong>'+usd+'</strong><br>'+tryAmount+'</td><td>'+receipt+'</td><td>'+esc(date)+'</td><td><span class="status '+(p.status==="approved"?"active":p.status==="pending"?"pending":"expired")+'">'+esc(statusNames[p.status]||p.status)+'</span></td><td>'+actions+'</td></tr>';
+   return '<tr><td>'+esc(user.username||"Bilinmeyen")+'<br><small>'+esc(displayEmail)+'</small></td><td>'+esc(planNames[p.plan]||p.plan)+'<br><small>'+esc(p.license_days)+' gün</small></td><td><strong>'+usd+'</strong><br>'+tryAmount+'</td><td>'+receipt+'</td><td>'+esc(date)+'</td><td><span class="status '+(p.status==="approved"?"active":p.status==="pending"?"pending":"expired")+'">'+esc(statusNames[p.status]||p.status)+'</span></td><td>'+actions+'</td></tr>';
   }).join("")||'<tr><td colspan="7">Henüz ödeme bildirimi yok.</td></tr>';
  }
  async function loadPayments(){
@@ -103,12 +103,12 @@
   const labels={open:"Yeni",in_progress:"İşlemde",resolved:"Çözüldü"};
   const categoryNames={technical:"Teknik",license:"Lisans",payment:"Ödeme",archive:"Arşiv",other:"Diğer"};
   body.innerHTML=tickets.map(t=>{
-   const user=t.user||{},date=t.created_at?new Date(t.created_at).toLocaleString("tr-TR"):"-";
+   const user=t.user||{},displayName=user.username||t.guest_name||"Ziyaretçi",displayEmail=user.email||t.guest_email||"E-posta yok",date=t.created_at?new Date(t.created_at).toLocaleString("tr-TR"):"-";
    const status=t.status||"open";
    const actions=status==="resolved"
     ?'<button class="btn" data-support-status="open" data-id="'+esc(t.id)+'">Yeniden Aç</button>'
     :'<button class="btn" data-support-status="in_progress" data-id="'+esc(t.id)+'">İşleme Al</button> <button class="btn" data-support-status="resolved" data-id="'+esc(t.id)+'">Çözüldü</button>';
-   return '<tr><td>'+esc(user.username||"Üye")+'<br><small>'+esc(user.email||"")+'</small></td>'+
+   return '<tr><td>'+esc(displayName)+'<br><small>'+esc(user.email||"")+'</small></td>'+
     '<td><strong>'+esc(t.subject)+'</strong><br><small>'+esc(categoryNames[t.category]||t.category)+'</small></td>'+
     '<td><details><summary>Mesajı görüntüle</summary><p class="ticket-message">'+esc(t.message)+'</p>'+(t.admin_note?'<p class="ticket-note"><b>Yanıt:</b> '+esc(t.admin_note)+'</p>':'')+'</details></td>'+
     '<td>'+esc(date)+'</td><td><span class="status '+(status==="resolved"?"active":status==="in_progress"?"pending":"expired")+'">'+esc(labels[status]||status)+'</span></td><td>'+actions+'</td></tr>';

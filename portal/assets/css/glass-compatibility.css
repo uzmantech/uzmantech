@@ -163,3 +163,64 @@ body.glass-lab{background:#06101a!important;color:#eaf5ff!important}
  .glass-image-search-input{left:14%;top:52.5%;width:59%;height:6%;font-size:11px}
  .glass-image-search-button{left:75%;top:52%;width:13%;height:7.5%}
 }
+
+/* Supplied neon concept adapted to the real Uzmantech portal */
+body.glass-code-page{margin:0;min-height:100vh;padding:0;background-color:#070913;background-image:radial-gradient(circle at 10% 20%,rgba(0,140,255,.15) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(0,240,255,.10) 0%,transparent 40%);color:#fff;font-family:'Plus Jakarta Sans',sans-serif}
+.glass-code-page *{box-sizing:border-box}
+.glass-code-page .site-global-header{position:sticky;top:0;z-index:40}
+.glass-code-page .glass-header-login{display:inline-flex;align-items:center;justify-content:center;padding:11px 21px;border-radius:25px;background:linear-gradient(135deg,#06f,#00a2ff);color:#fff;text-decoration:none;font-size:13px;font-weight:700;box-shadow:0 0 20px #0066ff66;white-space:nowrap}
+.glass-code-container{width:min(1280px,calc(100% - 40px));margin:34px auto 70px}
+.glass-code-hero{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:35px;min-height:370px;margin-bottom:26px;padding:42px 50px;border:1px solid rgba(0,162,255,.3);border-radius:24px;background:linear-gradient(135deg,rgba(13,20,43,.86),rgba(6,10,22,.92));box-shadow:0 10px 40px #0008}
+.glass-code-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 40%,rgba(0,240,255,.06),transparent 75%);pointer-events:none}
+.glass-code-kicker{display:flex;align-items:center;gap:10px;color:#00d9ff;font-size:10px;font-weight:800;letter-spacing:2px}
+.glass-code-kicker i,.glass-live i{width:7px;height:7px;border-radius:50%;background:#00e9ff;box-shadow:0 0 12px #00e9ff}
+.glass-code-copy h1{margin:18px 0 14px;font-size:clamp(34px,4vw,54px);font-weight:800;line-height:1.05;letter-spacing:-1.8px}
+.glass-code-copy h1 span{color:#00f0ff;text-shadow:0 0 20px #00f0ff66}
+.glass-code-copy>p{max-width:540px;margin:0 0 27px;color:#94a3b8;font-size:14px;line-height:1.7}
+.glass-code-badges{display:flex;flex-wrap:wrap;gap:10px}
+.glass-code-badge{display:flex;align-items:center;gap:9px;padding:10px 13px;border:1px solid #00a2ff4d;border-radius:30px;background:#00a2ff18;color:#00eaff;font-size:17px}
+.glass-code-badge span{color:#eaf7ff;font-size:11px;font-weight:600}
+.glass-code-visual{position:relative;min-height:290px;display:flex;align-items:center;justify-content:center;perspective:900px}
+.glass-code-orbit{position:absolute;width:270px;height:270px;border:1px solid #00dfff55;border-radius:50%;transform:rotateX(68deg);box-shadow:0 0 32px #00bfff24}
+.glass-code-orbit.orbit-b{width:340px;height:340px;border-color:#008cff2b}
+.glass-code-phone{position:relative;z-index:2;width:158px;height:270px;padding:9px;border:2px solid #56eaff;border-radius:27px;background:linear-gradient(145deg,#283b59,#070d1c 65%);box-shadow:0 0 34px #00bfff66;transform:rotateY(-13deg) rotateZ(-8deg)}
+.glass-code-screen{position:absolute;inset:8px;border-radius:19px;background:radial-gradient(ellipse at 45% 20%,#1e9bff99,transparent 35%),linear-gradient(145deg,#101a38,#02050d 70%);border:1px solid #7cecff66}
+.glass-code-camera{position:absolute;z-index:3;top:12px;left:50%;width:43px;height:7px;border-radius:10px;background:#02050d;transform:translateX(-50%)}
+.glass-code-glass{position:absolute;z-index:4;width:155px;height:265px;border:2px solid #8df7ff;border-radius:26px;background:linear-gradient(135deg,#a9f5ff55,#148aff12 45%,#d4ffff33);box-shadow:inset 0 0 25px #65eaff55,0 0 25px #00dfff66;transform:translate(45px,-12px) rotate(13deg) skewY(-2deg)}
+.glass-code-chip{position:absolute;z-index:5;padding:7px 10px;border:1px solid #00cfff66;border-radius:6px;background:#061323d9;color:#75edff;font-size:8px;font-weight:800;letter-spacing:1.5px}
+.glass-code-chip.chip-one{top:15%;left:2%}.glass-code-chip.chip-two{right:0;bottom:16%}
+.glass-code-search{position:relative;display:flex;align-items:center;gap:0;margin:0 0 22px;padding:7px 8px 7px 22px;border:1px solid #00a2ff88;border-radius:50px;background:rgba(12,18,38,.92);box-shadow:0 0 30px #008cff2c}
+.glass-code-search-icon{flex:0 0 auto;margin-right:13px;color:#00eaff;font-size:27px;line-height:1}
+.glass-code-search .search-box{width:100%;min-width:0;padding:13px 12px;border:0;outline:0;background:transparent;color:#fff;font:500 15px 'Plus Jakarta Sans',sans-serif;box-shadow:none}
+.glass-code-search .search-box::placeholder{color:#8295ad}
+.glass-code-search .search-btn{position:static;flex:0 0 auto;transform:none;padding:13px 25px;border:0;border-radius:30px;background:linear-gradient(135deg,#06f,#00a2ff);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 0 18px #0066ff66}
+.glass-code-search .search-btn:disabled{opacity:.65;cursor:wait}
+.glass-code-brands{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:11px;margin-bottom:25px}
+.glass-code-brands .brand-card{min-width:0;min-height:76px;padding:15px 7px;border:1px solid #ffffff18;border-radius:15px;background:#0c1226a6;color:#eaf7ff;cursor:pointer;transition:.2s}
+.glass-code-brands .brand-card:hover{border-color:#00f0ff;background:#00a2ff1a;box-shadow:0 0 20px #00f0ff30;transform:translateY(-3px)}
+.glass-code-brands .brand-card b{font-size:clamp(10px,1vw,14px);font-weight:800}
+.brand-samsung{color:#168fff}.brand-apple{color:#fff}.brand-xiaomi{color:#ff8a25}.brand-oppo{color:#00d59b}.brand-realme{color:#ffd52a}.brand-vivo{color:#168fff}.brand-huawei{color:#ff5366}.brand-honor{color:#6beaff}
+.glass-code-page .glass-results{margin:24px 0 28px;padding:25px;border:1px solid #00a2ff44;border-radius:20px;background:linear-gradient(145deg,#0c1226d9,#080d1b);box-shadow:0 8px 32px #0005}
+.glass-code-page .glass-results-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}
+.glass-code-page .glass-step{color:#00dfff;font-size:9px;font-weight:800;letter-spacing:2px}
+.glass-code-page .glass-results-head h2{margin:7px 0 0;color:#f3f8ff;font-size:22px}
+.glass-code-page .glass-live{display:flex;align-items:center;gap:8px;color:#8da6c0;font-size:11px;white-space:nowrap}
+.glass-code-page .glass-empty{padding:25px;border:1px dashed #1b5278;border-radius:13px;color:#dceeff;text-align:center}
+.glass-code-page .glass-empty p{margin:8px 0 0;color:#94a3b8;font-size:12px}
+.glass-code-page .glass-group{margin-top:13px;padding:18px;border:1px solid #14517a;border-radius:13px;background:#091a2c}
+.glass-code-page .glass-group-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.glass-code-page .glass-group-top h3{margin:0;color:#eaf7ff;font-size:15px}
+.glass-code-page .glass-count{color:#00dfff;font-size:11px}
+.glass-code-page .glass-models{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.glass-code-page .glass-model{padding:7px 10px;border:1px solid #28516f;border-radius:8px;background:#10243a;color:#cfe4f7;font-size:11px}
+.glass-code-page .glass-model.is-match{border-color:#00dfff;background:#00dfff18;color:#8cf7ff}
+.glass-code-page .glass-source{color:#36dfff;font-size:11px;text-decoration:none}
+.glass-code-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.glass-code-features .feature-card{padding:23px;border:1px solid #00a2ff40;border-radius:18px;background:rgba(12,18,38,.75);box-shadow:0 8px 32px #0005;transition:.2s}
+.glass-code-features .feature-card:hover{border-color:#00f0ff;box-shadow:0 0 25px #00f0ff22}
+.glass-code-features .feature-symbol{margin-bottom:12px;color:#00eaff;font-size:28px;text-shadow:0 0 15px #00eaff66}
+.glass-code-features h3{margin:0 0 8px;font-size:15px}
+.glass-code-features p{margin:0;color:#94a3b8;font-size:12px;line-height:1.7}
+@media(max-width:1050px){.glass-code-brands{grid-template-columns:repeat(5,minmax(0,1fr))}.glass-code-hero{padding:35px;gap:15px}}
+@media(max-width:760px){.glass-code-container{width:calc(100% - 26px);margin:20px auto 45px}.glass-code-hero{grid-template-columns:1fr;padding:27px 22px}.glass-code-visual{min-height:250px}.glass-code-features{grid-template-columns:1fr}.glass-code-brands{grid-template-columns:repeat(3,minmax(0,1fr))}.glass-code-page .glass-results{padding:17px}.glass-code-page .glass-results-head{align-items:flex-start;flex-direction:column}.glass-code-search{padding:7px 7px 7px 13px}.glass-code-search .search-box{font-size:12px;padding:12px 4px}.glass-code-search .search-btn{padding:12px 13px;font-size:11px}}
+@media(max-width:420px){.glass-code-brands{grid-template-columns:repeat(2,minmax(0,1fr))}.glass-code-copy h1{font-size:35px}.glass-code-search-icon{display:none}.glass-code-search .search-btn{padding:11px 10px}}

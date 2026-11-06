@@ -103,7 +103,7 @@ async function verifySession(token: string, allowExpired = false) {
     const payload = JSON.parse(new TextDecoder().decode(decode64url(parts[0])));
     if (!payload.sub || Number(payload.exp) <= Math.floor(Date.now() / 1000)) return null;
     const { data: user, error } = await db.from("users")
-      .select("id,username,email,role,status,disabled_reason,expiry_date,license_plan,license_days,license_started_at")
+      .select("id,username,email,phone,country_code,language_code,role,status,created_at,last_login,disabled_reason,expiry_date,license_plan,license_days,license_started_at")
       .eq("id", payload.sub).maybeSingle();
     if (error || !user) return null;
 
@@ -173,6 +173,15 @@ function scrubLinks(value: any): any {
   return out;
 }
 
+const paidArchivePlans = new Set(["weekly", "monthly", "half_year", "annual", "365", "full_365"]);
+function hasPaidArchiveAccess(member: any): boolean {
+  return !!member && (
+    member.role === "admin" ||
+    (member.status === "active" && !member.membership_expired &&
+      paidArchivePlans.has(String(member.license_plan || "").toLowerCase()))
+  );
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   if (!url || !serviceKey) return response({ success: false, message: "Sunucu yapılandırması eksik." }, 500);
@@ -206,6 +215,7 @@ Deno.serve(async (req: Request) => {
 
   if (req.method === "GET" && path.pathname.endsWith("/recent")) {
     const member = await verifySession(tokenFrom(req));
+    const archiveAccess = hasPaidArchiveAccess(member);
     const categories = ["firmware", "eng", "imei", "test_point", "resistor"];
     const { data, error } = await db.from("archive_records").select("category,records").in("category", categories);
     if (error) return response({ success: false, message: "Son eklenen dosyalar yüklenemedi." }, 503);
@@ -215,7 +225,7 @@ Deno.serve(async (req: Request) => {
       for (let i = records.length - 1; i >= Math.max(0, records.length - 8); i--) {
         const item = records[i];
         const d = Array.isArray(item) ? { brand:item[0], model:item[1], codename:item[2], description:item[3], link:item[4], version:item[5], android:item[6], region:item[7] } : item;
-        recent.push({ category: row.category, data: member ? d : scrubLinks(d) });
+        recent.push({ category: row.category, data: archiveAccess ? d : scrubLinks(d) });
       }
     }
     recent.sort((a,b) => {
@@ -223,11 +233,14 @@ Deno.serve(async (req: Request) => {
       const dbb = String(b.data?.updated_at || b.data?.created_at || b.data?.date || b.data?.description || "");
       return dbb.localeCompare(da);
     });
-    return response({ success: true, member: !!member, results: recent.slice(0, 8) });
+    return response({ success: true, member: archiveAccess, results: recent.slice(0, 8) });
   }
 
   if (req.method === "GET" && path.pathname.endsWith("/archive")) {
     const member = await verifySession(tokenFrom(req));
+    if (!hasPaidArchiveAccess(member)) {
+      return response({ success: false, code: "PACKAGE_REQUIRED", message: "Dosya deposuna erişmek için bir paket satın almanız ve yönetici onayını beklemeniz gerekir." }, 403);
+    }
     const q = String(path.searchParams.get("q") || "").trim().toLocaleLowerCase("tr-TR");
     const requested = String(path.searchParams.get("category") || "all").toLowerCase();
     const limitRaw = Number(path.searchParams.get("limit") || "60");
@@ -246,7 +259,7 @@ Deno.serve(async (req: Request) => {
         if (q && !haystack.includes(q)) continue;
         results.push({
           category: row.category,
-          data: member ? item : scrubLinks(item),
+          data: item,
         });
         if (results.length >= limit) break;
       }
@@ -254,7 +267,7 @@ Deno.serve(async (req: Request) => {
     }
     const { data: noticesRow } = await db.from("archive_records").select("records").eq("category", "announcements").maybeSingle();
     const announcements = Array.isArray(noticesRow?.records) ? noticesRow.records.filter((x: any) => x?.active !== false).slice(0, 30) : [];
-    return response({ success: true, member: !!member, query: q, category: requested, results, count: results.length, announcements });
+    return response({ success: true, member: true, query: q, category: requested, results, count: results.length, announcements });
   }
 
 
@@ -263,8 +276,8 @@ Deno.serve(async (req: Request) => {
     const member = await verifySession(tokenFrom(req), true);
     if (!member || member.role === "admin") return response({ success: false, message: "Ödeme bildirimi için geçerli üye oturumu gerekli." }, 401);
     const plan = String(path.searchParams.get("plan") || "");
-    const planDays: Record<string, number> = { monthly: 30, half_year: 180, annual: 365 };
-    const usdPrices: Record<string, number> = { monthly: 15, half_year: 30, annual: 40 };
+    const planDays: Record<string, number> = { weekly: 7, monthly: 30, half_year: 180, annual: 365 };
+    const usdPrices: Record<string, number> = { weekly: 5, monthly: 10, half_year: 20, annual: 40 };
     const days = planDays[plan];
     const amountUsd = usdPrices[plan] || 0;
     const suppliedUsd = Number(path.searchParams.get("amount_usd") || "0");
@@ -527,7 +540,7 @@ Deno.serve(async (req: Request) => {
   if (body.action === "register_verify") {
     const email = String(body.email || "").trim().toLowerCase();
     const code = String(body.code || "").trim();
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email) || !/^\\d{6}$/.test(code)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || !/^\d{6}$/.test(code)) {
       return response({ success: false, message: "E-posta veya doğrulama kodu geçersiz." }, 400);
     }
 
@@ -573,7 +586,7 @@ Deno.serve(async (req: Request) => {
       language_code: verification.language_code,
       password_hash: verification.password_hash,
       role: "user",
-      status: "pending",
+      status: "active",
       email_verified: true,
       expiry_date: null,
       license_plan: "none",
@@ -593,7 +606,8 @@ Deno.serve(async (req: Request) => {
     await db.from("registration_verifications").delete().eq("id", verification.id);
     return response({
       success: true,
-      message: "E-posta doğrulandı. Üyelik başvurunuz yönetici onayına gönderildi.",
+      message: "E-posta adresiniz doğrulandı. Hesabınız aktif edildi.",
+      session_token: await signSession({ id: newUser.id, role: newUser.role }),
       user: newUser,
     }, 201);
   }
@@ -756,18 +770,33 @@ Deno.serve(async (req: Request) => {
     }
     const user = result.data;
     if (result.error) return response({ success: false, message: "Giriş servisi şu anda kullanılamıyor." }, 503);
-    if (!user || !await verifyPassword(password, user.password_hash)) {
+    const validPassword = !!user && await verifyPassword(password, user.password_hash);
+    const logLogin = async (success: boolean, details: string) => {
+      if (!user?.id) return;
+      await db.from("activity_logs").insert({
+        user_id: user.id, username: user.username, action: "portal_login",
+        category: "account_login", result: success ? "success" : "failed",
+        details, app_version: "portal"
+      });
+    };
+    if (!validPassword) {
+      await logLogin(false, "Portal login failed: invalid credentials");
       return response({ success: false, message: "Kullanıcı bilgileri hatalı." }, 401);
     }
-    if (user.status === "pending") return response({ success: false, status: "pending", message: "Hesabınız yönetici onayı bekliyor." }, 403);
+    if (user.status === "pending") {
+      await logLogin(false, "Portal login blocked: approval pending");
+      return response({ success: false, status: "pending", message: "Hesabınız yönetici onayı bekliyor." }, 403);
+    }
     const expiryTime = user.expiry_date ? new Date(user.expiry_date).getTime() : 0;
     const isExpired = user.role !== "admin" && (!expiryTime || expiryTime <= Date.now());
     const renewalOnly = user.status === "disabled" && user.disabled_reason === "license_expired" && !!expiryTime && expiryTime <= Date.now();
     if (user.status !== "active" && !renewalOnly) {
+      await logLogin(false, "Portal login blocked: account disabled");
       return response({ success: false, status: "disabled", message: "Hesabınız yönetici tarafından devre dışı bırakılmış veya onay bekliyor." }, 403);
     }
     const now = new Date().toISOString();
     await db.from("users").update({ last_login: now, updated_at: now }).eq("id", user.id);
+    await logLogin(true, "Portal login successful");
     const session_token = await signSession({ id: user.id, role: user.role });
     const { password_hash: _secret, ...safeUser } = user;
     return response({
@@ -781,6 +810,74 @@ Deno.serve(async (req: Request) => {
       },
       expires_in: 43200
     });
+  }
+
+  if (body.action === "account_profile") {
+    const member = await verifySession(tokenFrom(req), true);
+    if (!member) return response({ success: false, message: "Oturum geçersiz veya süresi dolmuş." }, 401);
+    const { data: events, error } = await db.from("activity_logs")
+      .select("id,created_at,result,details")
+      .eq("user_id", member.id).eq("action", "portal_login")
+      .order("created_at", { ascending: false }).limit(10);
+    if (error) return response({ success: false, message: "Giriş geçmişi okunamadı." }, 503);
+    return response({ success: true, user: member, login_events: events || [] });
+  }
+
+  if (body.action === "account_password_change") {
+    const member = await verifySession(tokenFrom(req), true);
+    if (!member) return response({ success: false, message: "Oturum geçersiz veya süresi dolmuş." }, 401);
+    const current = String(body.current_password || "");
+    const next = String(body.new_password || "");
+    if (next.length < 8 || next.length > 128) return response({ success: false, message: "Yeni şifre 8-128 karakter arasında olmalıdır." }, 400);
+    const { data: row, error } = await db.from("users").select("password_hash").eq("id", member.id).single();
+    if (error || !row || !await verifyPassword(current, row.password_hash)) return response({ success: false, message: "Mevcut şifreniz hatalı." }, 400);
+    const { error: updateError } = await db.from("users").update({ password_hash: await hashPassword(next), updated_at: new Date().toISOString() }).eq("id", member.id);
+    if (updateError) return response({ success: false, message: "Şifre güncellenemedi." }, 503);
+    return response({ success: true, message: "Şifreniz güncellendi." });
+  }
+
+  if (body.action === "account_email_request") {
+    const member = await verifySession(tokenFrom(req), true);
+    if (!member) return response({ success: false, message: "Oturum geçersiz veya süresi dolmuş." }, 401);
+    const email = String(body.new_email || "").trim().toLowerCase();
+    const currentPassword = String(body.current_password || "");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return response({ success: false, message: "Geçerli bir e-posta adresi girin." }, 400);
+    if (email === String(member.email || "").toLowerCase()) return response({ success: false, message: "Bu adres zaten hesabınızda kayıtlı." }, 400);
+    const { data: row, error: userError } = await db.from("users").select("password_hash").eq("id", member.id).single();
+    if (userError || !row || !await verifyPassword(currentPassword, row.password_hash)) return response({ success: false, message: "Güvenlik için mevcut şifrenizi doğrulayın." }, 400);
+    const { data: taken } = await db.from("users").select("id").eq("email", email).maybeSingle();
+    if (taken) return response({ success: false, message: "Bu e-posta başka bir hesapta kullanılıyor." }, 409);
+    const code = makeOtp();
+    const codeHash = await sha256Hex(code);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+    const { error: saveError } = await db.from("portal_email_change_requests").upsert({
+      user_id: member.id, new_email: email, code_hash: codeHash, expires_at: expiresAt, attempts: 0, created_at: new Date().toISOString()
+    }, { onConflict: "user_id" });
+    if (saveError) return response({ success: false, message: "E-posta değişikliği başlatılamadı." }, 503);
+    const queued = await queuePortalEmail(email, "Uzmantech e-posta değişikliği doğrulaması", "Uzmantech hesabınızın e-posta adresini değiştirmek için doğrulama kodunuz: " + code + "\\nKod 10 dakika geçerlidir. Bu işlemi siz başlatmadıysanız bu e-postayı dikkate almayın.");
+    if (queued.error) return response({ success: false, message: "Doğrulama e-postası sıraya alınamadı." }, 503);
+    return response({ success: true, message: "Doğrulama kodu yeni e-posta adresinize gönderilmek üzere sıraya alındı." });
+  }
+
+  if (body.action === "account_email_confirm") {
+    const member = await verifySession(tokenFrom(req), true);
+    if (!member) return response({ success: false, message: "Oturum geçersiz veya süresi dolmuş." }, 401);
+    const code = String(body.code || "").trim();
+    if (!/^\d{6}$/.test(code)) return response({ success: false, message: "6 haneli doğrulama kodunu girin." }, 400);
+    const { data: pending, error } = await db.from("portal_email_change_requests").select("*").eq("user_id", member.id).maybeSingle();
+    if (error || !pending) return response({ success: false, message: "Bekleyen e-posta değişikliği bulunamadı." }, 404);
+    if (Number(pending.attempts || 0) >= 5 || new Date(pending.expires_at).getTime() <= Date.now()) return response({ success: false, message: "Kodun süresi doldu veya deneme sınırı aşıldı. Yeniden kod isteyin." }, 400);
+    const supplied = await sha256Hex(code);
+    if (!safeEqual(new TextEncoder().encode(supplied), new TextEncoder().encode(String(pending.code_hash)))) {
+      await db.from("portal_email_change_requests").update({ attempts: Number(pending.attempts || 0) + 1 }).eq("id", pending.id);
+      return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
+    }
+    const { data: taken } = await db.from("users").select("id").eq("email", pending.new_email).maybeSingle();
+    if (taken && taken.id !== member.id) return response({ success: false, message: "Bu e-posta başka bir hesapta kullanılıyor." }, 409);
+    const { error: updateError } = await db.from("users").update({ email: pending.new_email, updated_at: new Date().toISOString() }).eq("id", member.id);
+    if (updateError) return response({ success: false, message: "E-posta adresi güncellenemedi." }, 503);
+    await db.from("portal_email_change_requests").delete().eq("id", pending.id);
+    return response({ success: true, message: "E-posta adresiniz güncellendi.", email: pending.new_email });
   }
 
   if (body.action === "session") {

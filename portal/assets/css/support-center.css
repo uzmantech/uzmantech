@@ -47,3 +47,9 @@
 .support-history-panel .empty-state{padding:20px 10px;border:1px dashed #254866;border-radius:10px;color:#8ea9c4;font-size:12px;text-align:center}
 @media(max-width:900px){.support-hub-main{grid-template-columns:1fr!important;gap:24px!important}.support-hub-action{min-height:230px!important}}
 @media(max-width:600px){.support-hub-main{padding:30px 18px 24px!important}.support-hub-copy h2{font-size:38px!important}.support-hub-points{gap:10px!important}.support-hub-bottom{flex-wrap:wrap!important;gap:10px 18px!important;padding:13px 18px!important}.support-hub-bottom>span:first-child{width:100%;margin:0}.support-inline-panel{padding:20px 15px}.support-inline-grid,.support-inline-form{grid-template-columns:1fr}.support-inline-form{padding:14px}.support-message-field,.support-submit{grid-column:1}.support-inline-head h2{font-size:23px}}
+
+
+/* Visitor support contact fields */
+.support-guest-fields{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px;min-width:0}
+.support-guest-fields[hidden]{display:none!important}
+@media(max-width:620px){.support-guest-fields{grid-template-columns:1fr}}

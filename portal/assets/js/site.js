@@ -341,7 +341,6 @@
   }
 
   function openSupport(){
-    if(!state.user){openLogin();return;}
     const card=$("#support");
     if(!card)return;
     let panel=$("#supportInlinePanel");
@@ -353,7 +352,7 @@
       card.insertAdjacentElement("afterend",panel);
     }
     if(panel.hidden){
-      panel.innerHTML='<div class="support-inline-head"><div><span class="support-inline-kicker">UZMANTOOL DESTEK MERKEZİ</span><h2>Nasıl yardımcı olabiliriz?</h2><p>Talebinizi oluşturun. Destek ekibimiz yanıtını hesabınız üzerinden takip edebilmenizi sağlar.</p></div><button type="button" class="support-inline-close" id="supportInlineClose" aria-label="Formu kapat">×</button></div><div class="support-inline-grid"><form id="supportForm" class="support-inline-form"><label class="support-field"><span>Konu</span><input name="subject" required minlength="4" maxlength="120" placeholder="Örn. Cihaz bağlantısı sorunu"></label><label class="support-field"><span>Destek kategorisi</span><select name="category" required><option value="technical">Teknik destek</option><option value="license">Lisans ve üyelik</option><option value="payment">Ödeme</option><option value="archive">Dosya arşivi</option><option value="other">Diğer</option></select></label><label class="support-field support-message-field"><span>Mesajınız</span><textarea name="message" required minlength="20" maxlength="4000" rows="6" placeholder="Sorunu, cihaz modelini ve varsa aldığınız hata mesajını açıklayın."></textarea><small>En az 20 karakter. En fazla 4000 karakter.</small></label><button class="support-submit" id="supportSubmit" type="submit"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebini Gönder</button></form><aside class="support-history-panel"><div class="support-history-heading"><div><span class="support-inline-kicker">TALEP TAKİBİ</span><h3>Destek taleplerim</h3></div><span class="support-history-count">Son 30 kayıt</span></div><div id="supportHistory"><div class="empty-state">Destek geçmişi yükleniyor…</div></div></aside></div>';
+      panel.innerHTML='<div class="support-inline-head"><div><span class="support-inline-kicker">UZMANTOOL DESTEK MERKEZİ</span><h2>Nasıl yardımcı olabiliriz?</h2><p>Üye olmadan da bize ulaşabilirsiniz. Ziyaretçi taleplerine e-posta üzerinden dönüş yaparız.</p></div><button type="button" class="support-inline-close" id="supportInlineClose" aria-label="Formu kapat">×</button></div><div class="support-inline-grid"><form id="supportForm" class="support-inline-form"><div class="support-guest-fields"><label class="support-field"><span>Adınız</span><input name="guest_name" minlength="2" maxlength="100" autocomplete="name" placeholder="Adınız soyadınız"></label><label class="support-field"><span>E-posta adresiniz</span><input name="guest_email" type="email" maxlength="254" autocomplete="email" placeholder="ornek@eposta.com"></label></div><label class="support-field"><span>Konu</span><input name="subject" required minlength="4" maxlength="120" placeholder="Örn. Cihaz bağlantısı sorunu"></label><label class="support-field"><span>Destek kategorisi</span><select name="category" required><option value="technical">Teknik destek</option><option value="license">Lisans ve üyelik</option><option value="payment">Ödeme</option><option value="archive">Dosya arşivi</option><option value="other">Diğer</option></select></label><label class="support-field support-message-field"><span>Mesajınız</span><textarea name="message" required minlength="20" maxlength="4000" rows="6" placeholder="Sorunu, cihaz modelini ve varsa aldığınız hata mesajını açıklayın."></textarea><small>En az 20 karakter. En fazla 4000 karakter.</small></label><button class="support-submit" id="supportSubmit" type="submit"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebini Gönder</button></form><aside class="support-history-panel"><div class="support-history-heading"><div><span class="support-inline-kicker">TALEP TAKİBİ</span><h3>Destek taleplerim</h3></div><span class="support-history-count">Son 30 kayıt</span></div><div id="supportHistory"><div class="empty-state">Destek geçmişi yükleniyor…</div></div></aside></div>';
       panel.hidden=false;
     }else{
       panel.hidden=true;
@@ -366,17 +365,25 @@
       const subject=String(data.get("subject")||"").trim();
       const category=String(data.get("category")||"other");
       const message=String(data.get("message")||"").trim();
+      const guestName=String(data.get("guest_name")||"").trim();
+      const guestEmail=String(data.get("guest_email")||"").trim();
+      if(!state.user&&(guestName.length<2||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(guestEmail))){toast("Lütfen adınızı ve geçerli e-posta adresinizi girin.");return;}
       if(subject.length<4||message.length<20){toast("Konu ve mesaj alanlarını kontrol edin.");return;}
       btn.disabled=true;btn.innerHTML="Gönderiliyor…";
       try{
-        const result=await window.UzmantechAPI.supportTicket({subject,category,message});
+        const result=await window.UzmantechAPI.supportTicket({subject,category,message,...(!state.user?{guest_name:guestName,guest_email:guestEmail}:{})});
         toast(result.message||"Destek talebi oluşturuldu.");
         form.reset();
-        await loadSupportHistory();
+        if(state.user)await loadSupportHistory();
+        else {const history=$("#supportHistory");if(history)history.innerHTML='<div class="empty-state">Talebiniz alındı. Yanıtımızı verdiğiniz e-posta adresinden ileteceğiz.</div>';}
       }catch(error){toast(error.message);}
       finally{btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebini Gönder';}
     });
-    loadSupportHistory();
+    const guestFields=panel.querySelector(".support-guest-fields");
+    if(guestFields){guestFields.style.display=state.user?"none":"grid";guestFields.querySelectorAll("input").forEach(input=>input.required=!state.user);}
+    const historyPanel=panel.querySelector(".support-history-panel");
+    if(historyPanel)historyPanel.style.display=state.user?"":"none";
+    if(state.user)loadSupportHistory();
     panel.scrollIntoView({behavior:"smooth",block:"start"});
   }
 

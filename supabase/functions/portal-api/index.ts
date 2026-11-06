@@ -374,7 +374,7 @@ Deno.serve(async (req: Request) => {
       console.error("support ticket insert failed", error);
       return response({ success: false, message: "Destek talebi kaydedilemedi. Lütfen tekrar deneyin." }, 503);
     }
-    return response({ success: true, message: "Destek talebiniz alındı. Yanıtımızı e-posta adresinize ileteceğiz.", ticket }, 201);
+    return response({ success: true, message: "Destek talebiniz alındı. İletişim bilgileriniz yönetici ekibine iletildi.", ticket }, 201);
   }
 
 

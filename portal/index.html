@@ -71,19 +71,19 @@
 <style id="uzmantech-intro-loader">
 #uz-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#102c4d 0%,#09182b 42%,#050b14 100%);color:#eaf6ff;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
 #uz-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
-#uz-intro:before,#uz-intro:after{content:"";position:absolute;width:min(78vw,620px);aspect-ratio:1;border:1px solid #1c8bd522;border-radius:50%;box-shadow:0 0 0 35px #1688d20a,0 0 0 85px #1688d207;animation:uz-orbit 18s linear infinite}
-#uz-intro:after{width:min(58vw,440px);border-color:#42bfff20;animation-direction:reverse;animation-duration:13s}
-.uz-intro-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:min(90vw,420px);text-align:center}
-.uz-intro-mark{position:relative;display:grid;place-items:center;width:116px;height:116px;margin-bottom:30px}
+#uz-intro:before,#uz-intro:after{content:"";position:absolute;width:min(92vw,760px);aspect-ratio:1;border:1px solid #1c8bd522;border-radius:50%;box-shadow:0 0 0 35px #1688d20a,0 0 0 85px #1688d207;animation:uz-orbit 18s linear infinite}
+#uz-intro:after{width:min(70vw,560px);border-color:#42bfff20;animation-direction:reverse;animation-duration:13s}
+.uz-intro-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:min(92vw,520px);text-align:center}
+.uz-intro-mark{position:relative;display:grid;place-items:center;width:164px;height:164px;margin-bottom:36px}
 .uz-intro-mark:before,.uz-intro-mark:after{content:"";position:absolute;inset:0;border:2px solid transparent;border-top-color:#38c7ff;border-right-color:#1678d5;border-radius:50%;filter:drop-shadow(0 0 9px #16aaff88);animation:uz-spin 3.6s linear infinite}
 .uz-intro-mark:after{inset:9px;border-top-color:#8be5ff;border-right-color:transparent;border-bottom-color:#176fbd;animation-duration:2.8s;animation-direction:reverse}
-.uz-intro-mark img{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 0 16px #139fff66);animation:uz-pulse 2.2s ease-in-out infinite}
-.uz-intro-name{margin:0;font:700 clamp(23px,5vw,30px)/1.1 "Space Grotesk",sans-serif;letter-spacing:4px;color:#f3f9ff}
+.uz-intro-mark img{width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 0 16px #139fff66);animation:uz-pulse 2.2s ease-in-out infinite}
+.uz-intro-name{margin:0;font:700 clamp(32px,6vw,44px)/1.1 "Space Grotesk",sans-serif;letter-spacing:5px;color:#f3f9ff}
 .uz-intro-name span{color:#37bdff}
-.uz-intro-tag{margin:10px 0 27px;color:#7e9dbb;font:600 9px "DM Sans",sans-serif;letter-spacing:3px}
-.uz-intro-progress{width:min(280px,78vw);height:3px;overflow:hidden;border-radius:8px;background:#19324a}
+.uz-intro-tag{margin:14px 0 34px;color:#7e9dbb;font:600 12px "DM Sans",sans-serif;letter-spacing:3px}
+.uz-intro-progress{width:min(360px,82vw);height:5px;overflow:hidden;border-radius:8px;background:#19324a}
 .uz-intro-progress i{display:block;width:38%;height:100%;border-radius:8px;background:linear-gradient(90deg,#0879d5,#52d5ff);box-shadow:0 0 12px #23baff;animation:uz-progress 2.6s ease-in-out infinite}
-.uz-intro-status{min-height:17px;margin:15px 0 0;color:#8ba9c6;font:500 10px "DM Sans",sans-serif;letter-spacing:1.2px}
+.uz-intro-status{min-height:22px;margin:20px 0 0;color:#8ba9c6;font:500 13px "DM Sans",sans-serif;letter-spacing:1.2px}
 .uz-intro-status:after{content:"";display:inline-block;width:13px;text-align:left;animation:uz-dots 1.1s steps(4,end) infinite}
 @keyframes uz-spin{to{transform:rotate(360deg)}}@keyframes uz-orbit{to{transform:rotate(360deg)}}@keyframes uz-pulse{50%{transform:scale(1.07);opacity:.82}}@keyframes uz-progress{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}@keyframes uz-dots{0%{content:""}25%{content:"."}50%{content:".."}75%,100%{content:"..."}}
 @media(prefers-reduced-motion:reduce){#uz-intro:before,#uz-intro:after,.uz-intro-mark:before,.uz-intro-mark:after,.uz-intro-mark img,.uz-intro-progress i,.uz-intro-status:after{animation:none} .uz-intro-progress i{width:100%}}

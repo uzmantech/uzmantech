@@ -138,3 +138,28 @@ body.glass-lab{background:#06101a!important;color:#eaf5ff!important}
 .glass-image-search-button:focus-visible,.glass-image-search-input:focus-visible{outline:2px solid #69f1ed;outline-offset:2px}
 .glass-image-page .glass-results{margin:30px clamp(15px,4vw,60px) 0}
 @media(max-width:620px){.glass-image-search-input{font-size:12px}.glass-image-search-button{border-radius:30px}.glass-image-language{right:10%;top:2%;width:9%;height:6%}}
+
+/* Functional navigation zones placed over the header already drawn in the approved artwork */
+.glass-artboard{position:relative}
+.glass-hotspot-nav{position:absolute;z-index:8;inset:0 0 auto;height:10.8%;pointer-events:none}
+.glass-hotspot-nav a{position:absolute;top:0;height:100%;display:block;pointer-events:auto;background:transparent;border:0;outline-offset:-3px}
+.glass-hotspot-nav a:focus-visible{outline:2px solid #72f5ff}
+.hotspot-logo{left:0;width:20%}
+.hotspot-home{left:20%;width:10.5%}
+.hotspot-archive{left:30.5%;width:12%}
+.hotspot-glass{left:42.5%;width:14.5%}
+.hotspot-tools{left:57%;width:9.5%}
+.hotspot-support{left:66.5%;width:10%}
+.hotspot-language{left:79%;width:9%}
+.hotspot-login{left:88%;width:11.5%}
+/* Search input and invisible button align to the artwork's printed controls */
+.glass-image-search-input{left:14.2%;top:52.5%;width:59.2%;height:6%;padding:0 1%;border:0!important;border-radius:0!important;outline:0;background:transparent!important;color:#26384b!important;caret-color:#078fe9;font:500 clamp(12px,1.25vw,20px) Arial;line-height:1;box-shadow:none!important}
+.glass-image-search-input::placeholder{color:#667789!important;opacity:1}
+.glass-image-search-button{left:75.5%;top:52%;width:12%;height:7.5%;padding:0!important;border:0!important;border-radius:40px;background:transparent!important;color:transparent!important;font-size:0!important;line-height:0!important;box-shadow:none!important;appearance:none}
+.glass-image-search-button:before,.glass-image-search-button:after{display:none!important;content:none!important}
+.glass-image-search-button:focus-visible{outline:2px solid #69f1ed!important;outline-offset:2px}
+@media(max-width:620px){
+ .glass-hotspot-nav{height:10.8%}
+ .glass-image-search-input{left:14%;top:52.5%;width:59%;height:6%;font-size:11px}
+ .glass-image-search-button{left:75%;top:52%;width:13%;height:7.5%}
+}

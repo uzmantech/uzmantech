@@ -408,6 +408,27 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 
 
 /* Locked archive preview: keep the brand catalogue visible behind the access dialog */
-.archive-shell.archive-preview-locked .archive-stage{display:grid!important;opacity:.42;filter:blur(1.2px);pointer-events:none;user-select:none;transition:opacity .2s ease,filter .2s ease}
-.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue){background:rgba(2,6,13,.58);backdrop-filter:blur(2px)}
+.archive-shell.archive-preview-locked .archive-stage{display:grid!important;opacity:.78;filter:blur(.35px);pointer-events:none;user-select:none;transition:opacity .2s ease,filter .2s ease}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue){background:rgba(2,6,13,.40);backdrop-filter:blur(1px)}
 .archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{background:rgba(17,30,48,.97);border-color:#536782;box-shadow:0 24px 90px #000b}
+
+
+/* Premium lock dialog */
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{width:min(510px,calc(100% - 20px));padding:30px 32px 26px;text-align:center;border:1px solid #8b5268;background:linear-gradient(155deg,#1c2940 0%,#111b2d 58%,#211725 100%);border-radius:22px;box-shadow:0 28px 100px #000c,0 0 0 1px #e43d6422;position:relative;overflow:hidden}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#e83c62,#ff9b61,#e83c62)}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-heading{justify-content:center;position:relative}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-heading h2{font-size:0;margin:0}
+.archive-lock-visual{height:112px;display:grid;place-items:center;position:relative;margin:4px auto 14px}
+.archive-lock-halo{position:absolute;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,#ed3f692c 0%,#ed3f6910 56%,transparent 72%);border:1px solid #ed55734a;box-shadow:0 0 42px #e83c6320,inset 0 0 25px #e83c6315}
+.archive-lock-icon{width:76px;height:76px;display:grid;place-items:center;position:relative;border:1px solid #ff7890;border-radius:23px;background:linear-gradient(145deg,#f04b70,#a91f48);color:#fff;box-shadow:0 12px 32px #e32e5a55,inset 0 1px #ffffff66}
+.archive-lock-icon svg{width:43px;height:43px;filter:drop-shadow(0 2px 2px #68122c66)}
+.archive-lock-eyebrow{display:inline-block;margin:2px 0 8px;color:#ff8da3;font-size:10px;font-weight:900;letter-spacing:2px}
+.archive-lock-heading{margin:0 0 10px;color:#fff;font:700 25px "Space Grotesk",sans-serif;letter-spacing:-.5px}
+.archive-lock-copy{max-width:405px;margin:0 auto 16px;color:#c0ccdc;font-size:13px;line-height:1.75}
+.archive-lock-benefit{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 19px;color:#dce8f8;font-size:11px;font-weight:700}
+.archive-lock-benefit span{width:19px;height:19px;display:grid;place-items:center;border-radius:50%;background:#1b8c6c;color:#fff;font-size:12px}
+.archive-lock-continue{width:100%;min-height:49px;display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid #ff6b87!important;border-radius:11px!important;background:linear-gradient(100deg,#e52f58,#bb2450)!important;color:#fff!important;font-size:12px;font-weight:900;box-shadow:0 9px 25px #d9275340}
+.archive-lock-continue b{font-size:20px;line-height:1}
+.archive-lock-continue:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.archive-lock-footnote{display:block;margin-top:13px;color:#8fa1b8;font-size:10px;line-height:1.5}
+@media(max-width:500px){.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{padding:24px 19px 21px}.archive-lock-heading{font-size:22px}.archive-lock-visual{height:98px}.archive-lock-halo{width:88px;height:88px}.archive-lock-icon{width:68px;height:68px}}

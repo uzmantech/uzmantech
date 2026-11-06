@@ -71,6 +71,7 @@
 <style id="uzmantech-intro-loader">
 #uz-intro{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:24px 16px;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#102c4d 0%,#09182b 42%,#050b14 100%);color:#eaf6ff;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
 #uz-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+html.uz-intro-skip #uz-intro{display:none!important}
 #uz-intro:before,#uz-intro:after{content:"";position:absolute;width:min(92vw,760px);aspect-ratio:1;border:1px solid #1c8bd522;border-radius:50%;box-shadow:0 0 0 35px #1688d20a,0 0 0 85px #1688d207;animation:uz-orbit 18s linear infinite}
 #uz-intro:after{width:min(70vw,560px);border-color:#42bfff20;animation-direction:reverse;animation-duration:13s}
 .uz-intro-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:min(92vw,520px);margin:auto;text-align:center;flex:0 1 auto}
@@ -88,6 +89,9 @@
 @keyframes uz-spin{to{transform:rotate(360deg)}}@keyframes uz-orbit{to{transform:rotate(360deg)}}@keyframes uz-pulse{50%{transform:scale(1.07);opacity:.82}}@keyframes uz-progress{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}@keyframes uz-dots{0%{content:""}25%{content:"."}50%{content:".."}75%,100%{content:"..."}}
 @media(prefers-reduced-motion:reduce){#uz-intro:before,#uz-intro:after,.uz-intro-mark:before,.uz-intro-mark:after,.uz-intro-mark img,.uz-intro-progress i,.uz-intro-status:after{animation:none} .uz-intro-progress i{width:100%}}
 </style>
+<script id="uz-intro-session-guard">
+(()=>{try{const key="uzmantech_intro_seen_v1";if(sessionStorage.getItem(key)==="1"){document.documentElement.classList.add("uz-intro-skip");}else{sessionStorage.setItem(key,"1");}}catch(e){/* Depolama kapalıysa animasyon normal şekilde gösterilir. */}})();
+</script>
 </head>
 <body class="dashboard-page">
 

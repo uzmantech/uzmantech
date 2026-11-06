@@ -344,30 +344,37 @@ Deno.serve(async (req: Request) => {
 
   if (body.action === "support_ticket") {
     const member = await verifySession(tokenFrom(req), true);
-    if (!member || member.role === "admin") return response({ success: false, message: "Destek talebi için üye oturumu gerekli." }, 401);
+    if (member?.role === "admin") return response({ success: false, message: "Yönetici hesapları ziyaretçi destek formunu kullanamaz." }, 403);
     const subject = String(body.subject || "").trim();
     const category = String(body.category || "other");
     const message = String(body.message || "").trim();
+    const guestName = String(body.guest_name || "").trim();
+    const guestEmail = String(body.guest_email || "").trim().toLowerCase();
     const allowedCategories = ["technical", "license", "payment", "archive", "other"];
     if (subject.length < 4 || subject.length > 120 || !allowedCategories.includes(category) || message.length < 20 || message.length > 4000) {
       return response({ success: false, message: "Konu, kategori veya mesaj alanını kontrol edin. Mesaj 20-4000 karakter olmalı." }, 400);
     }
+    if (!member && (guestName.length < 2 || guestName.length > 100 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(guestEmail) || guestEmail.length > 254)) {
+      return response({ success: false, message: "Ziyaretçi talepleri için adınızı ve geçerli e-posta adresinizi girin." }, 400);
+    }
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const { count, error: countError } = await db.from("portal_support_tickets")
-      .select("id", { count: "exact", head: true }).eq("user_id", member.id).gte("created_at", since);
+    let countQuery = db.from("portal_support_tickets").select("id", { count: "exact", head: true }).gte("created_at", since);
+    countQuery = member ? countQuery.eq("user_id", member.id) : countQuery.is("user_id", null).eq("guest_email", guestEmail);
+    const { count, error: countError } = await countQuery;
     if (countError) {
       console.error("support ticket rate limit lookup failed", countError);
       return response({ success: false, message: "Destek servisi şu anda kullanılamıyor." }, 503);
     }
-    if (Number(count || 0) >= 5) return response({ success: false, message: "24 saat içinde en fazla 5 destek talebi gönderebilirsiniz." }, 429);
+    const limit = member ? 5 : 3;
+    if (Number(count || 0) >= limit) return response({ success: false, message: "24 saat içinde en fazla " + limit + " destek talebi gönderebilirsiniz." }, 429);
     const { data: ticket, error } = await db.from("portal_support_tickets")
-      .insert({ user_id: member.id, subject, category, message })
+      .insert({ user_id: member?.id || null, guest_name: member ? null : guestName, guest_email: member ? null : guestEmail, subject, category, message })
       .select("id,subject,category,status,created_at").single();
     if (error) {
       console.error("support ticket insert failed", error);
       return response({ success: false, message: "Destek talebi kaydedilemedi. Lütfen tekrar deneyin." }, 503);
     }
-    return response({ success: true, message: "Destek talebiniz alındı. Yönetim panelinden takip edebilirsiniz.", ticket }, 201);
+    return response({ success: true, message: "Destek talebiniz alındı. Yanıtımızı e-posta adresinize ileteceğiz.", ticket }, 201);
   }
 
 
@@ -385,7 +392,7 @@ Deno.serve(async (req: Request) => {
     const admin = await verifySession(tokenFrom(req));
     if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Bu işlem için yönetici yetkisi gerekli." }, 403);
     const { data: rows, error } = await db.from("portal_support_tickets")
-      .select("id,user_id,subject,category,message,status,admin_note,created_at,updated_at,resolved_at")
+      .select("id,user_id,guest_name,guest_email,subject,category,message,status,admin_note,created_at,updated_at,resolved_at")
       .order("created_at", { ascending: false }).limit(150);
     if (error) return response({ success: false, message: "Destek talepleri okunamadı." }, 503);
     const ids = [...new Set((rows || []).map((x: any) => x.user_id))];

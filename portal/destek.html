@@ -8,7 +8,7 @@
 :root{--bg-main:#0f172a;--bg-card:#1e293b;--border-color:#334155;--primary:#2563eb;--primary-hover:#1d4ed8;--text-main:#f8fafc;--text-muted:#94a3b8;--accent-green:#10b981}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 body{background:var(--bg-main);color:var(--text-main);line-height:1.6}
-a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#111c31;border-bottom:1px solid var(--border-color)}
+a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(17,28,49,.96);border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:1000;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .brand{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.5px}.brand small{display:block;color:var(--text-muted);font-size:9px;letter-spacing:2px}
 .site-header nav{display:flex;gap:22px}.site-header nav a{text-decoration:none;color:#cbd5e1;font-size:13px}
 .container{width:calc(100% - 40px);max-width:1500px;margin:0 auto;padding:0 10px}

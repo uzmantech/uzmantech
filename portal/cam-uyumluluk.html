@@ -79,6 +79,9 @@
 <script>
 document.querySelector("#glassSearchForm")?.addEventListener("submit",e=>{e.preventDefault();document.querySelector("#glassSearch")?.click();});
 document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.brand;const input=document.querySelector("#glassQuery");if(q){input.value=q;input.focus();document.querySelector("#glassSearch").click();}else{input.focus();}}));
-document.querySelector(".site-mobile-nav-toggle")?.addEventListener("click",e=>{const nav=document.querySelector(".site-global-nav");const opened=nav.classList.toggle("is-open");e.currentTarget.setAttribute("aria-expanded",String(opened));});
+
+</script>
+<script id="site-global-nav-controller">
+(()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
 </script>
 </body></html>

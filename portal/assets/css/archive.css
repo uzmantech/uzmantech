@@ -405,3 +405,9 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 .site-live-stats .stat-live-help>span.whatsapp-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid #168b58;border-radius:50%;background:#073c2c;color:#35e58c}
 .site-live-stats .stat-live-help .whatsapp-icon svg{display:block;width:23px;height:23px}
 .site-live-stats .stat-live-help:hover .whatsapp-icon{background:#07583d;color:#6affb1}
+
+
+/* Locked archive preview: keep the brand catalogue visible behind the access dialog */
+.archive-shell.archive-preview-locked .archive-stage{display:grid!important;opacity:.42;filter:blur(1.2px);pointer-events:none;user-select:none;transition:opacity .2s ease,filter .2s ease}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue){background:rgba(2,6,13,.58);backdrop-filter:blur(2px)}
+.archive-shell.archive-preview-locked #modal:has(#archivePackageContinue) .modal-card{background:rgba(17,30,48,.97);border-color:#536782;box-shadow:0 24px 90px #000b}

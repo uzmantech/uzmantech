@@ -59,72 +59,52 @@ upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");
 
 
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
-const help=make("help","Destek","Teknik Destek ve Yardım Merkezi.");
-help.classList.add("help-center-page","support-reference-page");
-help.innerHTML+=`
-<section class="support-reference-hero">
- <div class="support-reference-copy">
-  <span class="support-reference-eyebrow"><i></i> UZMANTECH DESTEK MERKEZİ</span>
-  <h2>Teknik Destek <em>ve Yardım Merkezi</em></h2>
-  <p>Uzmantech ve Uzmantool ile ilgili tüm sorularınız, teknik sorunlarınız ve çözüm talepleriniz için yanınızdayız.</p>
-  <form class="support-search" id="supportSearchForm"><span>⌕</span><input id="supportSearchInput" type="search" placeholder="Yardım veya çözüm arayın..." aria-label="Yardım veya çözüm arayın"><button type="submit">Ara</button></form>
-  <div class="support-popular-searches"><b>Popüler Aramalar:</b><button type="button" data-support-search="Kurulum">Kurulum</button><button type="button" data-support-search="Lisans">Lisans</button><button type="button" data-support-search="ADB">ADB</button><button type="button" data-support-search="Fastboot">Fastboot</button><button type="button" data-support-search="Yedekleme">Yedekleme</button><button type="button" data-support-search="Hata Çözümleri">Hata Çözümleri</button></div>
- </div>
- <div class="support-reference-art" role="img" aria-label="Uzmantech destek görevlisi ve destek merkezi görseli"></div>
+const help=make("help","Destek","Uzmantech destek merkezi.");
+help.classList.add("help-center-page","support-redesign");
+help.querySelector(".portal-page-heading")?.remove();
+help.innerHTML+=\`
+<section class="sr-hero">
+ <div class="sr-hero-copy"><span class="sr-eyebrow"><i></i> UZMANTECH · DESTEK MERKEZİ</span><h2>Takıldığınız yerde<br><em>yanınızdayız.</em></h2><p>Uzmantech ve Uzmantool için çözüm, rehber ve teknik destek tek bir merkezde.</p>
+ <form class="sr-search" id="srSearch"><span>⌕</span><input id="srSearchInput" type="search" placeholder="Örn. ADB cihazı görmüyor, lisans, kurulum..." aria-label="Destek makalelerinde ara"><button type="submit">Ara <b>↗</b></button></form>
+ <div class="sr-search-hints"><span>Popüler:</span><button type="button" data-sr-query="ADB">ADB</button><button type="button" data-sr-query="Fastboot">Fastboot</button><button type="button" data-sr-query="Lisans">Lisans</button><button type="button" data-sr-query="Yedekleme">Yedekleme</button></div></div>
+ <div class="sr-hero-visual" aria-hidden="true"><div class="sr-visual-grid"></div><div class="sr-orbit sr-orbit-a"></div><div class="sr-orbit sr-orbit-b"></div><div class="sr-support-device"><div class="sr-device-top"><i></i><i></i><i></i><span>UZMANTECH / HELP DESK</span></div><div class="sr-device-body"><div class="sr-device-side"><b>U</b><i></i><i></i><i></i></div><div class="sr-device-content"><small>DESTEK PANELİ</small><strong>Nasıl yardımcı<br>olabiliriz?</strong><div class="sr-device-line"></div><div class="sr-device-line short"></div><div class="sr-device-status"><i></i> TALEPLERİNİZ GÜVENDE</div></div></div></div><div class="sr-float-bubble sr-bubble-one">24/7 <small>DESTEK MERKEZİ</small></div><div class="sr-float-bubble sr-bubble-two">✓ <small>ÇÖZÜM ODAKLI</small></div></div>
 </section>
-<nav class="support-quick-actions" aria-label="Hızlı destek işlemleri">
- <button type="button" data-support-open><span class="support-quick-icon quick-ticket"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v5m0 14v5M4 16h5m14 0h5M8 8l3.5 3.5m9 9L24 24m0-16-3.5 3.5m-9 9L8 24" /><circle cx="16" cy="16" r="5.5"/><path d="M16 10.5v-3M16 24.5v-3"/></svg></span><b>Destek Talebi Oluştur<small>Teknik destek talebi gönderin.</small></b><i>›</i></button>
- <button type="button" data-support-open><span class="support-quick-icon quick-chat"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 12V8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v4M7 12h18M7 12a4 4 0 0 0-4 4v5a3 3 0 0 0 3 3h3v-8H6m19-7a4 4 0 0 1 4 4v8a3 3 0 0 1-3 3h-3v-8h3M11 24h10M14 27h4"/></svg></span><b>Canlı Destek<small>Anlık destek alın.</small></b><i>›</i></button>
- <button type="button" data-support-faq><span class="support-quick-icon quick-knowledge"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 5h22v22H5zM10 10h12v12H10zM13 13h6v6h-6z"/></svg></span><b>Bilgi Bankası<small>Rehber ve çözüm içerikleri.</small></b><i>›</i></button>
- <a href="archive.html"><span class="support-quick-icon quick-download"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3v18m-7-7 7 7 7-7M5 23v5h22v-5"/></svg></span><b>Gerekli Dosyalar<small>Sürücü, araç ve ek dosyalar.</small></b><i>›</i></a>
-</nav>
-<div class="support-reference-layout">
- <div class="support-reference-main">
-  <div class="support-reference-section-head"><div><span>DESTEK MERKEZİ</span><h3>Yardım Kategorileri</h3><p>İhtiyacınıza uygun kategoriye göz atın.</p></div><a href="#support-faq">Tüm Kategorileri Gör　→</a></div>
-  <div class="support-category-grid">
-   <button type="button" data-support-search="Kurulum"><i class="support-cat-icon cat-install"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 5h22v22H5zM10 10h12v12H10zM13 13h6v6h-6z"/></svg></i><span><b>Kurulum ve İlk Ayarlar</b><small>Uzmantech kurulumu, lisans aktivasyonu ve ilk ayarlar.</small></span></button>
-   <button type="button" data-support-search="ADB Fastboot Android"><i class="support-cat-icon cat-android"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="9" r="4"/><path d="M8 26v-4a8 8 0 0 1 16 0v4zM12 4l-2-2m10 2 2-2"/></svg></i><span><b>Android İşlemleri</b><small>ADB, Fastboot, yedekleme ve diğer Android araçları.</small></span></button>
-   <button type="button" data-support-search="Apple iOS"><i class="support-cat-icon cat-apple"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19 8c0-3 2-5 5-5 0 3-2 5-5 5Zm-2 3c-2-2-5-2-7 0-4 3-2 10 1 14 2 3 4 3 6 1 2 2 4 2 6-1 1-2 2-4 2-6-3 0-5-2-5-4s2-4 4-4c-2-3-5-3-7 0Z"/></svg></i><span><b>Apple İşlemleri</b><small>iOS yedekleme, veri yönetimi ve cihaz işlemleri.</small></span></button>
-   <button type="button" data-support-search="Hata Çözümleri"><i class="support-cat-icon cat-errors"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 3h6l1 4 3 2 4-1 3 5-3 3v4l3 3-3 5-4-1-3 2-1 4h-6l-1-4-3-2-4 1-3-5 3-3v-4l-3-3 3-5 4 1 3-2z" transform="translate(0 -2) scale(1 .95)"/><circle cx="16" cy="16" r="4"/></svg></i><span><b>Hata Çözümleri</b><small>Sık karşılaşılan hatalar ve çözüm adımları.</small></span></button>
-   <button type="button" data-support-search="Araçlar Modüller"><i class="support-cat-icon cat-tools"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7h22l-4 18H2z"/></svg></i><span><b>Araçlar ve Modüller</b><small>Uzmantool ve entegre araçlar hakkında destek.</small></span></button>
-   <button type="button" data-support-search="Güncellemeler"><i class="support-cat-icon cat-update"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 13a11 11 0 1 0 1 7M26 5v8h-8"/></svg></i><span><b>Güncellemeler</b><small>Sürüm notları, güncelleme adımları ve yenilikler.</small></span></button>
-  </div>
-  <div class="adsense-guides-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
-   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="6651798470" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  <div class="support-reference-section-head faq-heading" id="support-faq"><div><span>MERAK EDİLENLER</span><h3>Sıkça Sorulan Sorular</h3><p>En çok merak edilen sorular ve cevapları.</p></div><a href="#support-faq">Tüm Soruları Gör　→</a></div>
-  <div class="support-faq-grid">
-   <details data-support-faq><summary>Uzmantech nasıl kurulur?</summary><p>Uygulamanın kurulum dosyasını indirme bölümünden alın. Kurulum tamamlandığında programı yönetici olarak çalıştırıp hesabınızla giriş yapın.</p></details>
-   <details data-support-faq><summary>ADB cihazı görünmüyor, ne yapmalıyım?</summary><p>Telefonda USB hata ayıklamayı etkinleştirin, uygun USB sürücüsünü kurun ve bağlantı modunu kontrol edin. Ardından kabloyu yeniden takıp ADB cihaz listesini yenileyin.</p></details>
-   <details data-support-faq><summary>Lisans aktivasyonu nasıl yapılır?</summary><p>Hesabınıza giriş yapın ve Lisans Aktivasyonu sayfasındaki adımları izleyin. Lisans anahtarınızı kimseyle paylaşmayın.</p></details>
-   <details data-support-faq><summary>Yedekleme nerede saklanır?</summary><p>Yedekleme konumu kullandığınız modüle ve seçtiğiniz klasöre göre değişebilir. İşlem öncesinde hedef klasörü kontrol edin.</p></details>
-  </div>
-  <div class="adsense-support-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
-   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="2820364674" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
- </div>
- <aside class="support-reference-sidebar">
-  <section class="support-side-card support-contact-card"><div class="support-side-heading"><span>♧</span><div><b>İletişim Kanalları</b><small>Bize dilediğiniz kanaldan ulaşabilirsiniz.</small></div></div><button type="button" data-support-open><i class="contact-whatsapp">◉</i><span><b>WhatsApp Destek</b><small>Hızlı ve doğrudan iletişim.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-telegram">➤</i><span><b>Telegram Destek</b><small>Güncel duyurular ve destek.</small></span><strong>→</strong></button><button type="button" data-support-open><i class="contact-email">✉</i><span><b>E-Posta Destek</b><small>destek@uzmantech.com</small></span><strong>→</strong></button></section>
-  <section class="support-side-card support-status-card"><div class="support-side-heading"><span>⌁</span><div><b>Sistem Durumu</b><small>Hizmetlerimizin anlık çalışma durumu.</small></div><strong class="support-all-online">✓ Tüm Sistemler Çalışıyor</strong></div><div class="support-status-row"><i></i><b>Web Portal</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Dosya Arşivi</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Lisans Sunucusu</b><small>Çevrimiçi</small></div><div class="support-status-row"><i></i><b>Destek Sistemi</b><small>Çevrimiçi</small></div></section>
- </aside>
-</div>`;
+<section class="sr-action-grid" aria-label="Destek seçenekleri">
+ <button type="button" class="sr-action sr-action-primary" data-sr-ticket><span class="sr-action-icon">✉</span><span><b>Destek talebi oluştur</b><small>Sorununuzu ekibimize iletin</small></span><i>↗</i></button>
+ <a class="sr-action" href="mailto:destek@uzmantech.com"><span class="sr-action-icon sr-icon-mail">＠</span><span><b>E-posta ile ulaşın</b><small>destek@uzmantech.com</small></span><i>↗</i></a>
+ <a class="sr-action" href="archive.html"><span class="sr-action-icon sr-icon-files">▤</span><span><b>Dosya arşivi</b><small>Sürücü ve teknik dosyalar</small></span><i>↗</i></a>
+</section>
+<section class="sr-section"><div class="sr-section-heading"><div><span class="sr-kicker">KONUYA GÖRE DESTEK</span><h3>Size nasıl yardımcı olabiliriz?</h3><p>İhtiyacınız olan başlığı seçin, ilgili çözümlere hızlıca ulaşın.</p></div><span class="sr-section-index">01 / KATEGORİLER</span></div>
+ <div class="sr-category-grid">
+  <button type="button" data-sr-query="Kurulum"><span class="sr-category-symbol">⌘</span><b>Kurulum ve başlangıç</b><small>Kurulum, sistem gereksinimleri ve ilk ayarlar</small><i>→</i></button>
+  <button type="button" data-sr-query="ADB Fastboot"><span class="sr-category-symbol">⌁</span><b>Android ve bağlantı</b><small>ADB, Fastboot, sürücüler ve cihaz algılama</small><i>→</i></button>
+  <button type="button" data-sr-query="Apple yedekleme"><span class="sr-category-symbol">◉</span><b>Apple işlemleri</b><small>iOS yedekleme ve cihaz yönetimi</small><i>→</i></button>
+  <button type="button" data-sr-query="Lisans üyelik ödeme"><span class="sr-category-symbol">◇</span><b>Lisans ve ödemeler</b><small>Üyelik, lisans, satın alma ve dekont</small><i>→</i></button>
+  <button type="button" data-sr-query="Yedekleme geri yükleme"><span class="sr-category-symbol">▣</span><b>Yedekleme ve geri yükleme</b><small>Yedek konumu, dosyalar ve geri yükleme</small><i>→</i></button>
+  <button type="button" data-sr-query="Hata çözümleri"><span class="sr-category-symbol">⚙</span><b>Hata çözümleri</b><small>Yaygın sorunlar ve kontrol adımları</small><i>→</i></button>
+ </div></section>
+<section class="sr-knowledge" id="srKnowledge"><div class="sr-section-heading"><div><span class="sr-kicker">BİLGİ BANKASI</span><h3>Sık sorulan sorular</h3><p>En çok karşılaşılan konular için kısa ve uygulanabilir yanıtlar.</p></div><span class="sr-section-index">02 / YARDIM</span></div>
+ <div class="sr-faq-list">
+  <details data-sr-faq><summary><span><i>01</i> ADB cihazımı görmüyor, ne yapmalıyım?</span><b>＋</b></summary><p>Telefonda Geliştirici Seçenekleri ve USB Hata Ayıklama açık olmalı. Telefon ekranındaki bilgisayar izin penceresini onaylayın, veri aktarımını destekleyen bir kablo kullanın ve Windows USB sürücüsünü kontrol edin. Ardından ADB sunucusunu yeniden başlatıp cihaz listesini yenileyin.</p></details>
+  <details data-sr-faq><summary><span><i>02</i> Fastboot cihazı algılanmıyorsa neyi kontrol etmeliyim?</span><b>＋</b></summary><p>Cihazın gerçekten Fastboot/Bootloader modunda olduğunu doğrulayın. Windows Aygıt Yöneticisi'nde Android Bootloader Interface sürücüsünü kontrol edin, farklı USB portu ve sağlam bir veri kablosu deneyin. Ardından fastboot devices çıktısını kontrol edin.</p></details>
+  <details data-sr-faq><summary><span><i>03</i> Lisans veya üyelik ödemem ne zaman aktif olur?</span><b>＋</b></summary><p>Ödeme dekontu gönderildikten sonra bildirim yönetici incelemesine alınır. Ödeme doğrulanıp onaylandığında seçilen paket hesabınıza tanımlanır. Onaylanmadan lisansın aktif olduğunu varsaymayın.</p></details>
+  <details data-sr-faq><summary><span><i>04</i> Yedekleme dosyalarım nerede saklanır?</span><b>＋</b></summary><p>Yedekleme modülünde seçtiğiniz hedef klasörü kontrol edin. İşlem tamamlandı mesajından sonra klasörde dosya oluştuğunu ve dosya boyutunun sıfır olmadığını doğrulayın.</p></details>
+  <details data-sr-faq><summary><span><i>05</i> Apple yedeklemesinde neden çok sayıda dosya oluşuyor?</span><b>＋</b></summary><p>Seçilen yedekleme kapsamı ve modülün oluşturduğu manifest/veri dosyaları sonucu etkileyebilir. Yalnızca rehber yedeği istiyorsanız rehber dışındaki kategorileri kapatın ve hedef klasördeki dosyaları işlem raporuyla karşılaştırın.</p></details>
+ </div><p class="sr-no-results" id="srNoResults" hidden>Bu arama için hazır bir yanıt bulamadık. Destek talebi oluşturarak bize ulaşabilirsiniz.</p></section>
+<section class="sr-bottom-cta"><div><span class="sr-kicker">BURADAYIZ</span><h3>Aradığınız yanıtı bulamadınız mı?</h3><p>Teknik detayları ve aldığınız hata mesajını paylaşın. Talebinizi inceleyelim.</p></div><button type="button" data-sr-ticket>Destek talebi oluştur <b>↗</b></button></section>
+<div class="sr-legacy-backend" hidden></div>\`;
+if(support){help.querySelector(".sr-legacy-backend").appendChild(support);}
 help.addEventListener("click",e=>{
- const searchButton=e.target.closest("[data-support-search]");
- if(searchButton){const input=help.querySelector("#supportSearchInput");input.value=searchButton.dataset.supportSearch;help.querySelector("#supportSearchForm").requestSubmit();return;}
- if(e.target.closest("[data-support-open]")){document.getElementById("supportRequest")?.click();return;}
- if(e.target.closest("[data-support-faq]")){help.querySelector("#support-faq")?.scrollIntoView({behavior:"smooth"});}
+ const q=e.target.closest("[data-sr-query]");
+ if(q){const input=help.querySelector("#srSearchInput");input.value=q.dataset.srQuery;help.querySelector("#srSearch").requestSubmit();return;}
+ if(e.target.closest("[data-sr-ticket]")){document.getElementById("supportRequest")?.click();return;}
 });
-help.querySelector("#supportSearchForm")?.addEventListener("submit",e=>{
- e.preventDefault();const q=help.querySelector("#supportSearchInput").value.trim().toLocaleLowerCase("tr");let count=0;
- help.querySelectorAll("[data-support-faq]").forEach(item=>{const show=!q||item.textContent.toLocaleLowerCase("tr").includes(q);item.hidden=!show;if(show)count++;});
- help.querySelector("#support-faq")?.scrollIntoView({behavior:"smooth",block:"start"});
- if(!count)help.querySelector("#support-faq").insertAdjacentHTML("beforeend",'<p class="support-no-results">Bu arama için hazır bir cevap bulunamadı. Destek talebi oluşturabilirsiniz.</p>');
+help.querySelector("#srSearch")?.addEventListener("submit",e=>{
+ e.preventDefault();const q=help.querySelector("#srSearchInput").value.trim().toLocaleLowerCase("tr");let count=0;
+ help.querySelectorAll("[data-sr-faq]").forEach(item=>{const show=!q||item.textContent.toLocaleLowerCase("tr").includes(q);item.hidden=!show;if(show)count++;});
+ help.querySelector("#srNoResults").hidden=count>0;
+ help.querySelector("#srKnowledge").scrollIntoView({behavior:"smooth",block:"start"});
 });
-
-
-if(support)help.appendChild(support);
 const pages=[...main.querySelectorAll("[data-page-view]")];
 function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});

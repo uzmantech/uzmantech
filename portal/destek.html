@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19">
+<meta name="description" content="Uzmantech teknik destek merkezi. Yardım konuları, sık sorulan sorular ve destek talebi.">
+<title>Destek Merkezi | Uzmantech</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/support-redesign.css?v=20261106-2">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080f1b;color:#edf4ff;font-family:"DM Sans",sans-serif}.support-top{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,72px);background:#0b1421;border-bottom:1px solid #20334a}.support-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}.support-brand img{width:39px;height:39px}.support-brand b{font:700 18px "Space Grotesk"}.support-brand small{display:block;color:#8fa8c2;font-size:9px;letter-spacing:1.5px}.support-top nav{display:flex;gap:22px}.support-top nav a{color:#aebed0;text-decoration:none;font-size:12px}.support-top nav a:hover{color:#54c6ff}.support-top .support-login{padding:10px 15px;border:1px solid #31516e;border-radius:9px;color:#ddecff;text-decoration:none;font-size:12px}.support-shell{width:min(1180px,calc(100% - 36px));margin:38px auto 70px}.support-footer{padding:25px;text-align:center;border-top:1px solid #1d2e42;color:#7189a3;font-size:11px}.sr-action-grid{margin-top:18px}.sr-ticket-panel{margin:22px 0;padding:25px;border:1px solid #25415c;border-radius:16px;background:#101e2e}.sr-ticket-panel h3{margin:0 0 8px;font:700 22px "Space Grotesk"}.sr-ticket-panel p{color:#9bb1c7;font-size:12px}.sr-ticket-panel form{display:grid;grid-template-columns:1fr 1fr;gap:13px}.sr-ticket-panel label{display:grid;gap:7px;color:#b8cadd;font-size:11px}.sr-ticket-panel input,.sr-ticket-panel select,.sr-ticket-panel textarea{width:100%;padding:12px;border:1px solid #304a65;border-radius:9px;background:#091727;color:#edf4ff;font:13px "DM Sans"}.sr-ticket-panel .wide{grid-column:1/-1}.sr-ticket-panel button{padding:13px 18px;border:0;border-radius:9px;background:#0876e8;color:#fff;font-weight:800;cursor:pointer}.sr-ticket-panel button:disabled{opacity:.6}.sr-ticket-status{min-height:20px;color:#70dcb6;font-size:12px}.sr-history{margin-top:20px}.sr-history article{padding:13px 0;border-bottom:1px solid #25394e;color:#c8d8e8;font-size:12px}.sr-history small{display:block;margin-top:5px;color:#829ab2}.sr-login-note{padding:14px;border:1px solid #785f2c;border-radius:10px;background:#3b2c121c;color:#e9ca82;font-size:12px}.sr-login-note a{color:#70caff}.support-top .support-login{white-space:nowrap}
+@media(max-width:650px){.support-top{height:auto;min-height:70px;flex-wrap:wrap;padding:13px 16px;gap:12px}.support-top nav{order:3;width:100%;justify-content:space-between;gap:8px}.support-top nav a{font-size:10px}.support-shell{margin-top:18px}.sr-ticket-panel form{grid-template-columns:1fr}.sr-ticket-panel .wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="support-top">
+ <a class="support-brand" href="index.html"><img src="assets/logo.svg" alt=""><span><b>UZMANTECH</b><small>TEKNİK DESTEK MERKEZİ</small></span></a>
+ <nav aria-label="Destek navigasyonu"><a href="index.html">Ana Sayfa</a><a href="archive.html">Dosya Arşivi</a><a href="#srKnowledge">Yardım Konuları</a></nav>
+ <a class="support-login" id="supportLogin" href="index.html?login=1">Giriş Yap</a>
+</header>
+<main class="support-shell support-redesign">
+<section class="sr-hero">
+ <div class="sr-hero-copy"><span class="sr-eyebrow"><i></i> UZMANTECH · DESTEK MERKEZİ</span><h2>Teknik sorunlara<br><em>net çözümler.</em></h2><p>Uygulama, cihaz bağlantısı, lisans ve yedekleme konularında aradığınız yardım burada.</p>
+ <form class="sr-search" id="srSearch"><span>⌕</span><input id="srSearchInput" type="search" placeholder="Sorununuzu yazın. Örn. Fastboot cihazı görmüyor" aria-label="Yardım konularında ara"><button type="submit">Ara <b>↗</b></button></form>
+ <div class="sr-search-hints"><span>Hızlı erişim:</span><button type="button" data-sr-query="ADB">ADB</button><button type="button" data-sr-query="Fastboot">Fastboot</button><button type="button" data-sr-query="Lisans">Lisans</button><button type="button" data-sr-query="Yedekleme">Yedekleme</button></div></div>
+ <div class="sr-hero-visual" aria-hidden="true"><div class="sr-visual-grid"></div><div class="sr-orbit"></div><div class="sr-orbit sr-orbit-b"></div><div class="sr-support-device"><div class="sr-device-top"><i></i><i></i><i></i><span>UZMANTECH / SUPPORT</span></div><div class="sr-device-body"><div class="sr-device-side"><b>U</b><i></i><i></i><i></i></div><div class="sr-device-content"><small>YARDIM MASASI</small><strong>Çözüm burada<br>başlıyor.</strong><div class="sr-device-line"></div><div class="sr-device-line short"></div><div class="sr-device-status"><i></i> DESTEK MERKEZİ AKTİF</div></div></div></div><div class="sr-float-bubble sr-bubble-one">HELP <small>DESTEK MERKEZİ</small></div><div class="sr-float-bubble sr-bubble-two">✓ <small>ÇÖZÜM ODAKLI</small></div></div>
+</section>
+<section class="sr-action-grid"><a class="sr-action sr-action-primary" href="#ticket"><span class="sr-action-icon">✉</span><span><b>Destek talebi oluştur</b><small>Ekibimize doğrudan yazın</small></span><i>↗</i></a><a class="sr-action" href="mailto:destek@uzmantech.com"><span class="sr-action-icon sr-icon-mail">＠</span><span><b>E-posta</b><small>destek@uzmantech.com</small></span><i>↗</i></a><a class="sr-action" href="archive.html"><span class="sr-action-icon sr-icon-files">▤</span><span><b>Dosya arşivi</b><small>Teknik dosyalar ve araçlar</small></span><i>↗</i></a></section>
+<section class="sr-section"><div class="sr-section-heading"><div><span class="sr-kicker">YARDIM KATEGORİLERİ</span><h3>Hangi konuda desteğe ihtiyacınız var?</h3><p>Konu seçerek ilgili cevapları filtreleyin.</p></div><span class="sr-section-index">01 / KONULAR</span></div><div class="sr-category-grid">
+<button type="button" data-sr-query="Kurulum"><span class="sr-category-symbol">⌘</span><b>Kurulum</b><small>Kurulum ve ilk kullanım</small><i>→</i></button>
+<button type="button" data-sr-query="ADB Fastboot"><span class="sr-category-symbol">⌁</span><b>Android bağlantı</b><small>ADB, Fastboot ve sürücüler</small><i>→</i></button>
+<button type="button" data-sr-query="Apple"><span class="sr-category-symbol">◉</span><b>Apple</b><small>iOS yedekleme ve cihazlar</small><i>→</i></button>
+<button type="button" data-sr-query="Lisans ödeme"><span class="sr-category-symbol">◇</span><b>Lisans ve ödeme</b><small>Üyelik ve satın alma</small><i>→</i></button>
+<button type="button" data-sr-query="Yedekleme"><span class="sr-category-symbol">▣</span><b>Yedekleme</b><small>Yedek alma ve geri yükleme</small><i>→</i></button>
+<button type="button" data-sr-query="Hata"><span class="sr-category-symbol">⚙</span><b>Hata çözümleri</b><small>Yaygın sorunlar ve kontroller</small><i>→</i></button>
+</div></section>
+<section class="sr-knowledge" id="srKnowledge"><div class="sr-section-heading"><div><span class="sr-kicker">BİLGİ BANKASI</span><h3>Sık sorulan sorular</h3><p>En sık karşılaşılan sorunlar için kontrol adımları.</p></div><span class="sr-section-index">02 / ÇÖZÜMLER</span></div><div class="sr-faq-list">
+<details data-sr-faq><summary><span><i>01</i> ADB cihazımı görmüyor.</span><b>＋</b></summary><p>Telefonda USB Hata Ayıklama'yı açın ve ekrandaki bilgisayar izin isteğini onaylayın. Veri aktarımını destekleyen kablo ve doğru Windows USB sürücüsü kullanın. Ardından ADB sunucusunu yeniden başlatıp cihaz listesini yenileyin.</p></details>
+<details data-sr-faq><summary><span><i>02</i> Fastboot cihazı algılanmıyor.</span><b>＋</b></summary><p>Cihazın Bootloader/Fastboot modunda olduğunu doğrulayın. Aygıt Yöneticisi'nde Android Bootloader Interface sürücüsünü kontrol edin. Farklı USB portu ve veri kablosu deneyip fastboot devices çıktısına bakın.</p></details>
+<details data-sr-faq><summary><span><i>03</i> Lisansım ne zaman aktif olur?</span><b>＋</b></summary><p>Dekont ve ödeme bildirimi yönetici incelemesine alınır. Ödeme doğrulanıp onaylandığında seçilen paket hesabınıza tanımlanır.</p></details>
+<details data-sr-faq><summary><span><i>04</i> Yedek dosyalarımı nerede bulurum?</span><b>＋</b></summary><p>Yedekleme sırasında seçtiğiniz hedef klasörü kontrol edin. İşlem sonrasında dosya oluştuğunu ve dosya boyutunun sıfır olmadığını doğrulayın.</p></details>
+<details data-sr-faq><summary><span><i>05</i> Apple rehber yedeği neden çok dosya oluşturuyor?</span><b>＋</b></summary><p>Yedekleme kapsamı ve modülün manifest/veri dosyaları etkili olabilir. Sadece rehber seçili olduğundan emin olun ve oluşturulan dosyaları işlem raporuyla karşılaştırın.</p></details>
+</div><p class="sr-no-results" id="srNoResults" hidden>Bu arama için hazır bir cevap yok. Destek talebi oluşturabilirsiniz.</p></section>
+<section class="sr-ticket-panel" id="ticket"><h3>Destek talebi oluştur</h3><p>Sorununuzu, cihaz modelini ve aldığınız hata mesajını mümkün olduğunca açık yazın.</p><div id="ticketLogin" class="sr-login-note" hidden>Destek talebi göndermek ve geçmişinizi görmek için <a href="index.html?login=1">hesabınıza giriş yapın</a>.</div><form id="ticketForm">
+<label>Konu<input name="subject" required minlength="4" maxlength="120" placeholder="Örn. Redmi cihaz Fastboot'ta görünmüyor"></label>
+<label>Kategori<select name="category" required><option value="technical">Teknik destek</option><option value="license">Lisans ve üyelik</option><option value="payment">Ödeme</option><option value="archive">Dosya arşivi</option><option value="other">Diğer</option></select></label>
+<label class="wide">Mesajınız<textarea name="message" required minlength="20" maxlength="4000" rows="5" placeholder="Sorunu ve denediğiniz adımları açıklayın."></textarea></label>
+<button id="ticketSubmit" type="submit">Destek talebini gönder</button><span class="sr-ticket-status wide" id="ticketStatus" aria-live="polite"></span></form><div class="sr-history" id="ticketHistory"></div></section>
+</main>
+<footer class="support-footer">© Uzmantech · Teknik Destek Merkezi</footer>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+<script>
+(()=>{const $=s=>document.querySelector(s),form=$("#ticketForm"),status=$("#ticketStatus"),login=$("#ticketLogin"),history=$("#ticketHistory"),token=()=>window.UzmantechAPI?.getToken();
+function renderAuth(){const ok=!!token();login.hidden=ok;form.hidden=!ok;$("#supportLogin").textContent=ok?"Hesabım":"Giriş Yap";$("#supportLogin").href=ok?"index.html":"index.html?login=1";if(ok)loadHistory();}
+async function loadHistory(){try{const r=await UzmantechAPI.supportHistory();const items=r.tickets||r.items||r.history||[];history.innerHTML="<h4>Destek taleplerim</h4>"+(items.length?items.map(x=>'<article><b>'+String(x.subject||"Destek talebi").replace(/[<>&"]/g,"")+'</b><small>'+String(x.status||"İnceleniyor")+' · '+String(x.created_at||"")+'</small><p>'+String(x.message||"").replace(/[<>&"]/g,"")+'</p></article>').join(""):"<p>Henüz destek talebiniz bulunmuyor.</p>");}catch(e){history.textContent=e.message||"Destek geçmişi yüklenemedi.";}}
+form.addEventListener("submit",async e=>{e.preventDefault();if(!token()){renderAuth();return;}const d=new FormData(form),subject=String(d.get("subject")||"").trim(),message=String(d.get("message")||"").trim();if(subject.length<4||message.length<20){status.textContent="Konu en az 4, mesaj en az 20 karakter olmalı.";return;}const btn=$("#ticketSubmit");btn.disabled=true;status.textContent="Talebiniz gönderiliyor...";try{const r=await UzmantechAPI.supportTicket({subject,category:String(d.get("category")),message});status.textContent=r.message||"Destek talebiniz oluşturuldu.";form.reset();await loadHistory();}catch(err){status.textContent=err.message||"Talep gönderilemedi.";}finally{btn.disabled=false;}});
+const search=$("#srSearch");search.addEventListener("submit",e=>{e.preventDefault();const q=$("#srSearchInput").value.trim().toLocaleLowerCase("tr");let n=0;document.querySelectorAll("[data-sr-faq]").forEach(x=>{const show=!q||x.textContent.toLocaleLowerCase("tr").includes(q);x.hidden=!show;if(show)n++;});$("#srNoResults").hidden=n>0;$("#srKnowledge").scrollIntoView({behavior:"smooth"});});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-sr-query]");if(!b)return;$("#srSearchInput").value=b.dataset.srQuery;search.requestSubmit();});
+renderAuth();
+})();
+</script>
+</body></html>

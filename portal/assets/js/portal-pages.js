@@ -59,52 +59,9 @@ upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");
 
 
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);
-const help=make("help","Destek","Uzmantech destek merkezi.");
-help.classList.add("help-center-page","support-redesign");
-help.querySelector(".portal-page-heading")?.remove();
-help.innerHTML+=\`
-<section class="sr-hero">
- <div class="sr-hero-copy"><span class="sr-eyebrow"><i></i> UZMANTECH · DESTEK MERKEZİ</span><h2>Takıldığınız yerde<br><em>yanınızdayız.</em></h2><p>Uzmantech ve Uzmantool için çözüm, rehber ve teknik destek tek bir merkezde.</p>
- <form class="sr-search" id="srSearch"><span>⌕</span><input id="srSearchInput" type="search" placeholder="Örn. ADB cihazı görmüyor, lisans, kurulum..." aria-label="Destek makalelerinde ara"><button type="submit">Ara <b>↗</b></button></form>
- <div class="sr-search-hints"><span>Popüler:</span><button type="button" data-sr-query="ADB">ADB</button><button type="button" data-sr-query="Fastboot">Fastboot</button><button type="button" data-sr-query="Lisans">Lisans</button><button type="button" data-sr-query="Yedekleme">Yedekleme</button></div></div>
- <div class="sr-hero-visual" aria-hidden="true"><div class="sr-visual-grid"></div><div class="sr-orbit sr-orbit-a"></div><div class="sr-orbit sr-orbit-b"></div><div class="sr-support-device"><div class="sr-device-top"><i></i><i></i><i></i><span>UZMANTECH / HELP DESK</span></div><div class="sr-device-body"><div class="sr-device-side"><b>U</b><i></i><i></i><i></i></div><div class="sr-device-content"><small>DESTEK PANELİ</small><strong>Nasıl yardımcı<br>olabiliriz?</strong><div class="sr-device-line"></div><div class="sr-device-line short"></div><div class="sr-device-status"><i></i> TALEPLERİNİZ GÜVENDE</div></div></div></div><div class="sr-float-bubble sr-bubble-one">24/7 <small>DESTEK MERKEZİ</small></div><div class="sr-float-bubble sr-bubble-two">✓ <small>ÇÖZÜM ODAKLI</small></div></div>
-</section>
-<section class="sr-action-grid" aria-label="Destek seçenekleri">
- <button type="button" class="sr-action sr-action-primary" data-sr-ticket><span class="sr-action-icon">✉</span><span><b>Destek talebi oluştur</b><small>Sorununuzu ekibimize iletin</small></span><i>↗</i></button>
- <a class="sr-action" href="mailto:destek@uzmantech.com"><span class="sr-action-icon sr-icon-mail">＠</span><span><b>E-posta ile ulaşın</b><small>destek@uzmantech.com</small></span><i>↗</i></a>
- <a class="sr-action" href="archive.html"><span class="sr-action-icon sr-icon-files">▤</span><span><b>Dosya arşivi</b><small>Sürücü ve teknik dosyalar</small></span><i>↗</i></a>
-</section>
-<section class="sr-section"><div class="sr-section-heading"><div><span class="sr-kicker">KONUYA GÖRE DESTEK</span><h3>Size nasıl yardımcı olabiliriz?</h3><p>İhtiyacınız olan başlığı seçin, ilgili çözümlere hızlıca ulaşın.</p></div><span class="sr-section-index">01 / KATEGORİLER</span></div>
- <div class="sr-category-grid">
-  <button type="button" data-sr-query="Kurulum"><span class="sr-category-symbol">⌘</span><b>Kurulum ve başlangıç</b><small>Kurulum, sistem gereksinimleri ve ilk ayarlar</small><i>→</i></button>
-  <button type="button" data-sr-query="ADB Fastboot"><span class="sr-category-symbol">⌁</span><b>Android ve bağlantı</b><small>ADB, Fastboot, sürücüler ve cihaz algılama</small><i>→</i></button>
-  <button type="button" data-sr-query="Apple yedekleme"><span class="sr-category-symbol">◉</span><b>Apple işlemleri</b><small>iOS yedekleme ve cihaz yönetimi</small><i>→</i></button>
-  <button type="button" data-sr-query="Lisans üyelik ödeme"><span class="sr-category-symbol">◇</span><b>Lisans ve ödemeler</b><small>Üyelik, lisans, satın alma ve dekont</small><i>→</i></button>
-  <button type="button" data-sr-query="Yedekleme geri yükleme"><span class="sr-category-symbol">▣</span><b>Yedekleme ve geri yükleme</b><small>Yedek konumu, dosyalar ve geri yükleme</small><i>→</i></button>
-  <button type="button" data-sr-query="Hata çözümleri"><span class="sr-category-symbol">⚙</span><b>Hata çözümleri</b><small>Yaygın sorunlar ve kontrol adımları</small><i>→</i></button>
- </div></section>
-<section class="sr-knowledge" id="srKnowledge"><div class="sr-section-heading"><div><span class="sr-kicker">BİLGİ BANKASI</span><h3>Sık sorulan sorular</h3><p>En çok karşılaşılan konular için kısa ve uygulanabilir yanıtlar.</p></div><span class="sr-section-index">02 / YARDIM</span></div>
- <div class="sr-faq-list">
-  <details data-sr-faq><summary><span><i>01</i> ADB cihazımı görmüyor, ne yapmalıyım?</span><b>＋</b></summary><p>Telefonda Geliştirici Seçenekleri ve USB Hata Ayıklama açık olmalı. Telefon ekranındaki bilgisayar izin penceresini onaylayın, veri aktarımını destekleyen bir kablo kullanın ve Windows USB sürücüsünü kontrol edin. Ardından ADB sunucusunu yeniden başlatıp cihaz listesini yenileyin.</p></details>
-  <details data-sr-faq><summary><span><i>02</i> Fastboot cihazı algılanmıyorsa neyi kontrol etmeliyim?</span><b>＋</b></summary><p>Cihazın gerçekten Fastboot/Bootloader modunda olduğunu doğrulayın. Windows Aygıt Yöneticisi'nde Android Bootloader Interface sürücüsünü kontrol edin, farklı USB portu ve sağlam bir veri kablosu deneyin. Ardından fastboot devices çıktısını kontrol edin.</p></details>
-  <details data-sr-faq><summary><span><i>03</i> Lisans veya üyelik ödemem ne zaman aktif olur?</span><b>＋</b></summary><p>Ödeme dekontu gönderildikten sonra bildirim yönetici incelemesine alınır. Ödeme doğrulanıp onaylandığında seçilen paket hesabınıza tanımlanır. Onaylanmadan lisansın aktif olduğunu varsaymayın.</p></details>
-  <details data-sr-faq><summary><span><i>04</i> Yedekleme dosyalarım nerede saklanır?</span><b>＋</b></summary><p>Yedekleme modülünde seçtiğiniz hedef klasörü kontrol edin. İşlem tamamlandı mesajından sonra klasörde dosya oluştuğunu ve dosya boyutunun sıfır olmadığını doğrulayın.</p></details>
-  <details data-sr-faq><summary><span><i>05</i> Apple yedeklemesinde neden çok sayıda dosya oluşuyor?</span><b>＋</b></summary><p>Seçilen yedekleme kapsamı ve modülün oluşturduğu manifest/veri dosyaları sonucu etkileyebilir. Yalnızca rehber yedeği istiyorsanız rehber dışındaki kategorileri kapatın ve hedef klasördeki dosyaları işlem raporuyla karşılaştırın.</p></details>
- </div><p class="sr-no-results" id="srNoResults" hidden>Bu arama için hazır bir yanıt bulamadık. Destek talebi oluşturarak bize ulaşabilirsiniz.</p></section>
-<section class="sr-bottom-cta"><div><span class="sr-kicker">BURADAYIZ</span><h3>Aradığınız yanıtı bulamadınız mı?</h3><p>Teknik detayları ve aldığınız hata mesajını paylaşın. Talebinizi inceleyelim.</p></div><button type="button" data-sr-ticket>Destek talebi oluştur <b>↗</b></button></section>
-<div class="sr-legacy-backend" hidden></div>\`;
-if(support){help.querySelector(".sr-legacy-backend").appendChild(support);}
-help.addEventListener("click",e=>{
- const q=e.target.closest("[data-sr-query]");
- if(q){const input=help.querySelector("#srSearchInput");input.value=q.dataset.srQuery;help.querySelector("#srSearch").requestSubmit();return;}
- if(e.target.closest("[data-sr-ticket]")){document.getElementById("supportRequest")?.click();return;}
-});
-help.querySelector("#srSearch")?.addEventListener("submit",e=>{
- e.preventDefault();const q=help.querySelector("#srSearchInput").value.trim().toLocaleLowerCase("tr");let count=0;
- help.querySelectorAll("[data-sr-faq]").forEach(item=>{const show=!q||item.textContent.toLocaleLowerCase("tr").includes(q);item.hidden=!show;if(show)count++;});
- help.querySelector("#srNoResults").hidden=count>0;
- help.querySelector("#srKnowledge").scrollIntoView({behavior:"smooth",block:"start"});
-});
+const help=make("help","Destek","Bağımsız destek merkezi.");
+help.classList.add("help-center-page");
+help.innerHTML='<div class="notice">Destek merkezine yönlendiriliyorsunuz...</div>';
 const pages=[...main.querySelectorAll("[data-page-view]")];
 function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});

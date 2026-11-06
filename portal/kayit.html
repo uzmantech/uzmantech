@@ -102,4 +102,7 @@
  });
 })();
 </script>
+<script id="site-global-nav-controller">
+(()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
+</script>
 </body></html>

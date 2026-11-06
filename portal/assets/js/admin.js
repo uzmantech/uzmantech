@@ -7,7 +7,7 @@
  let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
@@ -152,7 +152,17 @@
   const now=Date.now(),active=users.filter(u=>u.status==="active"),pending=users.filter(u=>u.status==="pending"),expired=active.filter(u=>u.expiry_date&&new Date(u.expiry_date).getTime()<=now);
   $("#statTotal").textContent=users.length;$("#statActive").textContent=active.length;$("#statPending").textContent=pending.length;$("#statExpired").textContent=expired.length;
  }
- async function loadDashboard(){await loadUsers();}
+ async function loadSiteMetrics(){
+ const stats=await api.siteStats();
+ const real=Number(stats.real_visitors??stats.visitors??0);
+ $("#metricRealNow").textContent=real;
+ $("#metric24h").textContent=Number(stats.visitors_24h??0);
+ $("#metricMembers").textContent=users.length;
+ $("#metricDisplay").textContent=Number(stats.visitors??real);
+ $("#visitorDisplayFloor").value=Number(stats.visitor_display_floor??0);
+ $("#visitorDisplayMessage").textContent="Gerçek anlık: "+real+" · Gösterim alt sınırı: "+Number(stats.visitor_display_floor??0);
+}
+async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)await loadSiteMetrics();$("#metricMembers").textContent=users.length;}
  async function enter(user){
   if(user.role!=="admin"){api.setSession("");throw new Error("Bu hesap yönetici yetkisine sahip değil.");}
   $("#loginView").hidden=true;$("#appView").hidden=false;$("#adminName").textContent=user.username;$("#logoutBtn").hidden=false;
@@ -168,6 +178,8 @@
  async function checkSession(){if(!api.getToken())return;try{const result=await api.session();await enter(result.user);}catch{api.setSession("");}}
  $("#logoutBtn").addEventListener("click",()=>{api.setSession("");location.reload();});
  $("#refreshBtn").addEventListener("click",()=>loadDashboard().catch(e=>toast(e.message)));
+ $("#reloadSiteMetrics")?.addEventListener("click",()=>loadSiteMetrics().catch(e=>toast(e.message)));
+ $("#visitorDisplayForm")?.addEventListener("submit",async e=>{e.preventDefault();const value=Number($("#visitorDisplayFloor").value);if(!Number.isInteger(value)||value<0||value>100000){toast("0 ile 100000 arasında bir sayı gir.");return;}const btn=$("#saveVisitorDisplay");btn.disabled=true;try{await api.archiveAdmin({action:"site_metrics_settings",visitor_display_floor:value});$("#visitorDisplayMessage").textContent="Ayar kaydedildi. Ana sayfadaki sayaç gerçek sayı ile alt sınırın yüksek olanını gösterecek.";toast("Anlık sayaç ayarı kaydedildi.");await loadSiteMetrics();}catch(err){toast(err.message);}finally{btn.disabled=false;}});
  $("#reloadUsers").addEventListener("click",()=>loadUsers().catch(e=>toast(e.message)));
  $("#reloadPayments")?.addEventListener("click",()=>loadPayments().catch(e=>toast(e.message)));
  $("#reloadSupport")?.addEventListener("click",()=>loadSupport().catch(e=>toast(e.message)));

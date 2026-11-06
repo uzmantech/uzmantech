@@ -123,3 +123,18 @@ body.glass-lab{background:#070b12;color:#eaf5ff;background-image:linear-gradient
 @media(max-width:850px){.glass-hero{grid-template-columns:1fr .8fr}.glass-visual{min-height:350px}.glass-search-panel,.glass-results,.glass-footer{margin-left:2%;margin-right:2%}}
 @media(max-width:620px){.glass-hero{grid-template-columns:1fr}.glass-visual{min-height:290px}.visual-orbit{width:230px;height:230px}.orbit-b{width:290px;height:290px}.phone-back{width:113px;height:216px}.phone-front{width:120px;height:232px}.glass-search-panel{margin:12px 0 0}.glass-results,.glass-footer{margin-left:0;margin-right:0}}
 @media(prefers-reduced-motion:reduce){.glass-lab *{transition:none!important;animation:none!important}}
+
+/* Approved concept artwork: preserve the generated composition pixel-for-pixel */
+body.glass-lab{background:#06101a!important;color:#eaf5ff!important}
+.glass-image-page{width:100%;max-width:1720px;margin:0 auto;padding:0 0 42px}
+.glass-artboard{position:relative;width:100%;line-height:0;overflow:hidden}
+.glass-concept-image{display:block;width:100%;height:auto;margin:0}
+.glass-image-search-label{position:absolute;left:12%;top:52%;width:64%;height:7.5%;overflow:hidden;opacity:0;pointer-events:none}
+.glass-image-search-input{position:absolute;left:16.5%;top:52.5%;width:58%;height:6%;padding:0 1%;border:0;outline:0;background:transparent;color:transparent;caret-color:#08cfff;font:600 clamp(12px,1.3vw,20px) Arial;line-height:1}
+.glass-image-search-input::placeholder{color:transparent}
+.glass-image-search-input::-webkit-search-cancel-button{display:none}
+.glass-image-search-button{position:absolute;left:76%;top:52%;width:11.5%;height:7.5%;padding:0;border:0;border-radius:40px;background:transparent;cursor:pointer}
+.glass-image-language{position:absolute;right:11.5%;top:2.5%;width:7%;height:5.5%;opacity:0;cursor:pointer}
+.glass-image-search-button:focus-visible,.glass-image-search-input:focus-visible{outline:2px solid #69f1ed;outline-offset:2px}
+.glass-image-page .glass-results{margin:30px clamp(15px,4vw,60px) 0}
+@media(max-width:620px){.glass-image-search-input{font-size:12px}.glass-image-search-button{border-radius:30px}.glass-image-language{right:10%;top:2%;width:9%;height:6%}}

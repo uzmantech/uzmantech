@@ -94,3 +94,10 @@ body:has(.site-global-header){padding-top:80px!important}
 /* Language selector uses the active language flag instead of a globe */
 .site-global-header .language-globe{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:20px;line-height:1;background:transparent!important;color:inherit!important}
 .site-global-header .language-globe svg{display:none!important}
+
+/* Render actual flag artwork, independent of Windows emoji font support */
+.site-global-header .language-globe{display:inline-flex!important;align-items:center;justify-content:center;width:26px;height:20px;flex:0 0 26px;font-size:0!important;line-height:0!important;background:none!important;border-radius:0!important;overflow:visible}
+.site-global-header .language-globe::before{content:"";display:block;width:24px;height:16px;border-radius:2px;background-size:cover;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 1px #ffffff30}
+.site-global-header .language-globe[data-lang="tr"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='10' fill='white'/%3E%3Ccircle cx='27' cy='20' r='8' fill='%23e30a17'/%3E%3Cpath fill='white' d='m38 12 2.2 5.3 5.7.4-4.4 3.6 1.4 5.5-4.9-3-4.8 3 1.4-5.5-4.4-3.6 5.7-.4z'/%3E%3C/svg%3E")}
+.site-global-header .language-globe[data-lang="en"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23012169'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='white' stroke-width='9'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='%23c8102e' stroke-width='4'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='white' stroke-width='13'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='%23c8102e' stroke-width='7'/%3E%3C/svg%3E")}
+.site-global-header .language-globe svg{display:none!important}

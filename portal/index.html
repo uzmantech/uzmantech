@@ -67,8 +67,39 @@
 
 </style>
 <link rel="stylesheet" href="assets/css/archive-home.css?v=yvz-layout-20261105"><link rel="stylesheet" href="assets/css/packages.css?v=home-price-fix-20261106-1">
-<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=viewport-fix-20261105-2"><link rel="stylesheet" href="assets/css/archive.css?v=whatsapp-live-20261106-1"><link rel="stylesheet" href="assets/css/home-showcase.css?v=20261105-2"><style id="professional-stat-icons">.site-live-stats .archive-stat .stat-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.site-live-stats .archive-stat .stat-icon svg{width:21px;height:21px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style><style id="home-package-professional-icons">.home-membership-showcase .package-icon{display:flex;align-items:center;justify-content:center}.home-membership-showcase .package-icon svg{width:29px;height:29px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style></head>
+<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=viewport-fix-20261105-2"><link rel="stylesheet" href="assets/css/archive.css?v=whatsapp-live-20261106-1"><link rel="stylesheet" href="assets/css/home-showcase.css?v=20261105-2"><style id="professional-stat-icons">.site-live-stats .archive-stat .stat-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.site-live-stats .archive-stat .stat-icon svg{width:21px;height:21px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style><style id="home-package-professional-icons">.home-membership-showcase .package-icon{display:flex;align-items:center;justify-content:center}.home-membership-showcase .package-icon svg{width:29px;height:29px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style>
+<style id="uzmantech-intro-loader">
+#uz-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#102c4d 0%,#09182b 42%,#050b14 100%);color:#eaf6ff;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
+#uz-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+#uz-intro:before,#uz-intro:after{content:"";position:absolute;width:min(78vw,620px);aspect-ratio:1;border:1px solid #1c8bd522;border-radius:50%;box-shadow:0 0 0 35px #1688d20a,0 0 0 85px #1688d207;animation:uz-orbit 18s linear infinite}
+#uz-intro:after{width:min(58vw,440px);border-color:#42bfff20;animation-direction:reverse;animation-duration:13s}
+.uz-intro-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:min(90vw,420px);text-align:center}
+.uz-intro-mark{position:relative;display:grid;place-items:center;width:116px;height:116px;margin-bottom:30px}
+.uz-intro-mark:before,.uz-intro-mark:after{content:"";position:absolute;inset:0;border:2px solid transparent;border-top-color:#38c7ff;border-right-color:#1678d5;border-radius:50%;filter:drop-shadow(0 0 9px #16aaff88);animation:uz-spin 2.4s linear infinite}
+.uz-intro-mark:after{inset:9px;border-top-color:#8be5ff;border-right-color:transparent;border-bottom-color:#176fbd;animation-duration:1.8s;animation-direction:reverse}
+.uz-intro-mark img{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 0 16px #139fff66);animation:uz-pulse 2.2s ease-in-out infinite}
+.uz-intro-name{margin:0;font:700 clamp(23px,5vw,30px)/1.1 "Space Grotesk",sans-serif;letter-spacing:4px;color:#f3f9ff}
+.uz-intro-name span{color:#37bdff}
+.uz-intro-tag{margin:10px 0 27px;color:#7e9dbb;font:600 9px "DM Sans",sans-serif;letter-spacing:3px}
+.uz-intro-progress{width:min(280px,78vw);height:3px;overflow:hidden;border-radius:8px;background:#19324a}
+.uz-intro-progress i{display:block;width:38%;height:100%;border-radius:8px;background:linear-gradient(90deg,#0879d5,#52d5ff);box-shadow:0 0 12px #23baff;animation:uz-progress 1.35s ease-in-out infinite}
+.uz-intro-status{min-height:17px;margin:15px 0 0;color:#8ba9c6;font:500 10px "DM Sans",sans-serif;letter-spacing:1.2px}
+.uz-intro-status:after{content:"";display:inline-block;width:13px;text-align:left;animation:uz-dots 1.1s steps(4,end) infinite}
+@keyframes uz-spin{to{transform:rotate(360deg)}}@keyframes uz-orbit{to{transform:rotate(360deg)}}@keyframes uz-pulse{50%{transform:scale(1.07);opacity:.82}}@keyframes uz-progress{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}@keyframes uz-dots{0%{content:""}25%{content:"."}50%{content:".."}75%,100%{content:"..."}}
+@media(prefers-reduced-motion:reduce){#uz-intro:before,#uz-intro:after,.uz-intro-mark:before,.uz-intro-mark:after,.uz-intro-mark img,.uz-intro-progress i,.uz-intro-status:after{animation:none} .uz-intro-progress i{width:100%}}
+</style>
+</head>
 <body class="dashboard-page">
+
+<div id="uz-intro" role="status" aria-live="polite" aria-label="Uzmantech yükleniyor">
+ <div class="uz-intro-inner">
+  <div class="uz-intro-mark"><img src="assets/logo.svg" alt="Uzmantech"></div>
+  <h1 class="uz-intro-name">UZMAN<span>TECH</span></h1>
+  <p class="uz-intro-tag">TEKNİK ÇÖZÜM PLATFORMU</p>
+  <div class="uz-intro-progress" aria-hidden="true"><i></i></div>
+  <p class="uz-intro-status">PORTAL HAZIRLANIYOR</p>
+ </div>
+</div>
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
 <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
 <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
@@ -332,6 +363,15 @@ load();
    label.textContent="Güncel Enpara kuru şu anda alınamıyor.";
   }
  })();
+})();
+</script>
+
+<script id="uz-intro-controller">
+(()=>{const loader=document.getElementById("uz-intro");if(!loader)return;
+let closed=false;const close=()=>{if(closed)return;closed=true;loader.classList.add("is-leaving");window.setTimeout(()=>loader.remove(),650);};
+const start=Date.now();const finish=()=>window.setTimeout(close,Math.max(0,850-(Date.now()-start)));
+if(document.readyState==="complete")finish();else window.addEventListener("load",finish,{once:true});
+window.setTimeout(close,4200);
 })();
 </script>
 </body></html>

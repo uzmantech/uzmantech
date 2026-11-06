@@ -142,10 +142,12 @@ async function enforceArchiveLicense(){
   if(gate)gate.hidden=true;
   await loadLiveArchive();
  }catch(error){
+  // Ziyaretçi veya oturumu olmayan kullanıcı kayıt sayfasına atılmaz.
+  // Dosya deposunun kilitli olduğunu görür; yalnızca Tamam ile paketlere gider.
   document.body.classList.remove("archive-authorized");
   if(stage)stage.hidden=true;
-  if(gate)gate.hidden=false;
-  location.replace("kayit.html");
+  if(gate)gate.hidden=true;
+  showPackageRequired();
  }
 }
 enforceArchiveLicense();

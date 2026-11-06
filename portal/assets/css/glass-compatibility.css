@@ -80,3 +80,46 @@ body.glass-lab{background:#090e15;color:#f4f6f8}
 @media(max-width:850px){.glass-hero{grid-template-columns:1fr .75fr}.glass-hero h1{font-size:clamp(39px,6vw,58px)}.glass-visual{min-height:320px}.glass-search-panel,.glass-results,.glass-footer{margin-left:2%;margin-right:2%}}
 @media(max-width:620px){.glass-page{padding:15px 12px 28px}.glass-breadcrumb{margin-bottom:12px}.glass-hero{grid-template-columns:1fr;min-height:0}.glass-hero-copy{padding:28px 23px 8px}.glass-hero h1{font-size:49px;letter-spacing:-2.8px;margin:19px 0 12px}.glass-hero-copy>p{font-size:12px}.glass-hero-meta{margin-top:17px;gap:13px}.glass-visual{min-height:280px}.visual-orbit{width:230px;height:230px}.orbit-b{width:290px;height:290px}.phone-back{width:113px;height:216px}.phone-front{width:120px;height:232px}.tag-top{right:7%;top:12%}.tag-bottom{left:6%;bottom:12%}.glass-search-panel{margin:12px 0 0;padding:22px 17px}.search-panel-heading{margin-bottom:17px}.search-heading-icon{width:42px;height:42px;font-size:26px}.search-panel-heading h2{font-size:22px}.search-panel-heading p{font-size:10px}.glass-search-row{flex-wrap:wrap;gap:5px;padding:8px}.glass-search input{font-size:13px}.glass-search button{width:100%;justify-content:space-between;padding:0 14px}.glass-results{margin:25px 0 0}.glass-results-head{align-items:flex-start;flex-direction:column}.glass-live{white-space:normal}.glass-group{padding:15px}.glass-group h3{font-size:13px}.glass-model{font-size:9px;padding:7px 8px}.glass-footer{margin:24px 0 0;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.glass-lab *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Uzmantech Glass Compatibility | futuristic device diagnostics */
+:root{--gl-blue:#28bfff;--gl-cyan:#69f1ed}
+body.glass-lab{background:#070b12;color:#eaf5ff;background-image:linear-gradient(#10223520 1px,transparent 1px),linear-gradient(90deg,#10223520 1px,transparent 1px),radial-gradient(ellipse at 50% -20%,#12395a66,transparent 58%);background-size:34px 34px,34px 34px,auto}
+.glass-page{width:min(1380px,100%);padding:24px clamp(15px,4vw,60px) 38px;color:#eaf5ff}
+.glass-breadcrumb{color:#60788c;font:600 10px "DM Sans";letter-spacing:1px;text-transform:uppercase}.glass-breadcrumb a{color:#8da9bd}.glass-breadcrumb b{color:#d6e8f5}
+.glass-hero{min-height:440px;border:1px solid #21415b;border-radius:10px;background:linear-gradient(112deg,#0b1420,#0b1928 54%,#0a2131);box-shadow:0 28px 90px #0009,inset 0 1px #9bdfff12;grid-template-columns:1fr 1fr}
+.glass-hero:before{background:linear-gradient(90deg,transparent 49.9%,#42baff12 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.9%,#42baff12 50%,transparent 50.2%);background-size:48px 48px}
+.glass-hero:after{content:"";position:absolute;left:0;top:0;width:180px;height:2px;background:linear-gradient(90deg,#69f1ed,transparent);box-shadow:0 0 20px #28bfff}
+.glass-eyebrow{color:#8cb6d0;letter-spacing:2.3px}.eyebrow-mark{border-radius:2px;transform:rotate(45deg);background:#69f1ed;box-shadow:0 0 15px #69f1ed}
+.glass-hero h1{color:#f0f8ff;font-size:clamp(43px,5.5vw,76px);letter-spacing:-3.8px}.glass-hero h1 em{color:#69f1ed;text-shadow:0 0 28px #39d9eb50}
+.glass-hero-copy>p{color:#9ab0c2}.glass-hero-meta{color:#7894a9}.glass-hero-meta b{color:#c5dbea}.glass-hero-meta i{background:#63efcb;box-shadow:0 0 12px #63efcb}
+.glass-visual{min-height:440px;background:radial-gradient(ellipse at 52% 50%,#168dcb28,transparent 48%)}
+.visual-orbit{width:330px;height:330px;border-color:#42bfff40;box-shadow:0 0 40px #168dcb12,inset 0 0 40px #168dcb0b}
+.orbit-b{width:430px;height:430px;border-color:#62e9ed25;animation:gl-spin 48s linear infinite}
+.glass-phone{border-color:#9edcf0;background:linear-gradient(145deg,#345b70,#101c29 45%,#07111a);box-shadow:18px 24px 55px #000b,inset 0 0 0 2px #c4eff21a}
+.phone-back{width:150px;height:285px;background:linear-gradient(145deg,#244b62,#0b1724 70%);border-color:#4a9dbd}
+.phone-camera{background:#07131e;border-color:#4f829a;box-shadow:inset 0 0 0 4px #1d3a4b}
+.phone-camera:before,.phone-camera:after{background:radial-gradient(circle at 35% 35%,#8adcf0 0 8%,#1b3c50 30% 65%,#030910 70%);border-color:#6bb8d2}
+.phone-front{width:158px;height:304px;border-color:#9eddf0;background:linear-gradient(140deg,#8bc9dc,#1b394c 10%,#08131d 80%)}
+.phone-screen{background:radial-gradient(circle at 35% 35%,#9af7f2 0,#258eb5 17%,#123b59 44%,#081522 76%);border-color:#54c7e2}
+.screen-glow{background:#53e9ef55}.screen-cross{background:linear-gradient(115deg,transparent 47%,#b9ffff32 48%,transparent 49%),linear-gradient(25deg,transparent 57%,#b9ffff1a 58%,transparent 59%)}
+.visual-tag{border:1px solid #28769b;border-radius:3px;background:#091827ef;color:#ccefff;box-shadow:0 8px 25px #0008,0 0 18px #28bfff12}.visual-tag span{color:#69f1ed}.visual-orbit-dot{background:#69f1ed;box-shadow:0 0 22px 7px #69f1ed66}
+.glass-search-panel{z-index:5;margin:-28px 5% 0;padding:30px clamp(20px,4vw,48px) 32px;border:1px solid #24516a;border-radius:8px;background:linear-gradient(115deg,#101e2b,#0d1925);color:#eaf5ff;box-shadow:0 25px 65px #0009,inset 0 1px #b6f2ff12}
+.glass-step{color:#5fcde9;letter-spacing:2px}.search-panel-heading h2{color:#edf8ff}.search-panel-heading p{color:#849eb1}
+.search-heading-icon{border:1px solid #27617e;border-radius:8px;color:#70e7f2;background:#0b2638;box-shadow:inset 0 0 22px #28bfff10}
+.glass-search label{color:#7fa7bd}.glass-search-row{border:1px solid #2b526a;border-radius:5px;background:#07131f;box-shadow:inset 0 0 25px #0a2940}
+.search-lens{color:#69ddec}.glass-search input{color:#e7f7ff}.glass-search input::placeholder{color:#597487}
+.glass-search button{border:1px solid #50d5e6;border-radius:4px;background:linear-gradient(110deg,#137fb0,#13a8b7);color:#f1fdff;box-shadow:0 0 22px #16b9d52b}.glass-search button:hover{filter:brightness(1.2)}
+.search-hints{color:#68869a}.search-hints button{border:1px solid #24465c;border-radius:3px;background:#0b1b29;color:#9dc5d8}.search-hints button:hover{border-color:#3bbbd5;background:#102b3c;color:#d8faff}
+.glass-results{margin:31px 5% 0;border-top:1px solid #1b3b50}.glass-results-head{border-bottom:1px solid #1b3447}.glass-results-head h2{color:#edf8ff}
+.glass-live{border:1px solid #1d5361;border-radius:3px;background:#0b242a;color:#75d8d4}.glass-live i{background:#65f2cb;box-shadow:0 0 9px #65f2cb}
+.glass-empty{color:#8298aa}.glass-empty>b{color:#e1f2fb}.glass-empty p{color:#8298aa}
+.empty-art{border:1px solid #28718c;color:#69f1ed;background:radial-gradient(circle,#12364b,#0b1825 70%);box-shadow:0 0 35px #28bfff16}.empty-art:after{border-color:#2a718c;animation:gl-spin 22s linear infinite}.empty-art i,.empty-art b{border-color:#69f1ed;background:#0b1825}
+.glass-group{border:1px solid #21435a;border-radius:6px;background:linear-gradient(105deg,#0f1d2a,#0b1722);box-shadow:0 12px 30px #0004}.glass-group:before{background:linear-gradient(#69f1ed,#238ed3);box-shadow:0 0 14px #28bfff}.glass-group h3{color:#edf8ff}
+.glass-count{border:1px solid #1d6176;border-radius:3px;background:#0b2936;color:#70e8ed}.glass-model{border:1px solid #24465c;border-radius:3px;background:#0b1c29;color:#b4cbd8}.glass-model.is-match{border-color:#35b9d0;background:#103449;color:#a5f8f3;box-shadow:0 0 14px #28bfff18}
+.glass-source{color:#6ce8ed}.glass-footnote{border:1px solid #1b3d51;border-radius:4px;background:#0b1823;color:#8299aa}.glass-footnote>span{color:#69f1ed}
+.glass-error{border-color:#814e58;border-radius:4px;background:#281820;color:#ffd0d7}.glass-footer{border-top:1px solid #1b3447;color:#6e8799}.glass-footer a{color:#73dce8}
+@keyframes gl-spin{to{transform:rotate(360deg)}}
+@media(max-width:850px){.glass-hero{grid-template-columns:1fr .8fr}.glass-visual{min-height:350px}.glass-search-panel,.glass-results,.glass-footer{margin-left:2%;margin-right:2%}}
+@media(max-width:620px){.glass-hero{grid-template-columns:1fr}.glass-visual{min-height:290px}.visual-orbit{width:230px;height:230px}.orbit-b{width:290px;height:290px}.phone-back{width:113px;height:216px}.phone-front{width:120px;height:232px}.glass-search-panel{margin:12px 0 0}.glass-results,.glass-footer{margin-left:0;margin-right:0}}
+@media(prefers-reduced-motion:reduce){.glass-lab *{transition:none!important;animation:none!important}}

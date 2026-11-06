@@ -101,3 +101,9 @@ body:has(.site-global-header){padding-top:80px!important}
 .site-global-header .language-globe[data-lang="tr"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='10' fill='white'/%3E%3Ccircle cx='27' cy='20' r='8' fill='%23e30a17'/%3E%3Cpath fill='white' d='m38 12 2.2 5.3 5.7.4-4.4 3.6 1.4 5.5-4.9-3-4.8 3 1.4-5.5-4.4-3.6 5.7-.4z'/%3E%3C/svg%3E")}
 .site-global-header .language-globe[data-lang="en"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23012169'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='white' stroke-width='9'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='%23c8102e' stroke-width='4'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='white' stroke-width='13'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='%23c8102e' stroke-width='7'/%3E%3C/svg%3E")}
 .site-global-header .language-globe svg{display:none!important}
+
+/* Make the complete language control open the native language menu */
+.site-global-header .language-control{position:relative;cursor:pointer}
+.site-global-header .language-control select{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;opacity:0!important;z-index:6!important;cursor:pointer!important}
+.site-global-header .language-control::after{content:attr(data-current);position:absolute;left:calc(50% - 2px);top:50%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;color:#fff;font:800 13px/1 "DM Sans",sans-serif;letter-spacing:.6px}
+.site-global-header .language-control .language-globe,.site-global-header .language-control .top-chevron{pointer-events:none}

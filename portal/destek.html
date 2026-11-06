@@ -76,4 +76,4 @@ $("#faqSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLoc
 document.querySelector(".site-mobile-nav-toggle")?.addEventListener("click",e=>{const nav=document.querySelector(".site-global-nav");const open=nav.classList.toggle("is-open");e.currentTarget.setAttribute("aria-expanded",String(open));});\ndocument.addEventListener("click",e=>{const b=e.target.closest("[data-query]");if(!b)return;$("#faqSearch").value=b.dataset.query;$("#faqSearch").dispatchEvent(new Event("input"));$("#faqList").scrollIntoView({behavior:"smooth"});});auth();
 })();
 </script>
-</body></html>
+<script src="assets/js/language.js?v=portal-en-20261106"></script></body></html>

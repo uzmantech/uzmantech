@@ -124,8 +124,8 @@ if($("#archiveModelsPage")){if(!selectedBrand||!MODEL_CATALOG[selectedBrand]){lo
 function showPackageRequired(){
  $("#modal").dataset.locked="true";
  $("#modalClose").hidden=true;
- $("#modalTitle").textContent="Paket Satın Almanız Gerekiyor";
- $("#modalBody").innerHTML='<p>Dosya deposundaki yazılım ve teknik dosyalara erişebilmek için bir paket satın almanız gerekiyor. Satın alma işleminiz yönetici tarafından onaylandıktan sonra dosyalara erişebilirsiniz.</p><button type="button" class="button button-primary" id="archivePackageContinue" style="width:100%">Tamam</button>';
+ $("#modalTitle").textContent="Dosya Arşivi Kilitli";
+ $("#modalBody").innerHTML=`<div class="archive-lock-visual" aria-hidden="true"><span class="archive-lock-halo"></span><span class="archive-lock-icon"><svg viewBox="0 0 64 64" role="presentation"><path d="M19 27v-8a13 13 0 0 1 26 0v8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><rect x="12" y="26" width="40" height="31" rx="8" fill="currentColor"/><circle cx="32" cy="40" r="4" fill="#17243a"/><path d="M32 43v6" stroke="#17243a" stroke-width="3" stroke-linecap="round"/></svg></span></div><span class="archive-lock-eyebrow">UZMANTOOL PREMIUM ARŞİV</span><h3 class="archive-lock-heading">Bu içerik üyelerimize özel</h3><p class="archive-lock-copy">Marka, model ve teknik yazılım dosyalarına erişmek için aktif bir paket satın almanız gerekiyor. Paketiniz yönetici tarafından onaylandığında arşivin tamamı açılır.</p><div class="archive-lock-benefit"><span>✓</span> 19 marka için teknik dosya arşivi</div><button type="button" class="button button-primary archive-lock-continue" id="archivePackageContinue"><span>Paketleri İncele</span><b>→</b></button><small class="archive-lock-footnote">Erişim, satın alma ve yönetici onayı sonrasında etkinleşir.</small>`;
  $("#modal").classList.add("open");
 }
 async function enforceArchiveLicense(){

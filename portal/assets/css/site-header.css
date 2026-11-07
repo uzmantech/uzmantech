@@ -91,99 +91,25 @@ body.archive-shell .archive-main-column{grid-column:1!important;width:100%!impor
 body:has(.site-global-header){padding-top:80px!important}
 @media(max-width:980px){body:has(.site-global-header){padding-top:72px!important}}
 
-/* Language selector uses the active language flag instead of a globe */
-.site-global-header .language-globe{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:20px;line-height:1;background:transparent!important;color:inherit!important}
-.site-global-header .language-globe svg{display:none!important}
 
-/* Render actual flag artwork, independent of Windows emoji font support */
-.site-global-header .language-globe{display:inline-flex!important;align-items:center;justify-content:center;width:26px;height:20px;flex:0 0 26px;font-size:0!important;line-height:0!important;background:none!important;border-radius:0!important;overflow:visible}
-.site-global-header .language-globe::before{content:"";display:block;width:24px;height:16px;border-radius:2px;background-size:cover;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 1px #ffffff30}
-.site-global-header .language-globe[data-lang="tr"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='10' fill='white'/%3E%3Ccircle cx='27' cy='20' r='8' fill='%23e30a17'/%3E%3Cpath fill='white' d='m38 12 2.2 5.3 5.7.4-4.4 3.6 1.4 5.5-4.9-3-4.8 3 1.4-5.5-4.4-3.6 5.7-.4z'/%3E%3C/svg%3E")}
-.site-global-header .language-globe[data-lang="en"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23012169'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='white' stroke-width='9'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='%23c8102e' stroke-width='4'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='white' stroke-width='13'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='%23c8102e' stroke-width='7'/%3E%3C/svg%3E")}
-.site-global-header .language-globe svg{display:none!important}
-
-/* Make the complete language control open the native language menu */
-.site-global-header .language-control{position:relative;cursor:pointer}
-.site-global-header .language-control select{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;opacity:0!important;z-index:6!important;cursor:pointer!important}
-.site-global-header .language-control::after{content:attr(data-current);position:absolute;left:calc(50% - 2px);top:50%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;color:#fff;font:800 13px/1 "DM Sans",sans-serif;letter-spacing:.6px}
-.site-global-header .language-control .language-globe,.site-global-header .language-control .top-chevron{pointer-events:none}
-
-
-/* Language selector fix: keep flag, language code and chevron in separate columns.
-   Shared by desktop and mobile headers. */
+/* Single source of truth for the language selector: flag | language code | chevron. */
 .site-global-header .language-control{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:9px!important;
-  min-width:90px!important;
-  height:44px!important;
-  padding:0 12px!important;
-  box-sizing:border-box!important;
-}
-.site-global-header .language-control::after{display:none!important;content:none!important}
-.site-global-header .language-control .language-globe{
-  position:static!important;
-  display:inline-flex!important;
-  flex:0 0 22px!important;
-  width:22px!important;height:22px!important;
-  align-items:center!important;justify-content:center!important;
-  border:1px solid #47749b!important;border-radius:50%!important;
-  background:#12304b!important;overflow:hidden!important;
-}
-.site-global-header .language-control .language-globe::before{
-  content:"◎"!important;
-  display:block!important;
-  width:auto!important;height:auto!important;
-  border:0!important;border-radius:0!important;
-  background:none!important;box-shadow:none!important;
-  color:#9bd8ff!important;font:700 18px/1 "DM Sans",sans-serif!important;
-}
-.site-global-header .language-control select{
-  position:static!important;inset:auto!important;
-  z-index:auto!important;opacity:1!important;
-  display:block!important;flex:0 0 29px!important;
-  width:29px!important;min-width:29px!important;height:30px!important;
-  padding:0!important;margin:0!important;
-  appearance:none!important;-webkit-appearance:none!important;
-  background:transparent!important;color:#fff!important;
-  text-align:center!important;text-align-last:center!important;
-  font:800 13px/1 "DM Sans",sans-serif!important;
-  cursor:pointer!important;
-}
-.site-global-header .language-control .top-chevron{
-  position:static!important;display:block!important;
-  flex:0 0 13px!important;width:13px!important;height:13px!important;
-  margin:0!important;opacity:1!important;
-}
-@media(max-width:980px){
- .site-global-header .language-control{height:38px!important;min-width:84px!important;padding:0 8px!important;gap:7px!important}
- .site-global-header .language-control .language-globe{width:20px!important;height:20px!important;flex-basis:20px!important}
- .site-global-header .language-control select{height:28px!important}
-}
-@media(max-width:420px){
- .site-global-header .language-control{min-width:78px!important;padding:0 6px!important;gap:5px!important}
- .site-global-header .language-control select{flex-basis:27px!important;width:27px!important;min-width:27px!important}
-}
-
-
-/* Final language selector layout: flag | visible code | chevron.
-   Do not overlay the language code on top of the flag. */
-.site-global-header .language-control{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  gap:8px!important;min-width:108px!important;height:44px!important;
-  padding:0 12px!important;box-sizing:border-box!important;cursor:pointer!important;
+  position:relative!important;display:inline-flex!important;align-items:center!important;
+  justify-content:center!important;gap:8px!important;flex:0 0 auto!important;
+  width:112px!important;min-width:112px!important;height:44px!important;
+  padding:0 10px!important;box-sizing:border-box!important;cursor:pointer!important;
 }
 .site-global-header .language-control::after{content:none!important;display:none!important}
 .site-global-header .language-control .language-globe{
-  display:inline-flex!important;position:static!important;flex:0 0 24px!important;
-  width:24px!important;height:16px!important;overflow:hidden!important;
-  border:0!important;border-radius:2px!important;background:none!important;
-  pointer-events:none!important;
+  position:static!important;display:inline-flex!important;align-items:center!important;
+  justify-content:center!important;flex:0 0 24px!important;width:24px!important;height:16px!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:2px!important;
+  background:none!important;overflow:hidden!important;pointer-events:none!important;
+  font-size:0!important;line-height:0!important;
 }
 .site-global-header .language-control .language-globe::before{
   content:""!important;display:block!important;width:24px!important;height:16px!important;
-  border:0!important;border-radius:2px!important;box-shadow:0 0 0 1px #ffffff30!important;
+  border:0!important;border-radius:2px!important;box-shadow:0 0 0 1px #ffffff40!important;
   background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
 }
 .site-global-header .language-control .language-globe[data-lang="tr"]::before{
@@ -194,24 +120,25 @@ body:has(.site-global-header){padding-top:80px!important}
 }
 .site-global-header .language-control select{
   position:static!important;inset:auto!important;z-index:auto!important;opacity:1!important;
-  display:block!important;flex:0 0 31px!important;width:31px!important;min-width:31px!important;
-  height:32px!important;padding:0!important;margin:0!important;
-  appearance:none!important;-webkit-appearance:none!important;
-  border:0!important;outline:0!important;background:transparent!important;color:#fff!important;
-  text-align:center!important;text-align-last:center!important;
+  display:block!important;flex:0 0 32px!important;width:32px!important;min-width:32px!important;
+  height:32px!important;margin:0!important;padding:0!important;border:0!important;outline:0!important;
+  appearance:none!important;-webkit-appearance:none!important;background:transparent!important;
+  color:#fff!important;text-align:center!important;text-align-last:center!important;
   font:800 13px/1 "DM Sans",sans-serif!important;letter-spacing:.5px!important;cursor:pointer!important;
 }
 .site-global-header .language-control option{background:#101a29!important;color:#fff!important}
 .site-global-header .language-control .top-chevron{
-  position:static!important;display:block!important;flex:0 0 13px!important;
-  width:13px!important;height:13px!important;margin:0!important;
-  opacity:1!important;pointer-events:none!important;
+  position:static!important;display:inline-flex!important;align-items:center!important;
+  justify-content:center!important;flex:0 0 13px!important;width:13px!important;height:13px!important;
+  margin:0!important;opacity:1!important;pointer-events:none!important;color:#9fb9d5!important;
 }
 @media(max-width:980px){
- .site-global-header .language-control{height:38px!important;min-width:98px!important;padding:0 9px!important;gap:7px!important}
- .site-global-header .language-control select{height:28px!important}
+  .site-global-header .language-control{width:104px!important;min-width:104px!important;height:38px!important;gap:7px!important;padding:0 8px!important}
+  .site-global-header .language-control select{height:28px!important}
 }
-@media(max-width:420px){
- .site-global-header .language-control{min-width:92px!important;padding:0 7px!important;gap:6px!important}
- .site-global-header .language-control select{flex-basis:29px!important;width:29px!important;min-width:29px!important}
+@media(max-width:560px){
+  .site-global-header .language-control{width:98px!important;min-width:98px!important;height:36px!important;gap:6px!important;padding:0 7px!important}
+  .site-global-header .language-control .language-globe{flex-basis:22px!important;width:22px!important}
+  .site-global-header .language-control .language-globe::before{width:22px!important;height:15px!important}
+  .site-global-header .language-control select{flex-basis:30px!important;width:30px!important;min-width:30px!important;font-size:12px!important}
 }

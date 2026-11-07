@@ -18,51 +18,19 @@ if(packages){packages.classList.add("license-packages-section");lic.appendChild(
 const upd=make("updates","Haberler","Uzmantech dünyasından haberler, ürün duyuruları ve sürüm notları.");
 upd.classList.add("updates-page","news-page");
 upd.innerHTML+=`
-<section class="news-masthead">
- <div class="news-masthead-copy">
-  <span class="news-eyebrow"><i></i> UZMANTECH HABER MERKEZİ</span>
-  <h2>Teknolojiden<br><em>haberdar olun.</em></h2>
-  <p>Uzmantech güncellemeleri, yeni özellikler, teknik ipuçları ve önemli duyurular. Hepsi tek bir yerde.</p>
-  <div class="news-masthead-actions"><a href="#download" data-page="download">Uygulamayı keşfet <b>↗</b></a><span><i></i> Resmî haber ve duyuru merkezi</span></div>
- </div>
- <div class="news-masthead-visual" aria-hidden="true">
-  <div class="news-visual-grid"></div><div class="news-glow-ring ring-a"></div><div class="news-glow-ring ring-b"></div>
-  <div class="news-orbit-dot dot-a"></div><div class="news-orbit-dot dot-b"></div>
-  <div class="news-dashboard-card"><div class="news-dashboard-top"><span>● UZMANTECH</span><small>NEWS CENTER / 2026</small></div><div class="news-dashboard-main"><div class="news-dashboard-side"><i></i><i></i><i></i><i></i></div><div class="news-dashboard-content"><b>GÜNCEL<br><em>GELİŞMELER</em></b><div class="news-dashboard-bars"><i></i><i></i><i></i></div><div class="news-dashboard-tags"><span>ADB</span><span>FASTBOOT</span><span>ROM</span></div></div></div><div class="news-dashboard-footer"><span>ÜRÜN HABERLERİ</span><span>● CANLI AKIŞ</span></div></div>
-  <div class="news-floating-chip chip-update">↻ <span>Yeni güncellemeler</span></div><div class="news-floating-chip chip-tech">⌘ <span>Teknik içerikler</span></div>
-  <div class="news-float-version"><small>SON SÜRÜM</small><b>v1.1.8</b><i>RELEASE</i></div>
- </div>
- <div class="news-masthead-bottom"><span><b>01</b> Resmî duyurular</span><span><b>02</b> Sürüm notları</span><span><b>03</b> Teknik içerikler</span></div>
+<section class="news-only-hero">
+ <div class="news-only-copy"><span class="news-only-kicker"><i></i> UZMANTECH / TECH NEWS</span><h2>Teknoloji<br><em>gündemi.</em></h2><p>En son eklenen teknoloji haberleri. Güncel gelişmeleri tek yerde takip edin.</p><div class="news-only-live"><i></i> OTOMATİK GÜNCELLENEN HABER AKIŞI</div></div>
+ <div class="news-only-visual" aria-hidden="true"><div class="news-only-grid"></div><div class="news-only-orbit orbit-a"></div><div class="news-only-orbit orbit-b"></div><div class="news-only-chip">UZ<span>TECH</span></div><b class="news-only-visual-code">LIVE / FEED_01</b></div>
 </section>
-<section class="news-featured">
- <div class="news-featured-visual"><div class="news-featured-version"><small>UZMANTECH DESKTOP</small><b>1.1.8</b><span>RELEASE</span></div><div class="news-featured-spark"></div><span class="news-featured-label">ÖNE ÇIKAN</span></div>
- <div class="news-featured-copy"><span class="news-category-tag">YAZILIM GÜNCELLEMESİ</span><h3>Uzmantech v1.1.8</h3><p>Uzmantech masaüstü uygulamasının sürüm bilgilerini ve yayın notlarını inceleyin. Yeni sürüm duyurularını resmî kaynak üzerinden takip edin.</p><div class="news-featured-meta"><span>Uzmantech Desktop</span><span>Resmî sürüm kaydı</span></div><a href="https://github.com/uzmantech/uzmantech/releases/tag/v1.1.8" target="_blank" rel="noopener">Sürüm notlarını görüntüle <b>↗</b></a></div>
-</section>
-<div class="adsense-news-detail-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="7330455321" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-<div class="news-section-heading"><div><span class="news-section-kicker">KEŞFET</span><h3>Haber başlıkları</h3><p>İhtiyacınız olan içeriğe hızlıca ulaşın.</p></div><span class="news-section-count">UZMANTECH / PORTAL</span></div>
-<div class="news-filter-row" role="group" aria-label="Haber kategorileri">
- <button type="button" class="is-active" data-news-filter="all">Tümü</button><button type="button" data-news-filter="product">Ürün &amp; Özellikler</button><button type="button" data-news-filter="archive">Dosya Arşivi</button><button type="button" data-news-filter="support">Destek</button><button type="button" data-news-filter="release">Sürüm Notları</button>
-</div>
-<section class="news-auto-feed">
- <div class="news-section-heading"><div><span class="news-section-kicker">OTOMATİK TEKNOLOJİ AKIŞI</span><h3>Güncel teknoloji haberleri</h3><p>Türk teknoloji yayınlarından otomatik güncellenen haber başlıkları.</p></div><span class="news-section-count" id="newsFeedUpdated">AKIŞ YÜKLENİYOR</span></div>
+<section class="news-auto-feed news-only-feed">
+ <div class="news-section-heading"><div><span class="news-section-kicker">LATEST TECHNOLOGY</span><h3>Son eklenen haberler</h3><p>Yeni yayınlanan teknoloji haberleri en üstte gösterilir.</p></div><span class="news-section-count" id="newsFeedUpdated">AKIŞ YÜKLENİYOR</span></div>
  <div class="news-card-grid" id="autoTechNewsGrid" aria-live="polite"><article class="news-card"><div class="news-card-body"><p>Teknoloji haberleri yükleniyor…</p></div></article></div>
- <p class="news-feed-disclaimer">Haber başlıkları ve kısa açıklamalar ilgili yayıncıların RSS akışlarından alınır. Her haberin özgün içeriği ve tüm hakları kaynak yayıncıya aittir.</p>
+ <p class="news-feed-disclaimer">Haber başlıkları ve kısa açıklamalar ilgili yayıncıların RSS akışlarından alınır. Özgün içerik ve tüm hakları kaynak yayıncıya aittir.</p>
 </section>
-<section class="news-card-grid" aria-label="Haber içerikleri">
- <article class="news-card" data-news-category="product"><div class="news-card-art art-devices"><span>ADB</span><span>FASTBOOT</span><span>UZMANTOOL</span><i>⌘</i></div><div class="news-card-body"><span class="news-category-tag">ÜRÜN &amp; ÖZELLİKLER</span><h4>Teknik servis araçları tek merkezde</h4><p>ADB, Fastboot, cihaz bilgisi ve servis araçlarına Uzmantool içerisinden erişin.</p><a href="#download" data-page="download">Uzmantool'u keşfet <b>→</b></a></div></article>
- <article class="news-card" data-news-category="archive"><div class="news-card-art art-archive"><i>▤</i><span>FIRMWARE<br>ARCHIVE</span><b>01 / 08</b></div><div class="news-card-body"><span class="news-category-tag">DOSYA ARŞİVİ</span><h4>Teknik dosyalar için merkezi arşiv</h4><p>Marka ve model bazlı firmware ve teknik dosya arşivini keşfedin.</p><a href="archive.html">Dosya arşivine git <b>→</b></a></div></article>
- <article class="news-card" data-news-category="support"><div class="news-card-art art-support"><i>✳</i><span>DESTEK<br>MERKEZİ</span><b>7/24</b></div><div class="news-card-body"><span class="news-category-tag">DESTEK</span><h4>Yardım ve destek merkezi</h4><p>Hesap, lisans ve uygulama kullanımıyla ilgili destek kanallarına ulaşın.</p><a href="#help" data-page="help">Destek merkezini aç <b>→</b></a></div></article>
- <article class="news-card" data-news-category="release"><div class="news-card-art art-release"><span>VERSION</span><b>1.1.8</b><i>↗</i></div><div class="news-card-body"><span class="news-category-tag">SÜRÜM NOTLARI</span><h4>Uzmantech sürüm geçmişi</h4><p>Yayınlanan sürümleri ve resmî değişiklik kayıtlarını GitHub üzerinden takip edin.</p><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Tüm sürümleri görüntüle <b>→</b></a></div></article>
-</section>
-<div class="adsense-news-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="3773132506" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-<div class="news-bottom-banner"><div><span class="news-section-kicker">GÜNCEL KALIN</span><h3>Uzmantech'teki yenilikleri kaçırmayın.</h3><p>Yeni sürümler ve önemli duyurular için resmî kanalları takip edin.</p></div><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Yayınları takip et <b>↗</b></a></div>`;
-upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");if(!b)return;const key=b.dataset.newsFilter;upd.querySelectorAll("[data-news-filter]").forEach(x=>x.classList.toggle("is-active",x===b));upd.querySelectorAll("[data-news-category]").forEach(card=>card.hidden=key!=="all"&&card.dataset.newsCategory!==key);});
+<section class="news-newsletter">
+ <div class="newsletter-orb" aria-hidden="true"></div><div class="newsletter-copy"><span class="news-section-kicker">UZMANTECH NEWSLETTER</span><h3>Teknoloji gündemi<br><em>e-posta kutunuzda.</em></h3><p>Yeni teknoloji haberleri ve önemli gelişmeler yayınlandığında e-posta ile haberdar olun.</p><small>İstediğiniz zaman abonelikten çıkabilirsiniz.</small></div>
+ <form class="newsletter-form" id="newsNewsletterForm"><label for="newsNewsletterEmail">E-posta adresiniz</label><div class="newsletter-input-row"><input id="newsNewsletterEmail" name="email" type="email" placeholder="ornek@eposta.com" autocomplete="email" required maxlength="254"><button type="submit">Abone ol <b>↗</b></button></div><input class="newsletter-honey" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true"><label class="newsletter-consent"><input type="checkbox" required><span>Yeni haberler ve Uzmantech duyuruları için e-posta almayı kabul ediyorum.</span></label><p class="newsletter-feedback" id="newsNewsletterFeedback" role="status" aria-live="polite"></p></form>
+</section>`;
 const newsEsc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 async function loadHomeLatestNews(){
  const grid=home.querySelector("#homeLatestNewsGrid");
@@ -109,6 +77,18 @@ async function loadAutoTechNews(){
  }
 }
 loadAutoTechNews();
+upd.querySelector("#newsNewsletterForm")?.addEventListener("submit",async e=>{
+ e.preventDefault();
+ const form=e.currentTarget,email=form.querySelector("#newsNewsletterEmail"),feedback=form.querySelector("#newsNewsletterFeedback"),button=form.querySelector('button[type="submit"]');
+ if(!email?.value.trim()||!form.querySelector('input[type="checkbox"]')?.checked)return;
+ button.disabled=true;button.textContent="Kaydediliyor…";feedback.textContent="";
+ try{
+  const result=await window.UzmantechAPI.newsletterSubscribe({email:email.value,company:form.querySelector('[name="company"]')?.value||""});
+  feedback.textContent=result.message||"Aboneliğiniz kaydedildi.";feedback.dataset.state="success";form.reset();
+ }catch(error){feedback.textContent=error.message||"Abonelik kaydedilemedi. Lütfen tekrar deneyin.";feedback.dataset.state="error";}
+ finally{button.disabled=false;button.innerHTML='Abone ol <b>↗</b>';}
+});
+
 
 
 

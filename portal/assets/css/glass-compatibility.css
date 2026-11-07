@@ -268,3 +268,6 @@ body.glass-code-page{padding:0!important}
 .site-global-header .site-header-actions .top-chevron{display:inline-block!important;color:#c6d9eb!important}
 .site-global-header .site-header-actions .glass-header-login{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:104px!important;height:40px!important;padding:0 18px!important;white-space:nowrap!important;box-sizing:border-box!important}
 @media(max-width:760px){.site-global-header .site-header-actions{min-width:0!important;gap:7px!important}.site-global-header .site-header-actions .language-control{width:68px!important;min-width:68px!important}.site-global-header .site-header-actions .glass-header-login{min-width:88px!important;padding:0 10px!important}}
+
+/* Brand tiles are decorative: preserve hover animation without click affordance. */
+.glass-code-brands .brand-card{cursor:default}

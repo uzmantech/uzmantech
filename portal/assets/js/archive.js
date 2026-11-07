@@ -129,7 +129,7 @@ function showPackageRequired(){
  $("#modal").classList.add("open");
 }
 function applyLockedArchivePreview(){
- applyLockedArchivePreview();
+ document.querySelectorAll(".archive-global-search,.archive-brand-catalog-head,.archive-brand-search").forEach(el=>{el.hidden=true;el.style.setProperty("display","none","important");});
 }
 async function enforceArchiveLicense(){
  const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
@@ -139,7 +139,7 @@ async function enforceArchiveLicense(){
   const user=result.user||{};
   const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
   const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
-  if(!hasPaidAccess){document.body.classList.remove("archive-authorized");document.body.classList.add("archive-preview-locked");if(stage)stage.hidden=false;if(gate)gate.hidden=false;document.querySelectorAll(".archive-global-search,.archive-brand-catalog-head,.archive-brand-search").forEach(el=>{el.hidden=true;el.style.setProperty("display","none","important");});return;}
+  if(!hasPaidAccess){document.body.classList.remove("archive-authorized");document.body.classList.add("archive-preview-locked");applyLockedArchivePreview();if(stage)stage.hidden=false;if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}return;}
   document.body.classList.remove("archive-preview-locked");
   document.body.classList.add("archive-authorized");
   if(stage)stage.hidden=false;
@@ -152,7 +152,7 @@ async function enforceArchiveLicense(){
   document.body.classList.add("archive-preview-locked");
   applyLockedArchivePreview();
   if(stage)stage.hidden=false;
-  if(gate)gate.hidden=false;
+  if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}
  }
 }
 enforceArchiveLicense();

@@ -54,7 +54,7 @@
  <form class="glass-code-search" id="glassSearchForm">
   <span class="glass-code-search-icon">⌕</span>
   <input id="glassQuery" class="search-box" type="search" minlength="2" maxlength="80" autocomplete="off" placeholder="Telefon marka veya modelini yazın... (Örn: Samsung A52)" data-tr-placeholder="Telefon marka veya modelini yazın... (Örn: Samsung A52)" data-en-placeholder="Enter phone brand or model... (e.g. Samsung A52)" aria-label="Telefon marka veya modeli">
-  <button id="glassSearch" class="search-btn" type="submit">Uyumluluğu Bul</button>
+  <button id="glassSearch" class="search-btn" type="button">Uyumluluğu Bul</button>
  </form>
  <section class="glass-code-brands" aria-label="Marka seçimi">
   <button class="brand-card" type="button" data-brand="Samsung"><b class="brand-samsung">SAMSUNG</b></button>
@@ -79,7 +79,7 @@
 </main>
 <script src="assets/js/config.js"></script><script src="assets/js/glass-compatibility.js?v=glass-language-fix-20261107-1"></script>
 <script>
-document.querySelector("#glassSearchForm")?.addEventListener("submit",e=>{e.preventDefault();document.querySelector("#glassSearch")?.click();});
+
 document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.brand;const input=document.querySelector("#glassQuery");if(q){input.value=q;input.focus();document.querySelector("#glassSearch").click();}else{input.focus();}}));
 
 </script>

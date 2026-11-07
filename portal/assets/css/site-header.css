@@ -719,3 +719,18 @@ body:has(.site-global-header){padding-top:66px!important}
  box-shadow:7px 4px 0 -2px #fff!important;
 }
 .site-global-header .language-control select{min-width:30px!important;width:30px!important}
+
+
+/* Definitive flag rendering: paint the flag on the visible span itself */
+.site-global-header .language-control .language-globe{
+ display:block!important;position:relative!important;z-index:2!important;
+ width:26px!important;min-width:26px!important;height:18px!important;flex:0 0 26px!important;
+ overflow:hidden!important;border-radius:2px!important;
+ background:#e30a17 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='10' fill='white'/%3E%3Ccircle cx='27' cy='20' r='8' fill='%23e30a17'/%3E%3Cpath fill='white' d='m40 11 2.5 6.5 7 .3-5.5 4.2 2 6.7-6-3.8-6 3.8 2-6.7-5.5-4.2 7-.3z'/%3E%3C/svg%3E") center/cover no-repeat!important;
+ box-shadow:0 0 0 1px rgba(255,255,255,.35)!important;
+}
+.site-global-header .language-control .language-globe:before,
+.site-global-header .language-control .language-globe:after{content:none!important;display:none!important}
+.site-global-header .language-control .language-globe svg{display:none!important}
+.site-global-header .language-control:after{content:"TR"!important}
+.site-global-header .language-control[data-current="EN"]:after{content:"EN"!important}

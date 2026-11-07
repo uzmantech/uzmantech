@@ -696,3 +696,26 @@ body:has(.site-global-header){padding-top:66px!important}
  .site-global-header .dash-top-actions{gap:6px!important}
  .site-global-header .dash-top-actions .header-login,.site-global-header .dash-top-actions .header-register{min-width:92px!important;padding-inline:8px!important}
 }
+
+
+/* Restore the Turkish flag inside the compact language selector */
+.site-global-header .language-control .language-globe{
+ position:relative!important;display:inline-flex!important;align-items:center!important;
+ justify-content:center!important;width:27px!important;height:19px!important;
+ min-width:27px!important;flex:0 0 27px!important;border-radius:2px!important;
+ overflow:hidden!important;background:#e30a17!important;color:#fff!important;
+ box-shadow:0 0 0 1px rgba(255,255,255,.24)!important;
+}
+.site-global-header .language-control .language-globe svg{display:none!important}
+.site-global-header .language-control .language-globe:before{
+ content:""!important;position:absolute!important;width:10px!important;height:10px!important;
+ left:6px!important;top:4.5px!important;border-radius:50%!important;
+ background:#fff!important;
+}
+.site-global-header .language-control .language-globe:after{
+ content:""!important;position:absolute!important;width:8px!important;height:8px!important;
+ left:9px!important;top:3.5px!important;border-radius:50%!important;
+ background:#e30a17!important;
+ box-shadow:7px 4px 0 -2px #fff!important;
+}
+.site-global-header .language-control select{min-width:30px!important;width:30px!important}

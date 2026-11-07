@@ -18,21 +18,11 @@ if(packages){packages.classList.add("license-packages-section");lic.appendChild(
 const upd=make("updates","Haberler","Uzmantech dünyasından haberler, ürün duyuruları ve sürüm notları.");
 upd.classList.add("updates-page","news-page");
 upd.innerHTML+=`
-<section class="news-masthead">
- <div class="news-masthead-copy">
-  <span class="news-eyebrow"><i></i> UZMANTECH HABER MERKEZİ</span>
-  <h2>Teknolojiden<br><em>haberdar olun.</em></h2>
-  <p>En güncel teknoloji haberleri, sektördeki yenilikler ve önemli gelişmeler. Hepsi tek bir yerde.</p>
-  <div class="news-masthead-actions"><span><i></i> Otomatik güncellenen teknoloji haberleri</span></div>
- </div>
- <div class="news-masthead-visual" aria-hidden="true">
-  <div class="news-visual-grid"></div><div class="news-glow-ring ring-a"></div><div class="news-glow-ring ring-b"></div>
-  <div class="news-orbit-dot dot-a"></div><div class="news-orbit-dot dot-b"></div>
-  <div class="news-dashboard-card"><div class="news-dashboard-top"><span>● UZMANTECH</span><small>TECH NEWS / LIVE</small></div><div class="news-dashboard-main"><div class="news-dashboard-side"><i></i><i></i><i></i><i></i></div><div class="news-dashboard-content"><b>TEKNOLOJİ<br><em>GÜNDEMİ</em></b><div class="news-dashboard-bars"><i></i><i></i><i></i></div><div class="news-dashboard-tags"><span>AI</span><span>MOBILE</span><span>TECH</span></div></div></div><div class="news-dashboard-footer"><span>SON HABERLER</span><span>● CANLI AKIŞ</span></div></div>
-  <div class="news-floating-chip chip-update">↻ <span>Yeni haberler</span></div><div class="news-floating-chip chip-tech">⌘ <span>Teknoloji gündemi</span></div>
-  <div class="news-float-version"><small>NEWS FEED</small><b>LIVE</b><i>UPDATING</i></div>
- </div>
- <div class="news-masthead-bottom"><span><b>01</b> Yapay zekâ</span><span><b>02</b> Mobil teknoloji</span><span><b>03</b> Dijital dünya</span></div>
+<section class="news-masthead news-editorial-hero">
+ <div class="editorial-topline"><span>UZMANTECH <i>/</i> TECHNOLOGY DESK</span><span><b></b> LIVE FEED&nbsp; · &nbsp;AUTO UPDATED</span></div>
+ <div class="editorial-main"><div class="editorial-index">01 <span> / NEWSROOM</span></div><h2>Teknoloji<br><em>şimdi.</em></h2><p>Dijital dünyanın hızına yetişin. Öne çıkan gelişmeler, yeni ürünler ve teknoloji gündeminden son haberler.</p></div>
+ <div class="editorial-side" aria-hidden="true"><div class="editorial-orbit"></div><div class="editorial-orbit second"></div><div class="editorial-cross">+</div><div class="editorial-coordinate">41° 00' 49.2&quot; N<br>28° 58'  ก. E</div><div class="editorial-side-label">SIGNAL<br><b>ACTIVE</b></div></div>
+ <div class="editorial-bottom"><span>01&nbsp; / &nbsp;YAPAY ZEKÂ</span><span>02&nbsp; / &nbsp;MOBİL</span><span>03&nbsp; / &nbsp;DİJİTAL DÜNYA</span><span class="editorial-scroll">SCROLL TO EXPLORE ↓</span></div>
 </section>
 <section class="news-auto-feed news-only-feed">
  <div class="news-section-heading"><div><span class="news-section-kicker">LATEST TECHNOLOGY</span><h3>Son eklenen haberler</h3><p>Yeni yayınlanan teknoloji haberleri en üstte gösterilir.</p></div><span class="news-section-count" id="newsFeedUpdated">AKIŞ YÜKLENİYOR</span></div>

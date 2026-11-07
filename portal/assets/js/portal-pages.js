@@ -69,7 +69,7 @@ async function loadAutoTechNews(){
    const date=item.published_at?new Date(item.published_at):null;
    const dateText=date&&!Number.isNaN(date.getTime())?date.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"}):"Güncel";
    const art=imageUrl?'<img src="'+imageUrl+'" alt="" loading="lazy" referrerpolicy="no-referrer">':"";
-   return '<article class="news-card"><div class="news-card-art '+(imageUrl?'has-image':'')+'">'+art+'<div class="news-art-top"><span>'+category+'</span><span>TECH / FEED</span></div><span class="news-art-index">UZMANTECH&nbsp; / &nbsp;'+String(index+1).padStart(2,"0")+'</span><b class="news-art-mark">01</b></div><div class="news-card-body"><span class="news-category-tag">'+source+'</span><h4>'+title+'</h4><p>'+summary+'</p><div class="news-featured-meta"><span>'+dateText+'</span><span>•</span><span>Kaynak haber</span></div><a href="/haber/'+slug+'">Haberi oku <b>→</b></a></div></article>';
+   return '<a class="news-card" href="/haber/'+slug+'" aria-label="'+title+' haberini oku"><div class="news-card-art '+(imageUrl?'has-image':'')+'">'+art+'<div class="news-art-top"><span>'+category+'</span><span>TECH / FEED</span></div><span class="news-art-index">UZMANTECH&nbsp; / &nbsp;'+String(index+1).padStart(2,"0")+'</span><b class="news-art-mark">01</b></div><div class="news-card-body"><span class="news-category-tag">'+source+'</span><h4>'+title+'</h4><p>'+summary+'</p><div class="news-featured-meta"><span>'+dateText+'</span><span>•</span><span>Kaynak haber</span></div><span class="news-card-link">Haberi oku <b>→</b></span></div></a>';
   }).join("");
   if(stamp)stamp.textContent=items.length+" HABER / GÜNCEL";
  }catch(error){

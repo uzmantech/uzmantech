@@ -3,6 +3,8 @@ const layout=$(".dash-layout"),download=$("#download"),account=$("#accountPage")
 const primary=$(".dash-primary"),license=$("#license"),support=$("#support"),announcements=$("#announcements"),premium=$("#premium"),packages=$("#packages"),welcome=$(".welcome-card");
 const make=(id,title,sub)=>{const el=document.createElement("section");el.className="portal-page";el.dataset.pageView=id;el.innerHTML='<div class="portal-page-heading"><span class="eyebrow">UZMANTOOL PORTAL</span><h1>'+title+'</h1><p>'+sub+'</p></div>';main.appendChild(el);return el;};
 const home=make("home","Ana Sayfa","Hesabınızın ve Uzmantool hizmetlerinin genel görünümü.");home.querySelector(".portal-page-heading")?.remove();home.prepend(layout);
+home.insertAdjacentHTML("beforeend",'<section class="home-latest-news"><div class="home-latest-heading"><div><span>TEKNOLOJİ GÜNDEMİ</span><h2>En yeni haberler</h2><p>Yayınlanan son teknoloji haberleri.</p></div><a href="#updates" data-page="updates">Tüm haberleri gör <b>↗</b></a></div><div class="home-latest-grid" id="homeLatestNewsGrid"><div class="home-news-loading">Son haberler yükleniyor…</div></div></section>');
+
 const dl=make("download","Uzmantech İndir","Windows masaüstü uygulamasının resmî indirme merkezi.");dl.appendChild(download);
 const lic=make("license","Lisans Aktivasyonu","Uzmantool lisansınızı güvenle etkinleştirin veya yeni lisans satın alın.");
 lic.classList.add("license-page","license-reference-layout");
@@ -62,6 +64,25 @@ upd.innerHTML+=`
 <div class="news-bottom-banner"><div><span class="news-section-kicker">GÜNCEL KALIN</span><h3>Uzmantech'teki yenilikleri kaçırmayın.</h3><p>Yeni sürümler ve önemli duyurular için resmî kanalları takip edin.</p></div><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Yayınları takip et <b>↗</b></a></div>`;
 upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");if(!b)return;const key=b.dataset.newsFilter;upd.querySelectorAll("[data-news-filter]").forEach(x=>x.classList.toggle("is-active",x===b));upd.querySelectorAll("[data-news-category]").forEach(card=>card.hidden=key!=="all"&&card.dataset.newsCategory!==key);});
 const newsEsc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function loadHomeLatestNews(){
+ const grid=home.querySelector("#homeLatestNewsGrid");
+ if(!grid||!window.UzmantechAPI?.news)return;
+ try{
+  const result=await window.UzmantechAPI.news({limit:"4"});
+  const items=Array.isArray(result.news)?result.news.slice(0,4):[];
+  if(!items.length){grid.innerHTML='<p class="home-news-loading">Henüz haber bulunmuyor.</p>';return;}
+  grid.innerHTML=items.map((item,index)=>{
+   const title=newsEsc(item.title),summary=newsEsc(item.summary||item.title),source=newsEsc(item.source_name);
+   const slug=encodeURIComponent(String(item.slug||""));
+   const image=String(item.image_url||"");
+   const safeImage=/^https:\/\//i.test(image)?newsEsc(image):"";
+   const date=item.published_at?new Date(item.published_at):null;
+   const dateText=date&&!Number.isNaN(date.getTime())?date.toLocaleDateString("tr-TR",{day:"numeric",month:"short",year:"numeric"}):"Güncel";
+   return '<article class="home-latest-card"><a class="home-latest-image" href="/haber/'+slug+'">'+(safeImage?'<img src="'+safeImage+'" alt="" loading="lazy" referrerpolicy="no-referrer">':'<span class="home-news-fallback">TECH<br><b>0'+(index+1)+'</b></span>')+'<span class="home-latest-source">'+source+'</span></a><div class="home-latest-copy"><small>'+dateText+'</small><h3><a href="/haber/'+slug+'">'+title+'</a></h3><p>'+summary+'</p><a class="home-latest-read" href="/haber/'+slug+'">Haberi oku <b>→</b></a></div></article>';
+  }).join("");
+ }catch(error){console.warn("Homepage news could not be loaded",error);grid.innerHTML='<p class="home-news-loading">Haberler şu anda yüklenemiyor.</p>';}
+}
+loadHomeLatestNews();
 async function loadAutoTechNews(){
  const grid=upd.querySelector("#autoTechNewsGrid"),stamp=upd.querySelector("#newsFeedUpdated");
  if(!grid||!window.UzmantechAPI?.news)return;

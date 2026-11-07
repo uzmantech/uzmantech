@@ -134,6 +134,15 @@ $("#archiveSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const 
 $("#archiveQuery")?.addEventListener("input",()=>{if(!$("#archiveQuery").value.trim()){selectedBrand=null;selectedDevice=null;selectedFolder=null;modelSearch="";renderLiveArchive();}});
 document.addEventListener("click",e=>{const btn=e.target.closest("[data-brand]");if(!btn)return;const label=normBrand(btn.dataset.brand||"");if(MODEL_CATALOG[label])location.href="models.html?brand="+encodeURIComponent(label);});
 document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
+document.addEventListener("submit",async e=>{
+ const form=e.target.closest("#archiveSamFwLookup");if(!form)return;
+ e.preventDefault();
+ const model=$("#archiveSamFwModel"),csc=$("#archiveSamFwCsc"),button=form.querySelector('button[type="submit"]');
+ if(button)button.disabled=true;
+ try{const count=await fetchSamFwCatalog(model?.value,csc?.value);toast(count+" SamFW firmware kaydı yüklendi.");}
+ catch(err){toast(err.message||"SamFW firmware kataloğu alınamadı.");}
+ finally{if(button)button.disabled=false;}
+});
 document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");
  if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;selectedFile=null;if(normBrand(selectedBrand)==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){try{await fetchSamFwCatalog(selectedDevice,"TUR");}catch(err){toast(err.message||"SamFW listesi yüklenemedi.");}}renderLiveArchive();return;}

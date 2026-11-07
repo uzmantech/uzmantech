@@ -1135,3 +1135,7 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   .site-global-header .site-profile-button{display:none!important}
   .site-global-header .notification-button{display:none!important}
 }
+
+@media(max-width:760px){
+  body:has(.site-global-header){padding-top:120px!important}
+}

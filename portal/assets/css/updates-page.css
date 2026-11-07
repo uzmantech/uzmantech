@@ -222,3 +222,33 @@
 .news-auto-feed .news-card-body>a:hover b{transform:translateX(4px)}
 @media(max-width:1050px){.news-auto-feed .news-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.news-auto-feed{padding:13px}.news-auto-feed .news-card-grid{grid-template-columns:1fr;gap:13px}.news-auto-feed .news-card-art{height:185px}.news-auto-feed .news-card-body h4,.news-auto-feed .news-card-body>p{min-height:0}.news-auto-feed .news-card-body{padding:16px}}
+
+
+/* Homepage latest technology news */
+.home-latest-news{margin:30px 0 8px;padding:clamp(17px,2.2vw,26px);border:1px solid #1c496b;border-radius:18px;background:radial-gradient(ellipse at 95% 0%,#087fc51b,transparent 35%),linear-gradient(145deg,#0b1e32,#071522);box-shadow:0 14px 34px #0002}
+.home-latest-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:19px}
+.home-latest-heading>div>span{color:#45caff;font-size:9px;font-weight:800;letter-spacing:2px}
+.home-latest-heading h2{margin:6px 0;color:#f0f7ff;font:700 clamp(22px,2.5vw,29px) "Space Grotesk",sans-serif;letter-spacing:-.6px}
+.home-latest-heading p{margin:0;color:#91abc3;font-size:11px}
+.home-latest-heading>a{flex-shrink:0;padding:10px 13px;border:1px solid #24638b;border-radius:8px;background:#0a2a45;color:#bdeaff;font-size:10px;font-weight:800}
+.home-latest-heading>a b{margin-left:8px;color:#43caff}
+.home-latest-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.home-latest-card{overflow:hidden;border:1px solid #214b6d;border-radius:12px;background:linear-gradient(155deg,#102943,#081827);transition:transform .25s,border-color .25s,box-shadow .25s}
+.home-latest-card:hover{transform:translateY(-4px);border-color:#25a9ed;box-shadow:0 15px 32px #0005}
+.home-latest-image{position:relative;display:grid;place-items:center;height:145px;overflow:hidden;background:radial-gradient(circle at 72% 25%,#087fbd66,transparent 38%),linear-gradient(135deg,#102e49,#071827)}
+.home-latest-image:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#42c7ff0b 1px,transparent 1px),linear-gradient(#42c7ff0b 1px,transparent 1px);background-size:22px 22px}
+.home-latest-image img{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.82;transition:transform .4s}
+.home-latest-card:hover .home-latest-image img{transform:scale(1.05)}
+.home-news-fallback{position:relative;color:#62d1ff;font:800 12px "Space Grotesk",sans-serif;letter-spacing:3px;text-align:center}
+.home-news-fallback b{font-size:42px;text-shadow:0 0 25px #008cff88}
+.home-latest-source{position:absolute;left:10px;bottom:10px;padding:5px 7px;border:1px solid #53caff55;border-radius:4px;background:#061a2bd9;color:#c4ecff;font-size:8px;font-weight:800}
+.home-latest-copy{padding:14px}
+.home-latest-copy>small{color:#7f9db9;font-size:9px}
+.home-latest-copy h3{min-height:62px;margin:8px 0;color:#edf6ff;font:700 14px/1.45 "Space Grotesk",sans-serif}
+.home-latest-copy h3 a{color:inherit}
+.home-latest-copy p{min-height:58px;margin:0;color:#96aec5;font-size:10px;line-height:1.65}
+.home-latest-read{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #1c3b56;color:#dff5ff;font-size:10px;font-weight:800}
+.home-latest-read b{color:#42caff;font-size:17px}
+.home-news-loading{grid-column:1/-1;margin:0;padding:20px;border:1px dashed #28516f;border-radius:9px;color:#8eabc4;font-size:11px}
+@media(max-width:1050px){.home-latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.home-latest-news{padding:14px}.home-latest-heading{align-items:flex-start;flex-direction:column}.home-latest-grid{grid-template-columns:1fr}.home-latest-image{height:175px}.home-latest-copy h3,.home-latest-copy p{min-height:0}}

@@ -755,3 +755,28 @@ body:has(.site-global-header){padding-top:66px!important}
  color:#fff!important;border:0!important;appearance:none!important;
  font:700 12px/1 "DM Sans",sans-serif!important;text-align:center!important;
 }
+
+
+/* Final compatibility selector override: eliminate legacy dashboard pseudo-label and overlay select */
+body.dashboard-page .site-global-header .dash-top-actions .language-control:before,
+body.dashboard-page .site-global-header .dash-top-actions .language-control:after,
+.site-global-header .dash-top-actions .language-control:before,
+.site-global-header .dash-top-actions .language-control:after{content:none!important;display:none!important}
+body.dashboard-page .site-global-header .dash-top-actions .language-control{
+ display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;width:76px!important;min-width:76px!important;height:44px!important;padding:0 8px!important;
+}
+body.dashboard-page .site-global-header .dash-top-actions .language-control .language-globe,
+.site-global-header .dash-top-actions .language-control .language-globe{
+ display:inline-flex!important;position:static!important;flex:0 0 26px!important;
+ width:26px!important;min-width:26px!important;height:18px!important;
+}
+body.dashboard-page .site-global-header .dash-top-actions .language-control .language-globe svg,
+.site-global-header .dash-top-actions .language-control .language-globe svg{display:block!important;width:26px!important;height:18px!important}
+body.dashboard-page .site-global-header .dash-top-actions .language-control select,
+.site-global-header .dash-top-actions .language-control select{
+ position:static!important;inset:auto!important;opacity:1!important;z-index:1!important;
+ display:block!important;flex:0 0 28px!important;width:28px!important;min-width:28px!important;
+ height:28px!important;padding:0!important;margin:0!important;appearance:none!important;
+ background:transparent!important;color:#fff!important;border:0!important;text-align:center!important;font-size:12px!important;
+}

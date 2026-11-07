@@ -63,7 +63,7 @@ const help=make("help","Destek","Bağımsız destek merkezi.");
 help.classList.add("help-center-page");
 help.innerHTML='<div class="notice">Destek merkezine yönlendiriliyorsunuz...</div>';
 const pages=[...main.querySelectorAll("[data-page-view]")];
-function show(id,update=true){const key=id==="account"?"account":id;pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));if(update){const url=key==="home"?location.pathname+location.search:"#"+key;history.replaceState(null,"",url);}window.scrollTo({top:0,behavior:"instant"});}
+function show(id,update=true){const key=pages.some(p=>p.dataset.pageView===id)?id:"home";pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));try{sessionStorage.setItem("uzmantech_portal_active_page",key);}catch{}if(update){history.replaceState(null,"",location.pathname+location.search);}window.scrollTo({top:0,behavior:"instant"});}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
 document.addEventListener("portal:show-account",()=>show("account"));
 document.addEventListener("click",e=>{if(e.target.closest("#activationAccountLink"))document.dispatchEvent(new CustomEvent("portal:show-account"));});
@@ -77,7 +77,7 @@ document.addEventListener("click",function(e){
   }
 });
 window.UzmantoolPages={show};
-const initialPage=location.hash.slice(1)||"home";
+let initialPage="home";try{initialPage=location.hash.slice(1)||sessionStorage.getItem("uzmantech_portal_active_page")||"home";}catch{initialPage=location.hash.slice(1)||"home";}
 show(initialPage,false);
 if(initialPage==="account") document.dispatchEvent(new CustomEvent("portal:show-account"));
 window.addEventListener("hashchange",()=>{

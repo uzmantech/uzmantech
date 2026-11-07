@@ -261,6 +261,35 @@ async function loadGlassCatalog(): Promise<GlassGroup[]> {
   return groups;
 }
 
+
+type EngineerRom = { model: string; codename: string; sourceUrl: string };
+let engineerRomCache: { items: EngineerRom[]; at: number } | null = null;
+const engineerRomSource = "https://xiaomitools.com/xiaomi-engineer-rom/";
+function romText(value: string): string {
+  return value.replace(/<script\b[\s\S]*?<\/script>/gi, " ").replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ").replace(/&nbsp;|&#160;/gi, " ").replace(/&amp;/gi, "&").replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'").replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/\s+/g, " ").trim();
+}
+async function loadEngineerRoms(): Promise<EngineerRom[]> {
+  if (engineerRomCache && Date.now()-engineerRomCache.at < 3*60*60*1000) return engineerRomCache.items;
+  const res=await fetch(engineerRomSource,{headers:{"User-Agent":"Mozilla/5.0 (compatible; UzmantechPortal/1.0)","Accept":"text/html,application/xhtml+xml"},signal:AbortSignal.timeout(15000)});
+  if(!res.ok) throw new Error("Xiaomi Tools kaynak sayfasına ulaşılamadı.");
+  const html=await res.text(); const tableMatch=html.match(/<table\b[\s\S]*?<\/table>/i);
+  if(!tableMatch) throw new Error("Engineer ROM tablosu kaynak sayfada bulunamadı.");
+  const items:EngineerRom[]=[];
+  for(const row of tableMatch[0].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)){
+    const cells=[...row[1].matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(x=>x[1]);
+    if(cells.length<3) continue;
+    const model=romText(cells[0]),codename=romText(cells[1]);
+    const a=cells[2].match(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+    if(!model||!codename||!a) continue;
+    try { const u=new URL(a[1],engineerRomSource); if(u.protocol!=="https:"||!["xiaomitools.com","www.xiaomitools.com"].includes(u.hostname)) continue; items.push({model,codename,sourceUrl:u.toString()}); } catch {}
+  }
+  const unique=[...new Map(items.map(x=>[x.sourceUrl,x])).values()];
+  if(!unique.length) throw new Error("Engineer ROM kayıtları okunamadı.");
+  engineerRomCache={items:unique,at:Date.now()}; return unique;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   if (!url || !serviceKey) return response({ success: false, message: "Sunucu yapılandırması eksik." }, 500);
@@ -293,6 +322,19 @@ Deno.serve(async (req: Request) => {
     } catch (error) {
       console.error("Glass compatibility lookup failed", error);
       return response({ success: false, error: "Cam uyumluluk kataloğu şu anda alınamıyor. Lütfen tekrar deneyin." }, 503);
+    }
+  }
+
+
+  if (req.method === "GET" && path.pathname.endsWith("/engineer-roms")) {
+    try {
+      const items=await loadEngineerRoms();
+      const q=String(path.searchParams.get("q")||"").trim().toLocaleLowerCase("tr-TR");
+      const filtered=q?items.filter(x=>(x.model+" "+x.codename).toLocaleLowerCase("tr-TR").includes(q)):items;
+      return response({success:true,source:engineerRomSource,count:filtered.length,total:items.length,items:filtered,updated_at:new Date(engineerRomCache!.at).toISOString()});
+    } catch(error) {
+      console.error("Engineer ROM catalog fetch failed",error);
+      return response({success:false,message:"Xiaomi Engineer ROM listesi şu anda alınamıyor. Lütfen tekrar deneyin."},503);
     }
   }
 

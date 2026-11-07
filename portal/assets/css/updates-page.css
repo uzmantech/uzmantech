@@ -194,3 +194,31 @@
 .news-auto-feed .news-card-body .news-featured-meta{margin:12px 0;color:#7f9db9;font-size:10px}
 .news-feed-disclaimer{margin:14px 2px 0;color:#7892ad;font-size:10px;line-height:1.6}
 @media(max-width:560px){.news-auto-feed{padding:14px}.news-auto-feed .news-section-heading h3{font-size:23px}}
+
+
+/* Auto technology feed: editorial image cards */
+.news-auto-feed{padding:clamp(14px,2vw,24px);border-color:#183e5f;background:radial-gradient(ellipse at 92% 0%,#087fc51a,transparent 34%),linear-gradient(145deg,#091b2e,#071321)}
+.news-auto-feed .news-card-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.news-auto-feed .news-card{position:relative;min-width:0;border:1px solid #214b6d;border-radius:14px;background:linear-gradient(155deg,#102943,#081827 76%);box-shadow:0 12px 28px #0003;transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease}
+.news-auto-feed .news-card:hover{transform:translateY(-6px);border-color:#22a9ed;box-shadow:0 18px 38px #00101fbb,0 0 24px #078ce52b}
+.news-auto-feed .news-card-art{height:176px;position:relative;display:block;overflow:hidden;padding:0;border:0;border-bottom:1px solid #245273;background:radial-gradient(ellipse at 72% 28%,#087fbd66,transparent 35%),linear-gradient(135deg,#102e49,#071827 72%)}
+.news-auto-feed .news-card-art:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#42c7ff0b 1px,transparent 1px),linear-gradient(#42c7ff0b 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(135deg,#000,transparent 85%);opacity:.9}
+.news-auto-feed .news-card-art:after{content:"";position:absolute;width:190px;height:190px;right:-48px;top:-65px;border:1px solid #39bfff55;border-radius:50%;box-shadow:0 0 0 18px #168edc12,0 0 0 38px #168edc0b,0 0 55px #008bdf25}
+.news-auto-feed .news-card-art.has-image:before{background:linear-gradient(0deg,#061321e8 0%,#06132122 72%,#06132112 100%)}
+.news-auto-feed .news-card-art.has-image:after{display:none}
+.news-auto-feed .news-card-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.78;filter:saturate(.82);transition:transform .5s ease,opacity .3s ease}
+.news-auto-feed .news-card:hover .news-card-art img{transform:scale(1.055);opacity:.9}
+.news-auto-feed .news-card-art .news-art-top{position:absolute;z-index:2;top:13px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center}
+.news-auto-feed .news-card-art .news-art-top span{padding:6px 8px;border:1px solid #54caff65;border-radius:4px;background:#061a2bc9;color:#b8eaff;font-size:8px;font-weight:800;letter-spacing:1px;backdrop-filter:blur(8px)}
+.news-auto-feed .news-card-art .news-art-index{position:absolute;z-index:2;left:17px;bottom:12px;color:#ffffffb8;font:700 10px "Space Grotesk",sans-serif;letter-spacing:2px}
+.news-auto-feed .news-card-art .news-art-mark{position:absolute;z-index:1;right:20px;bottom:14px;color:#5bd4ff;font:800 40px "Space Grotesk",sans-serif;text-shadow:0 0 28px #008bff80}
+.news-auto-feed .news-card-body{padding:17px 17px 16px}
+.news-auto-feed .news-card-body .news-category-tag{padding:5px 8px;border-color:#24628a;background:#092944;color:#60d0ff;font-size:8px;letter-spacing:.8px}
+.news-auto-feed .news-card-body h4{min-height:64px;margin:12px 0 8px;color:#f0f7ff;font:700 15px/1.45 "Space Grotesk","DM Sans",sans-serif;letter-spacing:-.15px}
+.news-auto-feed .news-card-body>p{min-height:68px;margin:0;color:#9bb3ca;font-size:11px;line-height:1.7}
+.news-auto-feed .news-card-body .news-featured-meta{display:flex;align-items:center;gap:8px;margin:13px 0 0;padding-top:10px;border-top:1px solid #1c3b56;color:#789bb8;font-size:9px}
+.news-auto-feed .news-card-body>a{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:11px 0 0;border-top:1px solid #1c3b56;color:#dff5ff;font-size:10px;font-weight:800}
+.news-auto-feed .news-card-body>a b{color:#42caff;font-size:18px;transition:transform .2s}
+.news-auto-feed .news-card-body>a:hover b{transform:translateX(4px)}
+@media(max-width:1050px){.news-auto-feed .news-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.news-auto-feed{padding:13px}.news-auto-feed .news-card-grid{grid-template-columns:1fr;gap:13px}.news-auto-feed .news-card-art{height:185px}.news-auto-feed .news-card-body h4,.news-auto-feed .news-card-body>p{min-height:0}.news-auto-feed .news-card-body{padding:16px}}

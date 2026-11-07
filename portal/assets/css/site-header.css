@@ -734,3 +734,24 @@ body:has(.site-global-header){padding-top:66px!important}
 .site-global-header .language-control .language-globe svg{display:none!important}
 .site-global-header .language-control:after{content:"TR"!important}
 .site-global-header .language-control[data-current="EN"]:after{content:"EN"!important}
+
+/* Language selector: one flag icon + one selected language label, no duplicate TR */
+.site-global-header .language-control:before,
+.site-global-header .language-control:after{content:none!important;display:none!important}
+.site-global-header .language-control .language-globe{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ position:relative!important;width:26px!important;min-width:26px!important;
+ height:18px!important;flex:0 0 26px!important;overflow:hidden!important;
+ border-radius:2px!important;background:#e30a17!important;
+ box-shadow:0 0 0 1px rgba(255,255,255,.35)!important;
+}
+.site-global-header .language-control .language-globe svg{
+ display:block!important;width:26px!important;height:18px!important;
+ min-width:26px!important;fill:none!important;stroke:none!important;
+}
+.site-global-header .language-control select{
+ display:block!important;flex:0 0 30px!important;width:30px!important;min-width:30px!important;
+ padding:0!important;margin:0!important;background:transparent!important;
+ color:#fff!important;border:0!important;appearance:none!important;
+ font:700 12px/1 "DM Sans",sans-serif!important;text-align:center!important;
+}

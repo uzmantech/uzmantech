@@ -33,6 +33,7 @@
     archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
     catalog: () => call("/portal-api/catalog"),
     recent: () => call("/portal-api/recent"),
+    news: params => call("/portal-api/news?" + new URLSearchParams(params || {})),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
     archiveAdmin: data => call("/archive-service", { method: "POST", body: JSON.stringify(data) }),
     archiveFiles: () => call("/archive-service?resource=files"),

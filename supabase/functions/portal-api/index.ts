@@ -182,6 +182,85 @@ function hasPaidArchiveAccess(member: any): boolean {
   );
 }
 
+
+type GlassModel = { brand: string; model: string };
+type GlassGroup = { group: string; url: string; models: string[] };
+let glassCatalogCache: { groups: GlassGroup[]; at: number } | null = null;
+const glassSourceUrl = "https://www.simkon.com.tr/uyumluluk";
+const glassBrands: Record<string, string> = {
+  apple:"Apple", samsung:"Samsung", xiaomi:"Xiaomi", redmi:"Redmi", poco:"POCO",
+  oppo:"OPPO", vivo:"Vivo", realme:"Realme", huawei:"Huawei", honor:"Honor",
+  motorola:"Motorola", oneplus:"OnePlus", tecno:"Tecno", infinix:"Infinix", lg:"LG",
+  tcl:"TCL", wiko:"Wiko", nokia:"Nokia", iqoo:"iQOO", meizu:"Meizu", zte:"ZTE",
+  asus:"ASUS", sony:"Sony", google:"Google", htc:"HTC", lenovo:"Lenovo",
+  reeder:"Reeder", vestel:"Vestel", casper:"Casper", omix:"OMIX",
+  "general mobile":"General Mobile", gm:"General Mobile",
+};
+function glassText(value: string): string {
+  return value.replace(/<script\b[\s\S]*?<\/script>/gi," ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi," ")
+    .replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ")
+    .replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'")
+    .replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n)))
+    .replace(/\s+/g," ").trim();
+}
+function glassNorm(value: string): string {
+  return value.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/ı/g,"i").replace(/\s+/g," ").trim();
+}
+function parseGlassGroup(url: string, html: string): GlassGroup | null {
+  const titleMatch = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
+  const title = titleMatch ? glassText(titleMatch[1]) : "Kırılmaz cam kalıbı";
+  const models: string[] = [];
+  const sections = [...html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2\b[^>]*>|$)/gi)];
+  for (const section of sections) {
+    const brand = glassBrands[glassNorm(glassText(section[1]))];
+    if (!brand) continue;
+    for (const li of section[2].matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)) {
+      let model = glassText(li[1]);
+      if (!model || model.length > 120) continue;
+      const key = glassNorm(model);
+      if (/toptan fiyatina|basvuru formu|bayilik|hakkimizda|iletisim|uyumluluk arac|kay[n]agi ac/.test(key)) continue;
+      if (!glassNorm(model).startsWith(glassNorm(brand)+" ") && glassNorm(model)!==glassNorm(brand)) {
+        if (brand==="Apple" && /^iphone\b/i.test(model)) model = model;
+        else if (brand==="Xiaomi" && /^(redmi|poco|xiaomi)\b/i.test(model)) model = model;
+        else model = brand+" "+model;
+      }
+      if (model.split(/\s+/).length <= 14) models.push(model);
+    }
+  }
+  const unique = [...new Map(models.map(m=>[glassNorm(m),m])).values()];
+  return unique.length ? { group:title, url, models:unique } : null;
+}
+async function loadGlassCatalog(): Promise<GlassGroup[]> {
+  if (glassCatalogCache && Date.now()-glassCatalogCache.at < 6*60*60*1000) return glassCatalogCache.groups;
+  const headers = { "User-Agent":"UzmantechPortal/1.0", "Accept":"text/html,application/xhtml+xml", "Accept-Language":"tr-TR,tr;q=0.9" };
+  const mainRes = await fetch(glassSourceUrl,{headers,signal:AbortSignal.timeout(12000)});
+  if (!mainRes.ok) throw new Error("Cam uyumluluk kaynağına ulaşılamadı.");
+  const mainHtml = await mainRes.text();
+  const links = [...mainHtml.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+    .map(m=>({url:new URL(m[1],glassSourceUrl).toString().split("#")[0],label:glassText(m[2])}))
+    .filter(x=>new URL(x.url).hostname==="www.simkon.com.tr" && new URL(x.url).pathname.startsWith("/uyumluluk/") && /kal[ıi]b[ıi]/i.test(x.label));
+  const uniqueLinks = [...new Map(links.map(x=>[x.url,x])).values()];
+  if (!uniqueLinks.length) throw new Error("Cam kalıp listesi kaynak sayfada bulunamadı.");
+  const groups: GlassGroup[] = [];
+  let cursor = 0;
+  const workers = Array.from({length:8},async()=>{
+    while(cursor<uniqueLinks.length){
+      const item=uniqueLinks[cursor++];
+      try {
+        const res=await fetch(item.url,{headers,signal:AbortSignal.timeout(10000)});
+        if(res.ok){const group=parseGlassGroup(item.url,await res.text());if(group)groups.push(group);}
+      } catch(error) { console.warn("Glass group fetch failed",item.url,error); }
+    }
+  });
+  await Promise.all(workers);
+  if (!groups.length) throw new Error("Cam kalıp verileri okunamadı.");
+  groups.sort((a,b)=>a.group.localeCompare(b.group,"tr"));
+  glassCatalogCache={groups,at:Date.now()};
+  return groups;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   if (!url || !serviceKey) return response({ success: false, message: "Sunucu yapılandırması eksik." }, 500);
@@ -198,6 +277,22 @@ Deno.serve(async (req: Request) => {
     } catch (error) {
       console.error("Enpara exchange rate fetch failed", error);
       return response({ success: false, message: "Enpara güncel USD satış kuru şu anda alınamıyor. Lütfen daha sonra tekrar deneyin." }, 503);
+    }
+  }
+
+
+  if (req.method === "GET" && path.pathname.endsWith("/cam-uyumluluk")) {
+    const query = String(path.searchParams.get("q") || "").trim();
+    if (query.length < 2 || query.length > 100) return response({ success: false, error: "En az 2 karakterlik model adı girin." }, 400);
+    try {
+      const groups = await loadGlassCatalog();
+      const needle = glassNorm(query);
+      const matches = groups.filter(group => group.models.some(model => glassNorm(model).includes(needle)))
+        .map(group => ({ group: group.group, models: group.models }));
+      return response({ success: true, groups: matches, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
+    } catch (error) {
+      console.error("Glass compatibility lookup failed", error);
+      return response({ success: false, error: "Cam uyumluluk kataloğu şu anda alınamıyor. Lütfen tekrar deneyin." }, 503);
     }
   }
 

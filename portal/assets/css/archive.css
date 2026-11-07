@@ -603,7 +603,7 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 
 
 /* Main portal header + reduced premium gate with translucent archive preview */
-.archive-shell.dashboard-page .site-global-header{position:sticky!important;top:0!important;z-index:60!important}
+.archive-shell.dashboard-page .site-global-header{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:99999!important}
 .archive-shell.dashboard-page .site-header-brand img{object-fit:contain}
 .archive-shell.archive-preview-locked{overflow:hidden!important;min-height:100vh!important}
 .archive-shell.archive-preview-locked .archive-stage{display:grid!important;visibility:visible!important;opacity:.2!important;filter:saturate(.72) blur(.35px)!important;pointer-events:none!important;position:relative!important;z-index:1!important}

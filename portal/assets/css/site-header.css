@@ -573,3 +573,67 @@ body:has(.site-global-header){padding-top:66px!important}
 }
 .glass-code-kicker,.glass-code-step{color:#a9dfff!important}
 .support-hero .status-bar{border-color:rgba(115,223,183,.55)!important;background:rgba(24,105,88,.2)!important}
+
+
+/* UZMANTECH GLOBAL METALLIC GLASS UI: shared card language across every page */
+:root{
+ --uzm-glass-border:rgba(190,220,244,.34);
+ --uzm-glass-fill:linear-gradient(160deg,rgba(154,190,220,.18) 0%,rgba(49,76,105,.42) 18%,rgba(24,43,65,.90) 58%,rgba(13,27,45,.96) 100%);
+ --uzm-glass-shadow:inset 0 1px 0 rgba(255,255,255,.17),inset 0 -2px 0 rgba(0,0,0,.28),0 7px 20px rgba(0,0,0,.25);
+ --uzm-glass-hover:rgba(110,190,245,.22);
+}
+:where(
+ .card,.glass-card,.feature-card,.feature-box,.category-card,.faq-item,
+ .ticket-section,.ticket-card,.ticket-history article,.support-card,
+ .plan-card,.package-card,.pricing-card,.price-card,.download-card,
+ .news-card,.update-card,.model-card,.brand-card,.device-card,
+ .payment-card,.payment-method,.stat-card,.info-card,.benefit-card,
+ .tool-card,.resource-card,.guide-card,.announcement-card,.dashboard-card,
+ .auth-card,.login-card,.register-card,.form-card,.content-card,
+ .glass-results,.glass-group,.glass-code-hero,.support-hero
+){
+ border:1px solid var(--uzm-glass-border)!important;
+ background:var(--uzm-glass-fill)!important;
+ box-shadow:var(--uzm-glass-shadow)!important;
+}
+:where(
+ .card,.glass-card,.feature-card,.feature-box,.category-card,.faq-item,
+ .ticket-section,.ticket-card,.support-card,.plan-card,.package-card,
+ .pricing-card,.price-card,.download-card,.news-card,.update-card,
+ .model-card,.brand-card,.device-card,.payment-card,.payment-method,
+ .stat-card,.info-card,.benefit-card,.tool-card,.resource-card,
+ .guide-card,.announcement-card,.dashboard-card,.auth-card,.login-card,
+ .register-card,.form-card,.content-card,.glass-results,.glass-group
+){border-radius:13px!important}
+:where(.card,.glass-card,.feature-card,.category-card,.plan-card,.package-card,.pricing-card,.download-card,.news-card,.update-card,.model-card,.brand-card,.device-card,.payment-card,.tool-card,.resource-card,.guide-card,.announcement-card){
+ transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease!important;
+}
+:where(.card,.glass-card,.feature-card,.category-card,.plan-card,.package-card,.pricing-card,.download-card,.news-card,.update-card,.model-card,.brand-card,.device-card,.payment-card,.tool-card,.resource-card,.guide-card,.announcement-card):hover{
+ border-color:rgba(190,231,255,.78)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 18px var(--uzm-glass-hover),0 9px 22px rgba(0,0,0,.32)!important;
+}
+:where(.card,.glass-card,.feature-card,.category-card,.plan-card,.package-card,.pricing-card,.download-card,.news-card,.update-card,.model-card,.brand-card,.device-card,.payment-card,.tool-card,.resource-card,.guide-card,.announcement-card) :where(h1,h2,h3,h4,.title){
+ color:#f2f8ff!important;
+}
+:where(.card,.glass-card,.feature-card,.category-card,.plan-card,.package-card,.pricing-card,.download-card,.news-card,.update-card,.model-card,.brand-card,.device-card,.payment-card,.tool-card,.resource-card,.guide-card,.announcement-card) :where(p,.description,.muted){
+ color:#b4c5d7!important;
+}
+:where(button,.btn,.button,.btn-primary,.btn-submit,.action-button,[type=submit]){
+ border-radius:9px;
+}
+:where(.btn-primary,.btn-submit,.primary-button,.action-button,[type=submit]){
+ border:1px solid rgba(202,234,255,.48)!important;
+ background:linear-gradient(180deg,#a8cbe6 0%,#456f96 24%,#183b5d 100%)!important;
+ color:#f7fbff!important;text-shadow:0 1px 2px #10263d!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 12px rgba(0,0,0,.3)!important;
+}
+:where(input,select,textarea,.search-box){
+ border-color:rgba(170,205,235,.34)!important;
+ background:linear-gradient(180deg,rgba(8,17,30,.94),rgba(17,34,53,.94))!important;
+ color:#f2f8ff!important;
+}
+:where(input,select,textarea,.search-box):focus{
+ border-color:rgba(153,218,255,.85)!important;
+ box-shadow:0 0 0 3px rgba(93,174,226,.14),0 0 16px rgba(93,174,226,.12)!important;
+ outline:none!important;
+}

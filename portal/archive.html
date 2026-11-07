@@ -124,6 +124,6 @@
 <script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/archive.js?v=samfw-models-20261107-1"></script>
 <script src="assets/js/language.js?v=portal-en-complete-20261107-1"></script>
 <script id="site-global-nav-controller">
-(()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
+(()=>{const header=document.querySelector(".site-global-header");if(!header)return;const button=header.querySelector(".site-mobile-nav-toggle"),nav=header.querySelector(".site-global-nav");if(!button||!nav)return;button.setAttribute("aria-controls","siteGlobalNav");nav.id="siteGlobalNav";button.addEventListener("click",()=>{const opened=!nav.classList.contains("is-open");nav.classList.toggle("is-open",opened);button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});nav.addEventListener("click",event=>{if(!event.target.closest("a"))return;nav.classList.remove("is-open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","Menüyü aç");});})();
 </script>
 </body></html>

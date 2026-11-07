@@ -274,7 +274,7 @@ async function loadSamFwFirmware(model:string,csc="TUR"):Promise<SamFwFirmware[]
  if(cached&&Date.now()-cached.at<30*60*1000)return cached.items;
  if(!/^SM-[A-Z0-9]+$/.test(key))throw new Error("Geçerli Samsung model kodu girin.");
  if(!/^[A-Z0-9]{3}$/.test(region))throw new Error("CSC kodu 3 karakter olmalıdır.");
- const source=new URL("/firmware/"+encodeURIComponent(key)+"/"+encodeURIComponent(region.toLowerCase()),samfwBase).toString();
+ const source=new URL("/firmware/"+encodeURIComponent(key)+"/"+encodeURIComponent(region)+"/",samfwBase).toString();
  const res=await fetch(source,{headers:{"User-Agent":"Mozilla/5.0 (compatible; UzmantechPortal/1.0)","Accept":"text/html,application/xhtml+xml"},signal:AbortSignal.timeout(20000)});
  if(!res.ok)throw new Error("SamFW firmware sayfasına ulaşılamadı.");
  const html=await res.text(),heading=html.search(/Samsung firmware\s+SM-/i),tableStart=heading>=0?html.indexOf("<table",heading):html.indexOf("<table"),tableEnd=tableStart>=0?html.indexOf("</table>",tableStart):-1;

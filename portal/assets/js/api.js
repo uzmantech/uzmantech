@@ -22,7 +22,7 @@
       if (!response.ok || data.success === false) throw new Error(data.message || "İşlem tamamlanamadı.");
       return data;
     } catch (error) {
-      if (error?.name === "AbortError") throw new Error("Sunucu 12 saniye içinde yanıt vermedi. Lütfen tekrar deneyin.");
+      if (error?.name === "AbortError") throw new Error("Sunucu " + Math.round(timeoutMs / 1000) + " saniye içinde yanıt vermedi. Lütfen tekrar deneyin.");
       throw error;
     } finally {
       window.clearTimeout(timeout);

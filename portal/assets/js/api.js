@@ -3,19 +3,30 @@
   const token = () => { const saved = localStorage.getItem("uzmantech_web_session"); if(saved) return saved; const legacy = sessionStorage.getItem("uzmantech_web_session") || ""; if(legacy){ localStorage.setItem("uzmantech_web_session", legacy); sessionStorage.removeItem("uzmantech_web_session"); } return legacy; };
   async function call(path, options = {}) {
     if (!config.apiBaseUrl || !config.publishableKey) throw new Error("Portal bağlantısı yapılandırılmamış.");
-    const response = await fetch(config.apiBaseUrl + path, {
-      ...options,
-      headers: {
-        apikey: config.publishableKey,
-        Authorization: "Bearer " + (token() || config.publishableKey),
-        "Content-Type": "application/json",
-        ...(options.headers || {})
-      },
-      cache: "no-store"
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok || data.success === false) throw new Error(data.message || "İşlem tamamlanamadı.");
-    return data;
+    const { timeoutMs = (path.includes("payment-receipt") ? 45000 : 12000), ...requestOptions } = options;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(config.apiBaseUrl + path, {
+        ...requestOptions,
+        signal: controller.signal,
+        headers: {
+          apikey: config.publishableKey,
+          Authorization: "Bearer " + (token() || config.publishableKey),
+          "Content-Type": "application/json",
+          ...(requestOptions.headers || {})
+        },
+        cache: "no-store"
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.success === false) throw new Error(data.message || "İşlem tamamlanamadı.");
+      return data;
+    } catch (error) {
+      if (error?.name === "AbortError") throw new Error("Sunucu 12 saniye içinde yanıt vermedi. Lütfen tekrar deneyin.");
+      throw error;
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
   window.UzmantechAPI = Object.freeze({
     login: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "login", ...data }) }),

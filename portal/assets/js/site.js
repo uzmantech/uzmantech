@@ -446,7 +446,7 @@
     if(e.target.id==="languageSelect"){
       const lang=applyLanguage(e.target.value);
       syncHeader();
-      if(lang==="en")toast("Language set to English. Some portal sections may still appear in Turkish.");
+      if(lang==="en")toast("Language set to English.");
       else toast("Dil Türkçe olarak ayarlandı.");
     }
   });

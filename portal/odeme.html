@@ -77,7 +77,7 @@
   }catch(err){say(err.message||"Dekont gönderilemedi.");}finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
  });
 })().catch(error=>{console.error("Payment page initialization failed:",error);const d=document.getElementById("paymentTry");if(d)d.textContent="Ödeme sayfası başlatılamadı";const r=document.getElementById("paymentRate");if(r)r.textContent=error.message||"Bilinmeyen hata";});
-</script><script src="assets/js/language.js?v=portal-en-20261106-2"></script><script id="site-global-nav-controller">
+</script><script src="assets/js/language.js?v=portal-en-complete-20261107-1"></script><script id="site-global-nav-controller">
 (()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
 </script>
 </body></html>

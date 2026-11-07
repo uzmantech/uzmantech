@@ -899,3 +899,38 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
  min-width:0!important;
  box-sizing:border-box!important;
 }
+
+
+/* Final mobile header layout: reserve separate columns for language and stacked auth. */
+@media (max-width: 980px) {
+ .site-global-header {
+  display:flex!important; flex-wrap:wrap!important; align-items:center!important;
+  gap:8px!important; min-height:0!important; height:auto!important;
+ }
+ .site-global-header .site-global-nav { display:none!important; }
+ .site-global-header .site-global-nav.is-open { display:flex!important; flex:1 0 100%!important; }
+ .site-global-header .dash-top-actions {
+  order:3!important; flex:0 0 auto!important; width:auto!important; min-width:0!important;
+  display:grid!important; grid-template-columns:64px 108px!important;
+  grid-template-rows:auto!important; align-items:start!important; justify-content:end!important;
+  gap:8px!important; margin:0 0 0 auto!important;
+ }
+ .site-global-header .dash-top-actions .language-control {
+  grid-column:1!important; grid-row:1!important; width:64px!important; min-width:64px!important;
+  height:32px!important; min-height:32px!important; box-sizing:border-box!important;
+ }
+ .site-global-header .dash-top-actions .header-auth {
+  grid-column:2!important; grid-row:1!important; position:relative!important;
+  display:flex!important; flex-direction:column!important; align-items:stretch!important;
+  justify-content:flex-start!important; gap:5px!important; width:108px!important;
+  min-width:108px!important; max-width:108px!important; flex:0 0 108px!important;
+  margin:0!important; padding:0!important; transform:none!important;
+ }
+ .site-global-header .dash-top-actions .header-auth .header-login,
+ .site-global-header .dash-top-actions .header-auth .header-register {
+  position:relative!important; inset:auto!important; float:none!important;
+  display:flex!important; width:100%!important; min-width:0!important; max-width:100%!important;
+  height:30px!important; min-height:30px!important; margin:0!important; padding:0 6px!important;
+  box-sizing:border-box!important; transform:none!important; white-space:nowrap!important;
+ }
+}

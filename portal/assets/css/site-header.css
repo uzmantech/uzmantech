@@ -1139,3 +1139,20 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
 @media(max-width:760px){
   body:has(.site-global-header){padding-top:120px!important}
 }
+
+
+/* Mobile header row: flatten nested auth groups so language/login/register share one row */
+@media(max-width:760px){
+  .site-global-header .site-header-brand{flex:1 1 0!important;width:auto!important;min-width:0!important}
+  .site-global-header .site-mobile-nav-toggle{flex:0 0 42px!important;margin-left:0!important}
+  .site-global-header .dash-top-actions,
+  .site-global-header .site-header-actions{display:flex!important;flex:1 0 100%!important;width:100%!important;gap:7px!important}
+  .site-global-header .dash-top-actions .header-auth,
+  .site-global-header .site-header-actions .site-archive-auth{display:contents!important}
+  .site-global-header .dash-top-actions .language-control,
+  .site-global-header .dash-top-actions .header-login,
+  .site-global-header .dash-top-actions .header-register,
+  .site-global-header .site-header-actions .language-control,
+  .site-global-header .site-header-actions .header-login,
+  .site-global-header .site-header-actions .header-register{flex:1 1 0!important;width:0!important;min-width:0!important}
+}

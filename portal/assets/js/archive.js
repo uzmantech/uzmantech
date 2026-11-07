@@ -128,6 +128,16 @@ function showPackageRequired(){
  $("#modalBody").innerHTML=`<div class="archive-access-symbol" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="9" y="21" width="30" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 21v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="31" r="2.2" fill="currentColor"/><path d="M24 33v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="archive-access-kicker">UZMANTOOL DOSYA ARŞİVİ</span><h3 class="archive-access-title">Arşiv erişime açık değil</h3><p class="archive-access-copy">Marka ve modellere ait teknik dosyaları görüntülemek için aktif bir üyelik paketine ihtiyacınız var.</p><div class="archive-access-divider"></div><button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button><small class="archive-access-note">Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</small>`;
  $("#modal").classList.add("open");
 }
+function syncArchiveHeader(user){
+ const auth=$("#headerAuth");if(!auth)return;
+ if(user){
+  const name=String(user.username||user.email||"Kullanıcı").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const role=user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Üye";
+  auth.innerHTML='<div class="profile-menu-wrap"><button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Kullanıcı menüsü" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdown"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+name+'</b><small>'+role+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button><div class="profile-dropdown" id="profileDropdown" hidden><button type="button" data-archive-profile-action="account"><span>Hesabım</span></button><button type="button" data-archive-profile-action="logout"><span>Çıkış Yap</span></button></div></div>';
+ }else{
+  auth.innerHTML='<button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span>Giriş Yap</span></button><a class="header-register" id="headerRegister" href="kayit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span>Üye Ol</span></a>';
+ }
+}
 function applyLockedArchivePreview(){
  document.querySelectorAll(".archive-global-search,.archive-brand-catalog-head,.archive-brand-search").forEach(el=>{el.hidden=true;el.style.setProperty("display","none","important");});
 }
@@ -137,6 +147,7 @@ async function enforceArchiveLicense(){
  try{
   const result=await UzmantechAPI.session();
   const user=result.user||{};
+  syncArchiveHeader(user);
   const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
   const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
   if(!hasPaidAccess){document.body.classList.remove("archive-authorized");document.body.classList.add("archive-preview-locked");applyLockedArchivePreview();if(stage)stage.hidden=false;if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}return;}
@@ -146,6 +157,7 @@ async function enforceArchiveLicense(){
   if(gate)gate.hidden=true;
   await loadLiveArchive();
  }catch(error){
+  syncArchiveHeader(null);
   // Ziyaretçi veya oturumu olmayan kullanıcı kayıt sayfasına atılmaz.
   // Dosya deposunun kilitli olduğunu görür; yalnızca Tamam ile paketlere gider.
   document.body.classList.remove("archive-authorized");

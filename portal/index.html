@@ -348,8 +348,7 @@ load();
    for(const [key,id] of Object.entries(ids)){const el=document.getElementById(id);if(el)el.textContent=format(result[key]);}
   }catch(error){console.warn("Site istatistikleri alınamadı.",error);}
  }
- refresh();
- window.setInterval(refresh,30000);
+ window.setTimeout(()=>{refresh();window.setInterval(refresh,60000);},8000);
 })();
 </script>
 <script>
@@ -379,10 +378,10 @@ load();
 
 <script id="uz-intro-controller">
 (()=>{const loader=document.getElementById("uz-intro");if(!loader)return;
-let closed=false;const close=()=>{if(closed)return;closed=true;loader.classList.add("is-leaving");window.setTimeout(()=>loader.remove(),650);};
-const start=Date.now();const finish=()=>window.setTimeout(close,Math.max(0,6000-(Date.now()-start)));
-if(document.readyState==="complete")finish();else window.addEventListener("load",finish,{once:true});
-window.setTimeout(close,9000);
+let closed=false;const close=()=>{if(closed)return;closed=true;loader.classList.add("is-leaving");window.setTimeout(()=>loader.remove(),180);};
+const finish=()=>window.setTimeout(close,250);
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",finish,{once:true});else finish();
+window.setTimeout(close,1800);
 })();
 </script>
 <script id="site-global-nav-controller">

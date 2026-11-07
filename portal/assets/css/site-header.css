@@ -508,3 +508,68 @@ body:has(.site-global-header){padding-top:66px!important}
  .site-global-header .site-nav-link{flex:1 1 190px!important;height:38px!important;min-height:38px!important;font-size:11px!important}
  .site-global-header .site-nav-link b{font-size:11px!important}
 }
+
+
+/* Metallic glass-card system matching the shared Uzmantech navigation */
+:root{
+ --uz-card-border:rgba(190,220,244,.34);
+ --uz-card-top:rgba(154,190,220,.18);
+ --uz-card-mid:rgba(49,76,105,.42);
+ --uz-card-base:rgba(13,27,45,.94);
+ --uz-card-glow:rgba(110,190,245,.2);
+}
+.support-hero,.ticket-section,.category-card,.faq-item,.login-note,.ticket-history article,
+.glass-code-hero,.glass-code-brands .brand-card,.glass-code-page .glass-results,
+.glass-code-page .glass-group,.glass-code-features .feature-card,.glass-code-search,
+.glass-code-badge{
+ border:1px solid var(--uz-card-border)!important;
+ background:linear-gradient(160deg,var(--uz-card-top) 0%,var(--uz-card-mid) 18%,rgba(24,43,65,.9) 58%,var(--uz-card-base) 100%)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.17),inset 0 -2px 0 rgba(0,0,0,.28),0 7px 20px rgba(0,0,0,.25)!important;
+}
+.support-hero,.glass-code-hero{
+ border-radius:18px!important;
+}
+.category-card,.faq-item,.ticket-section,.glass-code-brands .brand-card,
+.glass-code-page .glass-results,.glass-code-page .glass-group,
+.glass-code-features .feature-card{
+ border-radius:13px!important;
+}
+.category-card,.glass-code-brands .brand-card,.glass-code-features .feature-card{
+ position:relative!important;overflow:hidden!important;
+ transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease!important;
+}
+.category-card:before,.glass-code-brands .brand-card:before,.glass-code-features .feature-card:before{
+ content:""!important;position:absolute!important;inset:0 0 auto!important;height:1px!important;
+ background:linear-gradient(90deg,transparent,rgba(225,244,255,.65),transparent)!important;
+ pointer-events:none!important;
+}
+.category-card:hover,.glass-code-brands .brand-card:hover,.glass-code-features .feature-card:hover{
+ border-color:rgba(190,231,255,.82)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 18px var(--uz-card-glow),0 9px 22px rgba(0,0,0,.32)!important;
+ transform:translateY(-2px)!important;
+}
+.category-card h3,.faq-item h4,.ticket-section h2,
+.glass-code-page .glass-results-head h2,.glass-code-page .glass-group-top h3,
+.glass-code-features h3{color:#f2f8ff!important}
+.category-card p,.faq-item p,.ticket-section>p,
+.glass-code-features p{color:#b4c5d7!important}
+.glass-code-page .glass-model{
+ border:1px solid rgba(178,214,242,.34)!important;border-radius:8px!important;
+ background:linear-gradient(180deg,rgba(151,188,218,.16),rgba(18,38,60,.9))!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+.glass-code-page .glass-model.is-match{
+ border-color:#78d9ff!important;background:linear-gradient(180deg,rgba(77,178,226,.3),rgba(12,61,91,.95))!important;
+}
+.glass-code-search{border-radius:13px!important}
+.glass-code-search .search-btn,.btn-submit{
+ border:1px solid rgba(202,234,255,.48)!important;
+ background:linear-gradient(180deg,#a8cbe6 0%,#456f96 24%,#183b5d 100%)!important;
+ color:#f7fbff!important;text-shadow:0 1px 2px #10263d!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 12px rgba(0,0,0,.3)!important;
+}
+.glass-code-search .search-btn:hover,.btn-submit:hover{
+ border-color:#d8f2ff!important;filter:brightness(1.12)!important;
+}
+.glass-code-kicker,.glass-code-step{color:#a9dfff!important}
+.support-hero .status-bar{border-color:rgba(115,223,183,.55)!important;background:rgba(24,105,88,.2)!important}

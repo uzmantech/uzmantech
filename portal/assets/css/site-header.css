@@ -877,3 +877,25 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   width:100%!important;min-width:108px!important;box-sizing:border-box!important;
  }
 }
+
+
+/* Keep login and registration actions vertically stacked in the compact header. */
+.site-global-header .header-auth{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:center!important;
+ gap:6px!important;
+ width:108px!important;
+ min-width:108px!important;
+ flex:0 0 108px!important;
+}
+.site-global-header .header-auth .header-login,
+.site-global-header .header-auth .header-register{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ min-width:0!important;
+ box-sizing:border-box!important;
+}

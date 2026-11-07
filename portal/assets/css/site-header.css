@@ -107,3 +107,74 @@ body:has(.site-global-header){padding-top:80px!important}
 .site-global-header .language-control select{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;opacity:0!important;z-index:6!important;cursor:pointer!important}
 .site-global-header .language-control{justify-content:flex-start!important;gap:11px!important;padding:0 12px!important;box-sizing:border-box!important}.site-global-header .language-control::after{content:attr(data-current);position:static!important;display:inline-block;transform:none!important;z-index:2;pointer-events:none;color:#fff;font:800 13px/1 "DM Sans",sans-serif;letter-spacing:.6px}.site-global-header .language-control .language-globe{position:relative;z-index:1;flex:0 0 26px!important;width:26px!important;height:20px!important}.site-global-header .language-control select{z-index:6!important}
 .site-global-header .language-control .language-globe,.site-global-header .language-control .top-chevron{pointer-events:none}
+
+
+/* Neon navbar experiment: visual language adapted from the supplied reference */
+.site-global-header{
+  min-height:80px;height:80px;padding:0 clamp(14px,2vw,28px);
+  gap:clamp(10px,1.2vw,18px);
+  background:rgba(9,13,22,.94);
+  border-bottom:1px solid rgba(0,216,238,.18);
+  box-shadow:0 8px 28px rgba(0,0,0,.34),inset 0 -1px 0 rgba(112,0,255,.08);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+}
+.site-global-header:after{
+  content:"";position:absolute;left:5%;right:5%;bottom:-1px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(0,216,238,.62),rgba(112,0,255,.5),transparent);
+}
+.site-header-brand{border-right-color:rgba(0,216,238,.16)}
+.site-header-brand b{font-family:"Space Grotesk","DM Sans",sans-serif;letter-spacing:.7px}
+.site-global-nav{gap:clamp(2px,.35vw,6px)}
+.site-nav-link{
+  position:relative;height:44px;padding:0 clamp(8px,.85vw,13px);gap:8px;
+  border:1px solid transparent;border-radius:11px;
+  color:#9baabd;font-family:"Space Grotesk","DM Sans",sans-serif;
+  font-size:clamp(10px,.82vw,12px);font-weight:600;letter-spacing:.15px;
+  transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.site-nav-icon{width:22px;height:22px;background:transparent;color:#8295aa;font-size:18px;transition:color .2s ease,text-shadow .2s ease}
+.site-nav-link:hover{
+  color:#d8faff;background:rgba(0,216,238,.055);
+  border-color:rgba(0,216,238,.24);box-shadow:0 0 16px rgba(0,216,238,.09);
+}
+.site-nav-link:hover .site-nav-icon{color:#00d8ee;text-shadow:0 0 10px rgba(0,216,238,.5)}
+.site-nav-link.active{
+  color:#00e5f5;background:rgba(0,216,238,.105);
+  border-color:rgba(0,216,238,.42);
+  box-shadow:0 0 18px rgba(0,216,238,.13),inset 0 0 12px rgba(0,216,238,.055);
+}
+.site-nav-link.active .site-nav-icon{color:#00e5f5;background:transparent;text-shadow:0 0 10px rgba(0,216,238,.65)}
+.site-global-header .language-control{
+  border-color:rgba(117,139,165,.28);background:rgba(15,24,38,.86);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.site-global-header .language-control:hover{border-color:rgba(0,216,238,.45);box-shadow:0 0 14px rgba(0,216,238,.1)}
+.site-global-header .header-login,.site-global-header .header-register{
+  min-height:42px;border-radius:10px;font-family:"Space Grotesk","DM Sans",sans-serif;
+  font-size:11px;letter-spacing:.25px;transition:all .2s ease;
+}
+.site-global-header .header-login{
+  color:#c5d0df;background:rgba(15,24,38,.72);
+  border:1px solid rgba(117,139,165,.28);
+}
+.site-global-header .header-login:hover{color:#00e5f5;border-color:rgba(0,216,238,.48);box-shadow:0 0 15px rgba(0,216,238,.12)}
+.site-global-header .header-register{
+  color:#031016;background:#00d8ee;border:1px solid #32eaff;
+  box-shadow:0 0 18px rgba(0,216,238,.22);
+}
+.site-global-header .header-register:hover{background:#65f2ff;box-shadow:0 0 24px rgba(0,216,238,.38);transform:translateY(-1px)}
+.site-global-header .header-register svg{color:#031016}
+@media(max-width:1250px){
+ .site-header-brand{width:176px;flex-basis:176px}
+ .site-nav-link{padding:0 7px;gap:5px;font-size:10px}
+ .site-nav-icon{width:19px;height:19px;font-size:16px}
+}
+@media(max-width:980px){
+ .site-global-header{min-height:72px;height:auto}
+ .site-global-header:after{left:0;right:0}
+ .site-nav-link{flex:1 1 135px;min-height:42px;font-size:11px}
+}
+@media(max-width:560px){
+ .site-global-header .header-login,.site-global-header .header-register{min-height:36px}
+ .site-nav-link{flex-basis:calc(50% - 5px)}
+}

@@ -462,5 +462,5 @@
     ];
     Promise.allSettled(startupTasks).then(()=>syncHeader());
   })();
-document.addEventListener("click",e=>{const b=e.target.closest(".site-mobile-nav-toggle");if(!b)return;const nav=document.querySelector(".site-global-nav");const open=nav?.classList.toggle("is-open")||false;b.setAttribute("aria-expanded",String(open));});
+
 })();

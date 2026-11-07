@@ -462,6 +462,5 @@
     ];
     Promise.allSettled(startupTasks).then(()=>syncHeader());
   })();
-document.addEventListener("click",e=>{const b=e.target.closest(".site-mobile-nav-toggle");if(!b)return;const header=b.closest(".site-global-header");const nav=header?.querySelector(".site-global-nav");if(!nav)return;const open=!nav.classList.contains("is-open");nav.classList.toggle("is-open",open);b.setAttribute("aria-expanded",String(open));b.setAttribute("aria-label",open?"Menüyü kapat":"Menüyü aç");});
-document.addEventListener("click",e=>{const link=e.target.closest(".site-global-nav a");if(!link)return;const header=link.closest(".site-global-header");const nav=header?.querySelector(".site-global-nav");const button=header?.querySelector(".site-mobile-nav-toggle");nav?.classList.remove("is-open");button?.setAttribute("aria-expanded","false");button?.setAttribute("aria-label","Menüyü aç");});
+
 })();

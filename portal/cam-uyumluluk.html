@@ -103,7 +103,8 @@
   <article class="feature-card"><div class="feature-symbol">⟳</div><h3 data-tr="Sürekli Güncel" data-en="Always Up to Date">Sürekli Güncel</h3><p data-tr="Simkon katalog verileriyle daima güncel ve güvenilir sonuçlar elde edin." data-en="Get up-to-date, reliable results using Simkon catalog data.">Simkon katalog verileriyle daima güncel ve güvenilir sonuçlar elde edin.</p></article>
  </section>
 </main>
-<script src="assets/js/config.js"></script><script src="assets/js/glass-compatibility.js?v=search-header-fix-20261107-2"></script>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" type="button" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=compat-login-20261107-1"></script><script src="assets/js/site.js?v=compat-login-20261107-1"></script><script src="assets/js/glass-compatibility.js?v=search-header-fix-20261107-2"></script>
 <script>
 
 document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.brand;const input=document.querySelector("#glassQuery");if(q){input.value=q;input.focus();document.querySelector("#glassSearch").click();}else{input.focus();}}));

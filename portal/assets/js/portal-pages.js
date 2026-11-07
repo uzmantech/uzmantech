@@ -69,12 +69,16 @@ async function loadAutoTechNews(){
   const result=await window.UzmantechAPI.news({limit:"18"});
   const items=Array.isArray(result.news)?result.news:[];
   if(!items.length){grid.innerHTML='<article class="news-card"><div class="news-card-body"><p>Henüz yayınlanmış teknoloji haberi bulunmuyor.</p></div></article>';return;}
-  grid.innerHTML=items.map(item=>{
+  grid.innerHTML=items.map((item,index)=>{
    const title=newsEsc(item.title),summary=newsEsc(item.summary||item.title),source=newsEsc(item.source_name);
    const slug=encodeURIComponent(String(item.slug||""));
+   const category=newsEsc(item.category||"TEKNOLOJİ").toLocaleUpperCase("tr-TR");
+   const rawImage=String(item.image_url||"");
+   const imageUrl=/^https:\/\//i.test(rawImage)?newsEsc(rawImage):"";
    const date=item.published_at?new Date(item.published_at):null;
    const dateText=date&&!Number.isNaN(date.getTime())?date.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"}):"Güncel";
-   return '<article class="news-card" data-news-category="product"><div class="news-card-art art-devices"><span>TEKNOLOJİ</span><span>GÜNCEL HABER</span><i>⌘</i></div><div class="news-card-body"><span class="news-category-tag">'+source+'</span><h4>'+title+'</h4><p>'+summary+'</p><div class="news-featured-meta"><span>'+dateText+'</span></div><a href="/haber/'+slug+'">Haberi oku <b>→</b></a></div></article>';
+   const art=imageUrl?'<img src="'+imageUrl+'" alt="" loading="lazy" referrerpolicy="no-referrer">':"";
+   return '<article class="news-card"><div class="news-card-art '+(imageUrl?'has-image':'')+'">'+art+'<div class="news-art-top"><span>'+category+'</span><span>TECH / FEED</span></div><span class="news-art-index">UZMANTECH&nbsp; / &nbsp;'+String(index+1).padStart(2,"0")+'</span><b class="news-art-mark">01</b></div><div class="news-card-body"><span class="news-category-tag">'+source+'</span><h4>'+title+'</h4><p>'+summary+'</p><div class="news-featured-meta"><span>'+dateText+'</span><span>•</span><span>Kaynak haber</span></div><a href="/haber/'+slug+'">Haberi oku <b>→</b></a></div></article>';
   }).join("");
   if(stamp)stamp.textContent=items.length+" HABER / GÜNCEL";
  }catch(error){

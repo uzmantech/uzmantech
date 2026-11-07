@@ -670,3 +670,15 @@ body.archive-shell .profile-dropdown{position:absolute!important;top:calc(100% +
 body.archive-shell .profile-dropdown[hidden]{display:none!important}
 body.archive-shell .profile-dropdown button{width:100%!important;min-height:38px!important;display:flex!important;align-items:center!important;padding:9px 10px!important;color:#e6f2ff!important;background:transparent!important;border:0!important;text-align:left!important;font-size:13px!important}
 body.archive-shell .profile-dropdown button:hover{background:#163653!important}
+
+/* SamFW Samsung firmware lookup */
+.archive-samfw-lookup{grid-column:1/-1;display:grid;gap:10px;margin:0 0 8px;padding:16px;border:1px solid #315d88;border-radius:13px;background:linear-gradient(135deg,#10243a,#101723);box-shadow:0 8px 24px #0003}
+.archive-samfw-lookup-title{display:flex;flex-direction:column;gap:4px}
+.archive-samfw-lookup-title strong{color:#eaf4ff;font-size:14px;font-weight:800}
+.archive-samfw-lookup-title small,.archive-samfw-lookup-hint{color:#a9bfd7;font-size:11px;line-height:1.5}
+.archive-samfw-lookup-fields{display:grid;grid-template-columns:minmax(0,1fr) 90px auto;gap:8px}
+.archive-samfw-lookup-fields input{width:100%;min-width:0;min-height:42px;padding:0 12px;border:1px solid #3a526c;border-radius:8px;outline:0;background:#091522;color:#f5f9ff;font:600 13px "DM Sans",sans-serif}
+.archive-samfw-lookup-fields input:focus{border-color:#4b9cf2;box-shadow:0 0 0 3px #348be522}
+.archive-samfw-lookup-fields button{min-height:42px;padding:0 17px;border:1px solid #3286dc;border-radius:8px;background:linear-gradient(120deg,#247de0,#1456a5);color:#fff;font-size:11px;font-weight:800;white-space:nowrap;cursor:pointer}
+.archive-samfw-lookup-fields button:disabled{opacity:.55;cursor:wait}
+@media(max-width:560px){.archive-samfw-lookup{padding:12px}.archive-samfw-lookup-fields{grid-template-columns:minmax(0,1fr) 74px}.archive-samfw-lookup-fields button{grid-column:1/-1;width:100%}}

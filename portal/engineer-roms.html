@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19">
+<meta name="description" content="Xiaomi, Redmi ve POCO cihazları için Engineer ROM listesi ve kaynak indirme bağlantıları.">
+<title>Xiaomi Engineer ROM | Uzmantech</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css?v=global-metal-glass-20261107-5">
+<link rel="stylesheet" href="assets/css/engineer-roms.css?v=20261107-1">
+</head>
+<body class="engineer-rom-page">
+<header class="site-global-header er-header">
+ <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="index.html"><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="archive.html"><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link active" href="engineer-roms.html"><b>Engineer ROM</b></a>
+  <a class="site-nav-link" href="cam-uyumluluk.html"><b>Cam Uyumluluğu</b></a>
+  <a class="site-nav-link" href="paketler.html"><b>Paketler</b></a>
+  <a class="site-nav-link" href="destek.html"><b>Destek</b></a>
+ </nav>
+ <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+</header>
+<main class="er-main">
+ <section class="er-hero">
+  <div class="er-eyebrow"><span></span> UZMANTOOL · XIAOMI FIRMWARE</div>
+  <h1>Xiaomi <em>Engineer ROM</em></h1>
+  <p>Xiaomi, Redmi ve POCO cihazlarının Engineer ROM kayıtları. İndirme bağlantıları doğrudan kaynak sayfadaki ilgili dosya sayfasına yönlendirir.</p>
+  <div class="er-source"><span class="er-live-dot"></span> Kaynak: Xiaomi Tools <span class="er-sep">•</span> Liste otomatik güncellenir</div>
+ </section>
+ <section class="er-catalog">
+  <div class="er-toolbar">
+   <label class="er-search"><span aria-hidden="true">⌕</span><input id="erSearch" type="search" placeholder="Model veya kod adı ara… (örn. Redmi Note 8, ginkgo)" autocomplete="off"><kbd>⌕</kbd></label>
+   <div class="er-stats"><strong id="erCount">Yükleniyor…</strong><span id="erUpdated"></span></div>
+  </div>
+  <div id="erStatus" class="er-status">Engineer ROM listesi kaynaktan alınıyor…</div>
+  <div class="er-table-wrap" id="erTableWrap" hidden>
+   <table class="er-table">
+    <thead><tr><th>TELEFON MODELİ</th><th>CODENAME</th><th class="er-action-head">KAYNAK İNDİRME SAYFASI</th></tr></thead>
+    <tbody id="erRows"></tbody>
+   </table>
+  </div>
+  <div id="erEmpty" class="er-empty" hidden>Aramanızla eşleşen model bulunamadı.</div>
+  <div class="er-footnote"><strong>Bilgilendirme:</strong> Engineer ROM yazılımları günlük kullanım için tasarlanmamıştır. Yalnızca teknik servis ve uygun onarım senaryolarında, cihaz uyumluluğu doğrulanarak kullanılmalıdır. İndirme işlemi Xiaomi Tools kaynak sayfasında devam eder.</div>
+ </section>
+ <footer class="er-footer"><a href="archive.html">← Dosya Arşivine Dön</a><span>© Uzmantech</span></footer>
+</main>
+<script src="assets/js/config.js"></script><script src="assets/js/engineer-roms.js?v=20261107-1"></script>
+<script id="er-mobile-nav">(()=>{const b=document.querySelector(".site-mobile-nav-toggle"),n=document.querySelector(".site-global-nav");if(!b||!n)return;b.addEventListener("click",()=>{const o=n.classList.toggle("is-open");b.setAttribute("aria-expanded",String(o));});})();</script>
+</body></html>

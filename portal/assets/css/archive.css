@@ -498,7 +498,7 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
   background-size:100% 100%;
 }
 .archive-license-card:after{
-  content:"";position:absolute;left:10%;right:10%;top:68%;height:2px;
+  content:"";position:absolute;left:10%;right:10%;top:61%;height:2px;
   background:linear-gradient(90deg,transparent,#64dfff,#b4f6ff,#64dfff,transparent);
   box-shadow:0 0 12px #55dfff,0 0 28px #0abce8;opacity:.85;
 }

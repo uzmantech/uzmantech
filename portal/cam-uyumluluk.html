@@ -83,15 +83,15 @@
   <button id="glassSearch" class="search-btn" type="button">Uyumluluğu Bul</button>
  </form>
  <section class="glass-code-brands" aria-label="Marka seçimi">
-  <button class="brand-card" type="button" data-brand="Samsung"><b class="brand-samsung">SAMSUNG</b></button>
-  <button class="brand-card" type="button" data-brand="iPhone"><b class="brand-apple">● iPhone</b></button>
-  <button class="brand-card" type="button" data-brand="Xiaomi"><b class="brand-xiaomi">mi Xiaomi</b></button>
-  <button class="brand-card" type="button" data-brand="OPPO"><b class="brand-oppo">OPPO</b></button>
-  <button class="brand-card" type="button" data-brand="realme"><b class="brand-realme">realme</b></button>
-  <button class="brand-card" type="button" data-brand="vivo"><b class="brand-vivo">vivo</b></button>
-  <button class="brand-card" type="button" data-brand="HUAWEI"><b class="brand-huawei">HUAWEI</b></button>
-  <button class="brand-card" type="button" data-brand="HONOR"><b class="brand-honor">HONOR</b></button>
-  <button class="brand-card" type="button" data-brand=""><b data-tr="▦ Diğer Markalar" data-en="▦ Other Brands">▦ Diğer Markalar</b></button>
+  <div class="brand-card"><b class="brand-samsung">SAMSUNG</b></div>
+  <div class="brand-card"><b class="brand-apple">● iPhone</b></div>
+  <div class="brand-card"><b class="brand-xiaomi">mi Xiaomi</b></div>
+  <div class="brand-card"><b class="brand-oppo">OPPO</b></div>
+  <div class="brand-card"><b class="brand-realme">realme</b></div>
+  <div class="brand-card"><b class="brand-vivo">vivo</b></div>
+  <div class="brand-card"><b class="brand-huawei">HUAWEI</b></div>
+  <div class="brand-card"><b class="brand-honor">HONOR</b></div>
+  <div class="brand-card"><b data-tr="▦ Diğer Markalar" data-en="▦ Other Brands">▦ Diğer Markalar</b></button>
  </section>
  <section class="glass-results" aria-live="polite">
   <div class="glass-results-head"><div><span class="glass-step">02 / MATCH RESULTS</span><h2 id="glassResultTitle" data-tr="Uyumluluk sonuçları burada" data-en="Compatibility results will appear here">Uyumluluk sonuçları burada</h2></div><span class="glass-live"><i></i><span data-tr="Katalog bağlantısı hazır" data-en="Catalog connection ready">Katalog bağlantısı hazır</span></span></div>
@@ -105,11 +105,7 @@
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" type="button" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js?v=compat-login-20261107-1"></script><script src="assets/js/site.js?v=compat-login-20261107-1"></script><script src="assets/js/glass-compatibility.js?v=search-header-fix-20261107-2"></script>
-<script>
 
-document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.brand;const input=document.querySelector("#glassQuery");if(q){input.value=q;input.focus();document.querySelector("#glassSearch").click();}else{input.focus();}}));
-
-</script>
 <script id="site-global-nav-controller">
 (()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
 </script>

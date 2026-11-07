@@ -76,5 +76,13 @@ document.addEventListener("click",function(e){
     note.textContent="Lisans anahtarı doğrulama servisi henüz portala bağlanmadı. Mevcut lisans işlemleri için hesabınıza giriş yapabilirsiniz.";
   }
 });
-window.UzmantoolPages={show};show(location.hash.slice(1)||"home",false);
+window.UzmantoolPages={show};
+const initialPage=location.hash.slice(1)||"home";
+show(initialPage,false);
+if(initialPage==="account") document.dispatchEvent(new CustomEvent("portal:show-account"));
+window.addEventListener("hashchange",()=>{
+ const target=location.hash.slice(1)||"home";
+ show(target,false);
+ if(target==="account") document.dispatchEvent(new CustomEvent("portal:show-account"));
+});
 })();

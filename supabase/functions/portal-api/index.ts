@@ -328,6 +328,21 @@ Deno.serve(async (req: Request) => {
     return response({ success: true, service: "uzmantech-portal-api" });
   }
 
+  if (req.method === "GET" && path.pathname.endsWith("/news")) {
+    const requestedLimit = Number(path.searchParams.get("limit") || "18");
+    const limit = Math.min(Math.max(Number.isFinite(requestedLimit) ? Math.floor(requestedLimit) : 18, 1), 30);
+    const { data, error } = await db.from("portal_news")
+      .select("slug,title,summary,source_name,source_url,category,image_url,published_at")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false })
+      .limit(limit);
+    if (error) {
+      console.error("Portal news query failed", error);
+      return response({ success: false, message: "Haber akışı veritabanından okunamadı." }, 503);
+    }
+    return response({ success: true, news: data || [], count: (data || []).length });
+  }
+
   if (req.method === "GET" && path.pathname.endsWith("/exchange-rate")) {
     try {
       const usd_sell = await getEnparaUsdSell();

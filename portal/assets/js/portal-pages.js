@@ -44,6 +44,11 @@ upd.innerHTML+=`
 <div class="news-filter-row" role="group" aria-label="Haber kategorileri">
  <button type="button" class="is-active" data-news-filter="all">Tümü</button><button type="button" data-news-filter="product">Ürün &amp; Özellikler</button><button type="button" data-news-filter="archive">Dosya Arşivi</button><button type="button" data-news-filter="support">Destek</button><button type="button" data-news-filter="release">Sürüm Notları</button>
 </div>
+<section class="news-auto-feed">
+ <div class="news-section-heading"><div><span class="news-section-kicker">OTOMATİK TEKNOLOJİ AKIŞI</span><h3>Güncel teknoloji haberleri</h3><p>Türk teknoloji yayınlarından otomatik güncellenen haber başlıkları.</p></div><span class="news-section-count" id="newsFeedUpdated">AKIŞ YÜKLENİYOR</span></div>
+ <div class="news-card-grid" id="autoTechNewsGrid" aria-live="polite"><article class="news-card"><div class="news-card-body"><p>Teknoloji haberleri yükleniyor…</p></div></article></div>
+ <p class="news-feed-disclaimer">Haber başlıkları ve kısa açıklamalar ilgili yayıncıların RSS akışlarından alınır. Her haberin özgün içeriği ve tüm hakları kaynak yayıncıya aittir.</p>
+</section>
 <section class="news-card-grid" aria-label="Haber içerikleri">
  <article class="news-card" data-news-category="product"><div class="news-card-art art-devices"><span>ADB</span><span>FASTBOOT</span><span>UZMANTOOL</span><i>⌘</i></div><div class="news-card-body"><span class="news-category-tag">ÜRÜN &amp; ÖZELLİKLER</span><h4>Teknik servis araçları tek merkezde</h4><p>ADB, Fastboot, cihaz bilgisi ve servis araçlarına Uzmantool içerisinden erişin.</p><a href="#download" data-page="download">Uzmantool'u keşfet <b>→</b></a></div></article>
  <article class="news-card" data-news-category="archive"><div class="news-card-art art-archive"><i>▤</i><span>FIRMWARE<br>ARCHIVE</span><b>01 / 08</b></div><div class="news-card-body"><span class="news-category-tag">DOSYA ARŞİVİ</span><h4>Teknik dosyalar için merkezi arşiv</h4><p>Marka ve model bazlı firmware ve teknik dosya arşivini keşfedin.</p><a href="archive.html">Dosya arşivine git <b>→</b></a></div></article>
@@ -56,6 +61,30 @@ upd.innerHTML+=`
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 <div class="news-bottom-banner"><div><span class="news-section-kicker">GÜNCEL KALIN</span><h3>Uzmantech'teki yenilikleri kaçırmayın.</h3><p>Yeni sürümler ve önemli duyurular için resmî kanalları takip edin.</p></div><a href="https://github.com/uzmantech/uzmantech/releases" target="_blank" rel="noopener">Yayınları takip et <b>↗</b></a></div>`;
 upd.addEventListener("click",e=>{const b=e.target.closest("[data-news-filter]");if(!b)return;const key=b.dataset.newsFilter;upd.querySelectorAll("[data-news-filter]").forEach(x=>x.classList.toggle("is-active",x===b));upd.querySelectorAll("[data-news-category]").forEach(card=>card.hidden=key!=="all"&&card.dataset.newsCategory!==key);});
+const newsEsc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function loadAutoTechNews(){
+ const grid=upd.querySelector("#autoTechNewsGrid"),stamp=upd.querySelector("#newsFeedUpdated");
+ if(!grid||!window.UzmantechAPI?.news)return;
+ try{
+  const result=await window.UzmantechAPI.news({limit:"18"});
+  const items=Array.isArray(result.news)?result.news:[];
+  if(!items.length){grid.innerHTML='<article class="news-card"><div class="news-card-body"><p>Henüz yayınlanmış teknoloji haberi bulunmuyor.</p></div></article>';return;}
+  grid.innerHTML=items.map(item=>{
+   const title=newsEsc(item.title),summary=newsEsc(item.summary||item.title),source=newsEsc(item.source_name);
+   const slug=encodeURIComponent(String(item.slug||""));
+   const date=item.published_at?new Date(item.published_at):null;
+   const dateText=date&&!Number.isNaN(date.getTime())?date.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"}):"Güncel";
+   return '<article class="news-card" data-news-category="product"><div class="news-card-art art-devices"><span>TEKNOLOJİ</span><span>GÜNCEL HABER</span><i>⌘</i></div><div class="news-card-body"><span class="news-category-tag">'+source+'</span><h4>'+title+'</h4><p>'+summary+'</p><div class="news-featured-meta"><span>'+dateText+'</span></div><a href="/haber/'+slug+'">Haberi oku <b>→</b></a></div></article>';
+  }).join("");
+  if(stamp)stamp.textContent=items.length+" HABER / GÜNCEL";
+ }catch(error){
+  console.warn("Technology news could not be loaded",error);
+  grid.innerHTML='<article class="news-card"><div class="news-card-body"><p>Haber akışı şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.</p></div></article>';
+  if(stamp)stamp.textContent="AKIŞA ULAŞILAMADI";
+ }
+}
+loadAutoTechNews();
+
 
 
 const ann=make("announcements","Duyurular","Uzmantool ve Uzmantech ile ilgili önemli bilgilendirmeler.");if(announcements)ann.appendChild(announcements);

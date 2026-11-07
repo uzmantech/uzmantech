@@ -78,7 +78,7 @@ async function loadAutoTechNews(){
   if(stamp)stamp.textContent="AKIŞA ULAŞILAMADI";
  }
 }
-loadAutoTechNews();
+let autoTechNewsLoaded=false;
 upd.querySelector("#newsNewsletterForm")?.addEventListener("submit",async e=>{
  e.preventDefault();
  const form=e.currentTarget,email=form.querySelector("#newsNewsletterEmail"),feedback=form.querySelector("#newsNewsletterFeedback"),button=form.querySelector('button[type="submit"]');
@@ -99,7 +99,7 @@ const help=make("help","Destek","Bağımsız destek merkezi.");
 help.classList.add("help-center-page");
 help.innerHTML='<div class="notice">Destek merkezine yönlendiriliyorsunuz...</div>';
 const pages=[...main.querySelectorAll("[data-page-view]")];
-function show(id,update=true){const key=pages.some(p=>p.dataset.pageView===id)?id:"home";pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));try{sessionStorage.setItem("uzmantech_portal_active_page",key);}catch{}if(update){history.replaceState(null,"",location.pathname+location.search);}window.scrollTo({top:0,behavior:"instant"});}
+function show(id,update=true){const key=pages.some(p=>p.dataset.pageView===id)?id:"home";pages.forEach(p=>p.hidden=p.dataset.pageView!==key);document.body.classList.toggle("account-view",key==="account");document.querySelectorAll(".dash-nav [data-page],.activation-site-header [data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===key));try{sessionStorage.setItem("uzmantech_portal_active_page",key);}catch{}if(update){history.replaceState(null,"",location.pathname+location.search);}window.scrollTo({top:0,behavior:"instant"});if(key==="updates"&&!autoTechNewsLoaded){autoTechNewsLoaded=true;loadAutoTechNews();}}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-page]");if(!a)return;e.preventDefault();show(a.dataset.page);});
 document.addEventListener("portal:show-account",()=>show("account"));
 document.addEventListener("click",e=>{if(e.target.closest("#activationAccountLink"))document.dispatchEvent(new CustomEvent("portal:show-account"));});

@@ -1061,3 +1061,77 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   box-sizing:border-box!important; white-space:normal!important; font-size:11px!important;
  }
 }
+
+
+/* Mobile: keep the brand on the first row and account actions together below it */
+@media(max-width:760px){
+  .site-global-header{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    row-gap:9px!important;
+    padding:10px 14px 12px!important;
+    min-height:0!important;
+    height:auto!important;
+  }
+  .site-global-header .site-header-brand{
+    order:1!important;
+    flex:1 1 calc(100% - 52px)!important;
+    width:auto!important;
+    min-width:0!important;
+    height:48px!important;
+  }
+  .site-global-header .site-mobile-nav-toggle{
+    order:2!important;
+    flex:0 0 42px!important;
+    margin-left:auto!important;
+  }
+  .site-global-header .dash-top-actions,
+  .site-global-header .site-header-actions{
+    order:3!important;
+    display:flex!important;
+    flex:1 0 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    justify-content:center!important;
+    align-items:stretch!important;
+    gap:8px!important;
+    margin:0!important;
+  }
+  .site-global-header .top-separator{display:none!important}
+  .site-global-header .language-control,
+  .site-global-header .header-auth .header-login,
+  .site-global-header .header-auth .header-register,
+  .site-global-header .site-archive-auth .header-login,
+  .site-global-header .site-archive-auth .header-register{
+    min-width:0!important;
+    min-height:40px!important;
+    flex:1 1 0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    padding:8px 7px!important;
+    box-sizing:border-box!important;
+    border:1px solid #294766!important;
+    border-radius:10px!important;
+    background:#10233a!important;
+    color:#f2f7ff!important;
+    text-decoration:none!important;
+    font:700 12px/1.2 "DM Sans",sans-serif!important;
+  }
+  .site-global-header .header-auth,
+  .site-global-header .site-archive-auth{
+    display:flex!important;
+    flex:1 1 0!important;
+    min-width:0!important;
+    gap:8px!important;
+  }
+  .site-global-header .header-auth .header-login svg,
+  .site-global-header .header-auth .header-register svg{width:16px!important;height:16px!important;flex:0 0 16px}
+  .site-global-header .language-control{height:40px!important;min-width:0!important}
+  .site-global-header .language-control::after{font-size:12px!important}
+  .site-global-header .language-control .language-globe{width:22px!important;flex-basis:22px!important}
+  .site-global-header .site-profile-button{display:none!important}
+  .site-global-header .notification-button{display:none!important}
+}

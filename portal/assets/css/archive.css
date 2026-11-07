@@ -649,3 +649,8 @@ body.dashboard-page .site-live-stats.archive-stat-row{width:min(calc(100% - 32px
 .archive-shell.archive-preview-locked .archive-brand-card{
   background:rgba(22,34,51,.38)!important;border-color:rgba(117,153,190,.22)!important;
 }
+
+/* Locked state: hide controls and catalogue heading regardless of session API outcome */
+body.archive-shell.archive-preview-locked .archive-global-search,
+body.archive-shell.archive-preview-locked .archive-brand-catalog-head,
+body.archive-shell.archive-preview-locked .archive-brand-search{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important}

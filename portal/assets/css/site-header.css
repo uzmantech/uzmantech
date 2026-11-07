@@ -934,3 +934,42 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   box-sizing:border-box!important; transform:none!important; white-space:nowrap!important;
  }
 }
+
+
+/* Mobile header v2: two-row grid, never let nav links share the auth row. */
+@media screen and (max-width: 980px) {
+ .site-global-header {
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 42px!important;
+  grid-template-areas:"brand toggle" "actions actions" "nav nav"!important;
+  align-items:center!important; column-gap:10px!important; row-gap:8px!important;
+  width:100%!important; height:auto!important; min-height:0!important;
+  padding:8px 12px!important; box-sizing:border-box!important;
+ }
+ .site-global-header > .site-header-brand {grid-area:brand!important; width:auto!important; min-width:0!important; height:48px!important; flex:none!important;}
+ .site-global-header > .site-mobile-nav-toggle {grid-area:toggle!important; display:block!important; justify-self:end!important; position:static!important;}
+ .site-global-header > .site-global-nav {grid-area:nav!important; display:none!important; width:100%!important; min-width:0!important;}
+ .site-global-header > .site-global-nav.is-open {display:flex!important; flex-wrap:wrap!important; width:100%!important;}
+ .site-global-header > .dash-top-actions {
+  grid-area:actions!important; display:grid!important; grid-template-columns:minmax(0,1fr) 120px!important;
+  grid-template-rows:auto!important; align-items:start!important; width:100%!important;
+  min-width:0!important; max-width:none!important; margin:0!important; padding:0!important; gap:10px!important;
+ }
+ .site-global-header > .dash-top-actions > .language-control {
+  grid-column:1!important; grid-row:1!important; justify-self:start!important;
+  width:64px!important; min-width:64px!important; height:32px!important; min-height:32px!important;
+ }
+ .site-global-header > .dash-top-actions > .top-separator {display:none!important;}
+ .site-global-header > .dash-top-actions > .header-auth {
+  grid-column:2!important; grid-row:1!important; display:flex!important; flex-direction:column!important;
+  align-items:stretch!important; justify-content:flex-start!important; position:static!important;
+  width:120px!important; min-width:120px!important; max-width:120px!important;
+  flex:none!important; gap:5px!important; margin:0!important; padding:0!important;
+ }
+ .site-global-header > .dash-top-actions > .header-auth > .header-login,
+ .site-global-header > .dash-top-actions > .header-auth > .header-register {
+  display:flex!important; position:static!important; inset:auto!important; float:none!important;
+  width:100%!important; min-width:0!important; max-width:100%!important; height:30px!important;
+  min-height:30px!important; margin:0!important; padding:0 8px!important; box-sizing:border-box!important; transform:none!important;
+ }
+}

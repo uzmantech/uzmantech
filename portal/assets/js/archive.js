@@ -128,6 +128,9 @@ function showPackageRequired(){
  $("#modalBody").innerHTML=`<div class="archive-access-symbol" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="9" y="21" width="30" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 21v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="31" r="2.2" fill="currentColor"/><path d="M24 33v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="archive-access-kicker">UZMANTOOL DOSYA ARŞİVİ</span><h3 class="archive-access-title">Arşiv erişime açık değil</h3><p class="archive-access-copy">Marka ve modellere ait teknik dosyaları görüntülemek için aktif bir üyelik paketine ihtiyacınız var.</p><div class="archive-access-divider"></div><button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button><small class="archive-access-note">Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</small>`;
  $("#modal").classList.add("open");
 }
+function applyLockedArchivePreview(){
+ applyLockedArchivePreview();
+}
 async function enforceArchiveLicense(){
  const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
  if(stage)stage.hidden=true;
@@ -147,6 +150,7 @@ async function enforceArchiveLicense(){
   // Dosya deposunun kilitli olduğunu görür; yalnızca Tamam ile paketlere gider.
   document.body.classList.remove("archive-authorized");
   document.body.classList.add("archive-preview-locked");
+  applyLockedArchivePreview();
   if(stage)stage.hidden=false;
   if(gate)gate.hidden=false;
  }

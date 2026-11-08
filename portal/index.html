@@ -348,7 +348,8 @@ load();
    for(const [key,id] of Object.entries(ids)){const el=document.getElementById(id);if(el)el.textContent=format(result[key]);}
   }catch(error){console.warn("Site istatistikleri alınamadı.",error);}
  }
- window.setTimeout(()=>{refresh();window.setInterval(refresh,60000);},8000);
+ refresh();
+ window.setInterval(()=>{if(document.visibilityState==="visible")refresh();},60000);
 })();
 </script>
 <script>

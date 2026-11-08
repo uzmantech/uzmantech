@@ -1156,3 +1156,84 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   .site-global-header .site-header-actions .header-login,
   .site-global-header .site-header-actions .header-register{flex:1 1 0!important;width:0!important;min-width:0!important}
 }
+
+
+/* FINAL MOBILE COMPACT HEADER: one horizontal action row below the brand */
+@media screen and (max-width:760px){
+  body:has(.site-global-header),
+  body.dashboard-page:has(.site-global-header){padding-top:126px!important}
+  .site-global-header,
+  body.dashboard-page .site-global-header,
+  body.dashboard-page .dash-topbar.site-global-header{
+    display:grid!important;
+    grid-template-columns:38px 58px minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:50px 42px!important;
+    grid-template-areas:"brand brand brand brand" "menu language login register"!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    column-gap:6px!important;
+    row-gap:7px!important;
+    width:100%!important;height:auto!important;min-height:0!important;
+    padding:8px 10px 10px!important;
+    box-sizing:border-box!important;
+  }
+  .site-global-header > .site-header-brand{
+    grid-area:brand!important;display:flex!important;
+    width:100%!important;height:50px!important;min-width:0!important;
+    margin:0!important;padding:0!important;border:0!important;
+  }
+  .site-global-header > .site-header-brand img{
+    width:46px!important;height:46px!important;flex:0 0 46px!important;
+  }
+  .site-global-header > .site-header-brand b{font-size:16px!important}
+  .site-global-header > .site-header-brand small{font-size:7px!important}
+  .site-global-header > .site-mobile-nav-toggle{
+    grid-area:menu!important;display:flex!important;
+    position:static!important;justify-self:stretch!important;align-self:stretch!important;
+    width:100%!important;min-width:0!important;height:42px!important;
+    margin:0!important;padding:0!important;order:initial!important;
+    align-items:center!important;justify-content:center!important;
+    font-size:22px!important;line-height:1!important;
+  }
+  .site-global-header > .dash-top-actions{
+    display:contents!important;
+  }
+  .site-global-header > .dash-top-actions > .language-control{
+    grid-area:language!important;display:flex!important;
+    width:100%!important;min-width:0!important;max-width:none!important;
+    height:42px!important;min-height:42px!important;margin:0!important;padding:0 4px!important;
+    justify-content:center!important;gap:3px!important;box-sizing:border-box!important;
+  }
+  .site-global-header > .dash-top-actions > .language-control .language-globe{
+    width:18px!important;min-width:18px!important;height:16px!important;flex:0 0 18px!important;
+  }
+  .site-global-header > .dash-top-actions > .language-control select{
+    width:27px!important;min-width:27px!important;flex:0 0 27px!important;
+    height:30px!important;font-size:12px!important;
+  }
+  .site-global-header > .dash-top-actions > .top-separator{display:none!important}
+  .site-global-header > .dash-top-actions > .header-auth{
+    display:contents!important;
+  }
+  .site-global-header > .dash-top-actions > .header-auth > .header-login{
+    grid-area:login!important;
+  }
+  .site-global-header > .dash-top-actions > .header-auth > .header-register{
+    grid-area:register!important;
+  }
+  .site-global-header > .dash-top-actions > .header-auth > .header-login,
+  .site-global-header > .dash-top-actions > .header-auth > .header-register{
+    display:flex!important;position:static!important;float:none!important;inset:auto!important;
+    width:100%!important;min-width:0!important;max-width:none!important;
+    height:42px!important;min-height:42px!important;margin:0!important;padding:0 3px!important;
+    align-items:center!important;justify-content:center!important;gap:3px!important;
+    box-sizing:border-box!important;white-space:nowrap!important;
+    font-size:11px!important;line-height:1!important;border-radius:9px!important;
+  }
+  .site-global-header > .site-global-nav{
+    position:absolute!important;top:100%!important;left:0!important;right:0!important;
+    width:100%!important;z-index:100001!important;
+  }
+  body:has(.site-global-header) .dash-main,
+  body:has(.site-global-header) main{margin-top:0!important}
+}

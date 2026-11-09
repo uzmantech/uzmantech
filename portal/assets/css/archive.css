@@ -748,3 +748,49 @@ body.archive-shell.archive-preview-locked .archive-brand-card small{color:#c0d0e
  body.archive-shell.archive-preview-locked .archive-license-lock{display:none!important}
  body.archive-shell.archive-preview-locked .archive-license-card{padding:14px 20px!important}
 }
+
+
+/* Keep the sign-in dialog above the locked archive gate */
+body.archive-shell.archive-preview-locked #modal.open{
+  position:fixed!important;inset:0!important;z-index:100500!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:20px!important;overflow-y:auto!important;
+  background:rgba(2,7,15,.82)!important;
+  backdrop-filter:blur(5px)!important;-webkit-backdrop-filter:blur(5px)!important;
+  isolation:isolate!important;
+}
+body.archive-shell.archive-preview-locked #modal.open .modal-card{
+  position:relative!important;z-index:1!important;
+  width:min(460px,calc(100vw - 32px))!important;max-height:calc(100vh - 40px)!important;
+  overflow:auto!important;margin:auto!important;
+  border:1px solid #6687a7!important;border-radius:18px!important;
+  background:linear-gradient(145deg,#203b55,#102238 68%,#0b1728)!important;
+  box-shadow:0 28px 90px #000e,0 0 0 1px #9ed4ff22!important;
+  text-align:left!important;padding:26px!important;
+}
+body.archive-shell.archive-preview-locked #modal.open .modal-heading{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  margin-bottom:20px!important;
+}
+body.archive-shell.archive-preview-locked #modal.open .modal-heading h2{
+  margin:0!important;font-size:21px!important;color:#f3f8ff!important;
+}
+body.archive-shell.archive-preview-locked #modal.open #modalClose{
+  display:inline-flex!important;position:relative!important;z-index:2!important;
+}
+body.archive-shell.archive-preview-locked #modal.open #modalBody,
+body.archive-shell.archive-preview-locked #modal.open #modalBody form,
+body.archive-shell.archive-preview-locked #modal.open #modalBody label,
+body.archive-shell.archive-preview-locked #modal.open #modalBody input{
+  visibility:visible!important;opacity:1!important;
+}
+body.archive-shell.archive-preview-locked #modal.open #modalBody input{
+  width:100%!important;min-height:44px!important;box-sizing:border-box!important;
+  color:#f5f9ff!important;background:#091827!important;border:1px solid #496987!important;
+  border-radius:9px!important;padding:10px 12px!important;
+}
+body.archive-shell.archive-preview-locked #modal.open #modalBody label{display:block!important;margin-bottom:14px!important;color:#dceafa!important}
+body.archive-shell.archive-preview-locked #modal.open #modalBody label span{display:block!important;margin-bottom:7px!important}
+body.archive-shell.archive-preview-locked #modal.open #modalBody button[type="submit"]{
+  min-height:44px!important;width:100%!important;border-radius:9px!important;
+}

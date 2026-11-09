@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0f172a"><meta name="description" content="Uzmantech ve Uzmantool teknik destek merkezi.">
-<title>Destek Merkezi - Uzmantech &amp; Uzmantool</title>
+<title>İletişim Merkezi - Uzmantech &amp; Uzmantool</title>
 
 <style>
 :root{--bg-main:#0f172a;--bg-card:#1e293b;--border-color:#334155;--primary:#2563eb;--primary-hover:#1d4ed8;--text-main:#f8fafc;--text-muted:#94a3b8;--accent-green:#10b981}
@@ -41,12 +41,12 @@ a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify
   <a class="site-nav-link" href="cam-uyumluluk.html"><span class="site-nav-icon">◇</span><b>Cam Uyumluluğu</b></a>
   <a class="site-nav-link" href="index.html#premium"><span class="site-nav-icon">⚒</span><b>Araçlar</b></a>
   <a class="site-nav-link" href="paketler.html"><span class="site-nav-icon">♛</span><b>Paketler</b></a>
-  <a class="site-nav-link active" href="destek.html"><span class="site-nav-icon">ⓘ</span><b>Destek</b></a>
+  <a class="site-nav-link active" href="destek.html"><span class="site-nav-icon">ⓘ</span><b>İletişim</b></a>
  </nav>
  <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
  <div class="dash-top-actions"><label class="language-control" aria-label="Language"><span class="language-globe">◎</span><select id="languageSelect" aria-label="Language"><option value="tr">TR</option><option value="en">EN</option></select></label><div class="header-auth"><a class="header-register" href="kayit.html">Üye Ol</a><a class="header-login" href="index.html?login=1">Giriş Yap</a></div></div>
 </header>
-<section class="support-hero"><div class="container"><h1>Uzmantech Destek Merkezi</h1><p>Sorularınız için rehberleri inceleyebilir veya teknik ekibimize doğrudan destek talebi oluşturabilirsiniz.</p><div class="search-box"><input id="faqSearch" type="search" placeholder="Sorununuzu yazın (Ör: HWID, USB sürücü, Fastboot)"></div><div class="status-bar"><span class="status-dot"></span> Destek merkezi erişilebilir</div></div></section>
+<section class="support-hero"><div class="container"><h1>Uzmantech İletişim Merkezi</h1><p>Sorularınız için rehberleri inceleyebilir veya teknik ekibimize doğrudan destek talebi oluşturabilirsiniz.</p><div class="search-box"><input id="faqSearch" type="search" placeholder="Sorununuzu yazın (Ör: HWID, USB sürücü, Fastboot)"></div><div class="status-bar"><span class="status-dot"></span> Destek merkezi erişilebilir</div></div></section>
 <main class="container">
 <h2 class="section-title">Hangi Konuda Yardıma İhtiyacınız Var?</h2>
 <div class="categories-grid">
@@ -68,7 +68,7 @@ a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify
 <div class="faq-item"><h4>Uzmantool "Cihaz Bulunamadı" hatası veriyor, ne yapmalıyım?</h4><p>Telefonun doğru modda olduğundan, USB hata ayıklama veya Bootloader sürücülerinin kurulu olduğundan ve Windows Aygıt Yöneticisi'nde sürücü hatası bulunmadığından emin olun. Farklı bir veri kablosu ve USB portu da deneyin.</p></div>
 <div class="faq-item"><h4>Destek talebimin durumunu nereden görebilirim?</h4><p>Hesabınıza giriş yaptıktan sonra bu sayfanın destek talebi bölümündeki "Destek taleplerim" alanından geçmiş taleplerinizi görüntüleyebilirsiniz.</p></div>
 </div>
-</main><footer class="support-page-footer">© Uzmantech · Teknik Destek Merkezi</footer>
+</main><footer class="support-page-footer">© Uzmantech · Teknik İletişim Merkezi</footer>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
 <script>
 (()=>{const $=s=>document.querySelector(s),form=$("#ticketForm"),status=$("#ticketStatus"),login=$("#ticketLogin"),history=$("#ticketHistory"),token=()=>window.UzmantechAPI?.getToken();
@@ -83,4 +83,4 @@ $("#faqSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLoc
 <script src="assets/js/language.js?v=portal-en-complete-20261107-1"></script><script id="site-global-nav-controller">
 (()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
 </script>
-</body></html>
+<footer class="support-page-footer legal-footer-links"><a href="gizlilik-politikasi.html">Gizlilik Politikası</a> · <a href="hakkimizda.html">Hakkımızda</a> · <a href="destek.html">İletişim</a> · <a href="kullanim-sartlari.html">Kullanım Şartları</a></footer></body></html>

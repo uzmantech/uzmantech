@@ -115,3 +115,25 @@ body.glass-code-page{margin:0!important;padding:0!important;background:#080e19!i
 .compat-suggestion b,.compat-suggest-all b{color:#42c9e7;font-size:17px}
 .compat-suggest-all{border-top:1px solid #344c6b;color:#91c5ff;font-size:12px;font-weight:700}
 @media(max-width:700px){.compat-suggestions{top:calc(46px + 5px);width:100%}}
+
+
+/* Keep native brand/model menus readable in dark theme across browsers */
+body.glass-code-page .compat-tool .compat-selects select,
+body.glass-code-page .compat-tool .compat-selects select:focus,
+body.glass-code-page .compat-tool .compat-selects select:active{
+  color:#f4f8ff !important;
+  -webkit-text-fill-color:#f4f8ff;
+  background-color:#0d192a !important;
+  border-color:#49617e !important;
+  color-scheme:dark;
+}
+body.glass-code-page .compat-tool .compat-selects select:disabled{
+  color:#a5b8d0 !important;
+  -webkit-text-fill-color:#a5b8d0;
+  background-color:#142238 !important;
+  opacity:1;
+}
+body.glass-code-page .compat-tool .compat-selects select option{
+  color:#f4f8ff !important;
+  background-color:#142238 !important;
+}

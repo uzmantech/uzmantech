@@ -107,7 +107,7 @@ document.addEventListener("click",function(e){
   }
 });
 window.UzmantoolPages={show};
-let initialPage="home";try{initialPage=location.hash.slice(1)||sessionStorage.getItem("uzmantech_portal_active_page")||"home";}catch{initialPage=location.hash.slice(1)||"home";}
+const forceHome=new URLSearchParams(location.search).get("view")==="home";let initialPage="home";if(forceHome){try{sessionStorage.removeItem("uzmantech_portal_active_page");}catch{}initialPage="home";}else{try{initialPage=location.hash.slice(1)||sessionStorage.getItem("uzmantech_portal_active_page")||"home";}catch{initialPage=location.hash.slice(1)||"home";}}
 show(initialPage,false);
 if(initialPage==="account") document.dispatchEvent(new CustomEvent("portal:show-account"));
 window.addEventListener("hashchange",()=>{

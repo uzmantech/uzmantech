@@ -275,3 +275,16 @@ body.glass-code-page{padding:0!important}
 /* Interactive brand filters */
 .glass-code-brands button.brand-card{width:100%;font:inherit;text-align:center;cursor:pointer;appearance:none;-webkit-appearance:none}
 .glass-code-brands button.brand-card:focus-visible{outline:2px solid #00eaff;outline-offset:3px}
+
+/* Clean, brand-organized compatibility results */
+.glass-code-page .glass-summary{display:flex;align-items:baseline;gap:8px;margin:0 0 16px;color:#9fb7cd;font-size:13px}
+.glass-code-page .glass-summary strong{color:#00dfff;font-size:24px;font-weight:800}
+.glass-code-page .glass-brand-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.glass-code-page .glass-brand-group{min-width:0;padding:14px 16px;border:1px solid rgba(107,164,203,.22);border-radius:12px;background:rgba(7,23,39,.58)}
+.glass-code-page .glass-brand-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:9px;border-bottom:1px solid rgba(107,164,203,.18)}
+.glass-code-page .glass-brand-heading h3{margin:0;color:#e7f4ff;font-size:14px;font-weight:750}
+.glass-code-page .glass-brand-heading span{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:23px;padding:0 7px;border-radius:7px;background:rgba(0,211,255,.1);color:#35e4ff;font-size:11px;font-weight:800}
+.glass-code-page .glass-brand-group ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;margin:11px 0 0;padding:0;list-style:none}
+.glass-code-page .glass-brand-group li{min-width:0;color:#c7dced;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+@media(max-width:760px){.glass-code-page .glass-brand-groups{grid-template-columns:1fr}.glass-code-page .glass-brand-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.glass-code-page .glass-brand-group ul{grid-template-columns:1fr}}

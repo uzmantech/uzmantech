@@ -92,7 +92,11 @@ function renderBrandArchiveCounts(){
 }
 function renderRecentSoftware(){
  const track=$("#archiveRecentTrack"),count=$("#archiveRecentCount");if(!track||!count)return;
- const recent=[...archiveItems].sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).slice(0,12);
+ const sorted=[...archiveItems].filter(f=>f&&f.is_active!==false).sort((a,b)=>{const dateDiff=new Date(b.created_at||0)-new Date(a.created_at||0);return dateDiff||String(b.id||"").localeCompare(String(a.id||""));});
+ // Aynı toplu aktarım saatinde tek markanın tüm alanı kaplamasını önle: önce her markanın en yeni kayıtlarını göster.
+ const recent=[],seenBrands=new Set();
+ for(const file of sorted){const brand=normBrand(file.brand||"");if(brand&&!seenBrands.has(brand)){recent.push(file);seenBrands.add(brand);}}
+ for(const file of sorted){if(recent.length>=12)break;if(!recent.some(x=>String(x.id)===String(file.id)))recent.push(file);}
  count.textContent=recent.length+" DOSYA";
  const cards=recent.map(f=>'<a class="archive-recent-folder" href="models.html?brand='+encodeURIComponent(normBrand(f.brand)||"")+'&model='+encodeURIComponent(f.model||"")+'"><span class="archive-recent-folder-icon">📁</span><span class="archive-recent-folder-info"><strong>'+archiveEsc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+archiveEsc((f.brand||"")+" "+(f.model||""))+'</small></span><em>'+archiveEsc(archiveCategory[f.category]||f.category||"Diğer")+'</em></a>').join("");
  track.innerHTML=recent.length?cards+cards:'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';

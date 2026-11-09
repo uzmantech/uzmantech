@@ -1509,3 +1509,80 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
  }
 }
+
+
+/* Desktop navigation balance: prevent auth controls wrapping/clipping on archive/download views */
+@media screen and (min-width:761px) and (max-width:1900px){
+ html body .site-global-header{
+  display:flex!important;flex-wrap:nowrap!important;gap:8px!important;
+  padding-left:10px!important;padding-right:10px!important;
+  min-width:0!important;overflow:visible!important;
+ }
+ html body .site-global-header>.site-header-brand{
+  flex:0 0 178px!important;width:178px!important;min-width:0!important;
+  gap:7px!important;padding-right:9px!important;
+ }
+ html body .site-global-header>.site-header-brand img{
+  width:39px!important;height:39px!important;flex:0 0 39px!important;
+ }
+ html body .site-global-header>.site-header-brand b{font-size:14px!important}
+ html body .site-global-header>.site-global-nav{
+  display:flex!important;flex:1 1 0!important;min-width:0!important;
+  width:auto!important;gap:3px!important;justify-content:stretch!important;
+ }
+ html body .site-global-header>.site-global-nav>.site-nav-link{
+  flex:1 1 0!important;min-width:0!important;width:0!important;
+  height:42px!important;padding:0 5px!important;gap:5px!important;
+  font-size:10.5px!important;letter-spacing:-.15px!important;
+ }
+ html body .site-global-header .site-nav-icon{
+  width:18px!important;height:18px!important;flex:0 0 18px!important;font-size:15px!important;
+ }
+ html body .site-global-header>.dash-top-actions,
+ html body .site-global-header>.site-header-actions{
+  display:flex!important;flex:0 0 auto!important;min-width:0!important;
+  gap:5px!important;margin-left:4px!important;
+ }
+ html body .site-global-header .language-control{
+  flex:0 0 58px!important;width:58px!important;min-width:58px!important;
+  height:40px!important;padding:0 4px!important;gap:3px!important;border-radius:9px!important;
+ }
+ html body .site-global-header .language-control .language-globe{width:18px!important;height:18px!important}
+ html body .site-global-header .language-control select{width:22px!important;min-width:22px!important;font-size:11px!important}
+ html body .site-global-header .language-control .top-chevron{display:none!important}
+ html body .site-global-header .top-separator{height:25px!important;margin:0 1px!important}
+ html body .site-global-header .notification-button{
+  position:relative!important;flex:0 0 34px!important;width:34px!important;min-width:34px!important;
+  height:40px!important;margin:0!important;font-size:19px!important;
+ }
+ html body .site-global-header .notification-button i{
+  position:absolute!important;right:-2px!important;top:-3px!important;
+  min-width:15px!important;height:15px!important;padding:1px 4px!important;
+  display:grid!important;place-items:center!important;font-size:9px!important;line-height:1!important;
+ }
+ html body .site-global-header .header-auth,
+ html body .site-global-header .site-archive-auth{
+  display:flex!important;flex:0 0 auto!important;flex-direction:row!important;
+  flex-wrap:nowrap!important;align-items:center!important;gap:4px!important;
+  width:auto!important;min-width:0!important;height:40px!important;
+ }
+ html body .site-global-header .header-auth>.header-login,
+ html body .site-global-header .header-auth>.header-register,
+ html body .site-global-header .site-archive-auth>.header-login,
+ html body .site-global-header .site-archive-auth>.header-register{
+  display:inline-flex!important;position:static!important;flex:0 0 auto!important;
+  width:auto!important;min-width:68px!important;max-width:92px!important;
+  height:38px!important;min-height:38px!important;padding:0 7px!important;
+  justify-content:center!important;white-space:nowrap!important;font-size:10px!important;
+ }
+}
+@media screen and (min-width:761px) and (max-width:1350px){
+ html body .site-global-header>.site-header-brand{flex-basis:145px!important;width:145px!important}
+ html body .site-global-header>.site-header-brand small{display:none!important}
+ html body .site-global-header>.site-global-nav>.site-nav-link{font-size:9px!important;padding:0 3px!important;gap:3px!important}
+ html body .site-global-header .site-nav-icon{display:none!important}
+ html body .site-global-header .header-auth>.header-login,
+ html body .site-global-header .header-auth>.header-register,
+ html body .site-global-header .site-archive-auth>.header-login,
+ html body .site-global-header .site-archive-auth>.header-register{min-width:58px!important;padding:0 5px!important;font-size:9px!important}
+}

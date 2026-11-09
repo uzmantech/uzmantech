@@ -288,3 +288,17 @@ body.glass-code-page{padding:0!important}
 .glass-code-page .glass-brand-group li{min-width:0;color:#c7dced;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 @media(max-width:760px){.glass-code-page .glass-brand-groups{grid-template-columns:1fr}.glass-code-page .glass-brand-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.glass-code-page .glass-brand-group ul{grid-template-columns:1fr}}
+
+/* Individual phone-style compatibility cards */
+.glass-code-page .glass-phone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:13px}
+.glass-code-page .glass-phone-card{display:flex;min-width:0;min-height:166px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px 12px;border:1px solid rgba(116,170,207,.28);border-radius:15px;background:linear-gradient(155deg,rgba(25,49,73,.96),rgba(9,24,41,.98));box-shadow:0 5px 16px rgba(0,0,0,.16);text-align:center;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.glass-code-page .glass-phone-card:hover{transform:translateY(-3px);border-color:rgba(0,220,255,.72);background:linear-gradient(155deg,rgba(27,62,88,.98),rgba(9,29,48,.99))}
+.glass-code-page .glass-phone-art{position:relative;width:42px;height:72px;padding:4px;border:2px solid #83a8c5;border-radius:9px;background:linear-gradient(160deg,#203d58,#0b1b2d);box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.glass-code-page .glass-phone-art:before{position:absolute;top:4px;left:50%;width:13px;height:3px;border-radius:4px;background:#83a8c5;content:"";transform:translateX(-50%)}
+.glass-code-page .glass-phone-art:after{position:absolute;right:4px;bottom:4px;left:4px;height:calc(100% - 17px);border:1px solid rgba(94,220,255,.2);border-radius:4px;background:linear-gradient(145deg,rgba(31,94,127,.55),rgba(9,25,43,.8));content:""}
+.glass-code-page .glass-phone-art span{position:absolute;z-index:1;top:10px;left:50%;width:4px;height:4px;border-radius:50%;background:#43dfff;transform:translateX(-50%)}
+.glass-code-page .glass-phone-name{color:#e8f5ff;font-size:13px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.glass-code-page .glass-phone-label{color:#6ecfe4;font-size:10px;font-weight:600;letter-spacing:.02em}
+.glass-code-page .glass-summary{margin-bottom:15px}
+@media(max-width:760px){.glass-code-page .glass-phone-grid{grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:10px}.glass-code-page .glass-phone-card{min-height:150px;padding:13px 9px}}
+@media(max-width:420px){.glass-code-page .glass-phone-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

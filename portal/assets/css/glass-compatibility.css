@@ -271,3 +271,7 @@ body.glass-code-page{padding:0!important}
 
 /* Brand tiles are decorative: preserve hover animation without click affordance. */
 .glass-code-brands .brand-card{cursor:default}
+
+/* Interactive brand filters */
+.glass-code-brands button.brand-card{width:100%;font:inherit;text-align:center;appearance:none;-webkit-appearance:none}
+.glass-code-brands button.brand-card:focus-visible{outline:2px solid #00eaff;outline-offset:3px}

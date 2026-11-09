@@ -18,12 +18,6 @@ if(packages){packages.classList.add("license-packages-section");lic.appendChild(
 const upd=make("updates","Haberler","Uzmantech dünyasından haberler, ürün duyuruları ve sürüm notları.");
 upd.classList.add("updates-page","news-page");
 upd.innerHTML+=`
-<section class="news-masthead news-editorial-hero">
- <div class="editorial-topline"><span>UZMANTECH <i>/</i> TECHNOLOGY DESK</span><span><b></b> LIVE FEED&nbsp; · &nbsp;AUTO UPDATED</span></div>
- <div class="editorial-main"><div class="editorial-index">01 <span> / NEWSROOM</span></div><h2>Teknoloji<br><em>şimdi.</em></h2><p>Dijital dünyanın hızına yetişin. Öne çıkan gelişmeler, yeni ürünler ve teknoloji gündeminden son haberler.</p></div>
- <div class="editorial-side" aria-hidden="true"><div class="editorial-orbit"></div><div class="editorial-orbit second"></div><div class="editorial-cross">+</div><div class="editorial-coordinate">41° 00' 49.2&quot; N<br>28° 58'  ก. E</div><div class="editorial-side-label">SIGNAL<br><b>ACTIVE</b></div></div>
- <div class="editorial-bottom"><span>01&nbsp; / &nbsp;YAPAY ZEKÂ</span><span>02&nbsp; / &nbsp;MOBİL</span><span>03&nbsp; / &nbsp;DİJİTAL DÜNYA</span><span class="editorial-scroll">SCROLL TO EXPLORE ↓</span></div>
-</section>
 <section class="news-auto-feed news-only-feed">
  <div class="news-section-heading"><div><span class="news-section-kicker">LATEST TECHNOLOGY</span><h3>Son eklenen haberler</h3><p>Yeni yayınlanan teknoloji haberleri en üstte gösterilir.</p></div><span class="news-section-count" id="newsFeedUpdated">AKIŞ YÜKLENİYOR</span></div>
  <div class="news-card-grid" id="autoTechNewsGrid" aria-live="polite"><article class="news-card"><div class="news-card-body"><p>Teknoloji haberleri yükleniyor…</p></div></article></div>

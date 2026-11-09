@@ -375,8 +375,18 @@ Deno.serve(async (req: Request) => {
           return !["apple", "iphone", "samsung", "xiaomi", "redmi", "poco", "oppo", "vivo", "realme", "huawei", "honor"].includes(first);
         }
         return glassSearchMatches(model, query);
-      })).map(group => ({ group: group.group, models: group.models }));
-      return response({ success: true, groups: matches, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
+      }));
+      // A searched phone can belong to several shared-glass groups. Flatten those groups into one deduplicated list.
+      const uniqueModels = new Map<string, string>();
+      for (const group of matches) {
+        for (const model of group.models) {
+          const key = glassNorm(model);
+          if (key && !uniqueModels.has(key)) uniqueModels.set(key, model);
+        }
+      }
+      const compatibleModels = [...uniqueModels.values()];
+      const resultGroups = compatibleModels.length ? [{ group: (query === "__other__" ? "Diğer markalar" : query) + " ile uyumlu modeller", models: compatibleModels }] : [];
+      return response({ success: true, groups: resultGroups, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
     } catch (error) {
       console.error("Glass compatibility lookup failed", error);
       return response({ success: false, error: "Cam uyumluluk kataloğu şu anda alınamıyor. Lütfen tekrar deneyin." }, 503);

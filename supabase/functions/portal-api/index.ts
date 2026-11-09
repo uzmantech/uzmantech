@@ -208,6 +208,16 @@ function glassNorm(value: string): string {
   return value.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/ı/g,"i").replace(/\s+/g," ").trim();
 }
+function glassSearchMatches(model: string, query: string): boolean {
+  const normalizedModel = glassNorm(model);
+  const normalizedQuery = glassNorm(query);
+  const compactModel = normalizedModel.replace(/[^a-z0-9]/g, "");
+  const compactQuery = normalizedQuery.replace(/[^a-z0-9]/g, "");
+  if (compactQuery && compactModel.includes(compactQuery)) return true;
+  const queryTerms = normalizedQuery.split(/[^a-z0-9]+/).filter(Boolean);
+  const modelTerms = normalizedModel.split(/[^a-z0-9]+/).filter(Boolean);
+  return queryTerms.length > 0 && queryTerms.every(term => modelTerms.some(candidate => candidate.includes(term)));
+}
 function parseGlassGroup(url: string, html: string): GlassGroup | null {
   const titleMatch = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
   const title = titleMatch ? glassText(titleMatch[1]) : "Kırılmaz cam kalıbı";
@@ -359,10 +369,24 @@ Deno.serve(async (req: Request) => {
     if (query.length < 2 || query.length > 100) return response({ success: false, error: "En az 2 karakterlik model adı girin." }, 400);
     try {
       const groups = await loadGlassCatalog();
-      const needle = glassNorm(query);
-      const matches = groups.filter(group => group.models.some(model => glassNorm(model).includes(needle)))
-        .map(group => ({ group: group.group, models: group.models }));
-      return response({ success: true, groups: matches, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
+      const matches = groups.filter(group => group.models.some(model => {
+        if (query === "__other__") {
+          const first = glassNorm(model).split(/[^a-z0-9]+/)[0];
+          return !["apple", "iphone", "samsung", "xiaomi", "redmi", "poco", "oppo", "vivo", "realme", "huawei", "honor"].includes(first);
+        }
+        return glassSearchMatches(model, query);
+      }));
+      // A searched phone can belong to several shared-glass groups. Flatten those groups into one deduplicated list.
+      const uniqueModels = new Map<string, string>();
+      for (const group of matches) {
+        for (const model of group.models) {
+          const key = glassNorm(model);
+          if (key && !uniqueModels.has(key)) uniqueModels.set(key, model);
+        }
+      }
+      const compatibleModels = [...uniqueModels.values()];
+      const resultGroups = compatibleModels.length ? [{ group: (query === "__other__" ? "Diğer markalar" : query) + " ile uyumlu modeller", models: compatibleModels }] : [];
+      return response({ success: true, groups: resultGroups, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
     } catch (error) {
       console.error("Glass compatibility lookup failed", error);
       return response({ success: false, error: "Cam uyumluluk kataloğu şu anda alınamıyor. Lütfen tekrar deneyin." }, 503);

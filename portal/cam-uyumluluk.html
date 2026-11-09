@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/glass-compatibility.css?v=brand-tiles-static-20261107-1">
+<link rel="stylesheet" href="assets/css/glass-compatibility.css?v=uzmantech-theme-20261109-1">
  
 <link rel="stylesheet" href="assets/css/site-header.css?v=all-pages-compact-20261108-1">
 </head>
@@ -58,53 +58,44 @@
   <div class="header-auth" id="headerAuth"><button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="login">Giriş Yap</span></button><a class="header-register" id="headerRegister" href="kayit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span data-i18n="register">Üye Ol</span></a></div>
  </div>
 </header>
-<main class="glass-code-container">
- <section class="glass-code-hero">
-  <div class="glass-code-copy">
-   <span class="glass-code-kicker"><i></i> UZMANTECH SMART CATALOG</span>
-   <h1 class="glass-code-title" data-tr="CAM UYUMLULUK<br><span>MERKEZİ</span>" data-en="GLASS COMPATIBILITY<br><span>CENTER</span>">CAM UYUMLULUK<br><span>MERKEZİ</span></h1>
-   <p data-tr="Ekran Jelatini / Kırılmaz Cam Uyum Sorgulama ve Kalıp Eşleştirme Sistemi" data-en="Screen Protector / Tempered Glass Compatibility and Template Matching System">Ekran Jelatini / Kırılmaz Cam Uyum Sorgulama ve Kalıp Eşleştirme Sistemi</p>
-   <div class="glass-code-badges">
-    <div class="glass-code-badge">◎ <span data-tr="Doğru Eşleşme" data-en="Accurate Matching">Doğru Eşleşme</span></div>
-    <div class="glass-code-badge">▱ <span data-tr="Uyumlu Modeller" data-en="Compatible Models">Uyumlu Modeller</span></div>
-    <div class="glass-code-badge">ϟ <span data-tr="Hızlı Arama" data-en="Quick Search">Hızlı Arama</span></div>
-    <div class="glass-code-badge">▤ <span data-tr="Güncel Katalog" data-en="Updated Catalog">Güncel Katalog</span></div>
+<main class="compat-page">
+ <section class="compat-intro">
+  <span class="compat-eyebrow" data-tr="UZMANTECH / ÜCRETSİZ ARAÇ" data-en="UZMANTECH / FREE TOOL">UZMANTECH / ÜCRETSİZ ARAÇ</span>
+  <h1 data-tr="Kırılmaz cam<br>uyumluluk sorgulama" data-en="Screen protector<br>compatibility lookup">Kırılmaz cam<br>uyumluluk sorgulama</h1>
+  <p data-tr="Marka ve model seçin; telefonunuzun kırılmaz camının hangi modellerle uyumlu olduğunu anında görün. Telefon aksesuarcıları için hazırlandı." data-en="Choose a brand and model to instantly see which phones share the same screen protector template. Built for mobile accessory professionals.">Marka ve model seçin; telefonunuzun kırılmaz camının hangi modellerle uyumlu olduğunu anında görün. Telefon aksesuarcıları için hazırlandı.</p>
+ </section>
+ <section class="compat-tool" aria-label="Uyumluluk sorgulama">
+  <div class="compat-tabs" role="tablist" aria-label="Ürün türü">
+   <button class="compat-tab is-active" id="glassTab" type="button" role="tab" aria-selected="true" data-kind="glass"><span data-tr="Kırılmaz Cam" data-en="Screen Protector">Kırılmaz Cam</span></button>
+   <button class="compat-tab" id="batteryTab" type="button" role="tab" aria-selected="false" data-kind="battery"><span data-tr="Batarya" data-en="Battery">Batarya</span><small data-tr="Yakında" data-en="Coming soon">Yakında</small></button>
+  </div>
+  <div class="compat-search-block" id="glassSearchPanel">
+   <label for="glassQuery" data-tr="Model ara" data-en="Search model">Model ara</label>
+   <div class="compat-search-row">
+    <input id="glassQuery" type="search" minlength="2" maxlength="100" autocomplete="off" placeholder="Örn. iPhone 11, Galaxy A52, Redmi Note 10..." data-tr-placeholder="Örn. iPhone 11, Galaxy A52, Redmi Note 10..." data-en-placeholder="e.g. iPhone 11, Galaxy A52, Redmi Note 10..." aria-label="Telefon modeli">
+    <button id="glassSearch" type="button"><span data-tr="SORGULA" data-en="SEARCH">SORGULA</span><b>↗</b></button>
    </div>
+   <div class="compat-or"><span data-tr="veya seçin" data-en="or choose">veya seçin</span></div>
+   <div class="compat-selects">
+    <div><label for="compatBrand" data-tr="Marka" data-en="Brand">Marka</label><select id="compatBrand"><option value="" data-tr="Marka seçin" data-en="Select brand">Marka seçin</option></select></div>
+    <div><label for="compatModel" data-tr="Model" data-en="Model">Model</label><select id="compatModel" disabled><option value="" data-tr="Önce marka seçin" data-en="Choose a brand first">Önce marka seçin</option></select></div>
+   </div>
+   <p class="compat-disclaimer" data-tr="Uyumluluk bilgileri cam kesim ölçülerine göre hazırlanmıştır; kamera ve sensör açıklıkları modele göre küçük farklılıklar gösterebilir. Satın almadan önce ürün açıklamasını kontrol etmenizi öneririz." data-en="Compatibility is based on glass cutout dimensions. Camera and sensor openings may vary slightly by model. Please check the product description before purchase.">Uyumluluk bilgileri cam kesim ölçülerine göre hazırlanmıştır; kamera ve sensör açıklıkları modele göre küçük farklılıklar gösterebilir. Satın almadan önce ürün açıklamasını kontrol etmenizi öneririz.</p>
   </div>
-  <div class="glass-code-visual" aria-hidden="true">
-   <div class="glass-code-orbit orbit-a"></div><div class="glass-code-orbit orbit-b"></div>
-   <div class="glass-code-phone"><div class="glass-code-screen"></div><div class="glass-code-camera"></div></div>
-   <div class="glass-code-glass"></div><span class="glass-code-chip chip-one">GLASS / 01</span><span class="glass-code-chip chip-two">DEVICE MATCH</span>
-  </div>
+  <div class="compat-battery-note" id="batteryPanel" hidden><strong data-tr="Batarya uyumluluğu yakında." data-en="Battery compatibility is coming soon.">Batarya uyumluluğu yakında.</strong><p data-tr="Bu bölüm şu anda yalnızca kırılmaz cam kataloğuna bağlıdır." data-en="This section is currently connected to the screen protector catalog only.">Bu bölüm şu anda yalnızca kırılmaz cam kataloğuna bağlıdır.</p></div>
  </section>
- <form class="glass-code-search" id="glassSearchForm">
-  <span class="glass-code-search-icon">⌕</span>
-  <input id="glassQuery" class="search-box" type="search" minlength="2" maxlength="80" autocomplete="off" placeholder="Telefon marka veya modelini yazın... (Örn: Samsung A52)" data-tr-placeholder="Telefon marka veya modelini yazın... (Örn: Samsung A52)" data-en-placeholder="Enter phone brand or model... (e.g. Samsung A52)" aria-label="Telefon marka veya modeli">
-  <button id="glassSearch" class="search-btn" type="button">Uyumluluğu Bul</button>
- </form>
- <section class="glass-code-brands" aria-label="Marka seçimi">
-  <div class="brand-card"><b class="brand-samsung">SAMSUNG</b></div>
-  <div class="brand-card"><b class="brand-apple">● iPhone</b></div>
-  <div class="brand-card"><b class="brand-xiaomi">mi Xiaomi</b></div>
-  <div class="brand-card"><b class="brand-oppo">OPPO</b></div>
-  <div class="brand-card"><b class="brand-realme">realme</b></div>
-  <div class="brand-card"><b class="brand-vivo">vivo</b></div>
-  <div class="brand-card"><b class="brand-huawei">HUAWEI</b></div>
-  <div class="brand-card"><b class="brand-honor">HONOR</b></div>
-  <div class="brand-card"><b data-tr="▦ Diğer Markalar" data-en="▦ Other Brands">▦ Diğer Markalar</b></div>
+ <section class="compat-results" aria-live="polite">
+  <div class="compat-section-heading"><div><span>01 / CATALOG MATCH</span><h2 id="glassResultTitle" data-tr="Doğrulanmış eşleşmeler" data-en="Verified matches">Doğrulanmış eşleşmeler</h2></div><span class="compat-source"><i></i><span data-tr="Simkon kataloğu" data-en="Simkon catalog">Simkon kataloğu</span></span></div>
+  <p class="compat-results-copy" data-tr="Aynı cam kesimini paylaşan modeller tek grupta toplanır. Elinizdeki camın hangi cihazlara uyduğunu kolayca kontrol edin." data-en="Models sharing the same glass cutout are grouped together. Quickly check which devices match the glass you have in stock.">Aynı cam kesimini paylaşan modeller tek grupta toplanır. Elinizdeki camın hangi cihazlara uyduğunu kolayca kontrol edin.</p>
+  <div id="glassResultBody" class="compat-result-body"><div class="compat-empty"><strong data-tr="Bir model arayın." data-en="Search for a model.">Bir model arayın.</strong><p data-tr="Model adını yazın veya marka ve model listesinden seçim yapın." data-en="Enter a model name or select a brand and model from the lists.">Model adını yazın veya marka ve model listesinden seçim yapın.</p></div></div>
  </section>
- <section class="glass-results" aria-live="polite">
-  <div class="glass-results-head"><div><span class="glass-step">02 / MATCH RESULTS</span><h2 id="glassResultTitle" data-tr="Uyumluluk sonuçları burada" data-en="Compatibility results will appear here">Uyumluluk sonuçları burada</h2></div><span class="glass-live"><i></i><span data-tr="Katalog bağlantısı hazır" data-en="Catalog connection ready">Katalog bağlantısı hazır</span></span></div>
-  <div id="glassResultBody" class="glass-result-body"><div class="glass-empty"><b data-tr="Aramaya hazırız" data-en="Ready to search">Aramaya hazırız</b><p data-tr="Telefon modelini yazıp sorgulayın veya marka seçin." data-en="Enter a phone model or choose a brand to search.">Telefon modelini yazıp sorgulayın veya marka seçin.</p></div></div>
- </section>
- <section class="glass-code-features">
-  <article class="feature-card"><div class="feature-symbol">▱</div><h3 data-tr="Kalıp Eşleşmesi" data-en="Template Matching">Kalıp Eşleşmesi</h3><p data-tr="Aynı cam kalıbını kullanan uyumlu cihazları keşfedin, stoğunuzu optimize edin." data-en="Find compatible devices that use the same glass template and optimize your inventory.">Aynı cam kalıbını kullanan uyumlu cihazları keşfedin, stoğunuzu optimize edin.</p></article>
-  <article class="feature-card"><div class="feature-symbol">⬡</div><h3 data-tr="Doğru Ürün Seçimi" data-en="Choose the Right Product">Doğru Ürün Seçimi</h3><p data-tr="Yanlış ürün riskini azaltın, zamandan ve maliyetten tasarruf edin." data-en="Reduce the risk of choosing the wrong product and save time and money.">Yanlış ürün riskini azaltın, zamandan ve maliyetten tasarruf edin.</p></article>
-  <article class="feature-card"><div class="feature-symbol">⟳</div><h3 data-tr="Sürekli Güncel" data-en="Always Up to Date">Sürekli Güncel</h3><p data-tr="Simkon katalog verileriyle daima güncel ve güvenilir sonuçlar elde edin." data-en="Get up-to-date, reliable results using Simkon catalog data.">Simkon katalog verileriyle daima güncel ve güvenilir sonuçlar elde edin.</p></article>
+ <section class="compat-info">
+  <article><span>02 / DATA</span><h3 data-tr="Sürekli güncellenen veri" data-en="Continuously updated data">Sürekli güncellenen veri</h3><p data-tr="Yeni telefon modelleri ve cam grupları katalog verisi güncellendikçe sorgulama sistemine yansır." data-en="New phone models and glass groups appear as the catalog data is updated.">Yeni telefon modelleri ve cam grupları katalog verisi güncellendikçe sorgulama sistemine yansır.</p></article>
+  <article><span>03 / FOR PROFESSIONALS</span><h3 data-tr="Telefoncular için" data-en="For repair professionals">Telefoncular için</h3><p data-tr="Tezgahta hızlı kontrol: müşterinin telefonu için elinizdeki hangi camın uyduğunu saniyeler içinde görün." data-en="Check at the counter which screen protector in your stock fits your customer's phone in seconds.">Tezgahta hızlı kontrol: müşterinin telefonu için elinizdeki hangi camın uyduğunu saniyeler içinde görün.</p></article>
  </section>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Bilgi</h2><button class="icon-button" id="modalClose" type="button" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=compat-login-20261107-1"></script><script src="assets/js/site.js?v=compat-login-20261107-1"></script><script src="assets/js/glass-compatibility.js?v=search-header-fix-20261107-2"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=compat-login-20261107-1"></script><script src="assets/js/site.js?v=compat-login-20261107-1"></script><script src="assets/js/glass-compatibility.js?v=simkon-reference-20261109-1"></script>
 
 <script id="site-global-nav-controller">
 (()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();

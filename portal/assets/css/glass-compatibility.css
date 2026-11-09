@@ -29,7 +29,7 @@ body.glass-code-page{margin:0!important;padding:0!important;background:#f1f0e9!i
 .glass-code-search .search-btn b{font-size:24px;font-weight:500}
 .glass-code-search .search-btn:disabled{opacity:.55;cursor:wait}
 .glass-code-brands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(20px,5vw,80px);row-gap:0}
-.glass-code-brands .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;min-height:62px;padding:14px 0;border:0;border-bottom:1px solid #c8c8be;border-radius:0;background:transparent;color:#111;text-align:left;cursor:pointer;transition:color .15s ease,background .15s ease}
+.glass-code-brands .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;min-height:62px;padding:14px 0;border:0;border-radius:0;background:transparent;color:#111;text-align:left;cursor:pointer;transition:color .15s ease,background .15s ease}
 .glass-code-brands .brand-card b{font-size:clamp(13px,1.1vw,16px);font-weight:800;letter-spacing:-.02em}
 .glass-code-brands .brand-card span{color:#85867c;font-size:10px;font-weight:700}
 .glass-code-brands .brand-card:hover,.glass-code-brands .brand-card:focus-visible{color:#777f1d;background:rgba(215,255,50,.14);outline:0}
@@ -44,8 +44,8 @@ body.glass-code-page{margin:0!important;padding:0!important;background:#f1f0e9!i
 .glass-code-page .glass-empty p{margin:8px 0 0;color:#66675f;font-size:14px}
 .glass-code-page .glass-summary{display:flex;align-items:baseline;gap:12px;margin:0 0 26px;color:#66675f;font-size:13px;font-weight:600}
 .glass-code-page .glass-summary strong{color:#111;font-size:clamp(38px,6vw,76px);font-weight:800;line-height:.9;letter-spacing:-.08em}
-.glass-code-page .glass-phone-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(18px,4vw,64px);row-gap:0}
-.glass-code-page .glass-phone-card{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:8px;min-width:0;min-height:82px;padding:12px 0;border:0;border-bottom:1px solid #c8c8be;border-radius:0;background:transparent;box-shadow:none;text-align:left;transition:color .15s ease}
+.glass-code-page .glass-phone-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(18px,4vw,64px);row-gap:14px}
+.glass-code-page .glass-phone-card{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:8px;min-width:0;min-height:82px;padding:12px 0;border:0;border-radius:0;background:transparent;box-shadow:none;text-align:left;transition:color .15s ease}
 .glass-code-page .glass-phone-card:hover{transform:none;border-color:#111;background:rgba(215,255,50,.12)}
 .glass-code-page .glass-phone-art{position:relative;width:24px;height:43px;border:2px solid #25261f;border-radius:5px;background:transparent;box-shadow:none}
 .glass-code-page .glass-phone-art:before{position:absolute;top:3px;left:50%;width:7px;height:2px;border-radius:2px;background:#25261f;content:"";transform:translateX(-50%)}

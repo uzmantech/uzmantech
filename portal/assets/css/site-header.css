@@ -1586,3 +1586,47 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
  html body .site-global-header .site-archive-auth>.header-login,
  html body .site-global-header .site-archive-auth>.header-register{min-width:58px!important;padding:0 5px!important;font-size:9px!important}
 }
+
+
+/* Final desktop fit for the 8-link models/archive header */
+@media screen and (min-width:761px) and (max-width:1800px){
+ html body .site-global-header{
+  gap:5px!important;padding-left:7px!important;padding-right:7px!important;
+ }
+ html body .site-global-header>.site-header-brand{
+  flex:0 0 150px!important;width:150px!important;padding-right:6px!important;gap:5px!important;
+ }
+ html body .site-global-header>.site-header-brand img{
+  width:36px!important;height:36px!important;flex-basis:36px!important;
+ }
+ html body .site-global-header>.site-header-brand b{font-size:13px!important}
+ html body .site-global-header>.site-global-nav{gap:2px!important}
+ html body .site-global-header>.site-global-nav>.site-nav-link{
+  height:40px!important;padding:0 3px!important;gap:3px!important;font-size:9.5px!important;
+ }
+ html body .site-global-header .site-nav-icon{width:16px!important;height:16px!important;flex-basis:16px!important;font-size:13px!important}
+ html body .site-global-header>.site-header-actions,
+ html body .site-global-header>.dash-top-actions{gap:3px!important;margin-left:2px!important}
+ html body .site-global-header .language-control{flex-basis:48px!important;width:48px!important;min-width:48px!important;height:38px!important;padding:0 2px!important}
+ html body .site-global-header .language-control .language-globe{display:none!important}
+ html body .site-global-header .language-control select{width:25px!important;min-width:25px!important}
+ html body .site-global-header .notification-button{flex:0 0 30px!important;width:30px!important;min-width:30px!important;height:36px!important;font-size:17px!important}
+ html body .site-global-header .notification-button i{
+  right:-1px!important;top:-5px!important;transform:none!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:14px!important;height:14px!important;padding:0 3px!important;
+  font-size:9px!important;line-height:14px!important;border-radius:9px!important;
+ }
+ html body .site-global-header .site-archive-auth{gap:3px!important}
+ html body .site-global-header .site-archive-auth>.header-login,
+ html body .site-global-header .site-archive-auth>.header-register{
+  min-width:55px!important;width:auto!important;max-width:68px!important;
+  height:36px!important;min-height:36px!important;padding:0 5px!important;font-size:9px!important;
+ }
+}
+@media screen and (min-width:761px) and (max-width:1450px){
+ html body .site-global-header>.site-header-brand{flex-basis:128px!important;width:128px!important}
+ html body .site-global-header>.site-header-brand small{display:none!important}
+ html body .site-global-header>.site-global-nav>.site-nav-link{font-size:8.5px!important;padding:0 2px!important}
+ html body .site-global-header .site-nav-icon{display:none!important}
+}

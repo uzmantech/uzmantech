@@ -369,8 +369,13 @@ Deno.serve(async (req: Request) => {
     if (query.length < 2 || query.length > 100) return response({ success: false, error: "En az 2 karakterlik model adı girin." }, 400);
     try {
       const groups = await loadGlassCatalog();
-      const matches = groups.filter(group => group.models.some(model => glassSearchMatches(model, query)))
-        .map(group => ({ group: group.group, models: group.models }));
+      const matches = groups.filter(group => group.models.some(model => {
+        if (query === "__other__") {
+          const first = glassNorm(model).split(/[^a-z0-9]+/)[0];
+          return !["apple", "iphone", "samsung", "xiaomi", "redmi", "poco", "oppo", "vivo", "realme", "huawei", "honor"].includes(first);
+        }
+        return glassSearchMatches(model, query);
+      })).map(group => ({ group: group.group, models: group.models }));
       return response({ success: true, groups: matches, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
     } catch (error) {
       console.error("Glass compatibility lookup failed", error);

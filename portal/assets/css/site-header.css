@@ -1793,3 +1793,24 @@ body.dashboard-page .site-global-header .dash-top-actions .language-control sele
   min-width:112px!important;max-width:150px!important;height:38px!important;
  }
 }
+
+
+/* Archive header: render the flag only once, on the flag span background */
+@media screen and (min-width:981px){
+ html body .site-global-header.site-global-header-archive .language-control .language-globe{
+  display:inline-block!important;position:relative!important;overflow:hidden!important;
+  width:27px!important;min-width:27px!important;height:18px!important;flex:0 0 27px!important;
+  background-color:#e30a17!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='10' fill='%23fff'/%3E%3Ccircle cx='28' cy='20' r='8' fill='%23e30a17'/%3E%3Cpath d='m41 10 2.6 7.2 7.6.2-6 4.6 2.2 7.2-6.4-4.2-6.4 4.2 2.2-7.2-6-4.6 7.6-.2z' fill='%23fff'/%3E%3C/svg%3E")!important;
+  background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.35)!important;
+ }
+ html body .site-global-header.site-global-header-archive .language-control .language-globe[data-lang="en"]{
+  background-color:#012169!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23012169'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='%23fff' stroke-width='9'/%3E%3Cpath d='M0 0 60 40M60 0 0 40' stroke='%23c8102e' stroke-width='4'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='%23fff' stroke-width='13'/%3E%3Cpath d='M30 0v40M0 20h60' stroke='%23c8102e' stroke-width='7'/%3E%3C/svg%3E")!important;
+ }
+ html body .site-global-header.site-global-header-archive .language-control .language-globe:before,
+ html body .site-global-header.site-global-header-archive .language-control .language-globe:after{
+  content:none!important;display:none!important;background:none!important;
+ }
+}

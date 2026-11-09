@@ -809,3 +809,13 @@ body.archive-shell.archive-preview-locked #modal.open #modalBody button[type="su
 .archive-brand-logo>img:not([src])+.brand-logo-fallback{display:block;}
 .archive-brand-logo>img:where([data-failed="true"]){display:none;}
 .archive-brand-logo>img[data-failed="true"]+.brand-logo-fallback{display:block;}
+
+
+/* 2026-11-09: remove archive top gap and normalize real brand favicon presentation */
+body.archive-shell .archive-stage{margin:0 auto 36px!important;padding-top:0!important;}
+body.archive-shell .archive-main-column{gap:0!important;margin-top:0!important;padding-top:0!important;}
+body.archive-shell .archive-brand-catalog{margin-top:0!important;padding-top:20px!important;}
+body.archive-shell .archive-brand-logo{width:56px!important;height:56px!important;display:grid!important;place-items:center!important;overflow:hidden!important;background:#f7f9fc!important;border:1px solid #d7e0eb!important;border-radius:13px!important;}
+body.archive-shell .archive-brand-logo>img{width:44px!important;height:44px!important;max-width:88%!important;max-height:88%!important;object-fit:contain!important;background:transparent!important;}
+body.archive-shell .archive-brand-logo .brand-logo-fallback{color:#172235!important;font-size:9px!important;font-weight:800!important;text-align:center!important;}
+@media(max-width:900px){body.archive-shell .archive-stage{margin:0 auto 26px!important;}}

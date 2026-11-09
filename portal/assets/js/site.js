@@ -463,4 +463,16 @@
     Promise.allSettled(startupTasks).then(()=>syncHeader());
   })();
 
+  // Shared legal navigation footer for portal pages.
+  (() => {
+    if (document.querySelector(".legal-footer-links")) return;
+    const footer = document.createElement("footer");
+    footer.className = "legal-footer-links";
+    footer.setAttribute("aria-label", "Yasal bağlantılar");
+    footer.innerHTML = '<a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="hakkimizda.html">Hakkımızda</a><a href="destek.html">İletişim</a><a href="kullanim-sartlari.html">Kullanım Şartları</a>';
+    footer.style.cssText = "display:flex;flex-wrap:wrap;justify-content:center;gap:18px;padding:24px 16px;margin-top:36px;border-top:1px solid #263b54;background:#071321;color:#a9bfd5;font-size:13px";
+    footer.querySelectorAll("a").forEach(a => { a.style.color="#8fcaff"; a.style.textDecoration="none"; });
+    document.body.appendChild(footer);
+  })();
+
 })();

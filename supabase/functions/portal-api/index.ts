@@ -208,6 +208,16 @@ function glassNorm(value: string): string {
   return value.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/ı/g,"i").replace(/\s+/g," ").trim();
 }
+function glassSearchMatches(model: string, query: string): boolean {
+  const normalizedModel = glassNorm(model);
+  const normalizedQuery = glassNorm(query);
+  const compactModel = normalizedModel.replace(/[^a-z0-9]/g, "");
+  const compactQuery = normalizedQuery.replace(/[^a-z0-9]/g, "");
+  if (compactQuery && compactModel.includes(compactQuery)) return true;
+  const queryTerms = normalizedQuery.split(/[^a-z0-9]+/).filter(Boolean);
+  const modelTerms = normalizedModel.split(/[^a-z0-9]+/).filter(Boolean);
+  return queryTerms.length > 0 && queryTerms.every(term => modelTerms.some(candidate => candidate.includes(term)));
+}
 function parseGlassGroup(url: string, html: string): GlassGroup | null {
   const titleMatch = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
   const title = titleMatch ? glassText(titleMatch[1]) : "Kırılmaz cam kalıbı";
@@ -359,8 +369,7 @@ Deno.serve(async (req: Request) => {
     if (query.length < 2 || query.length > 100) return response({ success: false, error: "En az 2 karakterlik model adı girin." }, 400);
     try {
       const groups = await loadGlassCatalog();
-      const needle = glassNorm(query);
-      const matches = groups.filter(group => group.models.some(model => glassNorm(model).includes(needle)))
+      const matches = groups.filter(group => group.models.some(model => glassSearchMatches(model, query)))
         .map(group => ({ group: group.group, models: group.models }));
       return response({ success: true, groups: matches, source: "Simkon", cached: !!glassCatalogCache && Date.now()-glassCatalogCache.at >= 0 });
     } catch (error) {

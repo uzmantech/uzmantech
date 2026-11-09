@@ -30,7 +30,7 @@
  <div class="site-header-actions">
  <label class="language-control" aria-label="Dil seçimi"><span class="language-globe">◎</span><select id="languageSelect" aria-label="Dil seçimi"><option value="tr">TR</option><option value="en">EN</option></select><span class="top-chevron">⌄</span></label>
  <span class="top-separator"></span><button class="notification-button" type="button" aria-label="Bildirimler">♧<i>3</i></button>
- <div class="site-archive-auth"><button class="header-login" type="button" data-open="login">Giriş Yap</button><a class="header-register" href="kayit.html">Üye Ol</a></div></div></header>
+ <div class="site-archive-auth" id="headerAuth"><button class="header-login" type="button" data-open="login">Giriş Yap</button><a class="header-register" href="kayit.html">Üye Ol</a></div></div></header>
 <section class="archive-license-gate" id="archiveLicenseGate" aria-live="polite" hidden>
  <div class="archive-license-card">
   <div class="archive-license-lock" aria-hidden="true">🔒</div>
@@ -63,6 +63,9 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/archive.js?v=samfw-models-20261107-1"></script>
 <script src="assets/js/language.js?v=portal-en-complete-20261107-1"></script>
+<script id="archive-header-language-label">
+(()=>{const c=document.querySelector(".site-global-header .language-control"),s=c?.querySelector("select");if(!c||!s)return;const sync=()=>c.setAttribute("data-current",s.value.toUpperCase());sync();s.addEventListener("change",sync);})();
+</script>
 <script id="site-global-nav-controller">
 (()=>{const header=document.querySelector(".site-global-header");if(!header)return;const button=header.querySelector(".site-mobile-nav-toggle"),nav=header.querySelector(".site-global-nav");if(!button||!nav)return;button.setAttribute("aria-controls","siteGlobalNav");nav.id="siteGlobalNav";button.addEventListener("click",()=>{const opened=!nav.classList.contains("is-open");nav.classList.toggle("is-open",opened);button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});nav.addEventListener("click",event=>{if(!event.target.closest("a"))return;nav.classList.remove("is-open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","Menüyü aç");});})();
 </script>

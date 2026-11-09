@@ -819,3 +819,12 @@ body.archive-shell .archive-brand-logo{width:56px!important;height:56px!importan
 body.archive-shell .archive-brand-logo>img{width:44px!important;height:44px!important;max-width:88%!important;max-height:88%!important;object-fit:contain!important;background:transparent!important;}
 body.archive-shell .archive-brand-logo .brand-logo-fallback{color:#172235!important;font-size:9px!important;font-weight:800!important;text-align:center!important;}
 @media(max-width:900px){body.archive-shell .archive-stage{margin:0 auto 26px!important;}}
+
+
+/* Hard reset for the empty strip between global header and archive content */
+body.archive-shell .archive-license-gate[hidden]{display:none!important;position:absolute!important;inset:auto!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;}
+body.archive-shell main.archive-stage{margin-top:0!important;padding-top:0!important;transform:none!important;}
+body.archive-shell .archive-brand-catalog{margin-top:0!important;}
+body.archive-shell .archive-main-column{margin-top:0!important;padding-top:0!important;gap:14px!important;}
+body.archive-shell .archive-recent-software{display:block!important;visibility:visible!important;opacity:1!important;margin:0!important;min-height:130px!important;}
+body.archive-shell .archive-recent-track{min-height:70px!important;}

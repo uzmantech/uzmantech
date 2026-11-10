@@ -869,3 +869,10 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
 .samsung-csc-inline-form button:hover{background:#2389df}
 .samsung-csc-inline-form button:disabled{opacity:.65;cursor:wait}
 @media(max-width:620px){.samsung-csc-inline-form{grid-template-columns:minmax(0,1fr) minmax(110px,36%);gap:8px}.samsung-csc-inline-form input{grid-column:1/-1}.samsung-csc-inline-form button{grid-column:1/-1}}
+
+
+/* Samsung local, free firmware download helper */
+.samsung-local-download-box{display:flex;flex-direction:column;gap:11px;margin-top:18px;padding:16px;border:1px solid #315878;border-radius:12px;background:#0b1b2b}
+.samsung-local-download-box p{margin:0;color:#c2d4e6;font-size:13px;line-height:1.65}
+.samsung-local-download-box .archive-live-download{width:100%;min-height:46px}
+.samsung-tool-link{color:#8fcaff;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}

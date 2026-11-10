@@ -2501,3 +2501,25 @@ html body.archive-shell>header.site-global-header.site-global-header-archive>.si
   padding-inline:2px!important;
  }
 }
+
+
+/* Fine-tune archive desktop menu density; keep the final Contact label readable. */
+@media screen and (min-width:981px){
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav{
+  gap:2px!important;
+ }
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link{
+  font-size:10.5px!important;
+  padding-inline:2px!important;
+ }
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link>b{
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
+ }
+}
+@media screen and (min-width:1181px){
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link{
+  font-size:11px!important;
+  padding-inline:3px!important;
+ }
+}

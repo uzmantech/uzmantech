@@ -44,7 +44,7 @@ const MODEL_CATALOG={
 };
 const archiveEsc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const archiveCategory={firmware:"Firmware",eng:"ENG",imei:"IMEI",test_point:"Test Point",resistor:"Direnç",usb:"USB Sürücüleri",other:"Diğer"};
-async function fetchSamFwCatalog(model,csc="TUR",append=false){
+async function fetchSamFwCatalog(model,csc="TUR",append=false,displayModel=null){
  const normalized=String(model||"").trim().toUpperCase(),region=String(csc||"TUR").trim().toUpperCase();
  if(!/^SM-[A-Z0-9]+$/.test(normalized))throw new Error("Samsung model kodunu SM-S928B biçiminde girin.");
  if(!/^[A-Z0-9]{3}$/.test(region))throw new Error("CSC kodu 3 karakter olmalıdır. Örnek: TUR, XSG, INS.");
@@ -56,14 +56,14 @@ async function fetchSamFwCatalog(model,csc="TUR",append=false){
  const catalog=await response.json().catch(()=>({}));
  if(!response.ok||!catalog.success)throw new Error(catalog.message||"SamFrew firmware listesi alınamadı.");
  const firmwareItems=(Array.isArray(catalog.items)?catalog.items:[]).filter(x=>x&&x.version&&x.csc).map(x=>({
-  id:"samfrew:"+x.model+":"+x.csc+":"+x.version,brand:"Samsung",model:normalized,category:"firmware",
+  id:"samfrew:"+x.model+":"+x.csc+":"+x.version,brand:"Samsung",model:displayModel||normalized,category:"firmware",
   title:"SamFrew • "+x.csc+" • "+x.version,original_filename:x.version,
   description:"CSC: "+x.csc+" ("+(x.regionName||"")+") | "+(x.os||"Android sürümü belirtilmemiş")+" | Build: "+(x.buildDate||"-")+" | Changelist: "+(x.changelist||"-"),
   created_at:null,source_url:/^https:\/\/samfrew\.com\//i.test(x.sourceUrl||"")?x.sourceUrl:catalog.pageUrl,is_samfrew:true
  }));
  if(!firmwareItems.length)throw new Error("Bu model ve CSC kodu için SamFrew firmware kaydı bulunamadı.");
  archiveItems=[...archiveItems.filter(x=>append||!String(x.id||"").startsWith("samfrew:")),...firmwareItems];
- selectedDevice=normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
+ selectedDevice=displayModel||normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }
 
 function normBrand(v){const x=String(v||"").toLocaleLowerCase("tr-TR");if(x==="redmi"||x==="poco"||x==="xiaomi")return "Xiaomi";if(x==="samsung")return "Samsung";if(x==="oppo")return "Oppo";if(x==="vivo")return "Vivo";if(x==="realme")return "Realme";if(x==="huawei")return "Huawei";if(x==="honor")return "Honor";if(x==="oneplus")return "OnePlus";if(x==="tecno")return "Tecno";if(x==="infinix")return "Infinix";if(x==="google")return "Google";if(x==="apple")return "Apple";if(x==="motorola")return "Motorola";if(x==="nokia"||x==="hmd")return "Nokia";if(x==="sony")return "Sony";if(x==="asus")return "ASUS";if(x==="nothing")return "Nothing";if(x==="zte"||x==="nubia")return "ZTE";if(x==="black shark"||x==="blackshark")return "Black Shark";return v;}
@@ -148,7 +148,7 @@ $("#archiveQuery")?.addEventListener("input",()=>{if(!$("#archiveQuery").value.t
 document.addEventListener("click",e=>{const btn=e.target.closest("[data-brand]");if(!btn)return;const label=normBrand(btn.dataset.brand||"");if(MODEL_CATALOG[label])location.href="models.html?brand="+encodeURIComponent(label);});
 const SAMSUNG_MODEL_ALIASES={"A13":["SM-A135F","SM-A137F","SM-A136B"],"GALAXY A13":["SM-A135F","SM-A137F","SM-A136B"],"A13 4G":["SM-A135F","SM-A137F"],"GALAXY A13 4G":["SM-A135F","SM-A137F"],"A13 5G":["SM-A136B"],"GALAXY A13 5G":["SM-A136B"]};
 function resolveSamsungModelCodes(query){const q=String(query||"").trim().toUpperCase().replace(/\s+/g," ");if(/^SM-[A-Z0-9]+$/.test(q))return [q];return SAMSUNG_MODEL_ALIASES[q]||[];}
-document.addEventListener("submit",async e=>{if(e.target.id!=="samfrewSearchForm")return;e.preventDefault();const query=$("#samfrewModelCode")?.value||"",csc=$("#samfrewCsc")?.value||"TUR",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Bu model için eşleştirme bulunamadı. Örnek: A13, A13 5G veya SM-A135F.");return;}if(submit){submit.disabled=true;submit.textContent="Aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],csc,i>0);}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){selectedDevice=query.toUpperCase();renderLiveArchive();toast("SamFrew: "+codes.length+" model kodunda "+total+" firmware kaydı bulundu.");}else toast(errors[0]||"Bu model ve CSC için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Yazılım ara";}}});
+document.addEventListener("submit",async e=>{if(e.target.id!=="samfrewSearchForm")return;e.preventDefault();const query=$("#samfrewModelCode")?.value||"",csc=$("#samfrewCsc")?.value||"TUR",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Bu model için eşleştirme bulunamadı. Örnek: A13, A13 5G veya SM-A135F.");return;}if(submit){submit.disabled=true;submit.textContent="Aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],csc,i>0,query.toUpperCase());}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){renderLiveArchive();toast("SamFrew: "+codes.length+" model kodunda "+total+" firmware kaydı bulundu.");}else toast(errors[0]||"Bu model ve CSC için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Yazılım ara";}}});
 document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
 document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");

@@ -83,7 +83,7 @@ function renderBrandArchiveCounts(){
  cards.forEach(card=>{
   const brand=normBrand(card.dataset.brand||"");
   const items=archiveItems.filter(file=>normBrand(file.brand)===brand);
-  const models=new Set(items.map(file=>String(file.model||"").trim()).filter(Boolean));
+  const models=new Set([...(MODEL_CATALOG[brand]||"").split("|").map(model=>model.trim()).filter(Boolean),...items.map(file=>String(file.model||"").trim()).filter(Boolean)]);
   let counts=card.querySelector(".archive-brand-counts");
   if(!counts){counts=document.createElement("span");counts.className="archive-brand-counts";card.appendChild(counts);}
   counts.textContent=models.size.toLocaleString("tr-TR")+" model · "+items.length.toLocaleString("tr-TR")+" yazılım";

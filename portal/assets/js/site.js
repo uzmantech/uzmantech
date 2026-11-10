@@ -41,7 +41,7 @@
     const lang=applyLanguage((()=>{try{return localStorage.getItem("uzmantech_portal_language")||document.documentElement.lang;}catch{return document.documentElement.lang;}})());
     if(auth){
       if(user){
-        auth.innerHTML='<div class="profile-menu-wrap"><button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Kullanıcı menüsü" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdown"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button><div class="profile-dropdown" id="profileDropdown" hidden><button type="button" data-profile-action="account"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Hesabım</span></button><button type="button" class="profile-logout" data-profile-action="logout"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span>Çıkış</span></button></div></div>';
+        auth.innerHTML='<div class="profile-menu-wrap"><button class="top-profile logged-in-profile" type="button" id="profileBtn" title="Kullanıcı menüsü" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdown"><span class="avatar"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><span class="top-account"><b>'+esc(user.username)+'</b><small>'+esc(user.role==="admin"?"Yönetici":user.role==="member"?"Premium Üye":"Hesap")+'</small></span><svg class="top-chevron" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></button><div class="profile-dropdown" id="profileDropdown" hidden><button type="button" data-profile-action="account"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Hesabım</span></button>'+(user.role==="admin"?'<button type="button" data-profile-action="management"><svg viewBox="0 0 24 24"><use href="#i-grid"/></svg><span>Yönetim</span></button>':'')+'<button type="button" class="profile-logout" data-profile-action="logout"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span>Çıkış</span></button></div></div>';
       }else{
         auth.innerHTML='<button class="header-login" id="headerLogin" type="button" data-open="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="login">'+translations[lang].login+'</span></button><a class="header-register" id="headerRegister" href="kayit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6"/></svg><span data-i18n="register">'+translations[lang].register+'</span></a>';
       }
@@ -415,7 +415,7 @@
     if(profileAction){
       const action=profileAction.dataset.profileAction;
       dropdown.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");
-      if(action==="account"){document.dispatchEvent(new CustomEvent("portal:show-account"));}
+      if(action==="account"){document.dispatchEvent(new CustomEvent("portal:show-account"));}if(action==="management"&&state.user?.role==="admin"){location.href="admin.html";}
       if(action==="logout"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();document.body.classList.remove("account-view");window.UzmantoolPages?.show("home");toast("Güvenli çıkış yapıldı.");}
       return;
     }

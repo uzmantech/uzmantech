@@ -876,3 +876,13 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
 .samsung-local-download-box p{margin:0;color:#c2d4e6;font-size:13px;line-height:1.65}
 .samsung-local-download-box .archive-live-download{width:100%;min-height:46px}
 .samsung-tool-link{color:#8fcaff;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+
+/* Samsung download guide */
+.samsung-download-guide{padding:12px 14px;border:1px solid #294b6b;border-radius:10px;background:#081625;color:#dceafa}
+.samsung-download-guide summary{color:#9ed0ff;font-size:13px;font-weight:800;cursor:pointer;list-style-position:inside}
+.samsung-download-guide ol{margin:12px 0 0;padding-left:22px;display:grid;gap:9px}
+.samsung-download-guide li{padding-left:3px;color:#c8d9e9;font-size:12px;line-height:1.65}
+.samsung-download-guide li b{color:#f3f8ff}
+.samsung-download-guide code{padding:1px 4px;border-radius:4px;background:#152b40;color:#a8d8ff;font-size:11px}
+.samsung-download-guide .samsung-guide-note{margin-top:12px;padding-top:10px;border-top:1px solid #294b6b;color:#f0d9a8;font-size:12px;line-height:1.6}

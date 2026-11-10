@@ -398,47 +398,38 @@ Deno.serve(async (req: Request) => {
   if (req.method === "GET" && path.pathname.endsWith("/samsung-firmware-search")) {
     const model=String(path.searchParams.get("q")||"").trim().toUpperCase();
     if(!/^SM-[A-Z0-9]+$/.test(model))return response({success:false,message:"Samsung model kodunu SM-A546E biçiminde girin."},400);
-    const endpoint="https://samsungfirmware.com/functions/publicApi";
-    const headers={"Accept":"application/json","User-Agent":"UzmantechPortal/2.0 (Samsung firmware lookup)"};
-    const collected:any[]=[];
-    let generatedAt="",provenance="",apiVersion="";
+    const pageUrl="https://firmwareindex.com/samsung/"+model.toLowerCase()+"/";
     try {
-      for(let page=1;page<=5;page++){
-        const url=new URL(endpoint);
-        url.searchParams.set("v","1");
-        url.searchParams.set("resource","firmware");
-        url.searchParams.set("model",model);
-        url.searchParams.set("limit","100");
-        url.searchParams.set("page",String(page));
-        const res=await fetch(url.toString(),{headers,signal:AbortSignal.timeout(18000)});
-        if(!res.ok)throw new Error("SamsungFirmware API HTTP "+res.status);
-        const payload=await res.json();
-        apiVersion=String(payload?.api_version||apiVersion);
-        generatedAt=String(payload?.generated_at||generatedAt);
-        provenance=String(payload?.provenance||provenance);
-        const candidates=Array.isArray(payload)?payload:
-          Array.isArray(payload?.data)?payload.data:
-          Array.isArray(payload?.items)?payload.items:
-          Array.isArray(payload?.results)?payload.results:
-          Array.isArray(payload?.firmware)?payload.firmware:
-          Array.isArray(payload?.data?.firmware)?payload.data.firmware:[];
-        collected.push(...candidates);
-        if(candidates.length<100)break;
+      const res=await fetch(pageUrl,{headers:{"Accept":"text/html,application/xhtml+xml","User-Agent":"Mozilla/5.0 (compatible; UzmantechPortal/2.0; firmware metadata lookup)","Accept-Language":"en-US,en;q=0.9"},signal:AbortSignal.timeout(22000)});
+      if(!res.ok)throw new Error("FirmwareIndex HTTP "+res.status);
+      const html=await res.text();
+      const clean=(v:string)=>v.replace(/<script\b[\s\S]*?<\/script>/gi," ").replace(/<style\b[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/\s+/g," ").trim();
+      const tables=[...html.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].map(m=>m[1]);
+      const items:any[]=[];
+      let matchedTable=false;
+      for(const table of tables){
+        const rows=[...table.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m=>m[1]);
+        if(!rows.length)continue;
+        const cellsOf=(row:string)=>[...row.matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(m=>clean(m[1]));
+        const header=cellsOf(rows[0]).map(v=>v.toLowerCase());
+        const isCscTable=header.some(v=>v==="csc")&&header.some(v=>v.includes("region"))&&header.some(v=>v.includes("latest build"));
+        if(!isCscTable)continue;
+        matchedTable=true;
+        for(const row of rows.slice(1)){
+          const cells=cellsOf(row);
+          if(cells.length<5)continue;
+          const csc=cells[0].toUpperCase();
+          const version=cells[2].trim();
+          if(!/^[A-Z0-9]{3}$/.test(csc)||!/^[A-Z0-9]{8,20}$/.test(version))continue;
+          const href=[...row.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)].map(m=>m[1]).map(v=>{try{return new URL(v,pageUrl).toString()}catch{return ""}}).find(v=>v.startsWith("https://firmwareindex.com/"))||pageUrl;
+          items.push({model,csc,regionName:cells[1],version,os:cells[3],buildDate:cells[4],changelist:"",sourceUrl:href,provider:"FirmwareIndex"});
+        }
       }
-      const normalized=collected.map((x:any)=>{
-        const csc=String(x.csc||x.region_code||x.region||x.sales_code||"").toUpperCase();
-        const version=String(x.build||x.firmware||x.version||x.build_number||x.pda||"");
-        const android=String(x.android_version||x.android||x.os_version||"");
-        const date=String(x.release_date||x.released_at||x.date||x.build_date||"");
-        const status=String(x.verification_status||x.verification||x.status||"");
-        if(!csc||!version)return null;
-        return {model,csc,regionName:String(x.region_name||x.country||x.market||""),version,os:android,buildDate:date,changelist:String(x.changelist||""),securityPatch:String(x.security_patch||x.securityPatch||""),verification:status,sourceUrl:String(x.url||x.source_url||"https://samsungfirmware.com/"),provider:"SamsungFirmware"};
-      }).filter(Boolean);
-      const unique=[...new Map(normalized.map((x:any)=>[x.model+"|"+x.csc+"|"+x.version,x])).values()];
-      return response({success:true,source:"SamsungFirmware",model,count:unique.length,items:unique,providerCount:collected.length,generatedAt,provenance,apiVersion,pageUrl:"https://samsungfirmware.com/firmware/"});
+      const unique=[...new Map(items.map(x=>[x.model+"|"+x.csc+"|"+x.version,x])).values()];
+      return response({success:true,source:"FirmwareIndex",provider:"FirmwareIndex",model,count:unique.length,items:unique,pageUrl,matchedTable,parserTables:tables.length});
     } catch(error) {
-      console.error("SamsungFirmware API lookup failed",model,error);
-      return response({success:false,message:"Yeni Samsung firmware kaynağına şu anda erişilemiyor.",provider:"SamsungFirmware",detail:String(error)},503);
+      console.error("FirmwareIndex lookup failed",model,error);
+      return response({success:false,message:"Samsung firmware kataloğuna şu anda erişilemiyor.",provider:"FirmwareIndex",detail:String(error)},503);
     }
   }
 

@@ -395,6 +395,53 @@ Deno.serve(async (req: Request) => {
 
 
 
+  if (req.method === "GET" && path.pathname.endsWith("/samsung-firmware-search")) {
+    const model=String(reqUrl.searchParams.get("q")||"").trim().toUpperCase();
+    if(!/^SM-[A-Z0-9]+$/.test(model))return response({success:false,message:"Samsung model kodunu SM-A546E biçiminde girin."},400);
+    const endpoint="https://samsungfirmware.com/functions/publicApi";
+    const headers={"Accept":"application/json","User-Agent":"UzmantechPortal/2.0 (Samsung firmware lookup)"};
+    const collected:any[]=[];
+    let generatedAt="",provenance="",apiVersion="";
+    try {
+      for(let page=1;page<=5;page++){
+        const url=new URL(endpoint);
+        url.searchParams.set("v","1");
+        url.searchParams.set("resource","firmware");
+        url.searchParams.set("model",model);
+        url.searchParams.set("limit","100");
+        url.searchParams.set("page",String(page));
+        const res=await fetch(url.toString(),{headers,signal:AbortSignal.timeout(18000)});
+        if(!res.ok)throw new Error("SamsungFirmware API HTTP "+res.status);
+        const payload=await res.json();
+        apiVersion=String(payload?.api_version||apiVersion);
+        generatedAt=String(payload?.generated_at||generatedAt);
+        provenance=String(payload?.provenance||provenance);
+        const candidates=Array.isArray(payload)?payload:
+          Array.isArray(payload?.data)?payload.data:
+          Array.isArray(payload?.items)?payload.items:
+          Array.isArray(payload?.results)?payload.results:
+          Array.isArray(payload?.firmware)?payload.firmware:
+          Array.isArray(payload?.data?.firmware)?payload.data.firmware:[];
+        collected.push(...candidates);
+        if(candidates.length<100)break;
+      }
+      const normalized=collected.map((x:any)=>{
+        const csc=String(x.csc||x.region_code||x.region||x.sales_code||"").toUpperCase();
+        const version=String(x.build||x.firmware||x.version||x.build_number||x.pda||"");
+        const android=String(x.android_version||x.android||x.os_version||"");
+        const date=String(x.release_date||x.released_at||x.date||x.build_date||"");
+        const status=String(x.verification_status||x.verification||x.status||"");
+        if(!csc||!version)return null;
+        return {model,csc,regionName:String(x.region_name||x.country||x.market||""),version,os:android,buildDate:date,changelist:String(x.changelist||""),securityPatch:String(x.security_patch||x.securityPatch||""),verification:status,sourceUrl:String(x.url||x.source_url||"https://samsungfirmware.com/"),provider:"SamsungFirmware"};
+      }).filter(Boolean);
+      const unique=[...new Map(normalized.map((x:any)=>[x.model+"|"+x.csc+"|"+x.version,x])).values()];
+      return response({success:true,source:"SamsungFirmware",model,count:unique.length,items:unique,providerCount:collected.length,generatedAt,provenance,apiVersion,pageUrl:"https://samsungfirmware.com/firmware/"});
+    } catch(error) {
+      console.error("SamsungFirmware API lookup failed",model,error);
+      return response({success:false,message:"Yeni Samsung firmware kaynağına şu anda erişilemiyor.",provider:"SamsungFirmware",detail:String(error)},503);
+    }
+  }
+
   if (req.method === "GET" && path.pathname.endsWith("/samfrew-firmware")) {
     const model=String(path.searchParams.get("q")||"").trim().toUpperCase();
     const limit=Math.min(Math.max(Number(path.searchParams.get("limit")||"50"),1),50);

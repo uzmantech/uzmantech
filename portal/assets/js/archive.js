@@ -121,7 +121,7 @@ function downloadSamsungLocalHelper(file){
  "pause",
  "endlocal"
  ].join("\r\n");
- const blob=new Blob(["\\ufeff",bat],{type:"application/octet-stream"});
+ const blob=new Blob(["\uFEFF",bat],{type:"application/octet-stream"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download="Uzmantech_"+outName+"_Firmware_Indir.bat";
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);

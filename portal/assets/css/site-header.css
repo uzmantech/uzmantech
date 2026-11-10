@@ -1895,3 +1895,11 @@ html body .uzmantech-legal-footer nav a:hover{
 }
 .site-global-header .profile-language-row select:focus{border-color:#35b8ed;box-shadow:0 0 0 2px #159bd52b}
 .site-global-header .profile-language-row option{background:#101a29;color:#fff}
+
+.site-global-header .profile-dropdown .profile-menu-link{
+ display:flex;align-items:center;width:100%;min-height:38px;padding:0 10px;
+ border:1px solid transparent;border-radius:8px;color:#eaf4ff;
+ font:600 12px/1 "DM Sans",sans-serif;text-decoration:none;
+}
+.site-global-header .profile-dropdown .profile-menu-link:hover{background:#203b59;border-color:#42688c}
+.site-global-header .profile-dropdown button[data-open="login"]{cursor:pointer}

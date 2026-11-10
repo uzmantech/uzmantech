@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/archive.css?v=archive-spacing-recent-20261109-3">
-<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=20261105"><link rel="stylesheet" href="assets/css/site-header.css?v=profile-only-width-20261110-4">
+<link rel="stylesheet" href="assets/css/archive.css?v=archive-performance-20261110-1">
+<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=20261105"><link rel="stylesheet" href="assets/css/site-header.css?v=archive-fixed-20261110-1">
 </head>
 <body class="archive-shell dashboard-page">
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -111,7 +111,7 @@
 </main>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-heading"><h2 id="modalTitle">Üye girişi</h2><button class="icon-button" id="modalClose" aria-label="Kapat">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast" role="status"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/archive.js?v=firmwareindex-provider-20261110-1"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/archive.js?v=catalog-fast-scroll-20261110-1"></script>
 <script src="assets/js/language.js?v=ip-language-20261110-1"></script>
 <script id="site-global-nav-controller">
 (()=>{const header=document.querySelector(".site-global-header");if(!header)return;const button=header.querySelector(".site-mobile-nav-toggle"),nav=header.querySelector(".site-global-nav");if(!button||!nav)return;button.setAttribute("aria-controls","siteGlobalNav");nav.id="siteGlobalNav";button.addEventListener("click",()=>{const opened=!nav.classList.contains("is-open");nav.classList.toggle("is-open",opened);button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});nav.addEventListener("click",event=>{if(!event.target.closest("a"))return;nav.classList.remove("is-open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","Menüyü aç");});})();

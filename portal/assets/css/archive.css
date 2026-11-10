@@ -858,3 +858,14 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
 .samsung-csc-panel button{grid-column:1/-1;min-height:43px;border:0;border-radius:8px;background:#1676c8;color:white;font:700 13px "DM Sans",sans-serif;cursor:pointer}
 .archive-live-head>strong[hidden]{display:none!important}
 @media(max-width:620px){.samsung-csc-panel form{grid-template-columns:1fr}.samsung-csc-panel button{grid-column:auto}}
+
+
+/* Samsung search controls stay on one row: model, CSC, search */
+.samsung-csc-search{grid-column:1/-1;width:100%;margin:0 0 14px}
+.samsung-csc-inline-form{display:grid;grid-template-columns:minmax(220px,1fr) minmax(145px,190px) auto;gap:9px;align-items:stretch;width:100%}
+.samsung-csc-inline-form input,.samsung-csc-inline-form select{width:100%;min-width:0;min-height:44px;padding:0 12px;border:1px solid #355675;border-radius:9px;background:#081625;color:#f1f7ff;font:500 13px "DM Sans",sans-serif}
+.samsung-csc-inline-form input::placeholder{color:#8fa6bd}
+.samsung-csc-inline-form button{min-width:82px;min-height:44px;padding:0 20px;border:0;border-radius:9px;background:#1676c8;color:#fff;font:700 13px "DM Sans",sans-serif;cursor:pointer}
+.samsung-csc-inline-form button:hover{background:#2389df}
+.samsung-csc-inline-form button:disabled{opacity:.65;cursor:wait}
+@media(max-width:620px){.samsung-csc-inline-form{grid-template-columns:minmax(0,1fr) minmax(110px,36%);gap:8px}.samsung-csc-inline-form input{grid-column:1/-1}.samsung-csc-inline-form button{grid-column:1/-1}}

@@ -2127,3 +2127,77 @@ html body .uzmantech-legal-footer nav a:hover{
     padding-right:4px!important;
   }
 }
+
+
+/* Restore the original header navigation sizing; widen only the profile control into the existing gap */
+@media screen and (min-width:761px){
+  html body .site-global-header:not(.site-global-header-archive) > .site-global-nav{
+    flex:1 1 0!important;
+    width:auto!important;
+    min-width:0!important;
+    justify-content:stretch!important;
+    gap:2px!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) > .site-global-nav > .site-nav-link{
+    flex:1 1 0!important;
+    width:0!important;
+    min-width:0!important;
+    padding-left:3px!important;
+    padding-right:3px!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) > .dash-top-actions,
+  html body .site-global-header:not(.site-global-header-archive) > .site-header-actions{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin-left:auto!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap{
+    display:block!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap > .top-profile{
+    box-sizing:border-box!important;
+    width:calc(100% + 120px)!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin-left:-120px!important;
+  }
+
+  html body .site-global-header.site-global-header-archive{
+    grid-template-columns:184px minmax(0,1fr) 222px!important;
+  }
+  html body .site-global-header.site-global-header-archive > .site-global-nav{
+    width:auto!important;
+    min-width:0!important;
+    justify-content:stretch!important;
+  }
+  html body .site-global-header.site-global-header-archive > .site-global-nav > .site-nav-link{
+    flex:1 1 0!important;
+    width:0!important;
+    min-width:0!important;
+  }
+  html body .site-global-header.site-global-header-archive .site-archive-auth .profile-menu-wrap > .top-profile{
+    width:calc(100% + 120px)!important;
+    margin-left:-120px!important;
+    max-width:none!important;
+  }
+}
+@media screen and (min-width:981px) and (max-width:1450px){
+  html body .site-global-header.site-global-header-archive{
+    grid-template-columns:142px minmax(0,1fr) 222px!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap > .top-profile{
+    width:calc(100% + 80px)!important;
+    margin-left:-80px!important;
+  }
+}
+@media screen and (max-width:760px){
+  html body .site-global-header .profile-menu-wrap > .top-profile{
+    width:100%!important;
+    margin-left:0!important;
+  }
+}

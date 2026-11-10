@@ -136,7 +136,8 @@ function renderLiveArchive(){
   count.textContent=folders.length+" KLASÖR";
   head.querySelector("h2").textContent=selectedDevice;
   head.querySelector("p").textContent=brand+" cihazının yazılım klasörleri";
-  const vivoSourceLink=brand==="Vivo"?'<a class="archive-live-download" href="https://vivofirmware.com/?s='+encodeURIComponent(selectedDevice)+'" target="_blank" rel="noopener noreferrer">FREE / PAID FİRMWARE SEÇENEKLERİNİ AÇ</a>':"";\n  grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackDevices">← '+archiveEsc(brand)+' modellerine dön</button>'+vivoSourceLink+(folders.length?folders.map(cat=>'<button type="button" class="archive-folder-card" data-archive-folder="'+archiveEsc(cat)+'"><span class="archive-folder-icon" aria-hidden="true">📁</span><strong>'+archiveEsc(archiveCategory[cat]||cat)+'</strong><small>'+deviceItems.filter(f=>(f.category||"other")===cat).length+' dosya</small></button>').join(""):'<p class="archive-live-empty">Bu modele ait yazılım henüz yüklenmemiştir.</p>');
+  const vivoSourceLink=brand==="Vivo"?'<a class="archive-live-download" href="https://vivofirmware.com/?s='+encodeURIComponent(selectedDevice)+'" target="_blank" rel="noopener noreferrer">FREE / PAID FİRMWARE SEÇENEKLERİNİ AÇ</a>':"";
+  grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackDevices">← '+archiveEsc(brand)+' modellerine dön</button>'+vivoSourceLink+(folders.length?folders.map(cat=>'<button type="button" class="archive-folder-card" data-archive-folder="'+archiveEsc(cat)+'"><span class="archive-folder-icon" aria-hidden="true">📁</span><strong>'+archiveEsc(archiveCategory[cat]||cat)+'</strong><small>'+deviceItems.filter(f=>(f.category||"other")===cat).length+' dosya</small></button>').join(""):'<p class="archive-live-empty">Bu modele ait yazılım henüz yüklenmemiştir.</p>');
   return;
  }
  head.querySelector("h2").textContent=brand+" cihaz modelleri";

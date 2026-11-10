@@ -2459,3 +2459,45 @@ html body.archive-shell>header.site-global-header.site-global-header-archive>.si
   font-size:10px!important;
  }
 }
+
+
+/* Archive desktop navigation: distribute every menu item across the full free header width. */
+@media screen and (min-width:981px){
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav{
+  display:flex!important;
+  flex:1 1 0!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  overflow:visible!important;
+  justify-content:stretch!important;
+  align-items:stretch!important;
+  gap:3px!important;
+ }
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link{
+  display:flex!important;
+  flex:1 1 0!important;
+  width:0!important;
+  min-width:0!important;
+  max-width:none!important;
+  justify-content:center!important;
+  align-items:center!important;
+  text-align:center!important;
+  white-space:normal!important;
+  padding-inline:4px!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+ }
+}
+@media screen and (min-width:1181px){
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link{
+  font-size:12px!important;
+  padding-inline:6px!important;
+ }
+}
+@media screen and (min-width:981px) and (max-width:1180px){
+ html body.archive-shell>header.site-global-header.site-global-header-archive>.site-global-nav>.site-nav-link{
+  font-size:10px!important;
+  padding-inline:2px!important;
+ }
+}

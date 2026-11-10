@@ -1107,3 +1107,45 @@
 .support-history-panel{background:linear-gradient(145deg,#0b2239,#07182b);border-color:#1c496c}
 @media(max-width:900px){.support-hub-main{grid-template-columns:1fr;gap:24px}.support-hub-action{min-height:230px}.support-hub:after{display:none}}
 @media(max-width:600px){.support-hub-main{padding:30px 18px 24px}.support-hub-copy h2{font-size:38px}.support-hub-points{gap:10px}.support-hub-points span{font-size:10px}.support-hub-bottom{flex-wrap:wrap;gap:10px 18px;padding:13px 18px}.support-hub-bottom>span:first-child{width:100%;margin:0}.support-inline-form{padding:14px}.support-inline-head h2{font-size:23px}}
+
+
+/* Keep the shared portal footer visible on home, downloads and news SPA views. */
+body.dashboard-page .dash-footer{
+  display:flex!important;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:12px 20px;
+  width:100%;
+  box-sizing:border-box;
+  padding:14px clamp(12px,2vw,32px) 18px;
+  margin:0 auto;
+  border-top:1px solid #1d3048;
+  color:#91a8c4;
+}
+body.dashboard-page .dash-footer .legal-footer-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 20px;
+  margin:0;
+  padding:0;
+}
+body.dashboard-page .dash-footer .legal-footer-links a{
+  color:#dcecff!important;
+  white-space:nowrap;
+  text-decoration:none;
+}
+@media(max-width:760px){
+  body.dashboard-page .dash-footer{
+    justify-content:center;
+    text-align:center;
+    padding:16px 12px 20px;
+    gap:10px 14px;
+  }
+  body.dashboard-page .dash-footer .legal-footer-links{
+    width:100%;
+    gap:8px 16px;
+  }
+}

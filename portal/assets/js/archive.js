@@ -46,22 +46,22 @@ const archiveEsc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 const archiveCategory={firmware:"Firmware",eng:"ENG",imei:"IMEI",test_point:"Test Point",resistor:"Direnç",usb:"USB Sürücüleri",other:"Diğer"};
 async function fetchSamFwCatalog(model,append=false,displayModel=null){
  const normalized=String(model||"").trim().toUpperCase();
- if(!/^SM-[A-Z0-9]+$/.test(normalized))throw new Error("Samsung model kodunu SM-S928B biçiminde girin.");
+ if(!/^SM-[A-Z0-9]+$/.test(normalized))throw new Error("Samsung model kodunu SM-A546E biçiminde girin.");
  const cfg=window.UZMANTECH_CONFIG||{};
  if(!cfg.apiBaseUrl||!cfg.publishableKey)throw new Error("Arşiv API yapılandırması bulunamadı.");
  const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};
- const url=cfg.apiBaseUrl+"/portal-api/samfrew-firmware?q="+encodeURIComponent(normalized)+"&limit=50";
- const response=await fetch(url,{headers,signal:AbortSignal.timeout(25000)});
+ const url=cfg.apiBaseUrl+"/portal-api/samsung-firmware-search?q="+encodeURIComponent(normalized);
+ const response=await fetch(url,{headers,signal:AbortSignal.timeout(30000)});
  const catalog=await response.json().catch(()=>({}));
- if(!response.ok||!catalog.success)throw new Error(catalog.message||"SamFrew firmware listesi alınamadı.");
- const firmwareItems=(Array.isArray(catalog.items)?catalog.items:[]).filter(x=>x&&x.version&&x.csc).map(x=>({
-  id:"samfrew:"+x.model+":"+x.csc+":"+x.version,brand:"Samsung",model:displayModel||normalized,category:"firmware",
-  title:"SamFrew • "+x.csc+" • "+x.version,original_filename:x.version,
-  description:"CSC: "+x.csc+" ("+(x.regionName||"")+") | "+(x.os||"Android sürümü belirtilmemiş")+" | Build: "+(x.buildDate||"-")+" | Changelist: "+(x.changelist||"-"),
-  created_at:null,source_url:/^https:\/\/samfrew\.com\//i.test(x.sourceUrl||"")?x.sourceUrl:catalog.pageUrl,is_samfrew:true
+ if(!response.ok||!catalog.success)throw new Error(catalog.message||"Samsung firmware kaynağına ulaşılamadı.");
+ const firmwareItems=(Array.isArray(catalog.items)?catalog.items:[]).map(x=>({
+  id:"samsungapi:"+x.model+":"+x.csc+":"+x.version,brand:"Samsung",model:displayModel||normalized,category:"firmware",
+  title:"Samsung Firmware • "+x.csc+" • "+x.version,original_filename:x.version,
+  description:"CSC: "+x.csc+(x.regionName?" ("+x.regionName+")":"")+" | "+(x.os||"Android sürümü belirtilmemiş")+" | Tarih: "+(x.buildDate||"-")+" | Güvenlik: "+(x.securityPatch||"-")+(x.verification?" | Doğrulama: "+x.verification:""),
+  created_at:x.buildDate||null,source_url:/^https?:\/\//i.test(x.sourceUrl||"")?x.sourceUrl:"https://samsungfirmware.com/",is_samfrew:false,is_samsung_api:true
  }));
- if(!firmwareItems.length){const rows=Number(catalog.parserRows||0);throw new Error(rows?("SamFrew sayfası açıldı ("+rows+" satır bulundu) ancak firmware satırları çözümlenemedi."):("SamFrew sayfası açıldı ancak tablo satırları okunamadı. Kaynak sayfa: "+(catalog.pageUrl||"")));}
- archiveItems=[...archiveItems.filter(x=>append||!String(x.id||"").startsWith("samfrew:")),...firmwareItems];
+ if(!firmwareItems.length)throw new Error("Bu model için yeni Samsung veri kaynağında kayıt bulunamadı. Kaynak yanıt verdi ancak eşleşen firmware kaydı döndürmedi.");
+ archiveItems=[...archiveItems.filter(x=>append||!String(x.id||"").startsWith("samsungapi:")),...firmwareItems];
  selectedDevice=displayModel||normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }
 

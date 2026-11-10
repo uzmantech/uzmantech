@@ -19,7 +19,7 @@ brandSearchInput?.addEventListener("input",filterBrandCards);
 $("#archiveBrandSearchClear")?.addEventListener("click",()=>{if(brandSearchInput)brandSearchInput.value="";filterBrandCards();brandSearchInput?.focus();});
 
 const pageParams=new URLSearchParams(location.search);
-let archiveItems=[],selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"";
+let archiveItems=[],selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"",modelVisibleLimit=48;
 
 const MODEL_CATALOG={
  "Xiaomi":"Mi 1|Mi 1S|Mi 2|Mi 2S|Mi 3|Mi 4|Mi 4i|Mi 4c|Mi 5|Mi 5s|Mi 5s Plus|Mi 5c|Mi 5X|Mi 6|Mi 6X|Mi 8|Mi 8 Lite|Mi 8 Pro|Mi 8 SE|Mi 9|Mi 9 SE|Mi 9T|Mi 9T Pro|Mi 10|Mi 10 Pro|Mi 10 Lite|Mi 10T|Mi 10T Pro|Mi 10T Lite|Mi 11|Mi 11 Lite|Mi 11 Lite 5G NE|Mi 11 Pro|Mi 11 Ultra|Xiaomi 11T|Xiaomi 11T Pro|Xiaomi 12|Xiaomi 12 Pro|Xiaomi 12X|Xiaomi 12 Lite|Xiaomi 12T|Xiaomi 12T Pro|Xiaomi 13|Xiaomi 13 Pro|Xiaomi 13 Ultra|Xiaomi 13 Lite|Xiaomi 13T|Xiaomi 13T Pro|Xiaomi 14|Xiaomi 14 Pro|Xiaomi 14 Ultra|Xiaomi 14T|Xiaomi 14T Pro|Xiaomi 15|Xiaomi 15 Pro|Xiaomi 15 Ultra|Xiaomi 15T|Xiaomi 15T Pro|Xiaomi 17|Xiaomi 17 Pro|Xiaomi 17 Pro Max|Redmi 1|Redmi 2|Redmi 3|Redmi 4|Redmi 5|Redmi 6|Redmi 7|Redmi 8|Redmi 9|Redmi 10|Redmi 12|Redmi 13|Redmi 14C|Redmi 15|Redmi 15C|Redmi Note 3|Redmi Note 4|Redmi Note 5|Redmi Note 6 Pro|Redmi Note 7|Redmi Note 8|Redmi Note 8 Pro|Redmi Note 9|Redmi Note 9S|Redmi Note 9 Pro|Redmi Note 10|Redmi Note 10 Pro|Redmi Note 11|Redmi Note 11 Pro|Redmi Note 12|Redmi Note 12 Pro|Redmi Note 13|Redmi Note 13 Pro|Redmi Note 13 Pro+|Redmi Note 14|Redmi Note 14 Pro|Redmi Note 14 Pro+|Redmi Note 15|Redmi Note 15 Pro|Redmi Note 15 Pro+|POCO F1|POCO F2 Pro|POCO F3|POCO F4|POCO F5|POCO F5 Pro|POCO F6|POCO F6 Pro|POCO F7|POCO X3|POCO X3 Pro|POCO X4 Pro|POCO X5|POCO X5 Pro|POCO X6|POCO X6 Pro|POCO X7|POCO X7 Pro|POCO M3|POCO M4 Pro|POCO M5|POCO M6|POCO C3|POCO C55|POCO C65|POCO C75",
@@ -138,9 +138,41 @@ function renderLiveArchive(){
  head.querySelector("p").textContent="Modeli arayın veya listeden seçin.";
  const models=getModels(brand).filter(m=>m.toLocaleLowerCase("tr-TR").includes(modelSearch.toLocaleLowerCase("tr-TR")));
  count.textContent=models.length+" MODEL";
- const samfrewSearch=brand==="Samsung"?'<form id="samfrewSearchForm" class="archive-model-search-wrap" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"><input id="samfrewModelCode" type="search" placeholder="Model ara: A13, A54, S23 Ultra..." aria-label="Samsung model adı veya kodu" required style="flex:1;min-width:210px"><button type="submit" style="padding:10px 16px;border:0;border-radius:8px;cursor:pointer">Tüm CSC yazılımlarını ara</button></form>':'';grid.innerHTML=samfrewSearch+'<div class="archive-model-search-wrap"><input id="archiveModelSearch" type="search" value="'+archiveEsc(modelSearch)+'" placeholder="'+archiveEsc(brand)+' model adı ara..." aria-label="Model ara"></div>'+models.map(model=>'<button type="button" class="archive-device-card" data-device-model="'+archiveEsc(model)+'"><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+archiveItems.filter(f=>normBrand(f.brand)===brand&&f.model===model).length+' dosya</em></button>').join("")||'<p class="archive-live-empty">Bu arama için model bulunamadı.</p>';
+ const visibleModels=models.slice(0,modelVisibleLimit);
+ const fileCounts=new Map();
+ for(const file of archiveItems){if(normBrand(file.brand)!==brand||!file.model)continue;fileCounts.set(file.model,(fileCounts.get(file.model)||0)+1);}
+ const samfrewSearch=brand==="Samsung"?'<form id="samfrewSearchForm" class="archive-model-search-wrap" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"><input id="samfrewModelCode" type="search" placeholder="Model ara: A13, A54, S23 Ultra..." aria-label="Samsung model adı veya kodu" required style="flex:1;min-width:210px"><button type="submit" style="padding:10px 16px;border:0;border-radius:8px;cursor:pointer">Tüm CSC yazılımlarını ara</button></form>':'';
+ const cards=visibleModels.map(model=>'<button type="button" class="archive-device-card" data-device-model="'+archiveEsc(model)+'"><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+(fileCounts.get(model)||0)+' dosya</em></button>').join("");
+ const more=models.length>visibleModels.length?'<button type="button" class="archive-load-more-models" data-load-more-models>+'+(models.length-visibleModels.length)+' model daha göster</button>':'';
+ grid.innerHTML=samfrewSearch+'<div class="archive-model-search-wrap"><input id="archiveModelSearch" type="search" value="'+archiveEsc(modelSearch)+'" placeholder="'+archiveEsc(brand)+' model adı ara..." aria-label="Model ara"></div>'+(cards||'<p class="archive-live-empty">Bu arama için model bulunamadı.</p>')+more;
 }
-async function loadLiveArchive(){try{const result=await UzmantechAPI.archiveFiles();archiveItems=result.files||[];const cfg=window.UZMANTECH_CONFIG||{};const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};try{const response=await fetch(cfg.apiBaseUrl+"/portal-api/engineer-roms",{headers});if(!response.ok)throw new Error("Engineer ROM kataloğu alınamadı");const catalog=await response.json();if(catalog.success&&Array.isArray(catalog.items)){const engineerItems=catalog.items.filter(x=>x&&x.model&&x.codename&&/^https:\/\/(www\.)?xiaomitools\.com\//i.test(x.sourceUrl||"")).map(x=>({id:"engineer-rom:"+x.codename,brand:"Xiaomi",model:x.model,category:"eng",title:"Engineer ROM • "+x.model,original_filename:x.codename+" • Engineer ROM",description:"Engineer ROM indirme sayfası XiaomiTools üzerinden açılır. Günlük kullanım için uygun değildir.",created_at:catalog.updated_at||null,source_url:x.sourceUrl,is_engineer_rom:true}));archiveItems=[...archiveItems.filter(x=>!String(x.id||"").startsWith("engineer-rom:")),...engineerItems];}}catch(catalogError){console.warn("Engineer ROM kataloğu yüklenemedi:",catalogError);}if(normBrand(selectedBrand)==="Samsung"&&selectedDevice&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){try{await fetchSamFwCatalog(selectedDevice,"TUR");}catch(samError){console.warn("SamFW firmware kataloğu yüklenemedi:",samError);}}renderBrandArchiveCounts();renderRecentSoftware();renderLiveArchive();}catch(err){archiveItems=[];renderBrandArchiveCounts();renderRecentSoftware();renderLiveArchive();console.error(err);}}
+async function loadLiveArchive(){
+ const isModelPage=!!$("#archiveModelsPage");
+ // Statik katalog önce çizilir; ağ yanıtı gelene kadar boş ekran bekletilmez.
+ if(isModelPage){archiveItems=[];renderLiveArchive();}
+ try{
+  const archivePromise=UzmantechAPI.archiveFiles();
+  const engineerPromise=isModelPage?Promise.resolve(null):(async()=>{
+   const cfg=window.UZMANTECH_CONFIG||{};
+   const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};
+   const response=await fetch(cfg.apiBaseUrl+"/portal-api/engineer-roms",{headers,signal:AbortSignal.timeout(12000)});
+   if(!response.ok)throw new Error("Engineer ROM kataloğu alınamadı");
+   return response.json();
+  })();
+  const [archiveResult,engineerResult]=await Promise.allSettled([archivePromise,engineerPromise]);
+  if(archiveResult.status==="fulfilled")archiveItems=archiveResult.value.files||[];
+  else console.warn("Arşiv dosyaları yüklenemedi:",archiveResult.reason);
+  if(engineerResult.status==="fulfilled"&&engineerResult.value&&engineerResult.value.success&&Array.isArray(engineerResult.value.items)){
+   const catalog=engineerResult.value;
+   const engineerItems=catalog.items.filter(x=>x&&x.model&&x.codename&&/^https:\/\/(www\.)?xiaomitools\.com\//i.test(x.sourceUrl||"")).map(x=>({id:"engineer-rom:"+x.codename,brand:"Xiaomi",model:x.model,category:"eng",title:"Engineer ROM • "+x.model,original_filename:x.codename+" • Engineer ROM",description:"Engineer ROM indirme sayfası XiaomiTools üzerinden açılır. Günlük kullanım için uygun değildir.",created_at:catalog.updated_at||null,source_url:x.sourceUrl,is_engineer_rom:true}));
+   archiveItems=[...archiveItems.filter(x=>!String(x.id||"").startsWith("engineer-rom:")),...engineerItems];
+  }
+  if(!isModelPage&&normBrand(selectedBrand)==="Samsung"&&selectedDevice&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){
+   try{await fetchSamFwCatalog(selectedDevice,false);}catch(samError){console.warn("Samsung firmware kataloğu yüklenemedi:",samError);}
+  }
+ }catch(err){console.error("Arşiv kataloğu yüklenemedi:",err);}
+ renderBrandArchiveCounts();renderRecentSoftware();renderLiveArchive();
+}
 
 $("#archiveSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=($("#archiveQuery")?.value||"").trim().toLocaleLowerCase("tr-TR");const found=Object.keys(MODEL_CATALOG).find(b=>b.toLocaleLowerCase("tr-TR").includes(q));if(found){location.href="models.html?brand="+encodeURIComponent(found);return;}const match=Object.keys(MODEL_CATALOG).find(b=>getModels(b).some(m=>m.toLocaleLowerCase("tr-TR").includes(q)));if(match){location.href="models.html?brand="+encodeURIComponent(match)+"&q="+encodeURIComponent(q);return;}toast("Marka veya model bulunamadı.");});
 $("#archiveQuery")?.addEventListener("input",()=>{if(!$("#archiveQuery").value.trim()){selectedBrand=null;selectedDevice=null;selectedFolder=null;modelSearch="";renderLiveArchive();}});
@@ -168,7 +200,8 @@ const SAMSUNG_MODEL_ALIASES={
 };
 function resolveSamsungModelCodes(query){const q=String(query||"").trim().toUpperCase().replace(/^SAMSUNG\s+/,"").replace(/^GALAXY\s+/,"GALAXY ").replace(/\s+/g," ");if(/^SM-[A-Z0-9]+$/.test(q))return [q];return SAMSUNG_MODEL_ALIASES[q]||SAMSUNG_MODEL_ALIASES[q.replace(/^GALAXY /,"")]||[];}
 document.addEventListener("submit",async e=>{if(e.target.id!=="samfrewSearchForm")return;e.preventDefault();const query=$("#samfrewModelCode")?.value||"",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Bu model için eşleştirme bulunamadı. Örnek: A13, A13 5G veya SM-A135F.");return;}if(submit){submit.disabled=true;submit.textContent="Tüm CSC'ler aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],i>0,query.toUpperCase());}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){renderLiveArchive();toast("SamFrew: "+codes.length+" model kodunda tüm CSC bölgelerinden "+total+" firmware kaydı listelendi.");}else toast(errors[0]||"Bu model için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Tüm CSC yazılımlarını ara";}}});
-document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
+document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;modelVisibleLimit=48;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
+document.addEventListener("click",e=>{if(e.target.closest("[data-load-more-models]")){modelVisibleLimit+=48;renderLiveArchive();}});
 document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");
  if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;selectedFile=null;if(normBrand(selectedBrand)==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){try{await fetchSamFwCatalog(selectedDevice,false);}catch(err){toast(err.message||"SamFrew listesi yüklenemedi.");}}renderLiveArchive();return;}

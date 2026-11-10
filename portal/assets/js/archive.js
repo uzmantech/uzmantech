@@ -60,7 +60,7 @@ async function fetchSamFwCatalog(model,append=false,displayModel=null){
   description:"CSC: "+x.csc+" ("+(x.regionName||"")+") | "+(x.os||"Android sürümü belirtilmemiş")+" | Build: "+(x.buildDate||"-")+" | Changelist: "+(x.changelist||"-"),
   created_at:null,source_url:/^https:\/\/samfrew\.com\//i.test(x.sourceUrl||"")?x.sourceUrl:catalog.pageUrl,is_samfrew:true
  }));
- if(!firmwareItems.length)throw new Error("Bu model için SamFrew üzerinde listelenebilir firmware kaydı bulunamadı.");
+ if(!firmwareItems.length){const rows=Number(catalog.parserRows||0);throw new Error(rows?("SamFrew sayfası açıldı ("+rows+" satır bulundu) ancak firmware satırları çözümlenemedi."):("SamFrew sayfası açıldı ancak tablo satırları okunamadı. Kaynak sayfa: "+(catalog.pageUrl||"")));}
  archiveItems=[...archiveItems.filter(x=>append||!String(x.id||"").startsWith("samfrew:")),...firmwareItems];
  selectedDevice=displayModel||normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }

@@ -426,7 +426,10 @@ Deno.serve(async (req: Request) => {
         }
       }
       const unique=[...new Map(items.map(x=>[x.model+"|"+x.csc+"|"+x.version,x])).values()];
-      return response({success:true,source:"FirmwareIndex",provider:"FirmwareIndex",model,count:unique.length,items:unique,pageUrl,matchedTable,parserTables:tables.length});
+      const requestedCsc=String(path.searchParams.get("csc")||"").trim().toUpperCase();
+      if(requestedCsc&&!/^[A-Z0-9]{3}$/.test(requestedCsc))return response({success:false,message:"CSC kodu 3 karakter olmalıdır."},400);
+      const filtered=requestedCsc?unique.filter(x=>x.csc===requestedCsc):unique;
+      return response({success:true,source:"FirmwareIndex",provider:"FirmwareIndex",model,csc:requestedCsc||null,count:filtered.length,items:filtered,pageUrl,matchedTable,parserTables:tables.length});
     } catch(error) {
       console.error("FirmwareIndex lookup failed",model,error);
       return response({success:false,message:"Samsung firmware kataloğuna şu anda erişilemiyor.",provider:"FirmwareIndex",detail:String(error)},503);

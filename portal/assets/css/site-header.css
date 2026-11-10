@@ -1984,3 +1984,80 @@ html body .uzmantech-legal-footer nav a:hover{
     flex:0 0 auto!important;
   }
 }
+
+
+/* Corrected profile width: transfer the removed header-language space to the account control */
+@media screen and (min-width:761px){
+  html body .site-global-header > .dash-top-actions,
+  html body .site-global-header > .site-header-actions{
+    flex:0 0 190px!important;
+    width:190px!important;
+    min-width:190px!important;
+    max-width:190px!important;
+    justify-content:flex-end!important;
+  }
+  html body .site-global-header > .dash-top-actions > .language-control,
+  html body .site-global-header > .site-header-actions > .language-control{
+    display:none!important;
+  }
+  html body .site-global-header .header-auth,
+  html body .site-global-header .site-archive-auth{
+    display:flex!important;
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    justify-content:stretch!important;
+  }
+  html body .site-global-header .profile-menu-wrap{
+    display:block!important;
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile{
+    display:flex!important;
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+  }
+  html body .site-global-header.site-global-header-archive{
+    grid-template-columns:184px minmax(0,1fr) 190px!important;
+  }
+  html body .site-global-header.site-global-header-archive .site-archive-auth .logged-in-profile{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+}
+@media screen and (min-width:981px) and (max-width:1450px){
+  html body .site-global-header.site-global-header-archive{
+    grid-template-columns:142px minmax(0,1fr) 190px!important;
+  }
+}
+@media screen and (max-width:760px){
+  html body .site-global-header > .dash-top-actions > .language-control,
+  html body .site-global-header > .site-header-actions > .language-control{
+    display:none!important;
+  }
+  html body .site-global-header > .dash-top-actions,
+  html body .site-global-header > .site-header-actions{
+    left:60px!important;
+    right:10px!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body .site-global-header .header-auth,
+  html body .site-global-header .site-archive-auth,
+  html body .site-global-header .profile-menu-wrap,
+  html body .site-global-header .profile-menu-wrap > .top-profile{
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+}

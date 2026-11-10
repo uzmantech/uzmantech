@@ -828,3 +828,19 @@ body.archive-shell .archive-brand-catalog{margin-top:0!important;}
 body.archive-shell .archive-main-column{margin-top:0!important;padding-top:0!important;gap:14px!important;}
 body.archive-shell .archive-recent-software{display:block!important;visibility:visible!important;opacity:1!important;margin:0!important;min-height:130px!important;}
 body.archive-shell .archive-recent-track{min-height:70px!important;}
+
+/* Progressive model-list rendering */
+.archive-load-more-models{
+ grid-column:1/-1;
+ justify-self:center;
+ min-height:42px;
+ margin:10px 0 18px;
+ padding:0 22px;
+ border:1px solid #3d6288;
+ border-radius:10px;
+ background:#14283d;
+ color:#dceeff;
+ font:700 12px "DM Sans",sans-serif;
+ cursor:pointer;
+}
+.archive-load-more-models:hover{border-color:#65aef5;background:#1a3856}

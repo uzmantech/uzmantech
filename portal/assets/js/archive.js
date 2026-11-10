@@ -46,29 +46,24 @@ const archiveEsc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 const archiveCategory={firmware:"Firmware",eng:"ENG",imei:"IMEI",test_point:"Test Point",resistor:"Direnç",usb:"USB Sürücüleri",other:"Diğer"};
 async function fetchSamFwCatalog(model,csc="TUR"){
  const normalized=String(model||"").trim().toUpperCase(),region=String(csc||"TUR").trim().toUpperCase();
- if(!/^SM-[A-Z0-9]+$/.test(normalized)){throw new Error("Samsung model kodunu SM-S928B biçiminde girin.");}
- if(!/^[A-Z0-9]{3}$/.test(region)){throw new Error("CSC kodu 3 karakter olmalıdır. Örnek: TUR, XSG, INS.");}
+ if(!/^SM-[A-Z0-9]+$/.test(normalized))throw new Error("Samsung model kodunu SM-S928B biçiminde girin.");
+ if(!/^[A-Z0-9]{3}$/.test(region))throw new Error("CSC kodu 3 karakter olmalıdır. Örnek: TUR, XSG, INS.");
  const cfg=window.UZMANTECH_CONFIG||{};
  if(!cfg.apiBaseUrl||!cfg.publishableKey)throw new Error("Arşiv API yapılandırması bulunamadı.");
  const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};
- const url=cfg.apiBaseUrl+"/portal-api/samfw-firmware?q="+encodeURIComponent(normalized)+"&csc="+encodeURIComponent(region);
- const response=await fetch(url,{headers,signal:AbortSignal.timeout(20000)});
+ const url=cfg.apiBaseUrl+"/portal-api/samfrew-firmware?q="+encodeURIComponent(normalized)+"&csc="+encodeURIComponent(region)+"&limit=50";
+ const response=await fetch(url,{headers,signal:AbortSignal.timeout(25000)});
  const catalog=await response.json().catch(()=>({}));
- if(!response.ok||!catalog.success)throw new Error(catalog.message||"SamFW firmware listesi alınamadı.");
+ if(!response.ok||!catalog.success)throw new Error(catalog.message||"SamFrew firmware listesi alınamadı.");
  const firmwareItems=(Array.isArray(catalog.items)?catalog.items:[]).filter(x=>x&&x.version&&x.csc).map(x=>({
-  id:"samfw:"+x.model+":"+x.csc+":"+x.version+":"+x.buildDate,
-  brand:"Samsung",model:normalized,category:"firmware",
-  title:"SamFW Firmware • "+x.csc+" • "+x.version,
-  original_filename:x.version,
-  description:"CSC: "+x.csc+" | Bit/SW Rev: "+(x.bit||"-")+" | Güvenlik yaması: "+(x.patch||"-")+" | "+(x.os||"Android sürümü belirtilmemiş")+" | Build: "+(x.buildDate||"-"),
-  created_at:null,
-  source_url:/^https:\/\/(www\.)?samfw\.com\//i.test(x.sourceUrl||"")?x.sourceUrl:"https://samfw.com/firmware/"+normalized+"/"+region,
-  is_samfw:true
+  id:"samfrew:"+x.model+":"+x.csc+":"+x.version,brand:"Samsung",model:normalized,category:"firmware",
+  title:"SamFrew • "+x.csc+" • "+x.version,original_filename:x.version,
+  description:"CSC: "+x.csc+" ("+(x.regionName||"")+") | "+(x.os||"Android sürümü belirtilmemiş")+" | Build: "+(x.buildDate||"-")+" | Changelist: "+(x.changelist||"-"),
+  created_at:null,source_url:/^https:\/\/samfrew\.com\//i.test(x.sourceUrl||"")?x.sourceUrl:catalog.pageUrl,is_samfrew:true
  }));
- if(!firmwareItems.length)throw new Error("Bu model ve CSC kodu için SamFW firmware kaydı bulunamadı.");
- archiveItems=[...archiveItems.filter(x=>!String(x.id||"").startsWith("samfw:")),...firmwareItems];
- selectedDevice=normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();
- return firmwareItems.length;
+ if(!firmwareItems.length)throw new Error("Bu model ve CSC kodu için SamFrew firmware kaydı bulunamadı.");
+ archiveItems=[...archiveItems.filter(x=>!String(x.id||"").startsWith("samfrew:")),...firmwareItems];
+ selectedDevice=normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }
 
 function normBrand(v){const x=String(v||"").toLocaleLowerCase("tr-TR");if(x==="redmi"||x==="poco"||x==="xiaomi")return "Xiaomi";if(x==="samsung")return "Samsung";if(x==="oppo")return "Oppo";if(x==="vivo")return "Vivo";if(x==="realme")return "Realme";if(x==="huawei")return "Huawei";if(x==="honor")return "Honor";if(x==="oneplus")return "OnePlus";if(x==="tecno")return "Tecno";if(x==="infinix")return "Infinix";if(x==="google")return "Google";if(x==="apple")return "Apple";if(x==="motorola")return "Motorola";if(x==="nokia"||x==="hmd")return "Nokia";if(x==="sony")return "Sony";if(x==="asus")return "ASUS";if(x==="nothing")return "Nothing";if(x==="zte"||x==="nubia")return "ZTE";if(x==="black shark"||x==="blackshark")return "Black Shark";return v;}

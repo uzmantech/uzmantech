@@ -44,7 +44,7 @@ a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify
   <a class="site-nav-link active" href="destek.html"><span class="site-nav-icon">ⓘ</span><b>İletişim</b></a>
  </nav>
  <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
- <div class="dash-top-actions"><label class="language-control" aria-label="Language"><span class="language-globe">◎</span><select id="languageSelect" aria-label="Language"><option value="tr">TR</option><option value="en">EN</option></select></label><div class="header-auth"><a class="header-register" href="kayit.html">Üye Ol</a><a class="header-login" href="index.html?login=1">Giriş Yap</a></div></div>
+ <div class="dash-top-actions"><div class="header-auth" id="headerAuth"></div></div>
 </header>
 <section class="support-hero"><div class="container"><h1>Uzmantech İletişim Merkezi</h1><p>Sorularınız için rehberleri inceleyebilir veya teknik ekibimize doğrudan destek talebi oluşturabilirsiniz.</p><div class="search-box"><input id="faqSearch" type="search" placeholder="Sorununuzu yazın (Ör: HWID, USB sürücü, Fastboot)"></div><div class="status-bar"><span class="status-dot"></span> Destek merkezi erişilebilir</div></div></section>
 <main class="container">
@@ -69,7 +69,7 @@ a{color:#93c5fd}.site-header{height:68px;display:flex;align-items:center;justify
 <div class="faq-item"><h4>Destek talebimin durumunu nereden görebilirim?</h4><p>Hesabınıza giriş yaptıktan sonra bu sayfanın destek talebi bölümündeki "Destek taleplerim" alanından geçmiş taleplerinizi görüntüleyebilirsiniz.</p></div>
 </div>
 </main><footer class="support-page-footer">© Uzmantech · Teknik İletişim Merkezi</footer>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js?v=profile-language-menu-20261110-1"></script>
 <script>
 (()=>{const $=s=>document.querySelector(s),form=$("#ticketForm"),status=$("#ticketStatus"),login=$("#ticketLogin"),history=$("#ticketHistory"),token=()=>window.UzmantechAPI?.getToken();
 function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}

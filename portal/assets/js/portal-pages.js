@@ -1,7 +1,7 @@
 (()=>{const $=s=>document.querySelector(s);const main=$(".dash-content");if(!main)return;
 const layout=$(".dash-layout"),download=$("#download"),account=$("#accountPage");
 const primary=$(".dash-primary"),license=$("#license"),support=$("#support"),announcements=$("#announcements"),premium=$("#premium"),packages=$("#packages"),welcome=$(".welcome-card");
-const make=(id,title,sub)=>{const el=document.createElement("section");el.className="portal-page";el.dataset.pageView=id;el.innerHTML='<div class="portal-page-heading"><span class="eyebrow">UZMANTOOL PORTAL</span><h1>'+title+'</h1><p>'+sub+'</p></div>';main.appendChild(el);return el;};
+const make=(id,title,sub)=>{const el=document.createElement("section");el.className="portal-page";el.dataset.pageView=id;el.innerHTML='<div class="portal-page-heading"><span class="eyebrow">UZMANTOOL PORTAL</span><h1>'+title+'</h1><p>'+sub+'</p></div>';const footer=main.querySelector(".dash-footer");if(footer)main.insertBefore(el,footer);else main.appendChild(el);return el;};
 const home=make("home","Ana Sayfa","Hesabınızın ve Uzmantool hizmetlerinin genel görünümü.");home.querySelector(".portal-page-heading")?.remove();home.prepend(layout);
 home.insertAdjacentHTML("beforeend",'<section class="home-latest-news"><div class="home-latest-heading"><div><span>TEKNOLOJİ GÜNDEMİ</span><h2>En yeni haberler</h2><p>Yayınlanan son teknoloji haberleri.</p></div><a href="#updates" data-page="updates">Tüm haberleri gör <b>↗</b></a></div><div class="home-latest-grid" id="homeLatestNewsGrid"><div class="home-news-loading">Son haberler yükleniyor…</div></div></section>');
 

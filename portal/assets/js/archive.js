@@ -67,6 +67,69 @@ async function fetchSamFwCatalog(model,append=false,displayModel=null,csc="TUR")
  selectedDevice=displayModel||normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }
 
+function downloadSamsungLocalHelper(file){
+ const model=String(file?.id||"").split(":")[1]||"";
+ const csc=String(file?.id||"").split(":")[2]||"";
+ const version=String(file?.original_filename||"").trim();
+ if(!/^SM-[A-Z0-9]{5,}$/i.test(model)||!/^[A-Z0-9]{3}$/i.test(csc)||!/^[A-Z0-9._/-]{4,180}$/i.test(version)){
+  toast("Samsung indirme bilgileri doğrulanamadı.");return;
+ }
+ const safeModel=model.toUpperCase(),safeCsc=csc.toUpperCase();
+ const outName=safeModel+"_"+safeCsc;
+ const zipUrl="https://github.com/topjohnwu/samloader-rs/releases/download/2.2.0/samloader-v2.2.0-windows-x86_64.zip";
+ const sha256="0132de1b79e208138f980c467f9a7eaa2ffcb72aae14afc3ed13799803c9b9ed";
+ const bat=[
+ "@echo off",
+ "setlocal",
+ "chcp 65001 >nul",
+ "title Uzmantech Samsung Firmware Downloader",
+ "set \"MODEL="+safeModel+"\"",
+ "set \"REGION="+safeCsc+"\"",
+ "set \"VERSION="+version+"\"",
+ "set \"WORK=%TEMP%\\UzmantechSamloader\"",
+ "set \"ZIP=%WORK%\\samloader-v2.2.0-windows-x86_64.zip\"",
+ "set \"TOOL_DIR=%WORK%\\tool\"",
+ "set \"OUT_DIR=%~dp0Firmware\\"+outName+"\"",
+ "echo.",
+ "echo UZMANTECH - SAMSUNG FIRMWARE INDIRME",
+ "echo Model: %MODEL%   CSC: %REGION%",
+ "echo Surum: %VERSION%",
+ "echo.",
+ "if not exist \"%WORK%\" mkdir \"%WORK%\"",
+ "if not exist \"%TOOL_DIR%\" mkdir \"%TOOL_DIR%\"",
+ "echo [1/3] Ucretsiz acik kaynakli samloader araci indiriliyor...",
+ "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; Invoke-WebRequest -Uri '"+zipUrl+"' -OutFile '%ZIP%'; $h=(Get-FileHash '%ZIP%' -Algorithm SHA256).Hash.ToLower(); if($h -ne '"+sha256+"'){throw 'SHA256 dogrulamasi basarisiz'}; Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%TOOL_DIR%' -Force\"",
+ "if errorlevel 1 goto toolerror",
+ "set \"SAMLOADER=\"",
+ "for /r \"%TOOL_DIR%\" %%F in (samloader.exe) do set \"SAMLOADER=%%F\"",
+ "if not defined SAMLOADER goto toolerror",
+ "if not exist \"%OUT_DIR%\" mkdir \"%OUT_DIR%\"",
+ "echo.",
+ "echo [2/3] Firmware dogrudan Samsung sunucularindan indiriliyor...",
+ "echo Dosya boyutuna ve internet hizina gore uzun surebilir.",
+ "\"%SAMLOADER%\" download --model \"%MODEL%\" --region \"%REGION%\" --version \"%VERSION%\" --out-dir \"%OUT_DIR%\"",
+ "if errorlevel 1 goto downloaderror",
+ "echo.",
+ "echo [3/3] Indirme tamamlandi. Dosyalar: %OUT_DIR%",
+ "start \"\" \"%OUT_DIR%\"",
+ "goto finish",
+ ":toolerror",
+ "echo Samloader araci indirilemedi veya SHA256 dogrulamasi basarisiz.",
+ "echo Internet baglantisini kontrol edip tekrar deneyin.",
+ "goto finish",
+ ":downloaderror",
+ "echo Firmware indirilemedi. Samsung bu surumu artik sunmuyor olabilir veya model/CSC uyusmuyor olabilir.",
+ ":finish",
+ "echo.",
+ "pause",
+ "endlocal"
+ ].join("\r\n");
+ const blob=new Blob(["\\ufeff",bat],{type:"application/octet-stream"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="Uzmantech_"+outName+"_Firmware_Indir.bat";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ toast("Ücretsiz Windows indirme dosyası hazırlandı. Dosyayı çalıştırın.");
+}
 function normBrand(v){const x=String(v||"").toLocaleLowerCase("tr-TR");if(x==="redmi"||x==="poco"||x==="xiaomi")return "Xiaomi";if(x==="samsung")return "Samsung";if(x==="oppo")return "Oppo";if(x==="vivo")return "Vivo";if(x==="realme")return "Realme";if(x==="huawei")return "Huawei";if(x==="honor")return "Honor";if(x==="oneplus")return "OnePlus";if(x==="tecno")return "Tecno";if(x==="infinix")return "Infinix";if(x==="google")return "Google";if(x==="apple")return "Apple";if(x==="motorola")return "Motorola";if(x==="nokia"||x==="hmd")return "Nokia";if(x==="sony")return "Sony";if(x==="asus")return "ASUS";if(x==="nothing")return "Nothing";if(x==="zte"||x==="nubia")return "ZTE";if(x==="black shark"||x==="blackshark")return "Black Shark";return v;}
 function getModels(brand){
  const base=(MODEL_CATALOG[brand]||"").split("|").filter(Boolean);
@@ -117,7 +180,7 @@ function renderLiveArchive(){
    count.textContent="DOSYA DETAYI";
    head.querySelector("h2").textContent=file.title||file.original_filename||"Yazılım dosyası";
    head.querySelector("p").textContent=brand+" • "+selectedDevice+" • "+(archiveCategory[file.category]||file.category||"Diğer");
-   grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackFile">← Dosya klasörüne dön</button><article class="archive-file-detail"><div class="archive-file-detail-icon">📁</div><span class="archive-file-detail-category">'+archiveEsc(archiveCategory[file.category]||file.category||"Diğer")+'</span><h3>'+archiveEsc(file.title||file.original_filename||"Yazılım dosyası")+'</h3><p>'+archiveEsc(file.description||"Bu dosya için açıklama eklenmemiş.")+'</p><div class="archive-file-detail-meta"><span>Marka: <b>'+archiveEsc(brand)+'</b></span><span>Model: <b>'+archiveEsc(selectedDevice)+'</b></span><span>Dosya: <b>'+archiveEsc(file.original_filename||"Teknik dosya")+'</b></span><span>Eklenme: <b>'+archiveEsc(file.created_at?new Date(file.created_at).toLocaleDateString("tr-TR"):"-")+'</b></span></div>'+((file.is_engineer_rom||file.is_samfw||file.is_samsung_api)?'<a class="archive-live-download" href="'+archiveEsc(file.source_url)+'" target="_blank" rel="noopener noreferrer">KAYNAK İNDİRME SAYFASINI AÇ</a>':file.external_url&&/^https:\/\/(www\.)?firmwarefile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FIRMWAREFILE FREE LİNKİNİ AÇ</a>':file.external_url&&/^https:\/\/(www\.)?vivofirmware\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FREE / PAID İNDİRME SEÇENEKLERİNİ AÇ</a>':file.external_url&&/^https:\/\/[a-z0-9.-]*vivoglobal\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">RESMİ VIVO FIRMWARE İNDİR</a>':file.external_url&&/^https:\/\/(www\.)?sammobile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">SAMMOBILE FIRMWARE SAYFASINI AÇ</a>':'<button type="button" class="archive-live-download" data-archive-download="'+archiveEsc(file.id)+'">İNDİRMEYİ BAŞLAT</button>')+'</article>';
+   grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackFile">← Dosya klasörüne dön</button><article class="archive-file-detail"><div class="archive-file-detail-icon">📁</div><span class="archive-file-detail-category">'+archiveEsc(archiveCategory[file.category]||file.category||"Diğer")+'</span><h3>'+archiveEsc(file.title||file.original_filename||"Yazılım dosyası")+'</h3><p>'+archiveEsc(file.description||"Bu dosya için açıklama eklenmemiş.")+'</p><div class="archive-file-detail-meta"><span>Marka: <b>'+archiveEsc(brand)+'</b></span><span>Model: <b>'+archiveEsc(selectedDevice)+'</b></span><span>Dosya: <b>'+archiveEsc(file.original_filename||"Teknik dosya")+'</b></span><span>Eklenme: <b>'+archiveEsc(file.created_at?new Date(file.created_at).toLocaleDateString("tr-TR"):"-")+'</b></span></div>'+(file.is_samsung_api?'<div class="samsung-local-download-box"><p>Bu sürüm, ücretsiz samloader aracıyla doğrudan Samsung sunucularından bilgisayarınıza indirilebilir. IMEI gerekmez; indirme Uzmantech sunucusuna yüklenmez.</p><button type="button" class="archive-live-download" data-samsung-local-download="'+archiveEsc(file.id)+'">ÜCRETSİZ İNDİRME DOSYASINI HAZIRLA</button><a class="samsung-tool-link" href="https://github.com/topjohnwu/samloader-rs/releases/latest" target="_blank" rel="noopener noreferrer">Açık kaynak aracın GitHub sayfası</a></div>':(file.is_engineer_rom||file.is_samfw)?'<a class="archive-live-download" href="'+archiveEsc(file.source_url)+'" target="_blank" rel="noopener noreferrer">KAYNAK İNDİRME SAYFASINI AÇ</a>':file.external_url&&/^https:\/\/(www\.)?firmwarefile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FIRMWAREFILE FREE LİNKİNİ AÇ</a>':file.external_url&&/^https:\/\/(www\.)?vivofirmware\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FREE / PAID İNDİRME SEÇENEKLERİNİ AÇ</a>':file.external_url&&/^https:\/\/[a-z0-9.-]*vivoglobal\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">RESMİ VIVO FIRMWARE İNDİR</a>':file.external_url&&/^https:\/\/(www\.)?sammobile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">SAMMOBILE FIRMWARE SAYFASINI AÇ</a>':'<button type="button" class="archive-live-download" data-archive-download="'+archiveEsc(file.id)+'">İNDİRMEYİ BAŞLAT</button>')+'</article>';
    return;
   }
   if(selectedFolder){
@@ -218,6 +281,8 @@ document.addEventListener("click",async e=>{
  const fileCard=e.target.closest("[data-archive-file]");if(fileCard){selectedFile=fileCard.dataset.archiveFile;renderLiveArchive();return;}
  if(e.target.id==="archiveBackFile"){selectedFile=null;renderLiveArchive();return;}
  if(e.target.id==="archiveBackDevices"){selectedDevice=null;location.href="models.html?brand="+encodeURIComponent(selectedBrand||"");return;}
+ const localSamsungBtn=e.target.closest("[data-samsung-local-download]");
+ if(localSamsungBtn){const file=archiveItems.find(x=>String(x.id)===localSamsungBtn.dataset.samsungLocalDownload);if(file)downloadSamsungLocalHelper(file);else toast("Firmware kaydı bulunamadı.");return;}
  const btn=e.target.closest("[data-archive-download]");if(!btn)return;
  const id=btn.dataset.archiveDownload;btn.disabled=true;const tab=window.open("about:blank","_blank");
  try{const result=await UzmantechAPI.archiveFileDownload(id);if(tab)tab.location=result.url;else window.location.href=result.url;}

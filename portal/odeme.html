@@ -78,7 +78,7 @@
   }catch(err){say(err.message||"Dekont gönderilemedi.");}finally{btn.disabled=false;btn.textContent="Dekontu gönder";}
  });
 })().catch(error=>{console.error("Payment page initialization failed:",error);const d=document.getElementById("paymentTry");if(d)d.textContent="Ödeme sayfası başlatılamadı";const r=document.getElementById("paymentRate");if(r)r.textContent=error.message||"Bilinmeyen hata";});
-</script><script src="assets/js/language.js?v=portal-en-complete-20261107-1"></script><script id="site-global-nav-controller">
+</script><script src="assets/js/language.js?v=ip-language-20261110-1"></script><script id="site-global-nav-controller">
 (()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();
 </script>
 <footer class="legal-footer-links" aria-label="Yasal bağlantılar" style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;padding:24px 16px;margin-top:36px;border-top:1px solid #263b54;background:#071321;font-size:13px"><a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="hakkimizda.html">Hakkımızda</a><a href="destek.html">İletişim</a><a href="kullanim-sartlari.html">Kullanım Şartları</a></footer></body></html>

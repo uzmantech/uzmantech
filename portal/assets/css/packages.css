@@ -123,3 +123,14 @@
  .home-membership-showcase .home-packages-grid .package-price .price-usd{font-size:25px!important}
  .home-membership-showcase .home-packages-grid .package-price .price-try{font-size:19px!important}
 }
+
+
+/* Keep the copyright note inside the single shared legal footer. */
+.legal-footer-links .packages-copyright{
+  flex:0 0 100%;
+  display:block;
+  margin:0 0 2px;
+  color:#8299b4;
+  font-size:11px;
+  text-align:center;
+}

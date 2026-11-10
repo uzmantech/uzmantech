@@ -395,6 +395,39 @@ Deno.serve(async (req: Request) => {
 
 
 
+  if (req.method === "GET" && path.pathname.endsWith("/samfrew-firmware")) {
+    const model=String(path.searchParams.get("q")||"").trim().toUpperCase();
+    const csc=String(path.searchParams.get("csc")||"TUR").trim().toUpperCase();
+    const limit=Math.min(Math.max(Number(path.searchParams.get("limit")||"20"),1),50);
+    if(!/^SM-[A-Z0-9]+$/.test(model))return response({success:false,message:"Samsung model kodunu SM-XXXX biçiminde girin."},400);
+    if(!/^[A-Z0-9]{3}$/.test(csc))return response({success:false,message:"CSC kodu 3 karakter olmalıdır."},400);
+    try {
+      const source="https://samfrew.com/firmware/model/"+encodeURIComponent(model)+"/region/"+encodeURIComponent(csc)+"/upload/Desc/0/"+limit;
+      const res=await fetch(source,{headers:{"User-Agent":"Mozilla/5.0 (compatible; UzmantechPortal/1.0)","Accept":"text/html,application/xhtml+xml"},signal:AbortSignal.timeout(20000)});
+      if(!res.ok)throw new Error("SamFrew sayfası HTTP "+res.status);
+      const html=await res.text();
+      const rows:string[]=[];
+      for(const m of html.matchAll(/<tr\\b[^>]*>([\\s\\S]*?)<\\/tr>/gi))rows.push(m[1]);
+      const clean=(v:string)=>v.replace(/<script\\b[\\s\\S]*?<\\/script>/gi," ").replace(/<style\\b[\\s\\S]*?<\\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/\\s+/g," ").trim();
+      const items:any[]=[];
+      for(const row of rows){
+        const cells=[...row.matchAll(/<t[dh]\\b[^>]*>([\\s\\S]*?)<\\/t[dh]>/gi)].map(x=>clean(x[1]));
+        if(cells.length<5)continue;
+        const version=cells.find(x=>/^[A-Z0-9]{8,20}$/.test(x));
+        const rowModel=cells.find(x=>/^SM-[A-Z0-9]+$/.test(x));
+        const rowCsc=cells.find(x=>/^[A-Z0-9]{3}$/.test(x));
+        if(!version||rowModel!==model||rowCsc!==csc)continue;
+        const text=cells.join(" ");
+        const href=[...row.matchAll(/<a\\b[^>]*href=["']([^"']+)["'][^>]*>/gi)].map(x=>x[1]).map(x=>{try{return new URL(x,"https://samfrew.com").toString()}catch{return ""}}).find(x=>x.startsWith("https://samfrew.com/download/"))||"";
+        items.push({model,csc,regionName:cells.find(x=>x!==model&&x!==csc&&x!==version&&!/^Android\\s+\\d+/i.test(x))||"",version,os:cells.find(x=>/^Android\\s+\\d+/i.test(x))||"",buildDate:cells.find(x=>/^[A-Z][a-z]{2} \\d{1,2}, 20\\d{2}$/.test(x))||"",changelist:cells.find(x=>/^\\d{6,}$/.test(x))||"",sourceUrl:href||source});
+      }
+      return response({success:true,source:"SamFrew",model,csc,count:items.length,items,pageUrl:source});
+    } catch(error) {
+      console.error("SamFrew firmware lookup failed",model,csc,error);
+      return response({success:false,message:"SamFrew listesi şu anda alınamıyor. Model ve CSC kodunu kontrol edin."},503);
+    }
+  }
+
   if (req.method === "GET" && path.pathname.endsWith("/samfw-firmware")) {
     const model=String(path.searchParams.get("q")||"").trim().toUpperCase();
     const csc=String(path.searchParams.get("csc")||"TUR").trim().toUpperCase();

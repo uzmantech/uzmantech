@@ -844,3 +844,17 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
  cursor:pointer;
 }
 .archive-load-more-models:hover{border-color:#65aef5;background:#1a3856}
+
+
+/* Samsung model catalogue: informational tiles and collapsible CSC lookup */
+.samsung-csc-search{grid-column:1/-1;margin:0 0 12px}
+.samsung-csc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:46px;padding:0 16px;border:1px solid #37658e;border-radius:10px;background:linear-gradient(120deg,#153451,#10243a);color:#eaf5ff;font:700 14px "DM Sans",sans-serif;cursor:pointer}
+.samsung-csc-toggle:hover{border-color:#69b8ff;background:#194064}
+.samsung-csc-panel{margin-top:9px;padding:16px;border:1px solid #294b6b;border-radius:12px;background:#0d1d2e}
+.samsung-csc-panel[hidden]{display:none}
+.samsung-csc-panel form{display:grid;grid-template-columns:1fr 1fr;gap:9px 12px;align-items:end}
+.samsung-csc-panel label{color:#bcd0e5;font-size:12px;font-weight:700}
+.samsung-csc-panel input,.samsung-csc-panel select{width:100%;min-width:0;min-height:42px;padding:0 11px;border:1px solid #355675;border-radius:8px;background:#081625;color:#f1f7ff;font:500 13px "DM Sans",sans-serif}
+.samsung-csc-panel button{grid-column:1/-1;min-height:43px;border:0;border-radius:8px;background:#1676c8;color:white;font:700 13px "DM Sans",sans-serif;cursor:pointer}
+.archive-live-head>strong[hidden]{display:none!important}
+@media(max-width:620px){.samsung-csc-panel form{grid-template-columns:1fr}.samsung-csc-panel button{grid-column:auto}}

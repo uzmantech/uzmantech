@@ -405,26 +405,39 @@ Deno.serve(async (req: Request) => {
       if(!res.ok)throw new Error("SamFrew sayfası HTTP "+res.status);
       const html=await res.text();
       const rows=[...html.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m=>m[1]);
-      const clean=(v:string)=>v.replace(/<script\b[\s\S]*?<\/script>/gi," ").replace(/<style\b[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/\s+/g," ").trim();
+      const clean=(v:string)=>v.replace(/<script\b[\s\S]*?<\/script>/gi," ").replace(/<style\b[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/\s+/g," ").trim();
       const items:any[]=[];
       for(const row of rows){
+        const rowText=clean(row);
         const cells=[...row.matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(m=>clean(m[1]));
-        if(cells.length<5)continue;
-        const rowModel=cells.find(v=>v===model||v.startsWith(model+" "));
-        if(!rowModel)continue;
-        const versionCell=cells.find(v=>/[A-Z0-9]{8,20}/.test(v)&&!v.includes(model));
-        const version=versionCell?.match(/[A-Z0-9]{8,20}/)?.[0]||"";
+        const rowModel=cells.find(v=>v===model||v.startsWith(model+" "))||rowText.match(/(?:^|\s)(SM-[A-Z0-9]+)(?=\s)/)?.[1]||"";
+        if(rowModel!==model)continue;
         const regionCell=cells.find(v=>/^[A-Z0-9]{3}(?:\s|$)/.test(v)&&!/^Android\b/i.test(v));
         const regionMatch=regionCell?.match(/^([A-Z0-9]{3})(?:\s+(.*))?$/);
-        const csc=regionMatch?.[1]||"";
+        let csc=regionMatch?.[1]||"",regionName=regionMatch?.[2]||"";
+        let version=cells.find(v=>/^[A-Z0-9]{8,20}$/.test(v)&&!v.startsWith("SM-"))||"";
+        let os=cells.find(v=>/^Android\s+\d+/i.test(v))||"";
+        let buildDate=cells.find(v=>/^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+20\d{2}$|^\d{1,2}\/\d{1,2}\/\d{4}$/.test(v))||"";
+        let changelist=cells.find(v=>/^\d{6,}$/.test(v))||"";
+        if(!csc||!version||!os){
+          const afterModel=rowText.slice(rowText.indexOf(model)+model.length).trim();
+          const cscMatch=afterModel.match(/^([A-Z0-9]{3})\b/);
+          const beforeAndroid=afterModel.split(/\bAndroid\s+\d+/i)[0].trim();
+          const tokens=beforeAndroid.split(/\s+/);
+          const fallbackVersion=tokens[tokens.length-1]||"";
+          if(!csc)csc=cscMatch?.[1]||"";
+          if(!regionName&&cscMatch)regionName=beforeAndroid.slice(cscMatch[0].length).replace(new RegExp("\\s*"+fallbackVersion+"$"),"").trim();
+          if(!version&&/^[A-Z0-9]{8,20}$/.test(fallbackVersion)&&!fallbackVersion.startsWith("SM-"))version=fallbackVersion;
+          if(!os)os=rowText.match(/Android\s+\d+/i)?.[0]||"";
+          if(!buildDate)buildDate=rowText.match(/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+20\d{2}|\b\d{1,2}\/\d{1,2}\/\d{4}\b/)?.[0]||"";
+          if(!changelist)changelist=rowText.match(/\b\d{6,}\b/)?.[0]||"";
+        }
         if(!version||!csc)continue;
-        const os=cells.find(v=>/^Android\s+\d+/i.test(v))||"";
-        const buildDate=cells.find(v=>/^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+20\d{2}$|^\d{1,2}\/\d{1,2}\/\d{4}$/.test(v))||"";
-        const changelist=cells.find(v=>/^\d{6,}$/.test(v))||"";
-        const href=[...row.matchAll(/<a\b[^>]*href=["\']([^"\']+)["\']/gi)].map(m=>m[1]).map(v=>{try{return new URL(v,"https://samfrew.com").toString()}catch{return ""}}).find(v=>v.startsWith("https://samfrew.com/"))||"";
-        items.push({model,csc,regionName:regionMatch?.[2]||"",version,os,buildDate,changelist,sourceUrl:href||source});
+        const href=[...row.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)].map(m=>m[1]).map(v=>{try{return new URL(v,"https://samfrew.com").toString()}catch{return ""}}).find(v=>v.startsWith("https://samfrew.com/"))||"";
+        items.push({model,csc,regionName,version,os,buildDate,changelist,sourceUrl:href||source});
       }
-      return response({success:true,source:"SamFrew",model,count:items.length,items,pageUrl:source,parserRows:rows.length});
+      const unique=[...new Map(items.map(x=>[x.model+"|"+x.csc+"|"+x.version+"|"+x.buildDate,x])).values()];
+      return response({success:true,source:"SamFrew",model,count:unique.length,items:unique,pageUrl:source,parserRows:rows.length,parserMode:"cells+row-fallback"});
     } catch(error) {
       console.error("SamFrew firmware lookup failed",model,error);
       return response({success:false,message:"SamFrew model firmware listesi şu anda alınamıyor. Lütfen tekrar deneyin."},503);

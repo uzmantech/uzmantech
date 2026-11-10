@@ -44,13 +44,15 @@ const MODEL_CATALOG={
 };
 const archiveEsc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const archiveCategory={firmware:"Firmware",eng:"ENG",imei:"IMEI",test_point:"Test Point",resistor:"Direnç",usb:"USB Sürücüleri",other:"Diğer"};
-async function fetchSamFwCatalog(model,append=false,displayModel=null){
+async function fetchSamFwCatalog(model,append=false,displayModel=null,csc="TUR"){
  const normalized=String(model||"").trim().toUpperCase();
  if(!/^SM-[A-Z0-9]+$/.test(normalized))throw new Error("Samsung model kodunu SM-A546E biçiminde girin.");
  const cfg=window.UZMANTECH_CONFIG||{};
  if(!cfg.apiBaseUrl||!cfg.publishableKey)throw new Error("Arşiv API yapılandırması bulunamadı.");
  const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};
- const url=cfg.apiBaseUrl+"/portal-api/samsung-firmware-search?q="+encodeURIComponent(normalized);
+ const region=String(csc||"TUR").trim().toUpperCase();
+ if(!/^[A-Z0-9]{3}$/.test(region))throw new Error("CSC kodu 3 karakter olmalıdır.");
+ const url=cfg.apiBaseUrl+"/portal-api/samsung-firmware-search?q="+encodeURIComponent(normalized)+"&csc="+encodeURIComponent(region);
  const response=await fetch(url,{headers,signal:AbortSignal.timeout(30000)});
  const catalog=await response.json().catch(()=>({}));
  if(!response.ok||!catalog.success)throw new Error(catalog.message||"Samsung firmware kaynağına ulaşılamadı.");
@@ -60,7 +62,7 @@ async function fetchSamFwCatalog(model,append=false,displayModel=null){
   description:"CSC: "+x.csc+(x.regionName?" ("+x.regionName+")":"")+" | "+(x.os||"Android sürümü belirtilmemiş")+" | Tarih: "+(x.buildDate||"-")+" | Güvenlik: "+(x.securityPatch||"-")+(x.verification?" | Doğrulama: "+x.verification:""),
   created_at:x.buildDate||null,source_url:/^https?:\/\//i.test(x.sourceUrl||"")?x.sourceUrl:"https://samsungfirmware.com/",is_samfrew:false,is_samsung_api:true
  }));
- if(!firmwareItems.length)throw new Error("Bu model için yeni Samsung veri kaynağında kayıt bulunamadı. Kaynak yanıt verdi ancak eşleşen firmware kaydı döndürmedi.");
+ if(!firmwareItems.length)throw new Error(normalized+" modeli için "+region+" CSC kodunda firmware kaydı bulunamadı.");
  archiveItems=[...archiveItems.filter(x=>append||!String(x.id||"").startsWith("samsungapi:")),...firmwareItems];
  selectedDevice=displayModel||normalized;selectedFolder="firmware";selectedFile=null;renderLiveArchive();return firmwareItems.length;
 }
@@ -135,16 +137,18 @@ function renderLiveArchive(){
   return;
  }
  head.querySelector("h2").textContent=brand+" cihaz modelleri";
- head.querySelector("p").textContent="Modeli arayın veya listeden seçin.";
- const models=getModels(brand).filter(m=>m.toLocaleLowerCase("tr-TR").includes(modelSearch.toLocaleLowerCase("tr-TR")));
- count.textContent=models.length+" MODEL";
+ const isSamsung=brand==="Samsung";
+ head.querySelector("p").textContent=isSamsung?"Samsung modelleri listelenir. Yazılım aramak için CSC Ara bölümünü kullanın.":"Modeli arayın veya listeden seçin.";
+ if(isSamsung){modelSearch="";count.textContent="";count.hidden=true;}else{count.hidden=false;}
+ const models=getModels(brand).filter(m=>isSamsung||m.toLocaleLowerCase("tr-TR").includes(modelSearch.toLocaleLowerCase("tr-TR")));
+ if(!isSamsung)count.textContent=models.length+" MODEL";
  const visibleModels=models.slice(0,modelVisibleLimit);
  const fileCounts=new Map();
  for(const file of archiveItems){if(normBrand(file.brand)!==brand||!file.model)continue;fileCounts.set(file.model,(fileCounts.get(file.model)||0)+1);}
- const samfrewSearch=brand==="Samsung"?'<form id="samfrewSearchForm" class="archive-model-search-wrap" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"><input id="samfrewModelCode" type="search" placeholder="Model ara: A13, A54, S23 Ultra..." aria-label="Samsung model adı veya kodu" required style="flex:1;min-width:210px"><button type="submit" style="padding:10px 16px;border:0;border-radius:8px;cursor:pointer">Tüm CSC yazılımlarını ara</button></form>':'';
- const cards=visibleModels.map(model=>'<button type="button" class="archive-device-card" data-device-model="'+archiveEsc(model)+'"><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+(fileCounts.get(model)||0)+' dosya</em></button>').join("");
+ const cscSearch=isSamsung?'<section class="samsung-csc-search"><button type="button" id="samsungCscToggle" class="samsung-csc-toggle" aria-expanded="false" aria-controls="samsungCscPanel">CSC Ara <span aria-hidden="true">⌄</span></button><div id="samsungCscPanel" class="samsung-csc-panel" hidden><form id="samsungCscSearchForm"><label for="samsungModelCode">Samsung model kodu</label><input id="samsungModelCode" type="search" placeholder="Örn. SM-A546E veya Galaxy A54" required><label for="samsungCscCode">CSC / Bölge kodu</label><select id="samsungCscCode"><option value="TUR" selected>TUR · Türkiye</option><option value="EUX">EUX · Avrupa</option><option value="DBT">DBT · Almanya</option><option value="BTU">BTU · Birleşik Krallık</option><option value="XSG">XSG · Birleşik Arap Emirlikleri</option><option value="INS">INS · Hindistan</option><option value="XEO">XEO · Polonya</option><option value="ILO">ILO · İsrail</option><option value="KOO">KOO · Güney Kore</option><option value="XAA">XAA · ABD</option><option value="ATT">ATT · AT&amp;T ABD</option><option value="TMB">TMB · T-Mobile ABD</option></select><button type="submit">Seçilen CSC için ara</button></form></div></section>':'';
+ const cards=visibleModels.map(model=>'<'+(isSamsung?'div':'button type="button"')+' class="archive-device-card" '+(isSamsung?'':'data-device-model="'+archiveEsc(model)+'"')+'><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+(fileCounts.get(model)||0)+' dosya</em></'+(isSamsung?'div':'button')+'>').join("");
  const more=models.length>visibleModels.length?'<button type="button" class="archive-load-more-models" data-load-more-models>+'+(models.length-visibleModels.length)+' model daha göster</button>':'';
- grid.innerHTML=samfrewSearch+'<div class="archive-model-search-wrap"><input id="archiveModelSearch" type="search" value="'+archiveEsc(modelSearch)+'" placeholder="'+archiveEsc(brand)+' model adı ara..." aria-label="Model ara"></div>'+(cards||'<p class="archive-live-empty">Bu arama için model bulunamadı.</p>')+more;
+ grid.innerHTML=cscSearch+(!isSamsung?'<div class="archive-model-search-wrap"><input id="archiveModelSearch" type="search" value="'+archiveEsc(modelSearch)+'" placeholder="'+archiveEsc(brand)+' model adı ara..." aria-label="Model ara"></div>':'')+(cards||'<p class="archive-live-empty">Bu arama için model bulunamadı.</p>')+more;
 }
 async function loadLiveArchive(){
  const isModelPage=!!$("#archiveModelsPage");
@@ -199,7 +203,8 @@ const SAMSUNG_MODEL_ALIASES={
  "S25 ULTRA":["SM-S938B","SM-S938U","SM-S938U1","SM-S938W","SM-S938N"],"GALAXY S25 ULTRA":["SM-S938B","SM-S938U","SM-S938U1","SM-S938W","SM-S938N"]
 };
 function resolveSamsungModelCodes(query){const q=String(query||"").trim().toUpperCase().replace(/^SAMSUNG\s+/,"").replace(/^GALAXY\s+/,"GALAXY ").replace(/\s+/g," ");if(/^SM-[A-Z0-9]+$/.test(q))return [q];return SAMSUNG_MODEL_ALIASES[q]||SAMSUNG_MODEL_ALIASES[q.replace(/^GALAXY /,"")]||[];}
-document.addEventListener("submit",async e=>{if(e.target.id!=="samfrewSearchForm")return;e.preventDefault();const query=$("#samfrewModelCode")?.value||"",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Bu model için eşleştirme bulunamadı. Örnek: A13, A13 5G veya SM-A135F.");return;}if(submit){submit.disabled=true;submit.textContent="Tüm CSC'ler aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],i>0,query.toUpperCase());}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){renderLiveArchive();toast("SamFrew: "+codes.length+" model kodunda tüm CSC bölgelerinden "+total+" firmware kaydı listelendi.");}else toast(errors[0]||"Bu model için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Tüm CSC yazılımlarını ara";}}});
+document.addEventListener("click",e=>{if(e.target.closest("#samsungCscToggle")){const panel=$("#samsungCscPanel"),button=$("#samsungCscToggle");if(!panel||!button)return;panel.hidden=!panel.hidden;button.setAttribute("aria-expanded",String(!panel.hidden));button.querySelector("span").textContent=panel.hidden?"⌄":"⌃";}});
+document.addEventListener("submit",async e=>{if(e.target.id!=="samsungCscSearchForm")return;e.preventDefault();const query=$("#samsungModelCode")?.value||"",csc=$("#samsungCscCode")?.value||"TUR",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Model kodu eşleştirilemedi. Örnek: A13, A54 veya SM-A546E.");return;}if(submit){submit.disabled=true;submit.textContent="CSC aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],i>0,query.toUpperCase(),csc);}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){renderLiveArchive();toast(csc+" CSC için "+total+" firmware kaydı listelendi.");}else toast(errors[0]||"Bu CSC için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Seçilen CSC için ara";}}});
 document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;modelVisibleLimit=48;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
 document.addEventListener("click",e=>{if(e.target.closest("[data-load-more-models]")){modelVisibleLimit+=48;renderLiveArchive();}});
 document.addEventListener("click",async e=>{

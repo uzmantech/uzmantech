@@ -463,16 +463,22 @@
     Promise.allSettled(startupTasks).then(()=>syncHeader());
   })();
 
-  // Shared legal navigation footer for portal pages.
-  (() => {
-    if (document.querySelector(".legal-footer-links")) return;
+  // Shared legal navigation footer. Run after parsing so static footers are detected
+  // before creating a fallback; this prevents duplicate footers on pages with inline markup.
+  const ensureLegalFooter = () => {
+    if (document.querySelector(".legal-footer-links, .uzmantech-legal-footer, .legal-footer")) return;
     const footer = document.createElement("footer");
     footer.className = "legal-footer-links";
     footer.setAttribute("aria-label", "Yasal bağlantılar");
     footer.innerHTML = '<a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="hakkimizda.html">Hakkımızda</a><a href="destek.html">İletişim</a><a href="kullanim-sartlari.html">Kullanım Şartları</a>';
-    footer.style.cssText = "display:flex;flex-wrap:wrap;justify-content:center;gap:18px;padding:24px 16px;margin-top:36px;border-top:1px solid #263b54;background:#071321;color:#a9bfd5;font-size:13px";
-    footer.querySelectorAll("a").forEach(a => { a.style.color="#8fcaff"; a.style.textDecoration="none"; });
+    footer.style.cssText = "display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 22px;padding:22px 16px;margin-top:28px;border-top:1px solid #263b54;background:#071321;color:#a9bfd5;font-size:13px;text-align:center";
+    footer.querySelectorAll("a").forEach(a => { a.style.color="#dcecff"; a.style.textDecoration="none"; a.style.padding="5px 0"; });
     document.body.appendChild(footer);
-  })();
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureLegalFooter, { once:true });
+  } else {
+    ensureLegalFooter();
+  }
 
 })();

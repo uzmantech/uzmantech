@@ -396,7 +396,7 @@ Deno.serve(async (req: Request) => {
 
 
   if (req.method === "GET" && path.pathname.endsWith("/samsung-firmware-search")) {
-    const model=String(reqUrl.searchParams.get("q")||"").trim().toUpperCase();
+    const model=String(path.searchParams.get("q")||"").trim().toUpperCase();
     if(!/^SM-[A-Z0-9]+$/.test(model))return response({success:false,message:"Samsung model kodunu SM-A546E biçiminde girin."},400);
     const endpoint="https://samsungfirmware.com/functions/publicApi";
     const headers={"Accept":"application/json","User-Agent":"UzmantechPortal/2.0 (Samsung firmware lookup)"};

@@ -1903,3 +1903,84 @@ html body .uzmantech-legal-footer nav a:hover{
 }
 .site-global-header .profile-dropdown .profile-menu-link:hover{background:#203b59;border-color:#42688c}
 .site-global-header .profile-dropdown button[data-open="login"]{cursor:pointer}
+
+
+/* Unified profile button fills the space left by the removed header language control */
+@media screen and (min-width:761px){
+  html body .site-global-header > .dash-top-actions,
+  html body .site-global-header > .site-header-actions{
+    gap:8px!important;
+  }
+  html body .site-global-header .header-auth,
+  html body .site-global-header .site-archive-auth{
+    flex:1 1 190px!important;
+    width:100%!important;
+    min-width:150px!important;
+    max-width:260px!important;
+    justify-content:stretch!important;
+  }
+  html body .site-global-header .profile-menu-wrap{
+    display:block!important;
+    flex:1 1 auto!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile{
+    display:flex!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:46px!important;
+    height:46px!important;
+    padding:0 13px!important;
+    justify-content:flex-start!important;
+    gap:10px!important;
+    border-radius:12px!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile .top-account{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    text-align:left!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile .top-chevron{
+    margin-left:auto!important;
+    flex:0 0 auto!important;
+  }
+}
+@media screen and (max-width:760px){
+  html body .site-global-header > .dash-top-actions,
+  html body .site-global-header > .site-header-actions{
+    gap:6px!important;
+  }
+  html body .site-global-header .header-auth,
+  html body .site-global-header .site-archive-auth{
+    flex:1 1 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body .site-global-header .profile-menu-wrap{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile{
+    display:flex!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:44px!important;
+    height:44px!important;
+    padding:0 10px!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    border-radius:11px!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile .top-account{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    text-align:left!important;
+  }
+  html body .site-global-header .profile-menu-wrap > .top-profile .top-chevron{
+    margin-left:auto!important;
+    flex:0 0 auto!important;
+  }
+}

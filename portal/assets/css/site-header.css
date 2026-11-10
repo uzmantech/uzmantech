@@ -2061,3 +2061,69 @@ html body .uzmantech-legal-footer nav a:hover{
     max-width:none!important;
   }
 }
+
+
+/* Final layout correction: remove the flexible gap after Support and give it to the profile area */
+@media screen and (min-width:761px){
+  html body .site-global-header:not(.site-global-header-archive) > .site-global-nav{
+    flex:0 1 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    justify-content:flex-start!important;
+    gap:3px!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) > .site-global-nav > .site-nav-link{
+    flex:0 1 auto!important;
+    width:auto!important;
+    min-width:max-content!important;
+    padding-left:7px!important;
+    padding-right:7px!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) > .dash-top-actions,
+  html body .site-global-header:not(.site-global-header-archive) > .site-header-actions{
+    flex:1 1 240px!important;
+    width:auto!important;
+    min-width:190px!important;
+    max-width:420px!important;
+    margin-left:auto!important;
+    justify-content:stretch!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) .header-auth,
+  html body .site-global-header:not(.site-global-header-archive) .site-archive-auth{
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap,
+  html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap > .top-profile{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+  html body .site-global-header.site-global-header-archive{
+    grid-template-columns:184px max-content minmax(190px,1fr)!important;
+  }
+  html body .site-global-header.site-global-header-archive > .site-global-nav{
+    width:max-content!important;
+    grid-template-columns:repeat(8,max-content)!important;
+    justify-content:start!important;
+  }
+  html body .site-global-header.site-global-header-archive > .site-header-actions{
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body .site-global-header.site-global-header-archive .site-archive-auth,
+  html body .site-global-header.site-global-header-archive .profile-menu-wrap,
+  html body .site-global-header.site-global-header-archive .profile-menu-wrap > .top-profile{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+}
+@media screen and (min-width:761px) and (max-width:1450px){
+  html body .site-global-header:not(.site-global-header-archive) > .site-global-nav > .site-nav-link{
+    padding-left:4px!important;
+    padding-right:4px!important;
+  }
+}

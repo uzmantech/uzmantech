@@ -84,7 +84,6 @@ function downloadSamsungLocalHelper(file){
  "title Uzmantech Samsung Firmware Downloader",
  "set \"MODEL="+safeModel+"\"",
  "set \"REGION="+safeCsc+"\"",
- "set \"VERSION="+version+"\"",
  "set \"WORK=%TEMP%\\UzmantechSamloader\"",
  "set \"ZIP=%WORK%\\samloader-v2.2.0-windows-x86_64.zip\"",
  "set \"TOOL_DIR=%WORK%\\tool\"",

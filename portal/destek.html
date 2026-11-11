@@ -46,6 +46,62 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 .info-stack{display:flex}
 .faq-wrap{margin-top:34px}
 @media(max-width:700px){.content-grid{width:100%}.hero{padding:28px 0 22px}.hero h1{font-size:39px;letter-spacing:-1.2px}}
+
+/* Okunabilirlik ve geniş ekran yerleşimi */
+.contact-shell{width:min(1600px,calc(100% - 72px));padding-top:38px}
+.hero{padding:42px 0 34px}
+.hero-kicker{font-size:13px;letter-spacing:1.7px}
+.hero h1{font-size:clamp(46px,5vw,68px);max-width:none;letter-spacing:-2px}
+.hero p{max-width:1000px;font-size:18px;line-height:1.8}
+.content-grid{display:block;width:100%;margin:30px auto 0}
+.form-panel{width:100%;border-radius:16px}
+.form-head{padding:28px 34px 23px}
+.form-head h2{font-size:28px}
+.form-head p{font-size:15px}
+.form-content{padding:30px 34px 34px}
+.form-row{gap:22px}
+.form-group{margin-bottom:22px}
+.form-group label{font-size:13px;margin-bottom:10px}
+.form-group input,.form-group select,.form-group textarea{min-height:54px;padding:15px 16px;font-size:16px;border-radius:9px}
+.form-group textarea{min-height:190px;line-height:1.7}
+.login-note{font-size:15px;padding:17px}
+.btn-submit{min-height:58px;padding:0 20px;font-size:15px;border-radius:9px}
+.ticket-status{font-size:14px}
+.ticket-history h3{font-size:19px}
+.ticket-history article{font-size:15px}
+.ticket-history article small{font-size:13px}
+.faq-wrap{margin-top:42px}
+.faq-heading small{font-size:12px}
+.faq-heading h2{font-size:32px}
+.faq-heading p{font-size:14px;max-width:560px}
+.faq-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.faq-item{min-height:150px;padding:23px;border-radius:12px}
+.faq-item h3{font-size:16px;line-height:1.5;margin-bottom:12px}
+.faq-item p{font-size:14px;line-height:1.8}
+@media(max-width:900px){
+ .contact-shell{width:calc(100% - 40px)}
+ .form-head,.form-content{padding-left:24px;padding-right:24px}
+ .faq-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .contact-shell{width:calc(100% - 24px);padding-top:25px}
+ .hero{padding:28px 0 24px}
+ .hero h1{font-size:39px;letter-spacing:-1.2px}
+ .hero p{font-size:15px}
+ .form-head{padding:20px 17px 17px}
+ .form-head h2{font-size:23px}
+ .form-head p{font-size:13px}
+ .form-content{padding:20px 17px 23px}
+ .form-row{grid-template-columns:1fr;gap:0}
+ .form-group label{font-size:12px}
+ .form-group input,.form-group select,.form-group textarea{font-size:16px}
+ .faq-heading{align-items:flex-start;flex-direction:column}
+ .faq-heading h2{font-size:27px}
+ .faq-list{grid-template-columns:1fr}
+ .faq-item{min-height:unset;padding:19px}
+ .faq-item h3{font-size:15px}
+ .faq-item p{font-size:13px}
+}
 </style>
 </head><body><header class="dash-topbar site-global-header">
  <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>

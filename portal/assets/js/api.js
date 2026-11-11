@@ -49,6 +49,7 @@
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
     archiveAdmin: data => call("/archive-service", { method: "POST", body: JSON.stringify(data) }),
     archiveFiles: () => call("/archive-service?resource=files"),
+    archiveHonorFirmware: () => call("/archive-service?resource=honor-free"),
     archiveFileDownload: id => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "archive_file_download_url", id }) }),
     siteStats: () => call("/archive-service?resource=stats"),
     visitorPing: visitorId => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "visitor_ping", visitor_id: visitorId }) }),

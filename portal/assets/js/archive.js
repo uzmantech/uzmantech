@@ -233,7 +233,7 @@ async function loadLiveArchive(){
    const honorItems=honorResult.value.firmware.map((row,index)=>{
     if(!Array.isArray(row)||String(row[0]||"").toUpperCase()!=="HONOR"||!row[1]||!/^https:\/\//i.test(String(row[4]||"")))return null;
     const description=String(row[3]||"");
-    const fileNameMatch=description.match(/Dosya:\\s*(.*?)\\s*•\\s*Boyut:/);
+    const fileNameMatch=description.match(/Dosya:\s*(.*?)\s*•\s*Boyut:/);
     const version=String(row[5]||"").trim();
     return {
      id:"honor-free:"+String(row[1])+":"+version+":"+index,

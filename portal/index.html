@@ -315,11 +315,16 @@ html.uz-intro-skip #uz-intro{display:none!important}
 (()=>{const track=document.getElementById("latestFilesTrack");if(!track)return;
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const date=v=>{if(!v)return "Yeni";const d=new Date(v);return Number.isNaN(d.getTime())?"Yeni":d.toLocaleDateString("tr-TR",{day:"2-digit",month:"short"});};
-async function load(){try{if(!window.UzmantechAPI?.recent)throw new Error("Son eklenenler servisi hazır değil");const r=await UzmantechAPI.recent();const files=(r.results||[]).sort((a,b)=>new Date(b.created_at||a.created_at||0)-new Date(a.created_at||0)).slice(0,10);
-if(!files.length){track.innerHTML='<div class="latest-file-placeholder">Henüz yeni dosya eklenmedi.</div>';return;}
-const cards=files.map(entry=>{const d=entry.data||{};const title=d.title||d.model||d.name||"Teknik dosya";const meta=[d.brand,d.model&&d.model!==title?d.model:null,entry.category].filter(Boolean).join(" · ");return '<button type="button" class="latest-file-card" data-latest-file data-file-title="'+esc(title)+'" data-file-brand="'+esc(d.brand||"")+'" data-file-model="'+esc(d.model||"")+'"><span class="latest-file-icon">📁</span><span class="latest-file-info"><strong>'+esc(title)+'</strong><small>'+esc(meta||"Teknik arşiv")+'</small></span><span class="latest-file-date">'+date(entry.created_at||d.created_at)+'</span></button>';}).join("");
-track.innerHTML=cards+cards;track.classList.toggle("is-static",files.length===1);
-}catch(e){track.innerHTML='<div class="latest-file-placeholder">Son eklenen dosyalar şu anda yüklenemiyor.</div>';}}
+const shuffle=items=>{const a=items.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+async function load(){try{
+ if(!window.UzmantechAPI?.recent)throw new Error("Son eklenenler servisi hazır değil");
+ const r=await UzmantechAPI.recent();
+ const files=(r.results||[]).slice().sort((a,b)=>new Date(b.created_at||b.data?.created_at||0)-new Date(a.created_at||a.data?.created_at||0));
+ if(!files.length){track.innerHTML='<div class="latest-file-placeholder">Henüz yeni dosya eklenmedi.</div>';return;}
+ const selected=shuffle(files.slice(0,24)).slice(0,8);
+ track.innerHTML=selected.map(entry=>{const d=entry.data||{};const title=d.title||d.model||d.name||"Teknik dosya";const meta=[d.brand,d.model&&d.model!==title?d.model:null,entry.category].filter(Boolean).join(" · ");return '<button type="button" class="latest-file-card" data-latest-file data-file-title="'+esc(title)+'" data-file-brand="'+esc(d.brand||"")+'" data-file-model="'+esc(d.model||"")+'"><span class="latest-file-icon" aria-hidden="true">📁</span><span class="latest-file-info"><strong>'+esc(title)+'</strong><small>'+esc(meta||"Teknik arşiv")+'</small></span><span class="latest-file-date">'+date(entry.created_at||d.created_at)+'</span></button>';}).join("");
+ track.classList.add("is-static");
+ }catch(e){track.innerHTML='<div class="latest-file-placeholder">Son eklenen dosyalar şu anda yüklenemiyor.</div>';}}
 track.addEventListener("click",e=>{const card=e.target.closest("[data-latest-file]");if(!card)return;e.preventDefault();const title=document.getElementById("modalTitle"),body=document.getElementById("modalBody"),modal=document.getElementById("modal");if(!title||!body||!modal)return;title.textContent="Üyelik gerekli";body.innerHTML='<p class="latest-files-access-message"><strong>'+esc(card.dataset.fileTitle)+'</strong> dosyasını görüntülemek için üye olmanız ve giriş yapmanız gerekir.</p><div class="latest-files-access-actions"><button type="button" class="dash-button" data-open="login">Giriş Yap</button><button type="button" class="dash-button dash-button-outline" data-open="register">Üye Ol</button></div>';modal.classList.add("open");});
 load();
 })();

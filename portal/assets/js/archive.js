@@ -213,10 +213,10 @@ function renderLiveArchive(){
 async function loadLiveArchive(){
  const isModelPage=!!$("#archiveModelsPage");
  // Statik katalog önce çizilir; ağ yanıtı gelene kadar boş ekran bekletilmez.
- if(isModelPage){archiveItems=[];renderLiveArchive();}
+ if(isModelPage){archiveItems=[];const loadingGrid=$("#archiveLiveGrid"),loadingCount=$("#archiveFileCount");if(loadingCount)loadingCount.textContent="Yükleniyor…";if(loadingGrid)loadingGrid.innerHTML='<p class="archive-live-empty">Modeller ve yazılım kayıtları yükleniyor...</p>';}
  try{
   const archivePromise=UzmantechAPI.archiveFiles();
-  const honorPromise=UzmantechAPI.archiveHonorFirmware();
+  const honorPromise=(!isModelPage||normBrand(selectedBrand)==="Honor")?UzmantechAPI.archiveHonorFirmware():Promise.resolve(null);
   const engineerPromise=isModelPage?Promise.resolve(null):(async()=>{
    const cfg=window.UZMANTECH_CONFIG||{};
    const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};

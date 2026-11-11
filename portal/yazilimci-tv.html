@@ -29,6 +29,7 @@
   <a class="site-nav-link" href="paketler.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-crown"/></svg></span><b>Paketler</b></a>
   <a class="site-nav-link" href="destek.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-help"/></svg></span><b>İletişim</b></a>
  </nav>
+<div class="header-auth" id="headerAuth"></div>
 <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button></header>
 <main class="tv-page"><section class="tv-hero">
  <div class="tv-hero-copy">
@@ -69,4 +70,11 @@ fetch("/api/youtube-feed").then(r=>{if(!r.ok)throw Error("feed");return r.json()
  const initial=new URLSearchParams(location.search).get("video");if(initial&&videos.some(v=>v.id===initial))choose(initial);
  }).catch(()=>{status.textContent="Kanal videoları şu anda alınamadı. YouTube kanalını açarak videoları izleyebilirsin.";});
 })();
-</script></body></html>
+</script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js?v=live-presence-20261105-1"></script>
+<script src="assets/js/site.js?v=profile-language-menu-20261110-3"></script>
+<script src="assets/js/user-panel.js?v=accountmenu2"></script>
+<script src="assets/js/language.js?v=ip-language-20261110-1"></script>
+<script src="assets/js/portal-pages.js?v=home-nav-fix-20261107-1"></script>
+</body></html>

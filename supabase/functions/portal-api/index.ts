@@ -521,24 +521,28 @@ Deno.serve(async (req: Request) => {
   if (req.method === "GET" && path.pathname.endsWith("/recent")) {
     const member = await verifySession(tokenFrom(req));
     const archiveAccess = hasPaidArchiveAccess(member);
+    const requestedLimit = Number(path.searchParams.get("limit") || "40");
+    const limit = Math.min(Math.max(Number.isFinite(requestedLimit) ? requestedLimit : 40, 8), 48);
     const categories = ["firmware", "eng", "imei", "test_point", "resistor"];
     const { data, error } = await db.from("archive_records").select("category,records").in("category", categories);
     if (error) return response({ success: false, message: "Son eklenen dosyalar yüklenemedi." }, 503);
     const recent: any[] = [];
+    let order = 0;
     for (const row of data || []) {
       const records = Array.isArray(row.records) ? row.records : [];
-      for (let i = records.length - 1; i >= Math.max(0, records.length - 8); i--) {
+      for (let i = records.length - 1; i >= Math.max(0, records.length - 24); i--) {
         const item = records[i];
         const d = Array.isArray(item) ? { brand:item[0], model:item[1], codename:item[2], description:item[3], link:item[4], version:item[5], android:item[6], region:item[7] } : item;
-        recent.push({ category: row.category, data: archiveAccess ? d : scrubLinks(d) });
+        recent.push({ category: row.category, data: archiveAccess ? d : scrubLinks(d), _order: order++ });
       }
     }
     recent.sort((a,b) => {
-      const da = String(a.data?.updated_at || a.data?.created_at || a.data?.date || a.data?.description || "");
-      const dbb = String(b.data?.updated_at || b.data?.created_at || b.data?.date || b.data?.description || "");
-      return dbb.localeCompare(da);
+      const dateA = Date.parse(String(a.data?.updated_at || a.data?.created_at || a.data?.date || ""));
+      const dateB = Date.parse(String(b.data?.updated_at || b.data?.created_at || b.data?.date || ""));
+      if (Number.isFinite(dateA) && Number.isFinite(dateB) && dateA !== dateB) return dateB - dateA;
+      return a._order - b._order;
     });
-    return response({ success: true, member: archiveAccess, results: recent.slice(0, 8) });
+    return response({ success: true, member: archiveAccess, results: recent.slice(0, limit).map(({ _order, ...item }) => item) });
   }
 
   if (req.method === "GET" && path.pathname.endsWith("/archive")) {

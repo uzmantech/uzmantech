@@ -41,13 +41,13 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 .hero h1{max-width:760px;margin:14px 0;font-size:clamp(38px,5vw,58px);letter-spacing:-2px;text-transform:none}
 .hero h1 em{color:var(--cyan)}
 .hero-side{display:none}
-.content-grid{grid-template-columns:minmax(0,1fr) 275px;gap:18px;margin-top:24px}
+.content-grid{display:block;width:min(860px,100%);margin:24px auto 0}.info-stack{display:none}
 .side-index{display:none}
 .info-stack{display:flex}
 .faq-wrap{margin-top:34px}
-@media(max-width:700px){.content-grid{grid-template-columns:1fr}.hero{padding:28px 0 22px}.hero h1{font-size:39px;letter-spacing:-1.2px}}
+@media(max-width:700px){.content-grid{width:100%}.hero{padding:28px 0 22px}.hero h1{font-size:39px;letter-spacing:-1.2px}}
 </style>
-</head><body>\n<header class="dash-topbar site-global-header">
+</head><body><header class="dash-topbar site-global-header">
  <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
  <nav class="site-global-nav" aria-label="Ana menü">
   <a class="site-nav-link" href="index.html?view=home" data-page="home"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg></span><b>Ana Sayfa</b></a>
@@ -61,7 +61,7 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
  </nav>
  <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
  <div class="dash-top-actions"><div class="header-auth" id="headerAuth"></div></div>
-</header>\n<main class="contact-shell">
+</header><main class="contact-shell">
 <div class="topline"><span>UZMANTECH / DESTEK OPERASYONLARI</span><span>İLETİŞİM NOKTASI · 01</span></div>
 <section class="hero">
  <div>
@@ -78,18 +78,14 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 <div class="form-group"><label for="subject">KONU BAŞLIĞI</label><input id="subject" name="subject" required minlength="4" maxlength="120" placeholder="Sorunu kısaca özetleyin"></div></div>
 <div class="form-group"><label for="message">SORUNUN AYRINTILARI</label><textarea id="message" name="message" required minlength="20" maxlength="4000" placeholder="Cihaz modelini, hata mesajını ve denediğiniz adımları yazın..."></textarea></div>
 <button type="submit" class="btn-submit" id="ticketSubmit">Talebi gönder <span></span></button><div class="ticket-status" id="ticketStatus" aria-live="polite"></div></form><div class="ticket-history" id="ticketHistory"></div></div></article>
-<aside class="info-stack">
-<article class="info-card feature"><span class="info-symbol">↗</span><span class="info-label">DOĞRUDAN İLETİŞİM</span><h3>E-posta kanalımız</h3><p>Genel sorular ve iş birliği talepleri için bize yazın.</p><p style="margin-top:12px"><a href="mailto:uzmantech58@gmail.com">uzmantech58@gmail.com</a></p></article>
-<article class="info-card"><span class="info-symbol">◷</span><span class="info-label">TALEP TAKİBİ</span><h3>Kontrol sizde</h3><p>Hesabınızdan gönderdiğiniz talepleri ve yanıtları bu sayfada görüntüleyebilirsiniz.</p></article>
-<article class="info-card"><span class="info-symbol">⌖</span><span class="info-label">KONUM</span><h3>Harita bağlantısı</h3><p>Uzmantech aramasını Google Haritalar'da açabilirsiniz.</p></article>
-</aside></section>
+</section>
 <section class="faq-wrap" id="faq"><div class="faq-heading"><div><small>DESTEK / BİLGİ BANKASI</small><h2>Sık sorulan sorular</h2></div><p>Aradığınız yanıtı bulamadınız mı? Destek formunu kullanarak ekibimize ulaşabilirsiniz.</p></div><div class="faq-list">
 <article class="faq-item"><h3>Lisansımı yeni bilgisayara nasıl taşırım?</h3><p>“HWID / Lisans” kategorisiyle talep oluşturun. Talebiniz lisans koşullarına göre incelenir.</p></article>
 <article class="faq-item"><h3>Ödeme sonrası lisansım ne zaman açılır?</h3><p>Ödeme bildiriminiz doğrulandıktan sonra paket hesabınıza tanımlanır. Süre yoğunluğa göre değişebilir.</p></article>
 <article class="faq-item"><h3>Uzmantool cihazımı algılamıyor.</h3><p>USB kablosunu ve portunu kontrol edin. Gerekli ADB/Fastboot sürücülerinin kurulu olduğundan emin olun.</p></article>
 <article class="faq-item"><h3>Talebimi nereden takip ederim?</h3><p>Giriş yaptıktan sonra bu sayfadaki destek alanında taleplerinizi ve durumlarını görebilirsiniz.</p></article>
 </div></section></main>
-<footer class="page-footer">© Uzmantech · <a href="gizlilik-politikasi.html">Gizlilik Politikası</a> · <a href="hakkimizda.html">Hakkımızda</a> · <a href="kullanim-sartlari.html">Kullanım Şartları</a></footer>\n<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js?v=profile-language-menu-20261110-3"></script>\n<script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/site.js?v=profile-language-menu-20261110-3"></script><script>
 (()=>{const $=s=>document.querySelector(s),form=$("#ticketForm"),status=$("#ticketStatus"),login=$("#ticketLogin"),history=$("#ticketHistory"),token=()=>window.UzmantechAPI?.getToken();
 function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function auth(){const ok=!!token();login.hidden=ok;form.hidden=!ok;if(ok)loadHistory();}
@@ -97,4 +93,4 @@ async function loadHistory(){try{const r=await UzmantechAPI.supportHistory();con
 form.addEventListener("submit",async e=>{e.preventDefault();if(!token()){auth();return;}const d=new FormData(form),subject=String(d.get("subject")||"").trim(),message=String(d.get("message")||"").trim();if(subject.length<4||message.length<20){status.textContent="Konu en az 4, mesaj en az 20 karakter olmalı.";return;}const btn=$("#ticketSubmit");btn.disabled=true;status.textContent="Talebiniz gönderiliyor...";try{const r=await UzmantechAPI.supportTicket({subject,category:String(d.get("category")),message});status.textContent=r.message||"Destek talebiniz oluşturuldu.";form.reset();await loadHistory();}catch(err){status.textContent=err.message||"Talep gönderilemedi.";}finally{btn.disabled=false;}});
 auth();
 })();
-</script>\n<script src="assets/js/language.js?v=ip-language-20261110-1"></script>\n<script id="site-global-nav-controller">(()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();</script>\n</body></html>
+</script><script src="assets/js/language.js?v=ip-language-20261110-1"></script><script id="site-global-nav-controller">(()=>{const button=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");if(!button||!nav)return;button.addEventListener("click",()=>{const opened=nav.classList.toggle("is-open");button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});})();</script></body></html>

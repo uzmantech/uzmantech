@@ -35,24 +35,17 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 .page-footer{padding:25px 16px;border-top:1px solid #25313a;background:#0c1218;text-align:center;color:#65737e;font-size:10px}.page-footer a{color:#a4b2bc;text-decoration:none}.page-footer a:hover{color:var(--orange)}
 @media(max-width:1050px){.content-grid{grid-template-columns:165px minmax(0,1fr)}.info-stack{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr)}.info-card{padding:15px}.side-index{grid-row:1/3}.map-section{grid-template-columns:1fr}.map-visual,.map-visual iframe{min-height:250px}}
 @media(max-width:700px){.contact-shell{width:calc(100% - 24px);padding:28px 0 48px}.topline{font-size:8px}.hero{grid-template-columns:1fr;padding:36px 0 28px;gap:18px}.hero h1{font-size:51px;letter-spacing:-2.5px}.hero p{font-size:13px}.hero-side{display:grid;grid-template-columns:1fr auto;gap:10px;padding:15px 0 0;border-left:0;border-top:1px solid var(--line)}.hero-number{align-self:center;font-size:48px}.content-grid{grid-template-columns:1fr;margin-top:16px}.side-index{position:static;display:flex;gap:14px;overflow:auto;padding:0 0 8px}.index-title{display:none}.index-item{flex:0 0 auto;gap:7px;padding:8px 0}.info-stack{grid-column:auto;grid-template-columns:1fr}.form-head{padding:20px 17px 16px}.form-content{padding:19px 17px 21px}.form-row{grid-template-columns:1fr;gap:0}.map-section{padding:10px}.map-copy{padding:12px 9px}.faq-heading{align-items:flex-start;flex-direction:column}.faq-list{grid-template-columns:1fr}.faq-item{min-height:unset}.map-visual,.map-visual iframe{min-height:225px}}
-/* Support center visual refresh */
-.support-hero{position:relative;isolation:isolate;overflow:hidden;margin:28px 0 34px;padding:clamp(25px,4vw,54px);border:1px solid #21476a;border-radius:25px;background:radial-gradient(ellipse at 83% 45%,#087bda2b,transparent 38%),linear-gradient(125deg,#08182a,#0b2540 58%,#071426);box-shadow:0 24px 65px #0006}
-.support-hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.2;background-image:linear-gradient(#2b7fb51a 1px,transparent 1px),linear-gradient(90deg,#2b7fb51a 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,transparent,#000)}
-.support-hero-glow{position:absolute;z-index:-1;width:280px;height:280px;border-radius:50%;filter:blur(70px);pointer-events:none}.support-glow-one{top:-170px;left:18%;background:#06b6d4}.support-glow-two{right:4%;bottom:-190px;background:#2563eb}
-.support-hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:clamp(25px,4vw,58px);align-items:center;position:relative}
-.support-kicker{display:inline-flex;align-items:center;gap:9px;color:#67d9ff;font-size:10px;font-weight:800;letter-spacing:1.8px}.support-kicker i{width:7px;height:7px;border-radius:50%;background:#22d3a6;box-shadow:0 0 12px #22d3a6}
-.support-hero h1{margin:20px 0 15px;font:800 clamp(34px,4.2vw,56px)/1.06 "Space Grotesk",sans-serif;letter-spacing:-2px;text-transform:none}.support-hero h1 span{color:#49c9ff}.support-hero-copy>p{max-width:620px;margin:0;color:#b0c4d8;font-size:14px;line-height:1.8}
-.support-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:29px}
-.support-step{position:relative;min-height:137px;padding:15px 13px;border:1px solid #294966;border-radius:14px;background:#0b1c30c9;backdrop-filter:blur(12px);transition:transform .2s,border-color .2s}.support-step:hover{transform:translateY(-3px);border-color:#36bdf5}
-.support-step-icon{display:grid;place-items:center;width:35px;height:35px;margin-bottom:13px;border-radius:10px;background:#0e9bd522;color:#54d3ff;font-size:18px}.support-step small{position:absolute;top:18px;right:13px;color:#67839e;font:700 10px "Space Grotesk"}.support-step b{display:block;color:#f0f7ff;font-size:12px}.support-step p{margin:6px 0 0;color:#8fa9c1;font-size:10px;line-height:1.55}
-.support-assurance{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px;color:#9bb4ca;font-size:10px}.support-assurance>span{color:#55d4ff}.support-assurance i,.support-shortcuts i{width:3px;height:3px;border-radius:50%;background:#4e7899}
-.support-action-card{position:relative;overflow:hidden;padding:29px 23px;border:1px solid #345b7c;border-radius:22px;background:linear-gradient(145deg,#102b47ed,#0a1a2ced);box-shadow:0 22px 55px #0007;text-align:center}.support-action-card:before{content:"";position:absolute;top:-100px;right:-80px;width:220px;height:220px;border-radius:50%;background:#06b6d42b;filter:blur(45px)}
-.support-action-card>*{position:relative}.support-action-icon{display:grid;place-items:center;width:60px;height:60px;margin:0 auto 17px;border:1px solid #67d8ff66;border-radius:18px;background:linear-gradient(145deg,#12a9df,#1559bd);color:white;font:700 30px "Space Grotesk";box-shadow:0 10px 30px #089bd955}
-.support-action-eyebrow{color:#5acfff;font-size:9px;font-weight:800;letter-spacing:1.8px}.support-action-card h2{margin:10px 0 8px;color:#f4f9ff;font:700 22px "Space Grotesk"}.support-action-card>p{margin:0 0 22px;color:#9eb5ca;font-size:11px}
-.support-primary-action,.support-secondary-action{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:49px;padding:0 12px;border-radius:11px;text-decoration:none;font-size:11px;font-weight:800;transition:transform .2s,filter .2s}.support-primary-action{background:linear-gradient(105deg,#08a8d8,#2563d9);color:white;box-shadow:0 9px 25px #087fd944}.support-primary-action b{margin-left:auto;font-size:17px}.support-secondary-action{margin-top:10px;border:1px solid #355572;background:#10263c;color:#d4e8f7}.support-primary-action:hover,.support-secondary-action:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.support-shortcuts{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:21px;padding-top:17px;border-top:1px solid #ffffff16}.support-shortcuts a{color:#9db8cf;text-decoration:none;font-size:9px}.support-shortcuts a:hover{color:#62d4ff}
-@media(max-width:900px){.support-hero-grid{grid-template-columns:1fr}.support-action-card{max-width:520px;width:100%;justify-self:center}.support-hero h1{font-size:clamp(35px,7vw,54px)}}
-@media(max-width:560px){.support-hero{padding:25px 17px;border-radius:18px}.support-hero h1{font-size:37px;letter-spacing:-1.3px}.support-hero-copy>p{font-size:12px}.support-steps{grid-template-columns:1fr;gap:8px;margin-top:21px}.support-step{min-height:unset;padding:12px;display:grid;grid-template-columns:36px 1fr auto;align-items:center;column-gap:10px}.support-step-icon{grid-row:1/3;margin:0}.support-step small{position:static;grid-column:3;grid-row:1}.support-step b{grid-column:2;grid-row:1}.support-step p{grid-column:2/4;grid-row:2;margin-top:3px}.support-action-card{padding:23px 16px}.support-assurance{font-size:9px}}
+
+/* Sade destek sayfasi */
+.hero{grid-template-columns:1fr;padding:38px 0 30px;border-bottom:1px solid var(--line)}
+.hero h1{max-width:760px;margin:14px 0;font-size:clamp(38px,5vw,58px);letter-spacing:-2px;text-transform:none}
+.hero h1 em{color:var(--cyan)}
+.hero-side{display:none}
+.content-grid{grid-template-columns:minmax(0,1fr) 275px;gap:18px;margin-top:24px}
+.side-index{display:none}
+.info-stack{display:flex}
+.faq-wrap{margin-top:34px}
+@media(max-width:700px){.content-grid{grid-template-columns:1fr}.hero{padding:28px 0 22px}.hero h1{font-size:39px;letter-spacing:-1.2px}}
 </style>
 </head><body>\n<header class="dash-topbar site-global-header">
  <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
@@ -70,31 +63,14 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
  <div class="dash-top-actions"><div class="header-auth" id="headerAuth"></div></div>
 </header>\n<main class="contact-shell">
 <div class="topline"><span>UZMANTECH / DESTEK OPERASYONLARI</span><span>İLETİŞİM NOKTASI · 01</span></div>
-<section class="support-hero">
- <div class="support-hero-glow support-glow-one"></div><div class="support-hero-glow support-glow-two"></div>
- <div class="support-hero-grid">
-  <div class="support-hero-copy">
-   <span class="support-kicker"><i></i> UZMANTECH DESTEK MERKEZİ</span>
-   <h1>İşiniz yarım kalmasın.<br><span>Yanınızdayız.</span></h1>
-   <p>Teknik sorunlarınızı, lisans işlemlerinizi ve portal kullanımıyla ilgili taleplerinizi tek noktadan yönetin. Destek sürecinizi hesabınızdan takip edin.</p>
-   <div class="support-steps">
-    <article class="support-step"><span class="support-step-icon">✎</span><small>01</small><b>Talebinizi oluşturun.</b><p>Sorununuzu ve cihaz bilgilerinizi iletin.</p></article>
-    <article class="support-step"><span class="support-step-icon">✓</span><small>02</small><b>Ekibimiz incelesin.</b><p>Talebiniz destek ekibimize ulaşsın.</p></article>
-    <article class="support-step"><span class="support-step-icon">☏</span><small>03</small><b>Yanıtınızı takip edin.</b><p>Gelişmeleri hesabınızdan görüntüleyin.</p></article>
-   </div>
-   <div class="support-assurance"><span>▣</span> Kişisel destek alanınız <i></i> Talep geçmişiniz kayıt altında</div>
-  </div>
-  <aside class="support-action-card">
-   <div class="support-action-icon">?</div><span class="support-action-eyebrow">UZMANTECH YARDIM</span>
-   <h2>Nasıl yardımcı olabiliriz?</h2><p>Destek kaydınızı birkaç adımda oluşturun.</p>
-   <a class="support-primary-action" href="#ticket">✉ &nbsp; DESTEK TALEBİ OLUŞTUR <b>↗</b></a>
-   <a class="support-secondary-action" href="#faq">⌕ &nbsp; SIK SORULAN SORULAR</a>
-   <div class="support-shortcuts"><a href="#ticket">Teknik destek</a><i></i><a href="#ticket">Lisans ve üyelik</a><i></i><a href="#ticket">Ödeme işlemleri</a></div>
-  </aside>
+<section class="hero">
+ <div>
+  <span class="hero-kicker">UZMANTECH DESTEK MERKEZİ</span>
+  <h1>Nasıl yardımcı <em>olabiliriz?</em></h1>
+  <p>Teknik sorun, lisans veya ödeme taleplerinizi aşağıdaki formdan bize iletin. Gönderdiğiniz talepleri hesabınızdan takip edebilirsiniz.</p>
  </div>
 </section>
 <section class="content-grid">
-<nav class="side-index" aria-label="Sayfa bölümleri"><p class="index-title">İÇERİK</p><div class="index-item active"><b>01</b> Talep oluştur</div><div class="index-item"><b>02</b> İletişim bilgileri</div><div class="index-item"><b>03</b> Konum</div><div class="index-item"><b>04</b> Sık sorulanlar</div></nav>
 <article class="form-panel" id="ticket"><div class="form-head"><div><h2>Yeni destek talebi</h2><p>Formu eksiksiz doldurun. Talebiniz hesabınızla ilişkilendirilir.</p></div><span class="form-step">FORM / 01</span></div><div class="form-content">
 <div class="login-note" id="ticketLogin" hidden>Destek talebi göndermek için <a href="index.html?login=1">hesabınıza giriş yapın</a>.</div>
 <form id="ticketForm"><div class="form-row">
@@ -107,8 +83,7 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 <article class="info-card"><span class="info-symbol">◷</span><span class="info-label">TALEP TAKİBİ</span><h3>Kontrol sizde</h3><p>Hesabınızdan gönderdiğiniz talepleri ve yanıtları bu sayfada görüntüleyebilirsiniz.</p></article>
 <article class="info-card"><span class="info-symbol">⌖</span><span class="info-label">KONUM</span><h3>Harita bağlantısı</h3><p>Uzmantech aramasını Google Haritalar'da açabilirsiniz.</p></article>
 </aside></section>
-<section class="map-section"><div class="map-copy"><small>LOKASYON / GOOGLE MAPS</small><h2>Haritada<br>Uzmantech.</h2><p><strong>Bilgilendirme:</strong> Doğrulanmış açık adres paylaşılmadığı için harita kesin bir ofis veya servis konumunu göstermiyor.</p><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Uzmantech" target="_blank" rel="noopener noreferrer">HARİTADA AÇ ↗</a></div><div class="map-visual"><iframe title="Google Haritalar Uzmantech araması" src="https://www.google.com/maps?q=Uzmantech&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></section>
-<section class="faq-wrap"><div class="faq-heading"><div><small>DESTEK / BİLGİ BANKASI</small><h2>Sık sorulan sorular</h2></div><p>Aradığınız yanıtı bulamadınız mı? Destek formunu kullanarak ekibimize ulaşabilirsiniz.</p></div><div class="faq-list">
+<section class="faq-wrap" id="faq"><div class="faq-heading"><div><small>DESTEK / BİLGİ BANKASI</small><h2>Sık sorulan sorular</h2></div><p>Aradığınız yanıtı bulamadınız mı? Destek formunu kullanarak ekibimize ulaşabilirsiniz.</p></div><div class="faq-list">
 <article class="faq-item"><h3>Lisansımı yeni bilgisayara nasıl taşırım?</h3><p>“HWID / Lisans” kategorisiyle talep oluşturun. Talebiniz lisans koşullarına göre incelenir.</p></article>
 <article class="faq-item"><h3>Ödeme sonrası lisansım ne zaman açılır?</h3><p>Ödeme bildiriminiz doğrulandıktan sonra paket hesabınıza tanımlanır. Süre yoğunluğa göre değişebilir.</p></article>
 <article class="faq-item"><h3>Uzmantool cihazımı algılamıyor.</h3><p>USB kablosunu ve portunu kontrol edin. Gerekli ADB/Fastboot sürücülerinin kurulu olduğundan emin olun.</p></article>

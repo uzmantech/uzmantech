@@ -55,6 +55,7 @@
     archiveTecnoFirmware: () => call("/archive-service?resource=tecno-free"),
     archiveInfinixFirmware: () => call("/archive-service?resource=infinix-free"),
     archiveGoogleFirmware: () => call("/archive-service?resource=google-free"),
+    archiveGoogleFirmware: () => call("/archive-service?resource=google-free"),
     archiveFileDownload: id => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "archive_file_download_url", id }) }),
     siteStats: () => call("/archive-service?resource=stats"),
     visitorPing: visitorId => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "visitor_ping", visitor_id: visitorId }) }),

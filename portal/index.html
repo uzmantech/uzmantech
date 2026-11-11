@@ -163,21 +163,6 @@ html.uz-intro-skip #uz-intro{display:none!important}
   <div class="dash-layout">
     <div class="dash-primary">
 <section class="showcase-home" id="home">
- <div class="uz-home-slider" id="uzHomeSlider" aria-label="Uzmantech tanıtım slaytları">
-  <div class="uz-slider-track">
-   <div class="uz-slide is-active" data-slide="1" aria-hidden="false"><img src="assets/images/slider/slide-1.png" alt="Uzmantech ve Uzmantool tanıtım görseli 1" fetchpriority="high" decoding="async"></div>
-   <div class="uz-slide" data-slide="2" aria-hidden="true"><img src="assets/images/slider/slide-2.png" alt="Uzmantech ve Uzmantool tanıtım görseli 2" loading="lazy" decoding="async"></div>
-   <div class="uz-slide" data-slide="3" aria-hidden="true"><img src="assets/images/slider/slide-3.png" alt="Uzmantech ve Uzmantool tanıtım görseli 3" loading="lazy" decoding="async"></div>
-   <div class="uz-slide" data-slide="4" aria-hidden="true"><img src="assets/images/slider/slide-4.png" alt="Uzmantech ve Uzmantool tanıtım görseli 4" loading="lazy" decoding="async"></div>
-   <div class="uz-slide" data-slide="5" aria-hidden="true"><img src="assets/images/slider/slide-5.png" alt="Uzmantech ve Uzmantool tanıtım görseli 5" loading="lazy" decoding="async"></div>
-  </div>
-  <button class="uz-slider-arrow prev" type="button" aria-label="Önceki slayt">‹</button>
-  <button class="uz-slider-arrow next" type="button" aria-label="Sonraki slayt">›</button>
-  <div class="uz-slider-dots" role="group" aria-label="Slayt seçimi">
-   <button type="button" class="is-active" data-go="0" aria-label="1. slayta git" aria-current="true"></button><button type="button" class="" data-go="1" aria-label="2. slayta git" aria-current="false"></button><button type="button" class="" data-go="2" aria-label="3. slayta git" aria-current="false"></button><button type="button" class="" data-go="3" aria-label="4. slayta git" aria-current="false"></button><button type="button" class="" data-go="4" aria-label="5. slayta git" aria-current="false"></button>
-  </div>
-  <span class="uz-slider-count" aria-live="polite">01 / 05</span>
- </div>
  <div class="showcase-metrics">
   <div><i>↓</i><span><b>1.250+</b><small>Dosya Arşivi</small></span></div><div><i>▱</i><span><b>50+</b><small>Teknik Araç</small></span></div><div><i>♙</i><span><b>3.000+</b><small>Kayıtlı Kullanıcı</small></span></div><div><i>✓</i><span><b>7/24</b><small>Teknik Destek</small></span></div><div><i>ϟ</i><span><b>Sürekli</b><small>Güncelleme</small></span></div><div><i>★</i><span><b>%99</b><small>Kullanıcı Memnuniyeti</small></span></div>
  </div>
@@ -212,10 +197,7 @@ html.uz-intro-skip #uz-intro{display:none!important}
   <div class="latest-files-heading"><div><span class="latest-files-kicker">ARŞİVE YENİ EKLENENLER</span><h2 id="latestFilesTitle">Son Eklenen Dosyalar</h2><p>Arşive en son eklenen teknik dosyalar.</p></div><span class="latest-files-live"><i></i> GÜNCEL</span></div>
   <div class="latest-files-window"><div class="latest-files-track" id="latestFilesTrack"><div class="latest-file-placeholder">Son eklenen dosyalar yükleniyor...</div></div></div>
  </section>
-<script>
-(()=>{const root=document.getElementById('uzHomeSlider');if(!root)return;const slides=[...root.querySelectorAll('.uz-slide')],dots=[...root.querySelectorAll('[data-go]')],count=root.querySelector('.uz-slider-count');let active=0,timer=null;const show=(n)=>{active=(n+slides.length)%slides.length;slides.forEach((s,i)=>{s.classList.toggle('is-active',i===active);s.setAttribute('aria-hidden',i===active?'false':'true')});dots.forEach((d,i)=>{d.classList.toggle('is-active',i===active);d.setAttribute('aria-current',i===active?'true':'false')});count.textContent=String(active+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0')};const stop=()=>{if(timer){clearInterval(timer);timer=null}};const start=()=>{stop();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>show(active+1),3000)};root.querySelector('.prev').addEventListener('click',()=>{show(active-1);start()});root.querySelector('.next').addEventListener('click',()=>{show(active+1);start()});dots.forEach(d=>d.addEventListener('click',()=>{show(Number(d.dataset.go));start()}));root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',()=>document.hidden?stop():start());show(0);start()})();
-</script>
- <div class="adsense-home-slot" style="width:100%;max-width:100%;overflow-x:auto;text-align:center;margin:28px auto;padding:8px 0" aria-label="Reklam">
+<div class="adsense-home-slot" style="width:100%;max-width:100%;overflow-x:auto;text-align:center;margin:28px auto;padding:8px 0" aria-label="Reklam">
   <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-0160654735972608" data-ad-slot="4871600919"></ins>
  </div>
  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>

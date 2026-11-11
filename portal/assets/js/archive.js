@@ -216,7 +216,7 @@ async function loadLiveArchive(){
  if(isModelPage){archiveItems=[];renderLiveArchive();}
  try{
   const archivePromise=UzmantechAPI.archiveFiles();
-  const honorPromise=isModelPage?UzmantechAPI.archiveHonorFirmware():Promise.resolve(null);
+  const honorPromise=UzmantechAPI.archiveHonorFirmware();
   const engineerPromise=isModelPage?Promise.resolve(null):(async()=>{
    const cfg=window.UZMANTECH_CONFIG||{};
    const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};

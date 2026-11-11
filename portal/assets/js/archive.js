@@ -130,16 +130,19 @@ function downloadSamsungLocalHelper(file){
 function normBrand(v){const x=String(v||"").toLocaleLowerCase("tr-TR");if(x==="redmi"||x==="poco"||x==="xiaomi")return "Xiaomi";if(x==="samsung")return "Samsung";if(x==="oppo")return "Oppo";if(x==="vivo")return "Vivo";if(x==="realme")return "Realme";if(x==="huawei")return "Huawei";if(x==="honor")return "Honor";if(x==="oneplus")return "OnePlus";if(x==="tecno")return "Tecno";if(x==="infinix")return "Infinix";if(x==="google")return "Google";if(x==="apple")return "Apple";if(x==="motorola")return "Motorola";if(x==="nokia"||x==="hmd")return "Nokia";if(x==="sony")return "Sony";if(x==="asus")return "ASUS";if(x==="nothing")return "Nothing";if(x==="zte"||x==="nubia")return "ZTE";if(x==="black shark"||x==="blackshark")return "Black Shark";return v;}
 function getModels(brand){
  const base=(MODEL_CATALOG[brand]||"").split("|").filter(Boolean);
- if(brand==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(modelSearch))base.push(modelSearch.toUpperCase());
- const uploaded=archiveItems.filter(f=>normBrand(f.brand)===brand).map(f=>f.model).filter(Boolean);
- return [...new Set([...base,...uploaded])].sort((a,b)=>a.localeCompare(b,"tr",{numeric:true,sensitivity:"base"}));
+ const uploaded=archiveItems.filter(f=>normBrand(f.brand)===brand&&f.model&&f.is_active!==false).map(f=>String(f.model).trim()).filter(Boolean);
+ // Samsung yazılımları model seçildikten sonra canlı CSC API'sinden sorgulanır.
+ // Diğer markalarda yalnızca arşivde gerçekten yazılım kaydı bulunan modeller listelenir.
+ const available=brand==="Samsung"?[...base,...uploaded]:uploaded;
+ if(brand==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(modelSearch))available.push(modelSearch.toUpperCase());
+ return [...new Set(available)].sort((a,b)=>a.localeCompare(b,"tr",{numeric:true,sensitivity:"base"}));
 }
 function renderBrandArchiveCounts(){
  const cards=document.querySelectorAll(".archive-brand-card[data-brand]");
  cards.forEach(card=>{
   const brand=normBrand(card.dataset.brand||"");
   const items=archiveItems.filter(file=>normBrand(file.brand)===brand);
-  const models=new Set([...(MODEL_CATALOG[brand]||"").split("|").map(model=>model.trim()).filter(Boolean),...items.map(file=>String(file.model||"").trim()).filter(Boolean)]);
+  const models=new Set((brand==="Samsung"?[...(MODEL_CATALOG[brand]||"").split("|")]:[]).concat(items.map(file=>String(file.model||"").trim())).map(model=>model.trim()).filter(Boolean));
   let counts=card.querySelector(".archive-brand-counts");
   if(!counts){counts=document.createElement("span");counts.className="archive-brand-counts";card.appendChild(counts);}
   counts.textContent=models.size.toLocaleString("tr-TR")+" model · "+items.length.toLocaleString("tr-TR")+" yazılım";

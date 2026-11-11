@@ -180,3 +180,23 @@
  .uz-slider-track{aspect-ratio:4/3;min-height:170px}
  .uz-slide img{width:100%;height:100%;object-fit:contain}
 }
+
+
+/* Desktop homepage slider sizing normalization */
+@media (min-width:701px){
+  .uz-home-slider{
+    width:100%;
+    max-width:1600px;
+  }
+  .uz-slider-track{
+    height:clamp(300px, 34vw, 560px);
+    min-height:0;
+    aspect-ratio:auto;
+  }
+  .uz-slide img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
+  }
+}

@@ -51,6 +51,7 @@
     archiveFiles: () => call("/archive-service?resource=files"),
     archiveHonorFirmware: () => call("/archive-service?resource=honor-free"),
     archiveOnePlusFirmware: () => call("/archive-service?resource=oneplus-free"),
+    archiveRealmeFirmware: () => call("/archive-service?resource=realme-free"),
     archiveFileDownload: id => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "archive_file_download_url", id }) }),
     siteStats: () => call("/archive-service?resource=stats"),
     visitorPing: visitorId => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "visitor_ping", visitor_id: visitorId }) }),

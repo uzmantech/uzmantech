@@ -217,6 +217,7 @@ async function loadLiveArchive(){
  try{
   const archivePromise=UzmantechAPI.archiveFiles();
   const honorPromise=(!isModelPage||normBrand(selectedBrand)==="Honor")?UzmantechAPI.archiveHonorFirmware():Promise.resolve(null);
+  const oneplusPromise=UzmantechAPI.archiveOnePlusFirmware();
   const engineerPromise=isModelPage?Promise.resolve(null):(async()=>{
    const cfg=window.UZMANTECH_CONFIG||{};
    const headers={apikey:cfg.publishableKey,Authorization:"Bearer "+cfg.publishableKey};
@@ -224,7 +225,7 @@ async function loadLiveArchive(){
    if(!response.ok)throw new Error("Engineer ROM kataloğu alınamadı");
    return response.json();
   })();
-  const [archiveResult,engineerResult,honorResult]=await Promise.allSettled([archivePromise,engineerPromise,honorPromise]);
+  const [archiveResult,engineerResult,honorResult,oneplusResult]=await Promise.allSettled([archivePromise,engineerPromise,honorPromise,oneplusPromise]);
   if(archiveResult.status==="fulfilled")archiveItems=archiveResult.value.files||[];
   else console.warn("Arşiv dosyaları yüklenemedi:",archiveResult.reason);
   if(honorResult.status==="fulfilled"&&honorResult.value?.success&&Array.isArray(honorResult.value.firmware)){
@@ -246,6 +247,24 @@ async function loadLiveArchive(){
    }).filter(Boolean);
    archiveItems=[...archiveItems.filter(x=>normBrand(x.brand)!=="Honor"),...honorItems];
   }else if(honorResult.status==="rejected")console.warn("Honor ücretsiz firmware kataloğu yüklenemedi:",honorResult.reason);
+  if(oneplusResult.status==="fulfilled"&&oneplusResult.value?.success&&Array.isArray(oneplusResult.value.firmware)){
+   const oneplusModels=Array.isArray(oneplusResult.value.models)?oneplusResult.value.models:[];
+   if(oneplusModels.length)MODEL_CATALOG.OnePlus=[...new Set([...(MODEL_CATALOG.OnePlus||"").split("|").filter(Boolean),...oneplusModels])].join("|");
+   const oneplusItems=oneplusResult.value.firmware.map((row,index)=>{
+    if(!Array.isArray(row)||String(row[0]||"").toUpperCase()!=="ONEPLUS"||!row[1]||!/^https:\/\//i.test(String(row[4]||"")))return null;
+    const description=String(row[3]||"");
+    const fileNameMatch=description.match(/Dosya:\s*(.*?)\s*•\s*Boyut:/);
+    return {
+     id:"oneplus-free:"+String(row[1])+":"+index,
+     brand:"OnePlus",model:String(row[1]),category:"firmware",
+     title:String(row[1])+" • Stock Firmware",
+     original_filename:fileNameMatch?.[1]||"OnePlus stock firmware",
+     description,created_at:null,source_url:String(row[4]),external_url:String(row[4]),
+     is_oneplus_free:true
+    };
+   }).filter(Boolean);
+   archiveItems=[...archiveItems.filter(x=>normBrand(x.brand)!=="OnePlus"),...oneplusItems];
+  }else if(oneplusResult.status==="rejected")console.warn("OnePlus ücretsiz firmware kataloğu yüklenemedi:",oneplusResult.reason);
   if(engineerResult.status==="fulfilled"&&engineerResult.value&&engineerResult.value.success&&Array.isArray(engineerResult.value.items)){
    const catalog=engineerResult.value;
    const engineerItems=catalog.items.filter(x=>x&&x.model&&x.codename&&/^https:\/\/(www\.)?xiaomitools\.com\//i.test(x.sourceUrl||"")).map(x=>({id:"engineer-rom:"+x.codename,brand:"Xiaomi",model:x.model,category:"eng",title:"Engineer ROM • "+x.model,original_filename:x.codename+" • Engineer ROM",description:"Engineer ROM indirme sayfası XiaomiTools üzerinden açılır. Günlük kullanım için uygun değildir.",created_at:catalog.updated_at||null,source_url:x.sourceUrl,is_engineer_rom:true}));

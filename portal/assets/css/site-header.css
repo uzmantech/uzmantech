@@ -2541,3 +2541,85 @@ html body.archive-shell>header.site-global-header.site-global-header-archive>.si
  .site-nav-link{padding-inline:5px;font-size:10px}
  .site-nav-link .site-nav-icon{flex-basis:19px;width:19px;height:19px;font-size:16px}
 }
+
+
+/* 2026-11-11: global profile sizing and navigation collision fix.
+   Keep the account chip compact on every page and reserve a fixed header slot for it. */
+@media screen and (min-width:761px){
+ html body .site-global-header:not(.site-global-header-archive){
+  display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
+  gap:8px!important;box-sizing:border-box!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive)>.site-global-nav{
+  display:flex!important;flex:1 1 0!important;width:auto!important;min-width:0!important;
+  max-width:none!important;justify-content:stretch!important;gap:3px!important;
+  overflow:hidden!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive)>.site-global-nav>.site-nav-link{
+  flex:1 1 0!important;width:0!important;min-width:0!important;max-width:none!important;
+  padding-inline:clamp(3px,.45vw,8px)!important;gap:5px!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive)>.dash-top-actions,
+ html body .site-global-header:not(.site-global-header-archive)>.site-header-actions,
+ html body .site-global-header:not(.site-global-header-archive)>.header-auth{
+  display:flex!important;flex:0 0 156px!important;width:156px!important;
+  min-width:156px!important;max-width:156px!important;
+  margin:0!important;justify-content:flex-end!important;box-sizing:border-box!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .header-auth,
+ html body .site-global-header:not(.site-global-header-archive) .site-archive-auth,
+ html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap{
+  flex:1 1 100%!important;width:100%!important;min-width:0!important;
+  max-width:100%!important;box-sizing:border-box!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap>.top-profile,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button,
+ html body .site-global-header:not(.site-global-header-archive) .logged-in-profile{
+  display:flex!important;box-sizing:border-box!important;
+  width:100%!important;min-width:0!important;max-width:156px!important;
+  margin:0!important;padding:4px 8px!important;gap:7px!important;
+  min-height:46px!important;height:46px!important;overflow:hidden!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .top-profile .avatar,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-avatar{
+  width:32px!important;height:32px!important;flex:0 0 32px!important;font-size:19px!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .top-account,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button>span:nth-child(2){
+  min-width:0!important;max-width:95px!important;overflow:hidden!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .top-account b,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button b{
+  display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:11px!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .top-account small,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button small{
+  display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:8px!important;
+ }
+}
+@media screen and (min-width:761px) and (max-width:1250px){
+ html body .site-global-header:not(.site-global-header-archive)>.dash-top-actions,
+ html body .site-global-header:not(.site-global-header-archive)>.site-header-actions,
+ html body .site-global-header:not(.site-global-header-archive)>.header-auth{
+  flex-basis:132px!important;width:132px!important;min-width:132px!important;max-width:132px!important;
+ }
+ html body .site-global-header:not(.site-global-header-archive) .profile-menu-wrap>.top-profile,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button,
+ html body .site-global-header:not(.site-global-header-archive) .logged-in-profile{max-width:132px!important}
+ html body .site-global-header:not(.site-global-header-archive) .top-account,
+ html body .site-global-header:not(.site-global-header-archive) .site-profile-button>span:nth-child(2){max-width:76px!important}
+}
+@media screen and (max-width:760px){
+ html body .site-global-header .profile-menu-wrap>.top-profile,
+ html body .site-global-header .site-profile-button,
+ html body .site-global-header .logged-in-profile{
+  width:auto!important;max-width:148px!important;min-height:40px!important;height:40px!important;
+  margin:0!important;padding:3px 6px!important;gap:5px!important;
+ }
+ html body .site-global-header .top-profile .avatar,
+ html body .site-global-header .site-profile-avatar{width:30px!important;height:30px!important;flex-basis:30px!important}
+ html body .site-global-header .top-account b,
+ html body .site-global-header .site-profile-button b{font-size:10px!important}
+ html body .site-global-header .top-account small,
+ html body .site-global-header .site-profile-button small{font-size:8px!important}
+}

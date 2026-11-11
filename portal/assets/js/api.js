@@ -43,7 +43,7 @@
     confirmEmailChange: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "account_email_confirm", ...data }) }),
     archive: params => call("/portal-api/archive?" + new URLSearchParams(params || {})),
     catalog: () => call("/portal-api/catalog"),
-    recent: () => call("/portal-api/recent"),
+    recent: params => call("/portal-api/recent" + (params ? "?" + new URLSearchParams(params) : "")),
     news: params => call("/portal-api/news?" + new URLSearchParams(params || {})),
     newsletterSubscribe: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "newsletter_subscribe", ...data }) }),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),

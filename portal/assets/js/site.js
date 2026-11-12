@@ -146,40 +146,60 @@
       '<label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
       '<label class="field"><span>Şifre tekrar</span><input name="password_confirm" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
       '<label class="register-consent"><input name="consent" type="checkbox" required><span>Kayıt talebimin yönetici incelemesine alınacağını ve e-posta adresimi doğrulamak için gönderilecek kodu kullanacağımı anlıyorum.</span></label>'+
-      '<div class="notice">Kayıt sonrası hesabın <strong>Yönetici Onayı Bekliyor</strong> durumunda oluşturulur. Yönetici onaylayana kadar giriş yapamazsın. E-posta doğrulama kodu kayıt sırasında gönderilir.</div>'+
-      '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Üyelik Başvurusu Gönder</button>'+
+      '<div class="notice">Kayıt başvurusu için e-posta doğrulaması zorunludur. Doğrulama tamamlandıktan sonra hesabın yönetici onayına alınır.</div>'+
+      '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Doğrulama Kodu Gönder</button>'+
       '<p class="muted">Zaten hesabın var mı? <button type="button" class="text-button" data-open="login">Giriş yap</button></p>'+
       '</form>';
     modal("Yeni üyelik",body);
     $("#registerForm").addEventListener("submit",async e=>{
       e.preventDefault();
-      const form=e.currentTarget;
-      const data=new FormData(form);
-      const password=String(data.get("password")||"");
-      const passwordConfirm=String(data.get("password_confirm")||"");
+      const form=e.currentTarget,data=new FormData(form);
+      const password=String(data.get("password")||""),passwordConfirm=String(data.get("password_confirm")||"");
       if(password!==passwordConfirm){toast("Şifreler aynı değil.");return;}
-      const btn=$("#registerSubmit");
-      btn.disabled=true;
-      btn.textContent="Başvuru gönderiliyor…";
+      const btn=$("#registerSubmit");btn.disabled=true;btn.textContent="Doğrulama kodu gönderiliyor…";
       try{
         const lang=(document.documentElement.lang||"tr").toLowerCase().startsWith("en")?"en":"tr";
+        const email=String(data.get("email")||"").trim().toLowerCase();
         const result=await window.UzmantechAPI.register({
           username:String(data.get("username")||"").trim(),
-          email:String(data.get("email")||"").trim().toLowerCase(),
+          email,
           phone:String(data.get("phone")||"").trim(),
           country_code:String(data.get("country_code")||"TR"),
           language_code:lang,
           password
         });
-        modal("Başvurun alındı",'<div class="notice"><strong>'+esc(result.message||"Üyelik başvurun oluşturuldu.")+'</strong></div><p>Hesabın yönetici onayına alındı. Onay verildiğinde kullanıcı adı veya e-posta adresinle giriş yapabilirsin.</p><p class="muted">E-posta adresin otomatik doğrulanmadı. Yanlış bilgi girdiysen yöneticiyle iletişime geç.</p><button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş ekranına dön</button>');
-      }catch(error){
-        toast(error.message);
-        btn.disabled=false;
-        btn.textContent="Üyelik Başvurusu Gönder";
-      }
+        showRegistrationVerification(email,result.email||email,result.message||"Doğrulama kodu e-posta adresinize gönderildi.");
+      }catch(error){toast(error.message);btn.disabled=false;btn.textContent="Doğrulama Kodu Gönder";}
     });
   }
 
+  function showRegistrationVerification(email,maskedEmail,message){
+    modal("E-posta doğrulama",'<div class="notice"><strong>'+esc(message)+'</strong></div>'+
+      '<p><strong>'+esc(maskedEmail)+'</strong> adresine gönderilen 6 haneli kodu girin.</p>'+
+      '<form id="registerVerifyForm">'+
+      '<label class="field"><span>6 haneli doğrulama kodu</span><input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required></label>'+
+      '<button class="button button-primary" id="registerVerifySubmit" type="submit" style="width:100%">E-postayı Doğrula</button>'+
+      '<p class="muted">Kod 10 dakika geçerlidir. En fazla 5 hatalı deneme yapılabilir.</p></form>'+
+      '<button class="button button-quiet" id="registerBackBtn" type="button">Bilgileri düzenle / Yeni kod iste</button>');
+    $("#registerBackBtn").addEventListener("click",openRegister);
+    $("#registerVerifyForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const code=String(new FormData(e.currentTarget).get("code")||"").trim();
+      if(!/^\d{6}$/.test(code)){toast("6 haneli doğrulama kodunu girin.");return;}
+      const btn=$("#registerVerifySubmit");btn.disabled=true;btn.textContent="Doğrulanıyor…";
+      try{
+        const result=await window.UzmantechAPI.registerVerify({email,code});
+        if(result.user?.status==="pending"||!result.session_token){
+          modal("E-posta doğrulandı",'<div class="notice"><strong>'+esc(result.message||"E-posta adresiniz doğrulandı.")+'</strong></div>'+
+            '<p>Üyelik başvurunuz yönetici onayına alındı. Onay verildiğinde kullanıcı adınız veya e-posta adresinizle giriş yapabilirsiniz.</p>'+
+            '<button class="button button-primary" type="button" data-open="login" style="width:100%">Giriş ekranına dön</button>');
+          return;
+        }
+        window.UzmantechAPI.setSession(result.session_token);state.user=result.user;closeModal();syncHeader();
+        toast("E-posta doğrulandı. Hesabınız oluşturuldu.");loadArchive();
+      }catch(error){toast(error.message);btn.disabled=false;btn.textContent="E-postayı Doğrula";}
+    });
+  }
   function openForgotPassword(){
     modal("Şifremi unuttum",
       '<form id="forgotRequestForm">'+

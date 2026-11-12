@@ -145,8 +145,8 @@
       '<label class="field"><span>Telefon numarası</span><input name="phone" type="tel" autocomplete="tel" required maxlength="24" placeholder="05XXXXXXXXX"></label>'+
       '<label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
       '<label class="field"><span>Şifre tekrar</span><input name="password_confirm" type="password" autocomplete="new-password" required minlength="8" maxlength="128"></label>'+
-      '<label class="register-consent"><input name="consent" type="checkbox" required><span>Kayıt talebimin yönetici incelemesine alınacağını ve e-posta doğrulama kodunun şu anda otomatik gönderilmediğini anlıyorum.</span></label>'+
-      '<div class="notice">Kayıt sonrası hesabın <strong>Yönetici Onayı Bekliyor</strong> durumunda oluşturulur. Yönetici onaylayana kadar giriş yapamazsın. E-posta adresi otomatik doğrulanmaz.</div>'+
+      '<label class="register-consent"><input name="consent" type="checkbox" required><span>Kayıt talebimin yönetici incelemesine alınacağını ve e-posta adresimi doğrulamak için gönderilecek kodu kullanacağımı anlıyorum.</span></label>'+
+      '<div class="notice">Kayıt sonrası hesabın <strong>Yönetici Onayı Bekliyor</strong> durumunda oluşturulur. Yönetici onaylayana kadar giriş yapamazsın. E-posta doğrulama kodu kayıt sırasında gönderilir.</div>'+
       '<button class="button button-primary" id="registerSubmit" type="submit" style="width:100%">Üyelik Başvurusu Gönder</button>'+
       '<p class="muted">Zaten hesabın var mı? <button type="button" class="text-button" data-open="login">Giriş yap</button></p>'+
       '</form>';

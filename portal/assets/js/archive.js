@@ -217,7 +217,7 @@ function renderLiveArchive(){
 async function loadLiveArchive(){
  const isModelPage=!!$("#archiveModelsPage");
  // Statik katalog önce çizilir; ağ yanıtı gelene kadar boş ekran bekletilmez.
- if(isModelPage){archiveItems=[];const loadingGrid=$("#archiveLiveGrid"),loadingCount=$("#archiveFileCount");if(loadingCount)loadingCount.textContent="Yükleniyor…";if(loadingGrid)loadingGrid.innerHTML='<div class="archive-loading-state" role="status" aria-label="Modeller yükleniyor"><div class="archive-loading-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>';}
+ if(isModelPage){archiveItems=[];const loadingGrid=$("#archiveLiveGrid"),loadingCount=$("#archiveFileCount");if(loadingCount)loadingCount.textContent="Yükleniyor…";if(loadingGrid)loadingGrid.innerHTML='<div class="archive-loading-state" role="status" aria-live="polite" aria-label="Modeller yükleniyor"><div class="archive-loading-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div><strong>MODELLER YÜKLENİYOR BEKLEYİNİZ</strong></div>';}
  try{
   const archivePromise=UzmantechAPI.archiveFiles();
   const honorPromise=(!isModelPage||normBrand(selectedBrand)==="Honor")?UzmantechAPI.archiveHonorFirmware():Promise.resolve(null);
@@ -448,8 +448,15 @@ async function enforceArchiveLicense(){
  const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
  if(stage)stage.hidden=true;
  try{
-  const result=await UzmantechAPI.session();
-  const user=result.user||{};
+  // Session doğrulaması, sayfa açılışındaki kısa ağ gecikmelerine karşı tekrar denenir.
+  let result=null,lastError=null;
+  for(let attempt=0;attempt<3;attempt++){
+   try{result=await UzmantechAPI.session();if(result?.user)break;}
+   catch(error){lastError=error;}
+   if(attempt<2)await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));
+  }
+  if(!result?.user)throw lastError||new Error("Oturum doğrulanamadı.");
+  const user=result.user;
   syncArchiveHeader(user);
   const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
   const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));

@@ -444,7 +444,7 @@
     const profileAction=e.target.closest("[data-profile-action]");
     if(profileAction){
       const action=profileAction.dataset.profileAction;
-      dropdown.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");
+      if(dropdown)dropdown.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");
       if(action==="account"){if(!window.UzmantoolPages)location.href="index.html?account=1";else document.dispatchEvent(new CustomEvent("portal:show-account"));}if(action==="management"&&state.user?.role==="admin"){location.href="admin.html";}
       if(action==="logout"){window.UzmantechAPI.setSession("");state.user=null;syncHeader();document.body.classList.remove("account-view");window.UzmantoolPages?.show("home");toast("Güvenli çıkış yapıldı.");}
       return;

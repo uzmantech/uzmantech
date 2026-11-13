@@ -495,7 +495,8 @@ async function enforceArchiveLicense(){
  }catch(error){
   console.error("Arşiv verileri yüklenemedi:",error);
   const grid=$("#archiveLiveGrid");
-  if(grid)grid.innerHTML='<div class="archive-live-empty">Modeller şu anda yüklenemedi. Lütfen sayfayı yenileyin.</div>';
+  const detail=String(error?.message||error||"Bilinmeyen hata").slice(0,240);
+  if(grid)grid.innerHTML='<div class="archive-live-empty">Model kataloğu oluşturulamadı: '+archiveEsc(detail)+'</div>';
  }
 }
 enforceArchiveLicense();

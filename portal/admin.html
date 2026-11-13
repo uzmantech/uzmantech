@@ -3,7 +3,7 @@
 </head>
 <body>
 <div class="layout">
-<aside class="sidebar" id="sidebar"><a class="brand" href="./"><img class="brand-logo" src="assets/logo.svg?v=20261104" alt="Uzmantool logo"><span>UZMANTOOL</span></a><p class="nav-label">YÖNETİM</p><nav id="adminNav"><button class="active" data-view="overview">▦　<span>Genel Bakış</span></button><button data-view="users">♙　<span>Üyeler ve Lisanslar</span></button><button data-view="payments">₺　<span>Ödeme Bildirimleri</span></button><button data-view="support">✉　<span>Destek Talepleri</span></button><button data-view="archive">▤　<span>Dosya Arşivi Yönetimi</span></button><button data-view="content">▧　<span>Site İçeriği</span></button></nav><div class="side-foot">Canlı yönetim · Uzmantech</div></aside>
+<aside class="sidebar" id="sidebar"><a class="brand" href="./"><img class="brand-logo" src="assets/logo.svg?v=20261104" alt="Uzmantool logo"><span>UZMANTOOL</span></a><p class="nav-label">YÖNETİM</p><nav id="adminNav"><button class="active" data-view="overview">▦　<span>Genel Bakış</span></button><button data-view="users">♙　<span>Üyeler ve Lisanslar</span></button><button data-view="payments">₺　<span>Ödeme Bildirimleri</span></button><button data-view="support">✉　<span>Destek Talepleri</span></button><button data-view="email">✉　<span>Toplu E-posta</span></button><button data-view="archive">▤　<span>Dosya Arşivi Yönetimi</span></button><button data-view="content">▧　<span>Site İçeriği</span></button></nav><div class="side-foot">Canlı yönetim · Uzmantech</div></aside>
 <div class="main"><header class="topbar"><div><button id="navToggle" class="nav-toggle">☰</button><span>Yönetim / <b id="breadcrumb">Genel Bakış</b></span></div><div class="top-right"><span id="adminName">Oturum kapalı</span><button class="btn" id="logoutBtn" hidden>Çıkış</button></div></header>
 <main class="content">
 <section id="loginView" class="panel" style="max-width:440px;margin:50px auto;padding:24px"><h1>Yönetici girişi</h1><p class="muted">Yalnızca aktif yönetici hesapları erişebilir.</p><form id="adminLogin"><label class="field"><span>Kullanıcı adı veya e-posta</span><input name="identifier" autocomplete="username" required></label><label class="field"><span>Şifre</span><input name="password" type="password" autocomplete="current-password" required></label><button class="btn" id="adminLoginBtn" type="submit">Giriş Yap</button><p id="loginError" class="muted"></p></form></section>
@@ -14,6 +14,29 @@
 <section class="view" id="users"><div class="page-head"><div><h1>Üyeler ve Lisanslar</h1><p>Bekleyen başvuruları onayla, lisans ver veya süre uzat.</p></div><button class="btn" id="reloadUsers">Listeyi yenile</button></div><div class="toolbar"><input id="userSearch" placeholder="Kullanıcı adı, e-posta veya telefon ara"></div><div class="panel table-scroll"><table id="usersTable"><thead><tr><th>KULLANICI</th><th>E-POSTA / DOĞRULAMA</th><th>DURUM</th><th>LİSANS BİTİŞİ</th><th>İŞLEMLER</th></tr></thead><tbody id="usersBody"><tr><td colspan="5">Yükleniyor…</td></tr></tbody></table></div></section>
 <section class="view" id="payments"><div class="page-head"><div><h1>Ödeme Bildirimleri</h1><p>Dekontları incele, onayla veya reddet. Onay lisans süresini otomatik ekler.</p></div><button class="btn" id="reloadPayments">Listeyi yenile</button></div><div class="panel table-scroll"><table><thead><tr><th>KULLANICI</th><th>PAKET</th><th>TUTAR (USD / TL)</th><th>DEKONT</th><th>TARİH</th><th>DURUM</th><th>İŞLEM</th></tr></thead><tbody id="paymentsBody"><tr><td colspan="7">Ödemeler yükleniyor…</td></tr></tbody></table></div></section>
 <section class="view" id="support"><div class="page-head"><div><h1>Destek Talepleri</h1><p>Üyelerden gelen talepleri incele, durumunu güncelle ve yanıtını kaydet.</p></div><button class="btn" id="reloadSupport">Listeyi yenile</button></div><div class="panel table-scroll"><table><thead><tr><th>ÜYE</th><th>TALEP</th><th>MESAJ</th><th>TARİH</th><th>DURUM</th><th>İŞLEM</th></tr></thead><tbody id="supportBody"><tr><td colspan="6">Destek talepleri yükleniyor…</td></tr></tbody></table></div></section>
+
+
+<section class="view" id="email">
+ <div class="page-head"><div><h1>Toplu E-posta Gönderimi</h1><p>Uzmantech web ve masaüstü üyelerine hizmet duyuruları, izinli bülten abonelerine kampanya gönder.</p></div><button class="btn" id="reloadBroadcasts">Geçmişi yenile</button></div>
+ <div class="warning">Hizmet duyuruları doğrulanmış üyelere gönderilir. Kampanya ve tanıtım içerikleri yalnızca aktif bülten abonelerine gönderilir. Taslak hazırlamak e-posta göndermez; gönderim ayrıca yönetici onayı ister.</div>
+ <div class="panel broadcast-compose">
+  <h2>Yeni e-posta hazırla</h2>
+  <form id="broadcastForm">
+   <label class="field"><span>ALICI GRUBU</span><select id="broadcastAudience" required><option value="members">Doğrulanmış üyeler · Hizmet duyurusu</option><option value="newsletter">İzinli bülten aboneleri · Kampanya / tanıtım</option></select></label>
+   <label class="field"><span>KONU BAŞLIĞI</span><input id="broadcastSubject" maxlength="180" required placeholder="Örn. Uzmantech yeni sürüm duyurusu"></label>
+   <label class="field"><span>E-POSTA MESAJI</span><textarea id="broadcastMessage" rows="9" maxlength="12000" required placeholder="Mesajınızı yazın..."></textarea></label>
+   <p class="muted" id="broadcastAudienceHint">Bu grup yalnızca e-posta adresi doğrulanmış kayıtlı üyeleri kapsar. Ticari kampanya gönderimi için kullanılamaz.</p>
+   <button class="btn" id="broadcastPrepare" type="submit">Alıcıları say ve taslak oluştur</button>
+   <p class="muted" id="broadcastFormStatus" aria-live="polite"></p>
+  </form>
+ </div>
+ <div class="panel" id="broadcastDraftPanel" hidden>
+  <h2>Gönderim önizlemesi</h2><p id="broadcastDraftSummary" class="muted"></p>
+  <div class="broadcast-actions"><button class="btn" id="broadcastStart">Gönderimi başlat</button><button class="btn" id="broadcastProcess" hidden>Sonraki 5 kişiye gönder</button></div>
+  <p id="broadcastProgress" class="muted" aria-live="polite"></p>
+ </div>
+ <div class="panel table-scroll"><h2>Son gönderimler</h2><table><thead><tr><th>KONU</th><th>ALICI GRUBU</th><th>DURUM</th><th>ALICI</th><th>GÖNDERİLDİ</th><th>BAŞARISIZ</th><th>TARİH</th></tr></thead><tbody id="broadcastsBody"><tr><td colspan="7">Gönderim geçmişi yükleniyor…</td></tr></tbody></table></div>
+</section>
 
 <section class="view" id="archive">
 <div class="page-head"><div><h1>Dosya Arşivi Yönetimi</h1><p>İndirme bağlantısını ekle, marka/model ve kategori bilgilerini girerek arşivde yayınla.</p></div><button class="btn" id="reloadArchiveFiles">Dosyaları yenile</button></div>

@@ -184,8 +184,16 @@
     $("#registerBackBtn").addEventListener("click",openRegister);
     $("#registerVerifyForm").addEventListener("submit",async e=>{
       e.preventDefault();
-      const code=String(new FormData(e.currentTarget).get("code")||"").trim();
-      if(!/^\d{6}$/.test(code)){toast("6 haneli doğrulama kodunu girin.");return;}
+      const codeInput=e.currentTarget.querySelector('input[name="code"]');
+      const rawCode=String(codeInput?.value||"").normalize("NFKC");
+      const code=Array.from(rawCode).map(char=>{
+        const cp=char.codePointAt(0);
+        if(cp>=0x0660&&cp<=0x0669)return String(cp-0x0660);
+        if(cp>=0x06F0&&cp<=0x06F9)return String(cp-0x06F0);
+        return char;
+      }).join("").replace(/[^0-9]/g,"");
+      if(codeInput)codeInput.value=code;
+      if(code.length!==6){toast("6 haneli doğrulama kodunu kontrol edin. Girilen karakter sayısı: "+code.length);codeInput?.focus();return;}
       const btn=$("#registerVerifySubmit");btn.disabled=true;btn.textContent="Doğrulanıyor…";
       try{
         const result=await window.UzmantechAPI.registerVerify({email,code});

@@ -1010,3 +1010,41 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
   .archive-models-page .archive-live-grid:has(.archive-back-devices){gap:14px!important}
   .archive-models-page .archive-live-grid:has(.archive-back-devices)>.archive-folder-card{flex-basis:min(100%,330px);min-height:205px!important}
 }
+
+
+/* Responsive full-width layout for every brand model catalogue */
+@media screen and (min-width:761px){
+  body.archive-shell:has(#archiveModelsPage) main.archive-stage{
+    width:calc(100% - 32px)!important;
+    max-width:none!important;
+    margin:12px 16px 36px!important;
+    box-sizing:border-box!important;
+  }
+  body.archive-shell:has(#archiveModelsPage) .archive-main-column{
+    width:100%!important;
+    min-width:0!important;
+  }
+  body.archive-shell #archiveModelsPage.archive-models-page{
+    width:100%!important;
+    max-width:none!important;
+    margin:clamp(12px,2vh,24px) 0 40px!important;
+    box-sizing:border-box!important;
+  }
+  body.archive-shell #archiveModelsPage>.archive-live-files{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+  }
+}
+@media screen and (max-width:760px){
+  body.archive-shell #archiveModelsPage.archive-models-page{
+    width:calc(100% - 16px)!important;
+    max-width:none!important;
+    margin:12px auto 28px!important;
+  }
+  body.archive-shell #archiveModelsPage>.archive-live-files{
+    width:100%!important;
+    padding:clamp(14px,3vw,24px)!important;
+    box-sizing:border-box!important;
+  }
+}

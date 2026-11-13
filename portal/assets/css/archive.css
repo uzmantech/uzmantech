@@ -1048,3 +1048,17 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
     box-sizing:border-box!important;
   }
 }
+
+
+/* Model-card issue reporting control */
+.archive-model-card-wrap{display:flex;flex-direction:column;gap:7px;min-width:0;min-height:0}
+.archive-model-card-wrap>.archive-device-card{width:100%;flex:1 1 auto;min-width:0}
+.archive-model-report{min-height:29px;padding:5px 7px;border:1px solid #65404a;border-radius:7px;background:#241923;color:#ffb2bd;font:700 10px "DM Sans",sans-serif;cursor:pointer;transition:background .15s,border-color .15s}
+.archive-model-report:hover{background:#3a202b;border-color:#df526d;color:#fff}
+.archive-report-form{display:grid;gap:13px}
+.archive-report-form>p{margin:0 0 2px;color:#cbd8e8;font-size:13px;line-height:1.6}
+.archive-report-form>p strong{color:#fff}
+.archive-report-form .field{display:grid;gap:6px}
+.archive-report-form .field>span{color:#aebed2;font-size:12px;font-weight:700}
+.archive-report-form select,.archive-report-form textarea{width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #394a61;border-radius:8px;background:#0d1623;color:#f2f6fc;font:13px "DM Sans",sans-serif}
+.archive-report-form textarea{resize:vertical}

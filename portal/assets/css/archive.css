@@ -1107,3 +1107,11 @@ body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!importan
 .archive-loading-state>span{font-size:13px;color:#9eb6d4}
 @keyframes archive-loading-pulse{0%,100%{opacity:.45;transform:scale(.72)}50%{opacity:1;transform:scale(1.16)}}
 @media(prefers-reduced-motion:reduce){.archive-loading-dots i{animation:none;opacity:1;transform:none}}
+
+
+/* Back-to-brand-list action directly below the model count */
+.archive-model-count-actions{display:flex;flex-direction:column;align-items:flex-end;gap:9px;flex:0 0 auto}
+.archive-model-count-actions>strong{padding:8px 12px;border:1px solid #315778;border-radius:30px;color:#b8dfff;font-size:10px;white-space:nowrap}
+.archive-back-brand-button{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border:1px solid #426487;border-radius:8px;background:linear-gradient(180deg,#20354e,#142438);color:#d9ecff;text-decoration:none;font-size:11px;font-weight:700;white-space:nowrap;transition:background .18s,border-color .18s,transform .18s}
+.archive-back-brand-button:hover{background:linear-gradient(180deg,#2b4d70,#1a3551);border-color:#68b8f4;transform:translateY(-1px)}
+@media(max-width:600px){.archive-model-count-actions{align-items:flex-end}.archive-back-brand-button{font-size:10px;padding:0 9px}}

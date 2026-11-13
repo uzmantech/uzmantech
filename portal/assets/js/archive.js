@@ -159,7 +159,7 @@ function renderRecentSoftware(){
  for(const file of sorted){if(recent.length>=12)break;if(!recent.some(x=>String(x.id)===String(file.id)))recent.push(file);}
  count.textContent=recent.length+" DOSYA";
  const cards=recent.map(f=>'<a class="archive-recent-folder" href="models.html?brand='+encodeURIComponent(normBrand(f.brand)||"")+'&model='+encodeURIComponent(f.model||"")+'"><span class="archive-recent-folder-icon">📁</span><span class="archive-recent-folder-info"><strong>'+archiveEsc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+archiveEsc((f.brand||"")+" "+(f.model||""))+'</small></span><em>'+archiveEsc(archiveCategory[f.category]||f.category||"Diğer")+'</em></a>').join("");
- track.innerHTML=recent.length?cards+cards:'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';
+ track.innerHTML=recent.length?'<div class="archive-recent-marquee">'+cards+cards+'</div>':'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';
  track.classList.toggle("is-static",recent.length<4);
 }
 function renderLiveArchive(){

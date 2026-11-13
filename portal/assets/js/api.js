@@ -46,6 +46,8 @@
     recent: params => call("/portal-api/recent" + (params ? "?" + new URLSearchParams(params) : "")),
     news: params => call("/portal-api/news?" + new URLSearchParams(params || {})),
     newsletterSubscribe: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "newsletter_subscribe", ...data }) }),
+    newsletterUnsubscribe: token => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "newsletter_unsubscribe", token }) }),
+    broadcastAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
     admin: data => call("/rapid-service", { method: "POST", body: JSON.stringify(data) }),
     archiveAdmin: data => call("/archive-service", { method: "POST", body: JSON.stringify(data) }),
     archiveFiles: () => call("/archive-service?resource=files"),

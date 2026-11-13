@@ -75,6 +75,7 @@
     },
     paymentHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "payment_history" }) }),
     supportTicket: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_ticket", ...data }) }),
+    archiveLinkReport: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "archive_link_report", ...data }) }),
     supportHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_history" }) }),
     supportList: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_list" }) }),
     supportUpdate: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_update", ...data }) }),

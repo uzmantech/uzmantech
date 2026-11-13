@@ -246,6 +246,19 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   finally{btn.disabled=false;}
  });
 
+ $("#resendTestBtn")?.addEventListener("click",async()=>{
+  const btn=$("#resendTestBtn"),status=$("#resendTestStatus");
+  if(!confirm("Yalnızca ataturkiyehack@gmail.com adresine Resend üzerinden bir test e-postası gönderilsin mi? Toplu gönderim yapılmayacak."))return;
+  btn.disabled=true;status.textContent="Resend bağlantısı kontrol ediliyor ve test e-postası gönderiliyor...";
+  try{
+   const result=await api.broadcastAdmin({action:"resend_test"});
+   status.textContent=result.message+" Alıcı: "+result.recipient+" · Sağlayıcı: "+result.provider;
+   toast("Resend test e-postası sağlayıcıya iletildi.");
+  }catch(err){
+   status.textContent=err.message||"Test e-postası gönderilemedi.";
+   toast(err.message||"Resend testi başarısız.");
+  }finally{btn.disabled=false;}
+ });
  let activeBroadcast=null;
  const audienceNames={members:"Doğrulanmış üyeler (hizmet duyurusu)",newsletter:"İzinli bülten aboneleri (kampanya)"};
  const campaignStatusNames={draft:"Taslak",sending:"Gönderiliyor",completed:"Tamamlandı",cancelled:"İptal"};

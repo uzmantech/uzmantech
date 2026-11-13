@@ -220,6 +220,27 @@ body:before{opacity:.42;background-size:64px 64px}
  .faq-wrap{padding:20px 15px;margin-top:22px}
  .faq-heading h2{font-size:24px}
 }
+
+/* Hero artwork tuned to the supplied Uzmantech contact-page reference */
+.support-hero{min-height:440px!important;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr)!important;padding:46px 42px 38px!important;background:radial-gradient(ellipse at 76% 48%,#073b4b80 0,transparent 34%),linear-gradient(105deg,#07111e 0%,#081523 58%,#061522 100%)!important;border-color:#23445a!important}
+.support-hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background-image:linear-gradient(90deg,transparent 49.8%,#5b9ab522 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,#5b9ab522 50%,transparent 50.2%);background-size:150px 150px;mask-image:linear-gradient(90deg,transparent 30%,#000 100%)}
+.support-hero-copy{position:relative;z-index:2}
+.support-hero .hero-kicker{font-size:clamp(15px,1.4vw,23px);letter-spacing:.2px;color:#82cbd1}
+.support-hero .hero-kicker:before{display:none}
+.support-hero h1{font-size:clamp(48px,5.5vw,78px);line-height:1.02;letter-spacing:-3.8px;margin:22px 0 20px}
+.support-hero h1 em{color:#25d8d0;text-shadow:0 0 34px #1edbd44d}
+.support-hero p{font-size:clamp(15px,1.35vw,19px);line-height:1.65;color:#b7c5d1;max-width:780px}
+.support-hero-points{gap:12px;margin-top:27px}
+.support-hero-points span{padding:9px 14px 9px 9px;border:1px solid #7da4b63a;border-radius:28px;background:linear-gradient(110deg,#d6faff1a,#8299ac1a);font-size:clamp(12px,1vw,16px);color:#e0edf4;backdrop-filter:blur(8px)}
+.support-hero-points i{width:27px;height:27px;background:#35c99a;color:#06251e;font-size:15px;box-shadow:0 0 14px #35c99a66}
+.support-headset-art{height:360px!important;min-width:0;position:relative;display:grid;place-items:center;isolation:isolate}
+.support-headset-art:after{content:"";position:absolute;inset:0;background-image:linear-gradient(90deg,transparent 49.8%,#68c4df24 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,#68c4df24 50%,transparent 50.2%);background-size:145px 145px;mask-image:radial-gradient(ellipse,#000 20%,transparent 78%);z-index:-2}
+.support-light-trails{position:absolute;width:145%;height:120%;inset:-8% -20%;z-index:-1;overflow:visible;filter:drop-shadow(0 0 9px #1fe8e0)}
+.support-headset-glow{position:absolute;width:230px;height:230px;border-radius:50%;background:#19d8d7;filter:blur(75px);opacity:.22}
+.support-headset-svg{width:min(100%,350px);height:100%;max-height:350px;filter:drop-shadow(0 18px 28px #0009) drop-shadow(0 0 22px #6be4e466)}
+.support-art-tag{bottom:3px;padding:10px 24px;border:1px solid #b7e6ee8a;background:linear-gradient(110deg,#b5dce52b,#8ea7b72b);color:#d2f4f8;font-size:clamp(12px,1.15vw,18px);letter-spacing:.5px;backdrop-filter:blur(12px);box-shadow:0 8px 30px #0004}
+@media(max-width:900px){.support-hero{grid-template-columns:1fr!important;padding:34px 28px!important}.support-headset-art{height:260px!important}.support-headset-svg{max-height:250px}.support-art-tag{bottom:0}}
+@media(max-width:600px){.support-hero{padding:27px 19px!important;min-height:unset!important}.support-hero h1{font-size:43px;letter-spacing:-1.8px}.support-hero .hero-kicker{font-size:13px}.support-hero p{font-size:14px}.support-headset-art{height:220px!important}.support-headset-svg{max-height:220px}.support-hero-points span{font-size:11px}.support-art-tag{font-size:11px;padding:8px 17px}}
 </style>
 </head><body>
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -266,11 +287,32 @@ body:before{opacity:.42;background-size:64px 64px}
 <section class="hero support-hero">
  <div class="support-hero-copy">
   <span class="hero-kicker">UZMANTECH İLETİŞİM MERKEZİ</span>
-  <h1>Size nasıl <em>yardımcı olalım?</em></h1>
+  <h1>Size nasıl <em>yardımcı</em><br>olalım?</h1>
   <p>Teknik destek, lisans, ödeme ve dosya arşivi konularında bize ulaşın. Talebinizi oluşturun, yanıtları hesabınızdan takip edin.</p>
   <div class="support-hero-points"><span><i>✓</i> Hesabınızla bağlantılı talepler</span><span><i>✓</i> Talep durumunu takip edin</span></div>
  </div>
- <div class="support-hero-art" aria-hidden="true"><div class="support-orbit orbit-one"></div><div class="support-orbit orbit-two"></div><div class="support-art-core"><svg viewBox="0 0 64 64"><path d="M12 34v-5a20 20 0 0 1 40 0v5M12 34h8v14h-4a4 4 0 0 1-4-4zM52 34h-8v14h4a4 4 0 0 0 4-4zM44 49c-3 6-9 8-16 8"/></svg></div><span class="support-art-tag">UZMANTECH SUPPORT</span></div>
+ <div class="support-hero-art support-headset-art" aria-hidden="true">
+  <svg class="support-light-trails" viewBox="0 0 620 500" preserveAspectRatio="xMidYMid meet">
+   <defs><linearGradient id="trailA"><stop stop-color="#16e8df" stop-opacity="0"/><stop offset=".48" stop-color="#16e8df"/><stop offset="1" stop-color="#16e8df" stop-opacity="0"/></linearGradient><linearGradient id="trailB"><stop stop-color="#478cff" stop-opacity="0"/><stop offset=".5" stop-color="#478cff"/><stop offset="1" stop-color="#478cff" stop-opacity="0"/></linearGradient></defs>
+   <path d="M-40 500C80 310 180 360 300 230S500 60 660-60" stroke="url(#trailA)" stroke-width="5" fill="none"/><path d="M-20 530C100 340 210 385 330 250S530 85 680-30" stroke="url(#trailB)" stroke-width="3" fill="none"/><path d="M30 510C150 330 240 370 360 230S550 55 680-70" stroke="#54e9e5" stroke-opacity=".35" stroke-width="1.5" fill="none"/>
+   <path d="M-20 470C90 300 190 335 300 210S490 45 630-65" stroke="#3d9dff" stroke-opacity=".45" stroke-width="2" fill="none"/>
+  </svg>
+  <div class="support-headset-glow"></div>
+  <svg class="support-headset-svg" viewBox="0 0 420 420">
+   <defs><linearGradient id="headBand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1ffff"/><stop offset=".42" stop-color="#9fc6d3"/><stop offset="1" stop-color="#547e91"/></linearGradient><linearGradient id="earCup" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f7fa"/><stop offset=".55" stop-color="#81b6c5"/><stop offset="1" stop-color="#416d83"/></linearGradient><radialGradient id="headGlow"><stop stop-color="#9ffff8" stop-opacity=".95"/><stop offset="1" stop-color="#42d9df" stop-opacity="0"/></radialGradient></defs>
+   <ellipse cx="210" cy="205" rx="105" ry="118" fill="url(#headGlow)" opacity=".85"/>
+   <path d="M92 222V190C92 92 145 39 211 39s119 53 119 151v32" fill="none" stroke="#3d6579" stroke-width="30" stroke-linecap="round" opacity=".5"/>
+   <path d="M92 215V184C92 91 145 43 211 43s119 48 119 141v31" fill="none" stroke="url(#headBand)" stroke-width="23" stroke-linecap="round"/>
+   <path d="M92 188C92 95 145 50 211 50s119 45 119 138" fill="none" stroke="#f1ffff" stroke-opacity=".65" stroke-width="5" stroke-linecap="round"/>
+   <rect x="69" y="174" width="62" height="139" rx="28" fill="url(#earCup)" stroke="#e3ffff" stroke-opacity=".7" stroke-width="4"/>
+   <rect x="289" y="174" width="62" height="139" rx="28" fill="url(#earCup)" stroke="#e3ffff" stroke-opacity=".7" stroke-width="4"/>
+   <rect x="81" y="191" width="37" height="105" rx="18" fill="#426e83" opacity=".55"/><rect x="302" y="191" width="37" height="105" rx="18" fill="#426e83" opacity=".55"/>
+   <path d="M320 292C328 322 309 344 281 349l-46 8" fill="none" stroke="url(#headBand)" stroke-width="13" stroke-linecap="round"/>
+   <rect x="213" y="346" width="73" height="22" rx="11" transform="rotate(-8 213 346)" fill="url(#earCup)" stroke="#d9ffff" stroke-opacity=".65" stroke-width="2"/>
+   <path d="M97 192v89M323 192v89" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <span class="support-art-tag">UZMANTECH SUPPORT</span>
+ </div>
 </section>
 <section class="support-topic-grid" aria-label="Destek kategorileri">
  <button type="button" class="support-topic-card" data-support-category="technical"><span class="support-topic-icon">⌘</span><span><b>Teknik destek</b><small>Uzmantool ve cihaz sorunları</small></span><i>↗</i></button>

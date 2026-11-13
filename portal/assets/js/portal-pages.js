@@ -68,8 +68,9 @@ async function loadAutoTechNews(){
   if(stamp)stamp.textContent=items.length+" HABER / GÜNCEL";
  }catch(error){
   console.warn("Technology news could not be loaded",error);
-  grid.innerHTML='<article class="news-card"><div class="news-card-body"><p>Haber akışı şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.</p></div></article>';
-  if(stamp)stamp.textContent="AKIŞA ULAŞILAMADI";
+  autoTechNewsLoaded=false;
+  grid.innerHTML='<article class="news-card"><div class="news-card-body"><p>Haber akışı şu anda yüklenemiyor. Sayfaya yeniden girdiğinizde tekrar denenecek.</p></div></article>';
+  if(stamp)stamp.textContent="YENİDEN DENENECEK";
  }
 }
 let autoTechNewsLoaded=false;

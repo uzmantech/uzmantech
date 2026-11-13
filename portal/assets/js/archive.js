@@ -209,7 +209,7 @@ function renderLiveArchive(){
  const fileCounts=new Map();
  for(const file of archiveItems){if(normBrand(file.brand)!==brand||!file.model)continue;fileCounts.set(file.model,(fileCounts.get(file.model)||0)+1);}
  const cscSearch=isSamsung?'<section class="samsung-csc-search"><form id="samsungCscSearchForm" class="samsung-csc-inline-form"><input id="samsungModelCode" type="search" list="samsungModelSuggestions" placeholder="Model kodu (Örn. A135F veya SM-A546E)" aria-label="Samsung model kodu" autocomplete="off" required><datalist id="samsungModelSuggestions"></datalist><select id="samsungCscCode" aria-label="CSC bölge kodu"><option value="TUR" selected>TUR · Türkiye</option><option value="EUX">EUX · Avrupa</option><option value="DBT">DBT · Almanya</option><option value="BTU">BTU · Birleşik Krallık</option><option value="XSG">XSG · Birleşik Arap Emirlikleri</option><option value="INS">INS · Hindistan</option><option value="XEO">XEO · Polonya</option><option value="ILO">ILO · İsrail</option><option value="KOO">KOO · Güney Kore</option><option value="XAA">XAA · ABD</option><option value="ATT">ATT · AT&amp;T ABD</option><option value="TMB">TMB · T-Mobile ABD</option></select><button type="submit">Ara</button></form></section>':'';
- const cards=visibleModels.map(model=>'<'+(isSamsung?'div':'button type="button"')+' class="archive-device-card" '+(isSamsung?'':'data-device-model="'+archiveEsc(model)+'"')+'><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+(fileCounts.get(model)||0)+' dosya</em></'+(isSamsung?'div':'button')+'>').join("");
+ const cards=visibleModels.map(model=>'<div class="archive-model-card-wrap"><'+(isSamsung?'div':'button type="button"')+' class="archive-device-card" '+(isSamsung?'':'data-device-model="'+archiveEsc(model)+'"')+'><span class="archive-device-icon" aria-hidden="true">▦</span><strong>'+archiveEsc(model)+'</strong><small>'+archiveEsc(brand)+'</small><em>'+(fileCounts.get(model)||0)+' dosya</em></'+(isSamsung?'div':'button')+'><button type="button" class="archive-model-report" data-report-model="'+archiveEsc(model)+'" data-report-brand="'+archiveEsc(brand)+'" aria-label="'+archiveEsc(brand+' '+model)+' için hatalı bağlantı bildir">Hatalı link bildir</button></div>').join("");
  const more=models.length>visibleModels.length?'<button type="button" class="archive-load-more-models" data-load-more-models>+'+(models.length-visibleModels.length)+' model daha göster</button>':'';
  grid.innerHTML=cscSearch+(!isSamsung?'<div class="archive-model-search-wrap"><input id="archiveModelSearch" type="search" value="'+archiveEsc(modelSearch)+'" placeholder="'+archiveEsc(brand)+' model adı ara..." aria-label="Model ara"></div>':'')+(cards||'<p class="archive-live-empty">Bu arama için model bulunamadı.</p>')+more;
 }
@@ -375,6 +375,35 @@ document.addEventListener("input",e=>{if(e.target.id!=="samsungModelCode")return
 document.addEventListener("submit",async e=>{if(e.target.id!=="samsungCscSearchForm")return;e.preventDefault();const query=$("#samsungModelCode")?.value||"",csc=$("#samsungCscCode")?.value||"TUR",codes=resolveSamsungModelCodes(query);const submit=e.target.querySelector('button[type="submit"]');if(!codes.length){toast("Model kodu bulunamadı. Önerilerden tam varyantı seçin. Örnek: A135F.");return;}if(submit){submit.disabled=true;submit.textContent="CSC aranıyor...";}let total=0,errors=[];try{for(let i=0;i<codes.length;i++){try{total+=await fetchSamFwCatalog(codes[i],i>0,query.toUpperCase(),csc);}catch(err){errors.push(codes[i]+": "+err.message);}}if(total){renderLiveArchive();toast(csc+" CSC için "+total+" firmware kaydı listelendi.");}else toast(errors[0]||"Bu CSC için firmware bulunamadı.");}finally{if(submit){submit.disabled=false;submit.textContent="Seçilen CSC için ara";}}});
 document.addEventListener("input",e=>{if(e.target.id==="archiveModelSearch"){modelSearch=e.target.value;modelVisibleLimit=48;const pos=e.target.selectionStart;renderLiveArchive();const next=$("#archiveModelSearch");next?.focus();next?.setSelectionRange(pos,pos);}});
 document.addEventListener("click",e=>{if(e.target.closest("[data-load-more-models]")){modelVisibleLimit+=48;renderLiveArchive();}});
+document.addEventListener("click",e=>{
+ const report=e.target.closest("[data-report-model]");
+ if(!report)return;
+ const modal=$("#modal");
+ if(!modal)return;
+ modal.dataset.locked="false";
+ $("#modalClose").hidden=false;
+ $("#modalTitle").textContent="Hatalı bağlantı bildir";
+ $("#modalBody").innerHTML='<form id="archiveModelReportForm" class="archive-report-form"><p><strong>'+archiveEsc(report.dataset.reportBrand)+' '+archiveEsc(report.dataset.reportModel)+'</strong> için bildirim gönderiyorsunuz.</p><label class="field"><span>Bildirim nedeni</span><select name="reason" required><option value="Kırık veya açılmayan bağlantı">Kırık veya açılmayan bağlantı</option><option value="Yanlış modele ait yazılım">Yanlış modele ait yazılım</option><option value="Yanlış sürüm veya bölge">Yanlış sürüm veya bölge</option><option value="Diğer">Diğer</option></select></label><label class="field"><span>Ek açıklama (isteğe bağlı)</span><textarea name="details" rows="3" maxlength="1200" placeholder="Sorunu kısaca açıklayın..."></textarea></label><button class="button button-primary" type="submit" style="width:100%">Bildirimi gönder</button></form>';
+ modal.classList.add("open");
+ $("#archiveModelReportForm").dataset.brand=report.dataset.reportBrand;
+ $("#archiveModelReportForm").dataset.model=report.dataset.reportModel;
+});
+document.addEventListener("submit",async e=>{
+ const form=e.target.closest("#archiveModelReportForm");
+ if(!form)return;
+ e.preventDefault();
+ const submit=form.querySelector('button[type="submit"]');
+ if(submit){submit.disabled=true;submit.textContent="Gönderiliyor...";}
+ const data=new FormData(form);
+ try{
+  const result=await UzmantechAPI.archiveLinkReport({brand:form.dataset.brand,model:form.dataset.model,reason:data.get("reason"),details:data.get("details"),page_url:location.href});
+  $("#modal").classList.remove("open");
+  toast(result.message||"Bildiriminiz alındı.");
+ }catch(err){
+  toast(err.message||"Bildirim gönderilemedi.");
+  if(/giriş|oturum|üyelik/i.test(err.message||"")){ $("#modal").classList.remove("open");showLogin(); }
+ }finally{if(submit){submit.disabled=false;submit.textContent="Bildirimi gönder";}}
+});
 document.addEventListener("click",async e=>{
  const device=e.target.closest("[data-device-model]");
  if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;selectedFile=null;if(normBrand(selectedBrand)==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){try{await fetchSamFwCatalog(selectedDevice,false);}catch(err){toast(err.message||"SamFrew listesi yüklenemedi.");}}renderLiveArchive();return;}

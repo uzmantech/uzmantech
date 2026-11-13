@@ -67,7 +67,7 @@
 
 </style>
 <link rel="stylesheet" href="assets/css/archive-home.css?v=yvz-layout-20261105"><link rel="stylesheet" href="assets/css/packages.css?v=footer-clean-20261110-1">
-<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=viewport-fix-20261105-2"><link rel="stylesheet" href="assets/css/archive.css?v=whatsapp-live-20261106-1"><link rel="stylesheet" href="assets/css/home-showcase.css?v=viewport-slider-20261107-1"><style id="professional-stat-icons">.site-live-stats .archive-stat .stat-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.site-live-stats .archive-stat .stat-icon svg{width:21px;height:21px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style><style id="home-package-professional-icons">.home-membership-showcase .package-icon{display:flex;align-items:center;justify-content:center}.home-membership-showcase .package-icon svg{width:29px;height:29px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style>
+<link rel="stylesheet" href="assets/css/uzmantool-theme.css?v=viewport-fix-20261105-2"><link rel="stylesheet" href="assets/css/archive.css?v=whatsapp-live-20261106-1"><link rel="stylesheet" href="assets/css/home-showcase.css?v=latest-heading-layout-20261113-2"><style id="professional-stat-icons">.site-live-stats .archive-stat .stat-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.site-live-stats .archive-stat .stat-icon svg{width:21px;height:21px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style><style id="home-package-professional-icons">.home-membership-showcase .package-icon{display:flex;align-items:center;justify-content:center}.home-membership-showcase .package-icon svg{width:29px;height:29px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px currentColor)}</style>
 <style id="uzmantech-intro-loader">
 #uz-intro{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:24px 16px;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#102c4d 0%,#09182b 42%,#050b14 100%);color:#eaf6ff;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
 #uz-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
@@ -93,6 +93,49 @@ html.uz-intro-skip #uz-intro{display:none!important}
 (()=>{try{const key="uzmantech_intro_seen_v1";if(sessionStorage.getItem(key)==="1"){document.documentElement.classList.add("uz-intro-skip");}else{sessionStorage.setItem(key,"1");}}catch(e){/* Depolama kapalıysa animasyon normal şekilde gösterilir. */}})();
 </script>
 <link rel="stylesheet" href="assets/css/site-header.css?v=profile-only-width-20261110-4">
+
+<style id="latest-files-heading-layout-fix">
+/* Keep the latest-files heading in normal flow, above the moving cards. */
+html body.showcase-home section.latest-files{
+ display:block!important;
+ position:relative!important;
+ isolation:isolate!important;
+}
+html body.showcase-home section.latest-files>.latest-files-heading{
+ position:relative!important;
+ inset:auto!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:space-between!important;
+ width:100%!important;
+ min-height:64px!important;
+ margin:0 0 18px!important;
+ padding:0!important;
+ transform:none!important;
+ float:none!important;
+ clear:both!important;
+ z-index:2!important;
+}
+html body.showcase-home section.latest-files>.latest-files-heading>div{
+ position:relative!important;
+ display:block!important;
+ inset:auto!important;
+ transform:none!important;
+}
+html body.showcase-home section.latest-files>.latest-files-window{
+ position:relative!important;
+ display:block!important;
+ inset:auto!important;
+ width:100%!important;
+ margin:0!important;
+ clear:both!important;
+ z-index:1!important;
+}
+html body.showcase-home section.latest-files .latest-files-track{
+ position:relative!important;
+}
+</style>
+
 </head>
 <body class="dashboard-page">
 

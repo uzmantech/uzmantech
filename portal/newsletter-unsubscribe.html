@@ -20,7 +20,7 @@ body{min-height:100vh;display:grid;place-items:center;background:#080e19;color:#
 <button id="unsubscribeButton" type="button">Aboneliğimi kaldır</button>
 <p id="unsubscribeStatus" role="status" aria-live="polite"></p>
 </main>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=bulk-email-20261113-2"></script>
 <script>
 (()=>{const button=document.getElementById("unsubscribeButton"),status=document.getElementById("unsubscribeStatus"),token=new URLSearchParams(location.search).get("token")||"";button.addEventListener("click",async()=>{if(!token){status.textContent="Abonelik bağlantısı geçersiz veya eksik.";button.disabled=true;return;}button.disabled=true;status.textContent="İşleminiz gerçekleştiriliyor...";try{const result=await window.UzmantechAPI.newsletterUnsubscribe(token);status.textContent=result.message||"Aboneliğiniz kaldırıldı.";}catch(error){status.textContent=error.message||"İşlem tamamlanamadı. Lütfen destek ekibine ulaşın.";button.disabled=false;}});})();
 </script>

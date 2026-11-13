@@ -102,6 +102,11 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
  .faq-item h3{font-size:15px}
  .faq-item p{font-size:13px}
 }
+
+/* Native select menus: keep option text readable in Windows/Chrome light popup menus. */
+.form-group select{color-scheme:dark!important;background-color:#0c1319!important;color:#f2f6f8!important}
+.form-group select option,.form-group select optgroup{background-color:#101c2b!important;color:#f2f6f8!important}
+.form-group select option:checked{background-color:#24527a!important;color:#ffffff!important}
 </style>
 </head><body>
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">

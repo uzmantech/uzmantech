@@ -7,7 +7,7 @@
  let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
@@ -245,5 +245,49 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   catch(err){toast(err.message);}
   finally{btn.disabled=false;}
  });
+
+ let activeBroadcast=null;
+ const audienceNames={members:"Doğrulanmış üyeler (hizmet duyurusu)",newsletter:"İzinli bülten aboneleri (kampanya)"};
+ const campaignStatusNames={draft:"Taslak",sending:"Gönderiliyor",completed:"Tamamlandı",cancelled:"İptal"};
+ async function loadBroadcasts(){
+  const r=await api.broadcastAdmin({action:"broadcast_list"});
+  const rows=r.campaigns||[];
+  $("#broadcastsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.subject)+'</strong></td><td>'+esc(audienceNames[x.audience]||x.audience)+'</td><td>'+esc(campaignStatusNames[x.status]||x.status)+'</td><td>'+Number(x.recipient_count||0)+'</td><td>'+Number(x.sent_count||0)+'</td><td>'+Number(x.failed_count||0)+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td></tr>').join("")||'<tr><td colspan="7">Henüz toplu e-posta gönderimi yok.</td></tr>';
+ }
+ $("#broadcastAudience")?.addEventListener("change",()=>{
+  const marketing=$("#broadcastAudience").value==="newsletter";
+  $("#broadcastAudienceHint").textContent=marketing
+   ?"Yalnızca aktif bülten abonelerine gönderilir. E-postaya abonelikten çıkış bağlantısı otomatik eklenir."
+   :"Yalnızca e-posta adresi doğrulanmış kayıtlı üyelere hizmet ve güvenlik duyuruları gönderilebilir. Reklam veya kampanya metni kullanmayın.";
+ });
+ $("#broadcastForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();const btn=$("#broadcastPrepare");btn.disabled=true;$("#broadcastFormStatus").textContent="Alıcılar kontrol ediliyor ve taslak hazırlanıyor...";
+  try{
+   const r=await api.broadcastAdmin({action:"broadcast_prepare",audience:$("#broadcastAudience").value,subject:$("#broadcastSubject").value,message:$("#broadcastMessage").value});
+   activeBroadcast=r.campaign;$("#broadcastDraftPanel").hidden=false;$("#broadcastStart").hidden=false;$("#broadcastProcess").hidden=true;
+   $("#broadcastDraftSummary").textContent='"'+r.campaign.subject+'" · '+audienceNames[r.campaign.audience]+' · '+Number(r.recipient_count).toLocaleString("tr-TR")+' alıcı. Henüz e-posta gönderilmedi.';
+   $("#broadcastProgress").textContent=r.message;$("#broadcastFormStatus").textContent="Taslak oluşturuldu.";
+   await loadBroadcasts();
+  }catch(err){$("#broadcastFormStatus").textContent=err.message||"Taslak oluşturulamadı.";}
+  finally{btn.disabled=false;}
+ });
+ $("#broadcastStart")?.addEventListener("click",async()=>{
+  if(!activeBroadcast)return;
+  if(!confirm(activeBroadcast.recipient_count+" alıcıya e-posta gönderimi başlatılsın mı? Bu işlem gerçek e-posta gönderir."))return;
+  const btn=$("#broadcastStart");btn.disabled=true;
+  try{await api.broadcastAdmin({action:"broadcast_start",campaign_id:activeBroadcast.id});btn.hidden=true;$("#broadcastProcess").hidden=false;$("#broadcastProgress").textContent="Gönderim başladı. Her adımda 5 e-posta gönderilecek.";await loadBroadcasts();}
+  catch(err){toast(err.message);btn.disabled=false;}
+ });
+ $("#broadcastProcess")?.addEventListener("click",async()=>{
+  if(!activeBroadcast)return;const btn=$("#broadcastProcess");btn.disabled=true;btn.textContent="Gönderiliyor...";
+  try{
+   const r=await api.broadcastAdmin({action:"broadcast_process",campaign_id:activeBroadcast.id});
+   $("#broadcastProgress").textContent="Bu grup: "+r.sent_now+" başarılı, "+r.failed_now+" başarısız. Toplam: "+r.sent_count+" başarılı, "+r.failed_count+" başarısız. Kalan: "+r.remaining+".";
+   if(r.completed){btn.hidden=true;$("#broadcastStart").hidden=true;$("#broadcastProgress").textContent+=" Gönderim tamamlandı.";}
+   await loadBroadcasts();
+  }catch(err){toast(err.message);}
+  finally{btn.disabled=false;btn.textContent="Sonraki 5 kişiye gönder";}
+ });
+ $("#reloadBroadcasts")?.addEventListener("click",()=>loadBroadcasts().catch(e=>toast(e.message)));
  checkSession().catch(e=>toast(e.message));
 })();

@@ -1093,3 +1093,17 @@ body.archive-shell:has(#archiveModelsPage) main.archive-stage{
   }
 }
 body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!important;}
+
+
+/* Animated loader for brand model catalogues */
+.archive-loading-state{grid-column:1/-1;width:100%;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;padding:32px 18px;box-sizing:border-box;text-align:center;color:#dbeafe;border:1px solid rgba(112,164,220,.18);border-radius:14px;background:linear-gradient(145deg,rgba(24,39,62,.48),rgba(9,16,29,.38))}
+.archive-loading-dots{display:flex;align-items:center;justify-content:center;gap:13px;height:48px}
+.archive-loading-dots i{display:block;width:13px;height:13px;border-radius:50%;background:#f5fbff;box-shadow:0 0 16px rgba(82,171,255,.42);opacity:.55;transform:scale(.78);animation:archive-loading-pulse 1.05s ease-in-out infinite}
+.archive-loading-dots i:first-child{width:23px;height:23px}
+.archive-loading-dots i:nth-child(2){animation-delay:.13s}
+.archive-loading-dots i:nth-child(3){animation-delay:.26s}
+.archive-loading-dots i:nth-child(4){animation-delay:.39s}
+.archive-loading-state strong{font-size:16px;font-weight:700;letter-spacing:.2px;color:#f2f7ff}
+.archive-loading-state>span{font-size:13px;color:#9eb6d4}
+@keyframes archive-loading-pulse{0%,100%{opacity:.45;transform:scale(.72)}50%{opacity:1;transform:scale(1.16)}}
+@media(prefers-reduced-motion:reduce){.archive-loading-dots i{animation:none;opacity:1;transform:none}}

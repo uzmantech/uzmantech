@@ -1115,3 +1115,26 @@ body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!importan
 .archive-back-brand-button{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border:1px solid #426487;border-radius:8px;background:linear-gradient(180deg,#20354e,#142438);color:#d9ecff;text-decoration:none;font-size:11px;font-weight:700;white-space:nowrap;transition:background .18s,border-color .18s,transform .18s}
 .archive-back-brand-button:hover{background:linear-gradient(180deg,#2b4d70,#1a3551);border-color:#68b8f4;transform:translateY(-1px)}
 @media(max-width:600px){.archive-model-count-actions{align-items:flex-end}.archive-back-brand-button{font-size:10px;padding:0 9px}}
+
+
+/* Minimal model page heading: title followed only by animated loader */
+.archive-models-page .archive-live-head{margin-bottom:0!important}
+.archive-models-page .archive-live-head>div{margin-bottom:0!important}
+.archive-models-page #archiveFileCount[hidden]{display:none!important}
+.archive-models-page .archive-loading-state{
+  min-height:112px!important;
+  padding:18px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.archive-models-page .archive-loading-state strong,
+.archive-models-page .archive-loading-state>span{display:none!important}
+.archive-models-page .archive-live-grid:has(.archive-loading-state){
+  min-height:112px!important;
+  margin-top:0!important;
+  padding-top:0!important;
+  border:0!important;
+  background:transparent!important;
+}

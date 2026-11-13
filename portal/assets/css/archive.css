@@ -1062,3 +1062,19 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
 .archive-report-form .field>span{color:#aebed2;font-size:12px;font-weight:700}
 .archive-report-form select,.archive-report-form textarea{width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #394a61;border-radius:8px;background:#0d1623;color:#f2f6fc;font:13px "DM Sans",sans-serif}
 .archive-report-form textarea{resize:vertical}
+
+
+/* 2026-11-13: collapse the excessive blank band below the archive navigation */
+@media(min-width:901px){
+  body.archive-shell:not(.archive-preview-locked) main.archive-stage{
+    position:relative!important;
+    top:-150px!important;
+    margin-bottom:-150px!important;
+  }
+}
+@media(max-width:900px){
+  body.archive-shell:not(.archive-preview-locked) main.archive-stage{
+    top:0!important;
+    margin-top:0!important;
+  }
+}

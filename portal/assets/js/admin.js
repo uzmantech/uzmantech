@@ -252,7 +252,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  async function loadBroadcasts(){
   const r=await api.broadcastAdmin({action:"broadcast_list"});
   const rows=r.campaigns||[];
-  $("#broadcastsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.subject)+'</strong></td><td>'+esc(audienceNames[x.audience]||x.audience)+'</td><td>'+esc(campaignStatusNames[x.status]||x.status)+'</td><td>'+Number(x.recipient_count||0)+'</td><td>'+Number(x.sent_count||0)+'</td><td>'+Number(x.failed_count||0)+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td></tr>').join("")||'<tr><td colspan="7">Henüz toplu e-posta gönderimi yok.</td></tr>';
+  $("#broadcastsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.subject)+'</strong></td><td>'+esc(audienceNames[x.audience]||x.audience)+'</td><td>'+esc(campaignStatusNames[x.status]||x.status)+'</td><td>'+Number(x.recipient_count||0)+'</td><td>'+Number(x.sent_count||0)+'</td><td>'+Number(x.failed_count||0)+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td><td>'+(x.status==="draft"||x.status==="sending"?'<button class="btn" data-broadcast-resume="'+esc(x.id)+'"> '+(x.status==="draft"?"Taslağı aç":"Devam et")+'</button>':"—")+'</td></tr>').join("")||'<tr><td colspan="8">Henüz toplu e-posta gönderimi yok.</td></tr>';
  }
  $("#broadcastAudience")?.addEventListener("change",()=>{
   const marketing=$("#broadcastAudience").value==="newsletter";

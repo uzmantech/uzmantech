@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#080e19">
+<title>Uzmantech | Bülten Aboneliği</title>
+<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/site-header.css">
+<style>
+body{min-height:100vh;display:grid;place-items:center;background:#080e19;color:#edf4ff;font-family:Inter,Segoe UI,Arial,sans-serif}
+.unsubscribe-card{width:min(560px,calc(100% - 32px));padding:34px;border:1px solid #29435f;border-radius:18px;background:linear-gradient(145deg,#14263b,#0c1726);box-shadow:0 24px 70px #0007;text-align:center}
+.unsubscribe-card h1{font-size:26px;margin:0 0 12px}.unsubscribe-card p{color:#a9bdd2;line-height:1.7}
+.unsubscribe-card button{border:1px solid #3e9cff;border-radius:10px;padding:12px 20px;background:#1676df;color:white;font-weight:800;cursor:pointer}
+#unsubscribeStatus{margin-top:16px;min-height:24px}
+</style>
+</head>
+<body>
+<main class="unsubscribe-card">
+<h1>Bülten aboneliği</h1>
+<p>Uzmantech e-posta bülteni aboneliğinizi kaldırabilirsiniz. Bu işlem yalnızca kampanya ve tanıtım e-postalarını durdurur. Hesap ve güvenlik bildirimleri etkilenmez.</p>
+<button id="unsubscribeButton" type="button">Aboneliğimi kaldır</button>
+<p id="unsubscribeStatus" role="status" aria-live="polite"></p>
+</main>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+<script>
+(()=>{const button=document.getElementById("unsubscribeButton"),status=document.getElementById("unsubscribeStatus"),token=new URLSearchParams(location.search).get("token")||"";button.addEventListener("click",async()=>{if(!token){status.textContent="Abonelik bağlantısı geçersiz veya eksik.";button.disabled=true;return;}button.disabled=true;status.textContent="İşleminiz gerçekleştiriliyor...";try{const result=await window.UzmantechAPI.newsletterUnsubscribe(token);status.textContent=result.message||"Aboneliğiniz kaldırıldı.";}catch(error){status.textContent=error.message||"İşlem tamamlanamadı. Lütfen destek ekibine ulaşın.";button.disabled=false;}});})();
+</script>
+</body></html>

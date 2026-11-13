@@ -1152,3 +1152,15 @@ body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!importan
   text-transform:uppercase;
   text-shadow:0 2px 14px rgba(63,151,255,.28);
 }
+
+/* Keep the recent-files viewport fixed; animate only its inner list.
+   This prevents the moving cards from sliding over the section heading. */
+.archive-recent-track{display:block!important;position:relative!important;height:238px!important;overflow:hidden!important;isolation:isolate;transform:none!important;animation:none!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 91%,transparent 100%)}
+.archive-recent-marquee{display:flex;flex-direction:column;gap:10px;will-change:transform;animation:archiveRecentMarquee 17s linear infinite}
+.archive-recent-track.is-static .archive-recent-marquee{animation:none}
+.archive-recent-track:hover .archive-recent-marquee{animation-play-state:paused}
+.archive-recent-track.is-static{animation:none!important}
+.archive-recent-head{position:relative;z-index:2}
+@keyframes archiveRecentMarquee{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media(max-width:600px){.archive-recent-track{height:220px!important}}
+@media(prefers-reduced-motion:reduce){.archive-recent-marquee{animation:none!important}}

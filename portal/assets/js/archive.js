@@ -217,7 +217,7 @@ function renderLiveArchive(){
 async function loadLiveArchive(){
  const isModelPage=!!$("#archiveModelsPage");
  // Statik katalog önce çizilir; ağ yanıtı gelene kadar boş ekran bekletilmez.
- if(isModelPage){archiveItems=[];const loadingGrid=$("#archiveLiveGrid"),loadingCount=$("#archiveFileCount");if(loadingCount)loadingCount.textContent="Yükleniyor…";if(loadingGrid)loadingGrid.innerHTML='<div class="archive-loading-state" role="status" aria-live="polite"><div class="archive-loading-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div><strong>Modeller yükleniyor</strong><span>Lütfen bekleyin, yazılım kayıtları hazırlanıyor.</span></div>';}
+ if(isModelPage){archiveItems=[];const loadingGrid=$("#archiveLiveGrid"),loadingCount=$("#archiveFileCount");if(loadingCount)loadingCount.textContent="Yükleniyor…";if(loadingGrid)loadingGrid.innerHTML='<div class="archive-loading-state" role="status" aria-label="Modeller yükleniyor"><div class="archive-loading-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>';}
  try{
   const archivePromise=UzmantechAPI.archiveFiles();
   const honorPromise=(!isModelPage||normBrand(selectedBrand)==="Honor")?UzmantechAPI.archiveHonorFirmware():Promise.resolve(null);

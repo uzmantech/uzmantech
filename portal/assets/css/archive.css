@@ -1138,3 +1138,17 @@ body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!importan
   border:0!important;
   background:transparent!important;
 }
+
+
+/* High-contrast loading caption under the animated model loader */
+.archive-models-page .archive-loading-state strong{
+  display:block!important;
+  margin-top:3px;
+  color:#f3f8ff!important;
+  font-size:clamp(15px,1.6vw,19px)!important;
+  line-height:1.4;
+  font-weight:850!important;
+  letter-spacing:1.1px;
+  text-transform:uppercase;
+  text-shadow:0 2px 14px rgba(63,151,255,.28);
+}

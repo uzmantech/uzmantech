@@ -137,3 +137,9 @@ body.glass-code-page .compat-tool .compat-selects select option{
   color:#f4f8ff !important;
   background-color:#142238 !important;
 }
+
+/* Prevent the inline SVG symbol sprite from reserving its default 300x150 box. */
+body.glass-code-page>svg.icon-sprite{display:none!important;position:absolute!important;width:0!important;height:0!important;overflow:hidden!important}
+body.glass-code-page>.site-global-header{position:relative!important;top:auto!important}
+body.glass-code-page .compat-page{margin-top:0!important;padding-top:28px!important}
+@media(max-width:700px){body.glass-code-page .compat-page{padding-top:20px!important}}

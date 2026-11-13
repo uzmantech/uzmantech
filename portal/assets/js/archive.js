@@ -447,47 +447,55 @@ function applyLockedArchivePreview(){
 async function enforceArchiveLicense(){
  const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
  if(stage)stage.hidden=true;
- try{
-  // Session doğrulaması, sayfa açılışındaki kısa ağ gecikmelerine karşı tekrar denenir.
-  let result=null,lastError=null;
-  for(let attempt=0;attempt<3;attempt++){
-   try{result=await UzmantechAPI.session();if(result?.user)break;}
-   catch(error){lastError=error;}
-   if(attempt<2)await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));
-  }
-  if(!result?.user)throw lastError||new Error("Oturum doğrulanamadı.");
-  const user=result.user;
-  syncArchiveHeader(user);
-  const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
-  const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
-  const isPublicHonorPage=!!$("#archiveModelsPage")&&["Honor","Tecno","Infinix","Google","Motorola","Nokia"].includes(normBrand(selectedBrand));
-  if(!hasPaidAccess){
-   if(isPublicHonorPage){
-    // HONOR'un açıkça ücretsiz olan FirmwareFile bağlantıları üyelik gerektirmez.
-    // Bu istisna yalnızca HONOR model kataloğu sayfasında çalışır; ücretli dosya deposunu açmaz.
-    document.body.classList.remove("archive-preview-locked");
-    document.body.classList.add("archive-authorized");
-    if(stage)stage.hidden=false;
-    if(gate)gate.hidden=true;
-    await loadLiveArchive();
-    return;
-   }
-   document.body.classList.remove("archive-authorized");document.body.classList.add("archive-preview-locked");applyLockedArchivePreview();if(stage)stage.hidden=false;if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}return;
-  }
-  document.body.classList.remove("archive-preview-locked");
-  document.body.classList.add("archive-authorized");
-  if(stage)stage.hidden=false;
-  if(gate)gate.hidden=true;
-  await loadLiveArchive();
- }catch(error){
+
+ // Oturum kontrolü sadece session isteğine bağlıdır.
+ // Arşiv verisi yükleme hatası kullanıcıyı Misafir durumuna düşürmemelidir.
+ let user=null,lastSessionError=null;
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   const result=await UzmantechAPI.session();
+   if(result?.user){user=result.user;break;}
+   lastSessionError=new Error("Oturum bilgisi sunucudan alınamadı.");
+  }catch(error){lastSessionError=error;}
+  if(attempt<2)await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));
+ }
+ if(!user){
   syncArchiveHeader(null);
-  // Ziyaretçi veya oturumu olmayan kullanıcı kayıt sayfasına atılmaz.
-  // Dosya deposunun kilitli olduğunu görür; yalnızca Tamam ile paketlere gider.
   document.body.classList.remove("archive-authorized");
   document.body.classList.add("archive-preview-locked");
   applyLockedArchivePreview();
   if(stage)stage.hidden=false;
   if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}
+  console.warn("Arşiv oturum kontrolü başarısız:",lastSessionError);
+  return;
+ }
+
+ // Oturum doğrulandı. Yönetici kimliği veri yükleme sürecinden bağımsız korunur.
+ syncArchiveHeader(user);
+ const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
+ const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
+ const isPublicHonorPage=!!$("#archiveModelsPage")&&["Honor","Tecno","Infinix","Google","Motorola","Nokia"].includes(normBrand(selectedBrand));
+ if(!hasPaidAccess&&!isPublicHonorPage){
+  document.body.classList.remove("archive-authorized");
+  document.body.classList.add("archive-preview-locked");
+  applyLockedArchivePreview();
+  if(stage)stage.hidden=false;
+  if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}
+  return;
+ }
+
+ document.body.classList.remove("archive-preview-locked");
+ document.body.classList.add("archive-authorized");
+ if(stage)stage.hidden=false;
+ if(gate)gate.hidden=true;
+
+ // Model/arşiv API hatası yalnızca yükleme mesajı üretir; oturumu kapatmaz.
+ try{
+  await loadLiveArchive();
+ }catch(error){
+  console.error("Arşiv verileri yüklenemedi:",error);
+  const grid=$("#archiveLiveGrid");
+  if(grid)grid.innerHTML='<div class="archive-live-empty">Modeller şu anda yüklenemedi. Lütfen sayfayı yenileyin.</div>';
  }
 }
 enforceArchiveLicense();

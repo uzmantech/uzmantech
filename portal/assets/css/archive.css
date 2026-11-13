@@ -1078,3 +1078,18 @@ body.archive-shell .archive-recent-track{min-height:70px!important;}
     margin-top:0!important;
   }
 }
+
+
+/* 2026-11-13: remove top whitespace on brand model pages */
+body.archive-shell:has(#archiveModelsPage) main.archive-stage{
+  position:relative!important;
+  top:-165px!important;
+  margin-bottom:-165px!important;
+}
+@media(max-width:760px){
+  body.archive-shell:has(#archiveModelsPage) main.archive-stage{
+    top:-90px!important;
+    margin-bottom:-90px!important;
+  }
+}
+body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!important;}

@@ -130,11 +130,12 @@
    const status=u.status==="active"?(remaining!==null&&remaining<=0?"Lisans süresi doldu":"Aktif"):u.status==="pending"?"Onay bekliyor":u.disabled_reason==="license_expired"?"Lisans süresi doldu · Yenileme açık":u.disabled_reason==="admin_disabled"?"Yönetici tarafından kapatıldı":"Pasif";
    const plan=planNames[u.license_plan]||u.license_plan||"Lisans yok";
    const remainingText=remaining===null?"Lisans atanmamış":remaining<=0?"Süresi doldu":remaining+" gün kaldı";
-   const buttons=u.status==="pending"
+   const actionButtons=u.status==="pending"
     ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Onayla + lisans ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
     :u.status==="disabled"
      ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Aktif Et</button>'
      :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
+   const buttons=actionButtons+' <button class="btn btn-danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
    return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
@@ -222,6 +223,15 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   }
   const btn=e.target.closest("[data-action]");if(!btn)return;
   const id=btn.dataset.id,action=btn.dataset.action,u=users.find(x=>x.id===id);if(!u)return;
+  if(action==="delete"){
+   const typed=prompt("Bu üyeyi kalıcı olarak silmek üzeresiniz. Bu işlem geri alınamaz.\\n\\nKullanıcı: "+u.username+"\\nE-posta: "+u.email+"\\n\\nOnaylamak için kullanıcı adını aynen yazın:");
+   if(typed!==u.username){if(typed!==null)toast("Silme iptal edildi. Kullanıcı adı eşleşmedi.");return;}
+   btn.disabled=true;
+   try{const result=await adminCall("delete_user",{user_id:id});toast(result.message||"Üye silindi.");await loadDashboard();}
+   catch(err){toast(err.message||"Üye silinemedi.");}
+   finally{btn.disabled=false;}
+   return;
+  }
   let days=365;
   if(action==="activate"||action==="extend"){
    const answer=prompt(u.username+" için kaç günlük lisans verilsin?",action==="activate"?"365":"30");

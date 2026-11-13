@@ -229,7 +229,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   const label=action==="activate"?"lisans verilsin":action==="extend"?"üyelik süresi uzatılsın":"hesap pasifleştirilsin";
   if(!confirm(u.username+" hesabı için "+label+" mı?"))return;
   btn.disabled=true;
-  try{await adminCall(action,{user_id:id,...(action==="activate"||action==="extend"?{days}:{})});toast("İşlem tamamlandı.");await loadDashboard();}
+  try{const result=await adminCall(action,{user_id:id,...(action==="activate"||action==="extend"?{days}:{})});toast(result.message||"İşlem tamamlandı.");await loadDashboard();}
   catch(err){toast(err.message);}
   finally{btn.disabled=false;}
  });

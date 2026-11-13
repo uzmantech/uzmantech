@@ -74,7 +74,7 @@
  </section>
 </main>
 <div class="register-toast" id="registerToast" role="status" aria-live="polite"></div>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/site.js?v=profile-language-menu-20261110-3"></script><script src="assets/js/language.js?v=ip-language-20261110-1"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js?v=live-presence-20261105-1"></script><script src="assets/js/site.js?v=register-page-otp-fix-20261113-1"></script><script src="assets/js/language.js?v=ip-language-20261110-1"></script>
 <script>
 (()=>{
  const form=document.getElementById("registerPageForm"),btn=document.getElementById("registerPageSubmit"),toast=document.getElementById("registerToast");
@@ -88,9 +88,9 @@
    const result=await window.UzmantechAPI.register({username:String(d.get("username")||"").trim(),email:String(d.get("email")||"").trim().toLowerCase(),phone:String(d.get("phone")||"").trim(),country_code:String(d.get("country_code")||"TR"),language_code:"tr",password,first_name:String(d.get("first_name")||"").trim(),last_name:String(d.get("last_name")||"").trim()});
    form.innerHTML='<div class="register-success"><span>✉</span><h2>E-posta doğrulaması</h2><p>'+String(result.message||"E-posta adresinize gönderilen 6 haneli kodu girin.")+'</p><label class="field"><b>Doğrulama kodu</b><input id="registerOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required></label><button class="register-submit" id="verifyRegister" type="button">Hesabı etkinleştir</button></div>';
    document.getElementById("verifyRegister").addEventListener("click",async()=>{
-    const code=document.getElementById("registerOtp").value.trim();if(!/^\\d{6}$/.test(code)){notify("6 haneli doğrulama kodunu girin.");return;}
+    const code=document.getElementById("registerOtp").value.trim();if(!/^\d{6}$/.test(code)){notify("6 haneli doğrulama kodunu girin.");document.getElementById("registerOtp").focus();return;}
     const verify=document.getElementById("verifyRegister");verify.disabled=true;verify.textContent="Doğrulanıyor...";
-    try{const done=await window.UzmantechAPI.registerVerify({email:String(d.get("email")||"").trim().toLowerCase(),code});window.UzmantechAPI.setSession(done.session_token);notify(done.message||"Hesabınız aktif.");location.href="odeme.html";}
+    try{const done=await window.UzmantechAPI.registerVerify({email:String(d.get("email")||"").trim().toLowerCase(),code});if(done.user?.status==="pending"||!done.session_token){form.innerHTML='<div class="register-success"><span>✓</span><h2>E-posta doğrulandı</h2><p>'+String(done.message||"E-posta adresiniz doğrulandı. Üyeliğiniz yönetici onayını bekliyor.")+'</p><a class="register-submit" href="index.html?login=1">Giriş ekranına dön</a></div>';return;}window.UzmantechAPI.setSession(done.session_token);notify(done.message||"Hesabınız aktif.");location.href="odeme.html";}
     catch(err){notify(err.message);verify.disabled=false;verify.textContent="Hesabı etkinleştir";}
    });
   }catch(error){notify(error.message);btn.disabled=false;btn.textContent="♙　Üyelik Oluştur";}

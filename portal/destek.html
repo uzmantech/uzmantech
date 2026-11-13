@@ -241,6 +241,19 @@ body:before{opacity:.42;background-size:64px 64px}
 .support-art-tag{bottom:3px;padding:10px 24px;border:1px solid #b7e6ee8a;background:linear-gradient(110deg,#b5dce52b,#8ea7b72b);color:#d2f4f8;font-size:clamp(12px,1.15vw,18px);letter-spacing:.5px;backdrop-filter:blur(12px);box-shadow:0 8px 30px #0004}
 @media(max-width:900px){.support-hero{grid-template-columns:1fr!important;padding:34px 28px!important}.support-headset-art{height:260px!important}.support-headset-svg{max-height:250px}.support-art-tag{bottom:0}}
 @media(max-width:600px){.support-hero{padding:27px 19px!important;min-height:unset!important}.support-hero h1{font-size:43px;letter-spacing:-1.8px}.support-hero .hero-kicker{font-size:13px}.support-hero p{font-size:14px}.support-headset-art{height:220px!important}.support-headset-svg{max-height:220px}.support-hero-points span{font-size:11px}.support-art-tag{font-size:11px;padding:8px 17px}}
+
+/* Use the available viewport instead of leaving oversized outer gutters */
+.contact-shell{width:calc(100% - 48px)!important;max-width:1800px!important;margin:0 auto!important;padding:18px 0 54px!important}
+.support-hero{width:100%!important;margin:0!important;min-height:440px!important}
+.support-topic-grid,.support-content-grid{width:100%!important}
+body{background:radial-gradient(ellipse at 0% 28%,#0b2637 0,transparent 30%),radial-gradient(ellipse at 100% 20%,#0a3040 0,transparent 31%),#080e16!important}
+@media(min-width:1500px){
+ .contact-shell{width:calc(100% - 64px)!important}
+ .support-hero{grid-template-columns:minmax(0,1.15fr) minmax(420px,.85fr)!important;padding-left:52px!important;padding-right:52px!important}
+}
+@media(max-width:600px){
+ .contact-shell{width:calc(100% - 24px)!important;padding:12px 0 36px!important}
+}
 </style>
 </head><body>
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">

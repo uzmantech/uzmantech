@@ -135,7 +135,7 @@
     :u.status==="disabled"
      ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Aktif Et</button>'
      :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
-   const buttons=actionButtons+' <button class="btn btn-danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
+   const buttons=actionButtons+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
    return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';

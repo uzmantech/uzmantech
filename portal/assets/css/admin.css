@@ -34,3 +34,10 @@
 /* Admin sidebar: enlarge and bold text only; preserve icon glyph sizing and appearance. */
 .sidebar nav button{font-size:14px;font-weight:400}
 .sidebar nav button>span{font-size:15px;font-weight:750;letter-spacing:.1px}
+
+.broadcast-compose .field textarea{width:100%;min-height:190px;padding:12px;border:1px solid #39465a;border-radius:9px;background:#0d121c;color:#f5f6fb;resize:vertical;line-height:1.6}
+.broadcast-compose .field input,.broadcast-compose .field select{width:100%;min-height:44px;padding:10px 12px;border:1px solid #39465a;border-radius:9px;background:#0d121c;color:#f5f6fb}
+.broadcast-actions{display:flex;gap:10px;flex-wrap:wrap}
+#broadcastDraftPanel{border-color:#286a9b}
+#broadcastProgress{line-height:1.7}
+@media(max-width:760px){.broadcast-actions .btn{width:100%}}

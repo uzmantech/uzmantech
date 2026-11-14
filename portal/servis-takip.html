@@ -90,6 +90,14 @@ const toast=m=>{const el=$("#toast");el.textContent=m;el.classList.add("show");s
 const open=id=>$("#"+id).classList.add("open");const close=el=>el.classList.remove("open");
 const formData=f=>Object.fromEntries(new FormData(f).entries());
 function page(name){$$(".side-link").forEach(x=>x.classList.toggle("active",x.dataset.page===name));$$(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+name));}
+function syncServiceHeader(user){
+ const host=$("#headerAuth");if(!host)return;
+ if(user){
+  host.innerHTML='<div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;color:#c6d9ee;text-align:right"><b style="display:block;color:#fff">'+esc(user.username||"Hesap")+'</b><small style="color:#7f9bb8">'+(user.role==="admin"?"Yönetici":"Üye")+'</small></span><button class="btn small" id="serviceLogout" type="button">Çıkış Yap</button></div>';
+ }else{
+  host.innerHTML='<button class="header-login" id="headerLogin" type="button">Giriş Yap</button><a class="header-register" id="headerRegister" href="kayit.html">Üye Ol</a>';
+ }
+}
 function stat(id,n){$("#"+id).textContent=n;}
 function device(r){return [r.brand,r.model].filter(Boolean).join(" ")||"Model belirtilmedi";}
 function render(){
@@ -108,20 +116,20 @@ async function load(){const r=await api("list");records=r.records||[];render();}
 async function start(){
  $("#app").hidden=true;$("#accessGate").hidden=false;
  let session;try{session=await UzmantechAPI.session();}catch(e){$("#gateText").textContent="Oturum doğrulanamadı. Lütfen giriş yapın.";return;}
- if(!session?.user){$("#gateTitle").textContent="Önce giriş yapmalısınız";$("#gateText").textContent="Servis Takip, Uzmantech hesabı ve aktif üyelik paketi olan kullanıcılara açıktır.";return;}
- currentUser=session.user;
+ if(!session?.user){syncServiceHeader(null);$("#gateTitle").textContent="Önce giriş yapmalısınız";$("#gateText").textContent="Servis Takip, Uzmantech hesabı ve aktif üyelik paketi olan kullanıcılara açıktır.";return;}
+ currentUser=session.user;syncServiceHeader(currentUser);
  try{await load();$("#accessGate").hidden=true;$("#app").hidden=false;$("#welcomeSub").textContent=(currentUser.username||"İşletmeniz")+", servis operasyonunuz hazır.";await loadProfile();}
  catch(e){$("#gateTitle").textContent=e.message.includes("üyelik")||e.message.includes("paket")?"Aktif üyelik gerekli":"Panel açılamadı";$("#gateText").textContent=e.message;$("#gateLogin").hidden=true;}
 }
 async function loadProfile(){try{const r=await api("profile_get");const f=$("#businessForm");for(const [k,v] of Object.entries(r.profile||{}))if(f.elements[k])f.elements[k].value=v||"";}catch(e){toast(e.message);}}
 function recordForm(r={}){const f=$("#recordForm");f.reset();for(const [k,v] of Object.entries(r))if(f.elements[k])f.elements[k].value=v??"";f.elements.id.value=r.id||"";$("#recordModalTitle").textContent=r.id?"Servis Kaydını Düzenle":"Yeni Servis Kaydı";open("recordModal");}
 async function detail(id){try{const r=await api("detail",{id});const x=r.record;$("#detailTitle").textContent="Servis #"+x.ticket_no+" · "+x.customer_name;$("#detailBody").innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px"><span class="status '+x.status+'">'+labels[x.status]+'</span><button class="btn primary small" id="editRecord">Kaydı Düzenle</button></div><div class="detail-grid">'+[["Müşteri",x.customer_name],["Telefon",x.customer_phone||"—"],["Cihaz",device(x)],["IMEI / Seri No",x.imei||"—"],["Kabul tarihi",date(x.received_at)],["Tahmini teslim",date(x.due_at)],["Ücret","₺"+Number(x.cost||0).toLocaleString("tr-TR",{minimumFractionDigits:2})],["Beraberinde gelenler",x.accessories||"—"],["Arıza",x.issue],["Teknik not",x.technician_note||"—"],["Parça notu",x.parts_note||"—"]].map(a=>'<div class="detail-box"><small>'+a[0]+'</small><strong>'+esc(a[1])+'</strong></div>').join("")+'</div><div class="timeline"><div class="eyebrow">SERVİS GEÇMİŞİ</div>'+(r.events||[]).map(e=>'<div class="timeline-row"><span class="timeline-mark"></span><div><strong>'+esc(e.description||e.event_type)+'</strong><small>'+new Date(e.created_at).toLocaleString("tr-TR")+'</small></div></div>').join("")+'</div>';$("#editRecord").onclick=()=>{close($("#detailModal"));recordForm(x)};open("detailModal");}catch(e){toast(e.message)}}
-document.addEventListener("click",e=>{const nav=e.target.closest("[data-page]");if(nav&&nav.classList.contains("side-link")){page(nav.dataset.page);return;}const go=e.target.closest("[data-go]");if(go){page(go.dataset.go);return;}const rec=e.target.closest("[data-record]");if(rec){detail(rec.dataset.record);return;}if(e.target.closest("[data-close]")){close(e.target.closest(".overlay"));return;}if(e.target.closest('[data-open="login"]')||e.target.id==="gateLogin")open("loginModal");});
+document.addEventListener("click",e=>{if(e.target.closest("#serviceLogout")){UzmantechAPI.setSession("");currentUser=null;syncServiceHeader(null);$("#app").hidden=true;$("#accessGate").hidden=false;$("#gateTitle").textContent="Oturum kapatıldı";$("#gateText").textContent="Servis Takip kullanmak için yeniden giriş yapın.";return;}const nav=e.target.closest("[data-page]");if(nav&&nav.classList.contains("side-link")){page(nav.dataset.page);return;}const go=e.target.closest("[data-go]");if(go){page(go.dataset.go);return;}const rec=e.target.closest("[data-record]");if(rec){detail(rec.dataset.record);return;}if(e.target.closest("[data-close]")){close(e.target.closest(".overlay"));return;}if(e.target.closest('[data-open="login"]')||e.target.id==="gateLogin")open("loginModal");});
 $("#newRecordBtn").onclick=$("#recordsNewBtn").onclick=()=>recordForm();
 $("#recordSearch").oninput=render;$("#statusFilter").onchange=render;
 $("#recordForm").onsubmit=async e=>{e.preventDefault();const d=formData(e.currentTarget),id=d.id;delete d.id;d.cost=Number(d.cost||0);if(!d.due_at)delete d.due_at;try{if(id){const r=await api("update",{id,...d});toast("Servis kaydı güncellendi.");}else{await api("create",d);toast("Yeni servis kaydı oluşturuldu.");}close($("#recordModal"));await load();}catch(err){toast(err.message)}};
 $("#businessForm").onsubmit=async e=>{e.preventDefault();try{await api("profile_save",formData(e.currentTarget));toast("İşletme bilgileriniz kaydedildi.");}catch(err){toast(err.message)}};
-$("#loginForm").onsubmit=async e=>{e.preventDefault();const d=formData(e.currentTarget);try{const r=await UzmantechAPI.login(d);UzmantechAPI.setSession(r.session_token);close($("#loginModal"));await start();}catch(err){toast(err.message)}};
+$("#loginForm").onsubmit=async e=>{e.preventDefault();const d=formData(e.currentTarget);try{const r=await UzmantechAPI.login({identifier:d.identifier,password:d.password});UzmantechAPI.setSession(r.session_token);close($("#loginModal"));await start();}catch(err){toast(err.message)}};
 $("#exportBtn").onclick=()=>{const cols=["ticket_no","customer_name","customer_phone","brand","model","imei","issue","status","received_at","cost"];const csv=[cols.join(";"),...records.map(r=>cols.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(";"))].join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));a.download="uzmantech-servis-kayitlari.csv";a.click();URL.revokeObjectURL(a.href);};
 start();
 })();

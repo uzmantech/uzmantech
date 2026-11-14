@@ -38,14 +38,13 @@ button,input,select,textarea{font:inherit}.service-wrap{max-width:1540px;margin:
   <a class="site-nav-link" href="archive.html"><span class="site-nav-icon">▤</span><b>Dosya Arşivi</b></a>
   <a class="site-nav-link" href="index.html#download"><span class="site-nav-icon">⇩</span><b>İndirilenler</b></a>
   <a class="site-nav-link" href="index.html#updates"><span class="site-nav-icon">▧</span><b>Haberler</b></a>
-  <a class="site-nav-link" href="cam-uyumluluk.html"><span class="site-nav-icon">▦</span><b>Cam Uyumluluğu</b></a>
   <a class="site-nav-link" href="yazilimci-tv.html"><span class="site-nav-icon">▶</span><b>Yazılımcı TV</b></a>
   <div class="site-nav-dropdown"><button class="site-nav-link site-nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="site-nav-icon">⚒</span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></button><div class="site-nav-dropdown-menu"><a class="site-nav-dropdown-item" href="servis-takip.html"><span>▣</span> Servis Takip</a></div></div>
   <a class="site-nav-link" href="paketler.html"><span class="site-nav-icon">♛</span><b>Paketler</b></a><a class="site-nav-link" href="destek.html"><span class="site-nav-icon">?</span><b>İletişim</b></a>
  </nav>
  <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button><div class="dash-top-actions"><div class="header-auth" id="headerAuth"><button class="header-login" id="headerLogin" type="button" data-open="login">Giriş Yap</button><a class="header-register" id="headerRegister" href="kayit.html">Üye Ol</a></div></div>
 </header>
-<section id="accessGate" class="gate" hidden><div class="gate-icon">🔐</div><div class="eyebrow">UZMANTECH SERVİS YÖNETİMİ</div><h1 id="gateTitle">Servis Takip erişimi</h1><p id="gateText">Servis kayıtlarınızı yönetmek için giriş yapmanız ve aktif bir üyelik paketinizin bulunması gerekir.</p><button class="btn primary" id="gateLogin" data-open="login">GİRİŞ YAP</button> <a class="btn" href="paketler.html">PAKETLERİ İNCELE</a></section>
+<section id="accessGate" class="gate" hidden><div class="gate-icon">🔐</div><div class="eyebrow">UZMANTECH SERVİS YÖNETİMİ</div><h1 id="gateTitle">Servis Takip erişimi</h1><p id="gateText">Oturumunuz doğrulanıyor. Lütfen bekleyin.</p><button class="btn primary" id="gateLogin" data-open="login" hidden>GİRİŞ YAP</button><button class="btn" id="gateRetry" type="button" hidden>TEKRAR DENE</button> <a class="btn" href="paketler.html">PAKETLERİ İNCELE</a></section>
 <main id="app" class="service-wrap" hidden>
  <div class="service-top"><div><div class="eyebrow">SERVİS OPERASYON MERKEZİ / WEB PANELİ</div><h1>Servis Takip</h1><p>Her cihazın yolculuğu kayıt altında. Kabulden teslimata tüm süreç tek ekranda.</p></div><div class="top-actions"><button class="btn ghost" id="exportBtn">↓ Dışa Aktar</button><button class="btn primary" id="newRecordBtn">＋ Yeni Servis Kaydı</button></div></div>
  <div class="layout">
@@ -113,17 +112,42 @@ function render(){
 }
 async function api(action,data={}){const r=await UzmantechAPI.serviceTracking({action,...data});if(!r.success)throw new Error(r.message||"İşlem başarısız.");return r;}
 async function load(){const r=await api("list");records=r.records||[];render();}
+let startupBusy=false;
 async function start(){
- $("#app").hidden=true;$("#accessGate").hidden=false;
- let session;try{session=await UzmantechAPI.session();}catch(e){$("#gateText").textContent="Oturum doğrulanamadı. Lütfen giriş yapın.";return;}
- if(!session?.user){syncServiceHeader(null);$("#gateTitle").textContent="Önce giriş yapmalısınız";$("#gateText").textContent="Servis Takip, Uzmantech hesabı ve aktif üyelik paketi olan kullanıcılara açıktır.";return;}
+ if(startupBusy)return;startupBusy=true;
+ $("#app").hidden=true;$("#accessGate").hidden=false;$("#gateLogin").hidden=true;$("#gateRetry").hidden=true;
+ $("#gateTitle").textContent="Oturum kontrol ediliyor";$("#gateText").textContent="Hesabınız ve servis erişiminiz doğrulanıyor.";
+ const token=localStorage.getItem("uzmantech_web_session")||sessionStorage.getItem("uzmantech_web_session")||"";
+ let session=null,lastError=null;
+ for(let attempt=0;attempt<3;attempt++){
+  try{session=await UzmantechAPI.session();lastError=null;break;}
+  catch(e){lastError=e;if(attempt<2)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)));}
+ }
+ if(lastError){
+  $("#gateTitle").textContent="Oturum doğrulanamadı";
+  $("#gateText").textContent=token?"Oturum anahtarınız mevcut ancak sunucudan doğrulama yanıtı alınamadı. Girişiniz silinmedi. Bağlantıyı kontrol edip tekrar deneyin.": "Sunucuya ulaşılamadı. Lütfen bağlantınızı kontrol edip tekrar deneyin.";
+  $("#gateLogin").hidden=!!token;$("#gateRetry").hidden=false;
+  if(!token)syncServiceHeader(null);
+  startupBusy=false;return;
+ }
+ if(!session?.user){syncServiceHeader(null);$("#gateTitle").textContent="Önce giriş yapmalısınız";$("#gateText").textContent="Servis Takip, Uzmantech hesabı ve aktif üyelik paketi olan kullanıcılara açıktır.";$(" #gateLogin".trim()).hidden=false;startupBusy=false;return;}
  currentUser=session.user;syncServiceHeader(currentUser);
- try{await load();$("#accessGate").hidden=true;$("#app").hidden=false;$("#welcomeSub").textContent=(currentUser.username||"İşletmeniz")+", servis operasyonunuz hazır.";await loadProfile();}
- catch(e){$("#gateTitle").textContent=e.message.includes("üyelik")||e.message.includes("paket")?"Aktif üyelik gerekli":"Panel açılamadı";$("#gateText").textContent=e.message;$("#gateLogin").hidden=true;}
+ try{
+  await load();$("#accessGate").hidden=true;$("#app").hidden=false;
+  $("#welcomeSub").textContent=(currentUser.username||"İşletmeniz")+", servis operasyonunuz hazır.";
+  await loadProfile();
+ }catch(e){
+  const msg=String(e.message||"");
+  $("#gateTitle").textContent=/üyelik|paket|erişim/i.test(msg)?"Aktif üyelik gerekli":"Servis paneli açılamadı";
+  $("#gateText").textContent=msg||"Servis verileri alınamadı. Tekrar deneyin.";
+  $("#gateLogin").hidden=true;$("#gateRetry").hidden=false;
+ }
+ startupBusy=false;
 }
 async function loadProfile(){try{const r=await api("profile_get");const f=$("#businessForm");for(const [k,v] of Object.entries(r.profile||{}))if(f.elements[k])f.elements[k].value=v||"";}catch(e){toast(e.message);}}
 function recordForm(r={}){const f=$("#recordForm");f.reset();for(const [k,v] of Object.entries(r))if(f.elements[k])f.elements[k].value=v??"";f.elements.id.value=r.id||"";$("#recordModalTitle").textContent=r.id?"Servis Kaydını Düzenle":"Yeni Servis Kaydı";open("recordModal");}
 async function detail(id){try{const r=await api("detail",{id});const x=r.record;$("#detailTitle").textContent="Servis #"+x.ticket_no+" · "+x.customer_name;$("#detailBody").innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px"><span class="status '+x.status+'">'+labels[x.status]+'</span><button class="btn primary small" id="editRecord">Kaydı Düzenle</button></div><div class="detail-grid">'+[["Müşteri",x.customer_name],["Telefon",x.customer_phone||"—"],["Cihaz",device(x)],["IMEI / Seri No",x.imei||"—"],["Kabul tarihi",date(x.received_at)],["Tahmini teslim",date(x.due_at)],["Ücret","₺"+Number(x.cost||0).toLocaleString("tr-TR",{minimumFractionDigits:2})],["Beraberinde gelenler",x.accessories||"—"],["Arıza",x.issue],["Teknik not",x.technician_note||"—"],["Parça notu",x.parts_note||"—"]].map(a=>'<div class="detail-box"><small>'+a[0]+'</small><strong>'+esc(a[1])+'</strong></div>').join("")+'</div><div class="timeline"><div class="eyebrow">SERVİS GEÇMİŞİ</div>'+(r.events||[]).map(e=>'<div class="timeline-row"><span class="timeline-mark"></span><div><strong>'+esc(e.description||e.event_type)+'</strong><small>'+new Date(e.created_at).toLocaleString("tr-TR")+'</small></div></div>').join("")+'</div>';$("#editRecord").onclick=()=>{close($("#detailModal"));recordForm(x)};open("detailModal");}catch(e){toast(e.message)}}
+$("#gateRetry").onclick=()=>start();
 document.addEventListener("click",e=>{if(e.target.closest("#serviceLogout")){UzmantechAPI.setSession("");currentUser=null;syncServiceHeader(null);$("#app").hidden=true;$("#accessGate").hidden=false;$("#gateTitle").textContent="Oturum kapatıldı";$("#gateText").textContent="Servis Takip kullanmak için yeniden giriş yapın.";return;}const nav=e.target.closest("[data-page]");if(nav&&nav.classList.contains("side-link")){page(nav.dataset.page);return;}const go=e.target.closest("[data-go]");if(go){page(go.dataset.go);return;}const rec=e.target.closest("[data-record]");if(rec){detail(rec.dataset.record);return;}if(e.target.closest("[data-close]")){close(e.target.closest(".overlay"));return;}if(e.target.closest('[data-open="login"]')||e.target.id==="gateLogin")open("loginModal");});
 $("#newRecordBtn").onclick=$("#recordsNewBtn").onclick=()=>recordForm();
 $("#recordSearch").oninput=render;$("#statusFilter").onchange=render;

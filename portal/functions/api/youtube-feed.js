@@ -4,7 +4,7 @@ export async function onRequestGet({ request }) {
   try {
     const upstream = await fetch(feedUrl, {
       headers: { "User-Agent": "UzmantechPortal/1.0" },
-      cf: { cacheTtl: 900, cacheEverything: true }
+      cf: { cacheTtl: 300, cacheEverything: true }
     });
     if (!upstream.ok) {
       return Response.json({ videos: [], error: "YouTube akışı alınamadı." }, { status: 502 });
@@ -23,9 +23,9 @@ export async function onRequestGet({ request }) {
         published: read("published"),
         thumbnail: id ? "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg" : ""
       };
-    }).filter((video) => /^[A-Za-z0-9_-]{11}$/.test(video.id) && video.title).slice(0, 12);
+    }).filter((video) => /^[A-Za-z0-9_-]{11}$/.test(video.id) && video.title);\n    // YouTube RSS returns the latest channel uploads. Shuffle and select a subset\n    // so each page visit presents a different mix instead of a fixed list.\n    for (let i = videos.length - 1; i > 0; i--) {\n      const j = Math.floor(Math.random() * (i + 1));\n      [videos[i], videos[j]] = [videos[j], videos[i]];\n    }\n    videos.splice(8);
     return Response.json({ videos }, {
-      headers: { "Cache-Control": "public, max-age=300, s-maxage=900" }
+      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" }
     });
   } catch (_) {
     return Response.json({ videos: [], error: "YouTube akışına şu anda ulaşılamıyor." }, { status: 502 });

@@ -23,7 +23,14 @@ export async function onRequestGet({ request }) {
         published: read("published"),
         thumbnail: id ? "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg" : ""
       };
-    }).filter((video) => /^[A-Za-z0-9_-]{11}$/.test(video.id) && video.title);\n    // YouTube RSS returns the latest channel uploads. Shuffle and select a subset\n    // so each page visit presents a different mix instead of a fixed list.\n    for (let i = videos.length - 1; i > 0; i--) {\n      const j = Math.floor(Math.random() * (i + 1));\n      [videos[i], videos[j]] = [videos[j], videos[i]];\n    }\n    videos.splice(8);
+    }).filter((video) => /^[A-Za-z0-9_-]{11}$/.test(video.id) && video.title);
+    // YouTube RSS returns the latest channel uploads. Shuffle and select a subset
+    // so each page visit presents a different mix instead of a fixed list.
+    for (let i = videos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [videos[i], videos[j]] = [videos[j], videos[i]];
+    }
+    videos.splice(8);
     return Response.json({ videos }, {
       headers: { "Cache-Control": "no-store, no-cache, must-revalidate" }
     });

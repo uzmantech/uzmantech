@@ -49,7 +49,10 @@ export async function onRequest({params}:Context):Promise<Response>{
  const canonical="https://uzmantool.com.tr/haber/"+encodeURIComponent(slug);
  const date=item.published_at&& !Number.isNaN(Date.parse(item.published_at))?new Date(item.published_at).toISOString():new Date().toISOString();
  const source=String(item.source_name||"Teknoloji haber kaynağı");
- const sourceUrl=String(item.source_url||"");\n const articleText=await fetchArticleText(sourceUrl);\n const storyText=articleText||summary;\n const storyParagraphs=storyText.split(/(?<=[.!?])\\s+/).filter(Boolean).map(part=>"<p>"+esc(part)+"</p>").join("");
+ const sourceUrl=String(item.source_url||"");
+ const articleText=await fetchArticleText(sourceUrl);
+ const storyText=articleText||summary;
+ const storyParagraphs=storyText.split(/(?<=[.!?])\\s+/).filter(Boolean).map(part=>"<p>"+esc(part)+"</p>").join("");
  const image=String(item.image_url||"");
  const schema={"@context":"https://schema.org","@type":"NewsArticle","headline":title,"description":summary,"datePublished":date,"dateModified":date,"mainEntityOfPage":canonical,"author":{"@type":"Organization","name":source,"url":sourceUrl},"publisher":{"@type":"Organization","name":"Uzmantech","url":"https://uzmantool.com.tr/"}};
  if(/^https:\/\//.test(image))Object.assign(schema,{image:[image]});

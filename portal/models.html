@@ -100,4 +100,5 @@
 <script id="site-global-nav-controller">
 (()=>{const header=document.querySelector(".site-global-header");if(!header)return;const button=header.querySelector(".site-mobile-nav-toggle"),nav=header.querySelector(".site-global-nav");if(!button||!nav)return;button.setAttribute("aria-controls","siteGlobalNav");nav.id="siteGlobalNav";button.addEventListener("click",()=>{const opened=!nav.classList.contains("is-open");nav.classList.toggle("is-open",opened);button.setAttribute("aria-expanded",String(opened));button.setAttribute("aria-label",opened?"Menüyü kapat":"Menüyü aç");});nav.addEventListener("click",event=>{if(!event.target.closest("a"))return;nav.classList.remove("is-open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","Menüyü aç");});})();
 </script>
-<footer class="uzmantech-legal-footer"><nav><a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="hakkimizda.html">Hakkımızda</a><a href="destek.html">İletişim</a><a href="kullanim-sartlari.html">Kullanım Şartları</a></nav></footer></body></html>
+<footer class="uzmantech-legal-footer"><nav><a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="hakkimizda.html">Hakkımızda</a><a href="destek.html">İletişim</a><a href="kullanim-sartlari.html">Kullanım Şartları</a></nav></footer><script src="assets/js/site-nav-dropdown.js" defer></script>
+</body></html>

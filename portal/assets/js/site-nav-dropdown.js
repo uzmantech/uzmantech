@@ -1,16 +1,45 @@
 (()=>{
  if(window.__uzDropdownBound)return;
  window.__uzDropdownBound=true;
- document.addEventListener("click",function(e){
+ const close=()=>{
+  document.querySelectorAll(".site-nav-dropdown.is-open").forEach(drop=>{
+   const menu=drop.querySelector(".site-nav-dropdown-menu");
+   if(menu&&menu.dataset.portalOpen==="1"){
+    menu.classList.remove("is-portal-open");
+    menu.style.removeProperty("top");menu.style.removeProperty("left");
+    menu.dataset.portalOpen="";
+    drop.appendChild(menu);
+   }
+   drop.classList.remove("is-open");
+   drop.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");
+  });
+ };
+ const open=(drop,toggle)=>{
+  close();
+  const menu=drop.querySelector(".site-nav-dropdown-menu");
+  if(!menu)return;
+  const rect=toggle.getBoundingClientRect();
+  document.body.appendChild(menu);
+  menu.dataset.portalOpen="1";
+  menu.classList.add("is-portal-open");
+  menu.style.top=Math.round(rect.bottom+6)+"px";
+  menu.style.left=Math.max(8,Math.min(Math.round(rect.left),window.innerWidth-menu.offsetWidth-8))+"px";
+  drop.classList.add("is-open");
+  toggle.setAttribute("aria-expanded","true");
+ };
+ document.addEventListener("click",e=>{
   const toggle=e.target.closest(".site-nav-dropdown-toggle");
-  const current=toggle&&toggle.closest(".site-nav-dropdown");
-  if(current){
-   const opening=!current.classList.contains("is-open");
-   document.querySelectorAll(".site-nav-dropdown.is-open").forEach(function(node){node.classList.remove("is-open");node.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");});
-   if(opening){current.classList.add("is-open");toggle.setAttribute("aria-expanded","true");}
+  if(toggle){
+   const drop=toggle.closest(".site-nav-dropdown");
+   if(drop?.classList.contains("is-open"))close();else if(drop)open(drop,toggle);
    e.preventDefault();e.stopPropagation();return;
   }
-  if(!e.target.closest(".site-nav-dropdown"))document.querySelectorAll(".site-nav-dropdown.is-open").forEach(function(node){node.classList.remove("is-open");node.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");});
+  if(e.target.closest(".site-nav-dropdown-menu.is-portal-open"))return;
+  if(!e.target.closest(".site-nav-dropdown"))close();
  });
- document.addEventListener("keydown",function(e){if(e.key==="Escape")document.querySelectorAll(".site-nav-dropdown.is-open").forEach(function(node){node.classList.remove("is-open");node.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");});});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
+ window.addEventListener("resize",close);
+ document.addEventListener("scroll",e=>{
+  if(document.querySelector(".site-nav-dropdown.is-open")&&!e.target.closest?.(".site-nav-dropdown-menu"))close();
+ },true);
 })();

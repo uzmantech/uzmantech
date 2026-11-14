@@ -436,6 +436,7 @@
     renderHero();startHero();
   }
 
+  window.__uzDropdownBound=true;
   document.addEventListener("click",e=>{
     const toolsToggle=e.target.closest(".site-nav-dropdown-toggle");
     const toolsDropdown=toolsToggle?.closest(".site-nav-dropdown");

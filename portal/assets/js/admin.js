@@ -7,7 +7,7 @@
  let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="email")loadBroadcasts().catch(e=>toast(e.message));if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="email"){loadBroadcasts().catch(e=>toast(e.message));loadMailLog().catch(e=>toast(e.message));}if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
@@ -262,6 +262,29 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  let activeBroadcast=null;
  const audienceNames={members:"Doğrulanmış üyeler (hizmet duyurusu)",newsletter:"İzinli bülten aboneleri (kampanya)"};
  const campaignStatusNames={draft:"Taslak",sending:"Gönderiliyor",completed:"Tamamlandı",cancelled:"İptal"};
+ let mailLogs=[];
+ const mailStatusNames={sent:"Gönderildi",sending:"Gönderiliyor",queued:"Kuyrukta",failed:"Başarısız"};
+ function renderMailLog(){
+  const q=($("#mailLogSearch")?.value||"").trim().toLocaleLowerCase("tr-TR");
+  const status=$("#mailLogStatus")?.value||"";
+  const rows=mailLogs.filter(x=>(!status||x.status===status)&&[x.recipient,x.username,x.subject,x.source].join(" ").toLocaleLowerCase("tr-TR").includes(q));
+  $("#mailLogBody").innerHTML=rows.map(x=>{
+   const stamp=x.sent_at||x.created_at;
+   const date=stamp?new Date(stamp).toLocaleString("tr-TR"):"-";
+   const statusLabel=mailStatusNames[x.status]||x.status||"-";
+   const statusClass=x.status==="sent"?"active":x.status==="failed"?"expired":"pending";
+   const detail=x.body?'<details><summary>Mesajı görüntüle</summary><p class="ticket-message">'+esc(x.body)+'</p></details>':x.last_error?'<details><summary>Hata ayrıntısı</summary><p class="ticket-message">'+esc(x.last_error)+'</p></details>':'<span class="muted">İçerik bu eski kayıtta tutulmamış.</span>';
+   return '<tr><td><strong>'+esc(x.username||x.recipient||"-")+'</strong>'+(x.username?'<br><small>'+esc(x.recipient)+'</small>':'')+'</td><td>'+esc(x.subject||"-")+'</td><td>'+esc(x.source||"-")+'</td><td><span class="status '+statusClass+'">'+esc(statusLabel)+'</span></td><td>'+esc(date)+'</td><td>'+detail+(x.provider_id?'<br><small>Resend ID: '+esc(x.provider_id)+'</small>':'')+'</td></tr>';
+  }).join("")||'<tr><td colspan="6">Bu filtreyle eşleşen e-posta kaydı yok.</td></tr>';
+  $("#mailLogSummary").textContent=rows.length+" kayıt gösteriliyor · Son 300 kayıt listelenir.";
+ }
+ async function loadMailLog(){
+  $("#mailLogBody").innerHTML='<tr><td colspan="6">E-posta kayıtları yükleniyor…</td></tr>';
+  const result=await api.mailLogAdmin();mailLogs=result.logs||[];renderMailLog();
+ }
+ $("#mailLogSearch")?.addEventListener("input",renderMailLog);
+ $("#mailLogStatus")?.addEventListener("change",renderMailLog);
+ $("#reloadMailLog")?.addEventListener("click",()=>loadMailLog().catch(e=>toast(e.message)));
  async function loadBroadcasts(){
   const r=await api.broadcastAdmin({action:"broadcast_list"});
   const rows=r.campaigns||[];

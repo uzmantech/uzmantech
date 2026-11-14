@@ -1,4 +1,19 @@
 (()=>{
+ // Keep the global navigation compact: move Cam Uyumluluğu into Araçlar on every page using this shared controller.
+ const globalNav=document.querySelector(".site-global-nav");
+ if(globalNav){
+  const camLink=globalNav.querySelector('a[href="cam-uyumluluk.html"]');
+  let toolsMenu=globalNav.querySelector(".site-nav-dropdown .site-nav-dropdown-menu");
+  if(camLink&&toolsMenu){
+   const active=location.pathname.toLowerCase().endsWith("/cam-uyumluluk.html");
+   camLink.classList.remove("site-nav-link");
+   camLink.classList.add("site-nav-dropdown-item");
+   camLink.classList.toggle("active",active);
+   const icon=camLink.querySelector(".site-nav-icon");
+   if(icon){icon.className="";icon.setAttribute("aria-hidden","true");}
+   toolsMenu.appendChild(camLink);
+  }
+ }
  if(window.__uzDropdownBound)return;
  window.__uzDropdownBound=true;
  const close=()=>{

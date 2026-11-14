@@ -143,3 +143,59 @@ body.glass-code-page>svg.icon-sprite{display:none!important;position:absolute!im
 body.glass-code-page>.site-global-header{position:relative!important;top:auto!important}
 body.glass-code-page .compat-page{margin-top:0!important;padding-top:28px!important}
 @media(max-width:700px){body.glass-code-page .compat-page{padding-top:20px!important}}
+
+
+/* VisionOS glass treatment aligned with the Service Tracking dashboard */
+body.glass-code-page{position:relative;isolation:isolate;overflow-x:hidden;background:#070b18!important;color:#f4f8ff!important}
+body.glass-code-page:before,body.glass-code-page:after{content:"";position:fixed;z-index:-1;pointer-events:none;width:58vw;height:58vw;max-width:900px;max-height:900px;border-radius:50%;filter:blur(95px);opacity:.24}
+body.glass-code-page:before{top:-28vw;left:-18vw;background:radial-gradient(circle,rgba(0,145,255,.85) 0%,rgba(0,145,255,.28) 34%,transparent 70%)}
+body.glass-code-page:after{right:-20vw;bottom:-32vw;background:radial-gradient(circle,rgba(139,70,255,.8) 0%,rgba(139,70,255,.24) 36%,transparent 70%)}
+body.glass-code-page .compat-intro h1{color:#f7faff;text-shadow:0 3px 28px rgba(78,155,255,.15)}
+body.glass-code-page .compat-eyebrow{color:#a8c9ef}
+body.glass-code-page .compat-intro p{color:#c6d5e9}
+body.glass-code-page .compat-tool,
+body.glass-code-page .compat-info,
+body.glass-code-page .compat-model-row,
+body.glass-code-page .compat-empty,
+body.glass-code-page .compat-results{border-color:rgba(157,190,235,.16)}
+body.glass-code-page .compat-tool{position:relative;overflow:visible;border:1px solid rgba(174,205,245,.2);border-radius:22px;background:linear-gradient(135deg,rgba(20,39,68,.68),rgba(11,21,40,.58));box-shadow:0 20px 60px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.10);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:border-color .22s ease,box-shadow .22s ease}
+body.glass-code-page .compat-tool:hover{border-color:rgba(65,218,255,.48);box-shadow:0 22px 64px rgba(0,0,0,.3),0 0 28px rgba(0,190,255,.10),inset 0 1px 0 rgba(255,255,255,.13)}
+body.glass-code-page .compat-tabs{border-color:rgba(174,205,245,.15)}
+body.glass-code-page .compat-tab{color:#b6c8df;font-weight:700}
+body.glass-code-page .compat-tab.is-active{color:#fff}
+body.glass-code-page .compat-tab.is-active:after{background:#42d7f5;box-shadow:0 0 14px rgba(66,215,245,.65)}
+body.glass-code-page .compat-tab small{background:rgba(95,140,200,.17);color:#c2d7f0}
+body.glass-code-page .compat-search-row input,
+body.glass-code-page .compat-selects select{border:1px solid rgba(165,197,235,.25)!important;border-radius:12px!important;background:rgba(5,15,31,.58)!important;color:#f5f9ff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
+body.glass-code-page .compat-search-row input:focus,
+body.glass-code-page .compat-selects select:focus{border-color:rgba(63,215,255,.8)!important;box-shadow:0 0 0 3px rgba(36,190,255,.13),0 0 20px rgba(36,190,255,.10)!important}
+body.glass-code-page .compat-search-row input::placeholder{color:#8da6c3}
+body.glass-code-page .compat-search-row button{border:1px solid rgba(117,208,255,.42);border-radius:12px;background:linear-gradient(135deg,#167bdc,#6551d9);box-shadow:0 8px 24px rgba(41,117,236,.22);font-size:13px;font-weight:800}
+body.glass-code-page .compat-search-row button:hover{background:linear-gradient(135deg,#2199f5,#8066f4);box-shadow:0 0 22px rgba(64,180,255,.25)}
+body.glass-code-page .compat-search-block>label,
+body.glass-code-page .compat-selects label{color:#e6f0ff;font-weight:800}
+body.glass-code-page .compat-or{color:#a9bdd6}
+body.glass-code-page .compat-or:before,
+body.glass-code-page .compat-or:after{background:rgba(174,205,245,.18)}
+body.glass-code-page .compat-disclaimer{color:#aebfd5}
+body.glass-code-page .compat-section-heading{border-color:rgba(174,205,245,.2)}
+body.glass-code-page .compat-section-heading h2{color:#f5f9ff;font-weight:800}
+body.glass-code-page .compat-section-heading>div>span,
+body.glass-code-page .compat-info article>span{color:#9fb8d7}
+body.glass-code-page .compat-source{color:#b4c6dd}
+body.glass-code-page .compat-results-copy,
+body.glass-code-page .compat-empty p,
+body.glass-code-page .compat-info p{color:#bdcce0}
+body.glass-code-page .compat-result-summary{color:#b9cbe1}
+body.glass-code-page .compat-result-summary strong{color:#fff;font-weight:850}
+body.glass-code-page .compat-model-row{border-color:rgba(174,205,245,.13);color:#e5efff}
+body.glass-code-page .compat-model-row strong{font-weight:700}
+body.glass-code-page .compat-model-row span{color:#9db4d2}
+body.glass-code-page .compat-info{border-color:rgba(174,205,245,.17)}
+body.glass-code-page .compat-info h3{color:#f0f6ff;font-weight:800}
+body.glass-code-page .compat-suggestions{border:1px solid rgba(174,205,245,.25);border-radius:13px;background:rgba(9,22,42,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 18px 45px rgba(0,0,0,.45)}
+body.glass-code-page .compat-suggestion,
+body.glass-code-page .compat-suggest-all{color:#edf5ff;font-weight:650}
+body.glass-code-page .compat-suggestion:hover,
+body.glass-code-page .compat-suggest-all:hover{background:rgba(48,126,196,.2)}
+@media(max-width:700px){body.glass-code-page:before,body.glass-code-page:after{width:100vw;height:100vw;filter:blur(70px)}body.glass-code-page .compat-tool{border-radius:18px}body.glass-code-page .compat-search-row button{min-height:48px}}

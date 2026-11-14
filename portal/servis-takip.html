@@ -95,7 +95,7 @@ function syncServiceHeader(user){
  if(user){
   host.innerHTML='<div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;color:#c6d9ee;text-align:right"><b style="display:block;color:#fff">'+esc(user.username||"Hesap")+'</b><small style="color:#7f9bb8">'+(user.role==="admin"?"Yönetici":"Üye")+'</small></span><button class="btn small" id="serviceLogout" type="button">Çıkış Yap</button></div>';
  }else{
-  host.innerHTML='<button class="header-login" id="headerLogin" type="button">Giriş Yap</button><a class="header-register" id="headerRegister" href="kayit.html">Üye Ol</a>';
+  host.innerHTML='<button class="header-login" id="headerLogin" data-open="login" type="button">Giriş Yap</button><a class="header-register" id="headerRegister" href="kayit.html">Üye Ol</a>';
  }
 }
 function stat(id,n){$("#"+id).textContent=n;}

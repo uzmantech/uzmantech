@@ -437,6 +437,28 @@
   }
 
   document.addEventListener("click",e=>{
+    const toolsToggle=e.target.closest(".site-nav-dropdown-toggle");
+    const toolsDropdown=toolsToggle?.closest(".site-nav-dropdown");
+    if(toolsToggle&&toolsDropdown){
+      const opening=!toolsDropdown.classList.contains("is-open");
+      document.querySelectorAll(".site-nav-dropdown.is-open").forEach(item=>{
+        item.classList.remove("is-open");
+        item.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");
+      });
+      if(opening){
+        toolsDropdown.classList.add("is-open");
+        toolsToggle.setAttribute("aria-expanded","true");
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if(!e.target.closest(".site-nav-dropdown")){
+      document.querySelectorAll(".site-nav-dropdown.is-open").forEach(item=>{
+        item.classList.remove("is-open");
+        item.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");
+      });
+    }
     const profileToggle=e.target.closest("#profileBtn");
     const dropdown=$("#profileDropdown");
     if(profileToggle&&dropdown){const opening=dropdown.hidden;dropdown.hidden=!opening;profileToggle.setAttribute("aria-expanded",String(opening));e.stopPropagation();return;}
@@ -469,7 +491,7 @@
   });
   $("#deviceSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=$("#deviceQuery").value.trim();location.href="archive.html"+(q?"?q="+encodeURIComponent(q):"");});
   $("#modalClose")?.addEventListener("click",closeModal);
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();const d=$("#profileDropdown");if(d)d.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");}});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();const d=$("#profileDropdown");if(d)d.hidden=true;$("#profileBtn")?.setAttribute("aria-expanded","false");document.querySelectorAll(".site-nav-dropdown.is-open").forEach(item=>{item.classList.remove("is-open");item.querySelector(".site-nav-dropdown-toggle")?.setAttribute("aria-expanded","false");});}});
   (async()=>{
   
   document.addEventListener("change",e=>{

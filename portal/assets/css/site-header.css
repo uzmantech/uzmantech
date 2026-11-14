@@ -2648,3 +2648,6 @@ html body.archive-shell>header.site-global-header.site-global-header-archive>.si
  .site-nav-dropdown-toggle{justify-content:flex-start}
  .site-nav-dropdown-menu{top:calc(100% + 2px);left:0}
 }
+
+/* Dropdown viewport-layer fix: menu is portaled to body while open. */
+.site-nav-dropdown-menu.is-portal-open{display:block!important;position:fixed!important;z-index:2147483000!important;min-width:190px!important;max-width:calc(100vw - 16px)!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}

@@ -7,11 +7,11 @@ const esc=(v:unknown)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 function decodeHtml(value:string):string {
  return value.replace(/&nbsp;|&#160;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"')
   .replace(/&#39;|&apos;/gi,"'").replace(/&lt;/gi,"<").replace(/&gt;/gi,">")
-  .replace(/&#(\\d+);/g,(_,n)=>String.fromCodePoint(Number(n)))
-  .replace(/&#x([\\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16)));
+  .replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n)))
+  .replace(/&#x([\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16)));
 }
 async function fetchArticleText(sourceUrl:string):Promise<string> {
- if(!/^https:\\/\\//i.test(sourceUrl)) return "";
+ if(!/^https:\/\//i.test(sourceUrl)) return "";
  try {
   const u=new URL(sourceUrl);
   if(!["donanimhaber.com","www.donanimhaber.com","webtekno.com","www.webtekno.com","shiftdelete.net","www.shiftdelete.net","technopat.net","www.technopat.net","webrazzi.com","www.webrazzi.com"].includes(u.hostname.toLowerCase())) return "";
@@ -19,15 +19,15 @@ async function fetchArticleText(sourceUrl:string):Promise<string> {
   if(!res.ok) return "";
   const html=await res.text();
   const candidates=[
-   html.match(/<article\\b[^>]*>([\\s\\S]*?)<\\/article>/i)?.[1],
-   html.match(/<[^>]+itemprop=["']articleBody["'][^>]*>([\\s\\S]*?)<\\/[^>]+>/i)?.[1],
-   html.match(/<main\\b[^>]*>([\\s\\S]*?)<\\/main>/i)?.[1]
+   html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i)?.[1],
+   html.match(/<[^>]+itemprop=["']articleBody["'][^>]*>([\s\S]*?)<\/[^>]+>/i)?.[1],
+   html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]
   ].filter(Boolean) as string[];
   for(const candidate of candidates){
-   const clean=decodeHtml(candidate.replace(/<(script|style|nav|footer|header|aside|svg)\\b[^>]*>[\\s\\S]*?<\\/\\1>/gi," ")
-    .replace(/<br\\s*\\/?>(?)/gi," ")
-    .replace(/<\\/(p|div|h[1-6]|li)>/gi,"\\n")
-    .replace(/<[^>]+>/g," ").replace(/\\s+/g," ").trim());
+   const clean=decodeHtml(candidate.replace(/<(script|style|nav|footer|header|aside|svg)\b[^>]*>[\s\S]*?<\/\1>/gi," ")
+    .replace(/<br\s*\/?>/gi," ")
+    .replace(/<\/(p|div|h[1-6]|li)>/gi,"\n")
+    .replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim());
    if(clean.length>700) return clean.slice(0,14000);
   }
  } catch {}

@@ -33,7 +33,8 @@ async function fetchArticleText(sourceUrl:string):Promise<string> {
  } catch {}
  return "";
 }
-\nexport async function onRequest({params}:Context):Promise<Response>{
+
+export async function onRequest({params}:Context):Promise<Response>{
  const slug=String(params.slug||"").slice(0,120);
  if(!/^[a-z0-9-]+$/.test(slug))return new Response("Haber bulunamadı.",{status:404});
  let item:any;

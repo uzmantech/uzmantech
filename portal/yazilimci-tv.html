@@ -155,11 +155,12 @@ body.dashboard-page .tv-page{margin-top:0!important;padding-top:28px!important}
 <script>
 (()=>{const grid=document.getElementById("tvVideoGrid"),status=document.getElementById("tvFeedStatus"),player=document.getElementById("tvMainPlayer");if(!grid||!status||!player)return;
 const esc=(v)=>String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-fetch("/api/youtube-feed").then(r=>{if(!r.ok)throw Error("feed");return r.json()}).then(data=>{
+fetch("/api/youtube-feed",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("feed");return r.json()}).then(data=>{
  const videos=Array.isArray(data.videos)?data.videos:[];
  if(!videos.length)throw Error("empty");
  grid.innerHTML=videos.map((v,i)=>'<button class="tv-video-card'+(i===0?' is-active':'')+'" type="button" data-video="'+esc(v.id)+'"><span class="tv-video-thumb"><img src="'+esc(v.thumbnail)+'" alt="" loading="lazy"></span><span class="tv-video-copy"><small>YAZILIMCI TV</small><b>'+esc(v.title)+'</b></span></button>').join("");
- status.textContent=videos.length+" video kanalından yüklendi. İzlemek için bir video seç.";
+ status.textContent=videos.length+" video kanalından rastgele seçildi. İzlemek için bir video seç.";
+ player.src="https://www.youtube-nocookie.com/embed/"+videos[0].id;
  const choose=(id)=>{player.src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1";grid.querySelectorAll("[data-video]").forEach(el=>el.classList.toggle("is-active",el.dataset.video===id));};
  grid.addEventListener("click",e=>{const card=e.target.closest("[data-video]");if(card)choose(card.dataset.video)});
  const initial=new URLSearchParams(location.search).get("video");if(initial&&videos.some(v=>v.id===initial))choose(initial);

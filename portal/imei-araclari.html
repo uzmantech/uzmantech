@@ -48,6 +48,31 @@ body.dashboard-page{background:radial-gradient(ellipse at 72% 8%,#10376a55,trans
 .imei-warning strong{display:block;margin-bottom:2px;color:#f3d58e;font-size:12px}
 @media(max-width:900px){.imei-workspace{grid-template-columns:1fr}.imei-output-panel{min-height:440px}.imei-hero{grid-template-columns:1fr}.imei-hero-art{max-width:350px;width:100%}}
 @media(max-width:600px){.imei-page{width:calc(100% - 22px);margin:16px auto 36px}.imei-hero{padding:22px 18px;border-radius:16px}.imei-hero h1{font-size:29px}.imei-panel{border-radius:14px}.imei-panel-head,.imei-output-head{padding:15px}.imei-form{grid-template-columns:minmax(0,1fr) 88px;padding:16px 14px;gap:9px}.imei-field input{height:47px;padding:0 10px;font-size:15px}.imei-actions{padding:0 14px 16px}.imei-actions button{flex:1;padding:0 10px;font-size:11px}.imei-results{min-height:270px;margin:12px;font-size:12px}.imei-status{margin:0 12px 12px}.imei-warning{padding:12px;font-size:10px}}
+
+/* Responsive full-viewport workspace */
+html,body{width:100%;min-height:100%;margin:0}
+body.dashboard-page{min-height:100vh;min-height:100svh;overflow-x:hidden}
+.imei-page{box-sizing:border-box;width:100%;max-width:none;min-height:calc(100vh - 58px);min-height:calc(100svh - 58px);height:calc(100vh - 58px);height:calc(100svh - 58px);margin:0;padding:clamp(12px,1.4vw,22px);display:flex;flex-direction:column;gap:clamp(10px,1.1vw,16px)}
+.imei-workspace{flex:1;min-height:0;width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(10px,1.2vw,18px)}
+.imei-panel{min-width:0;min-height:0;height:100%;display:flex;flex-direction:column}
+.imei-panel-head,.imei-output-head{flex:none}
+.imei-form{flex:none}
+.imei-results{flex:1;min-height:0;height:auto;max-height:none;resize:none}
+.imei-actions{flex:none}
+.imei-warning{flex:none;margin-top:0}
+@media(max-width:900px){
+ .imei-page{height:auto;min-height:calc(100svh - 58px)}
+ .imei-workspace{grid-template-columns:minmax(0,1fr)}
+ .imei-panel{height:auto}
+ .imei-output-panel{min-height:440px}
+ .imei-results{height:clamp(260px,42svh,480px);min-height:260px;flex:none}
+}
+@media(max-width:600px){
+ .imei-page{padding:10px;gap:10px}
+ .imei-workspace{gap:10px}
+ .imei-output-panel{min-height:400px}
+ .imei-results{height:42svh;min-height:240px}
+}
 </style></head><body class="dashboard-page">
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
 <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>

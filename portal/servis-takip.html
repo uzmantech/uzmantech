@@ -90,7 +90,7 @@ const date=v=>v?new Date(v).toLocaleDateString("tr-TR",{day:"2-digit",month:"sho
 const toast=m=>{const el=$("#toast");el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)};
 const open=id=>$("#"+id).classList.add("open");const close=el=>el.classList.remove("open");
 const formData=f=>Object.fromEntries(new FormData(f).entries());
-function page(name){$(".side-link").forEach(x=>x.classList.toggle("active",x.dataset.page===name));$(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+name));window.scrollTo({top:0,behavior:"smooth"});}
+function page(name){document.querySelectorAll(".side-link").forEach(x=>x.classList.toggle("active",x.dataset.page===name));document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+name));window.scrollTo({top:0,behavior:"smooth"});}
 function syncServiceHeader(user){
  const host=$("#headerAuth");if(!host)return;
  const name=user?.username||"Misafir",role=user?.role==="admin"?"Yönetici":user?.role==="member"?"Premium Üye":user?"Hesap":"Portal Ziyaretçisi";

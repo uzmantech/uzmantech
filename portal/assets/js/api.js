@@ -64,6 +64,7 @@
     siteStats: () => call("/archive-service?resource=stats"),
     visitorPing: visitorId => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "visitor_ping", visitor_id: visitorId }) }),
     portalAdmin: data => call("/portal-api", { method: "POST", body: JSON.stringify(data) }),
+    serviceTracking: data => call("/service-tracking", { method: "POST", body: JSON.stringify(data), timeoutMs: 20000 }),
     exchangeRate: () => call("/portal-api/exchange-rate"),
     paymentReceipt: ({plan, amountUsd, amountTry, rate, payerName, file}) => {
       const params = new URLSearchParams({

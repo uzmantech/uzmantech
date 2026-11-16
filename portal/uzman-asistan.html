@@ -33,7 +33,7 @@ body.dashboard-page{background:#060c15}
 .chat-launcher{position:fixed;z-index:30;right:28px;bottom:26px;width:74px;height:74px;border:1px solid #00eaff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#0b4055 0,#071b2b 65%,#06111e 100%);color:#4df5ff;cursor:pointer;box-shadow:0 0 0 7px #00d9ef0d,0 0 32px #00d9ef3b;animation:launcherFloat 3s ease-in-out infinite}
 .chat-launcher:before,.chat-launcher:after{content:"";position:absolute;inset:-8px;border:1px solid #00d9ef66;border-radius:50%;animation:orbitPulse 2.6s ease-out infinite}
 .chat-launcher:after{inset:-15px;animation-delay:1.3s}
-.launcher-core{width:62px;height:62px;display:block;overflow:hidden;border:1px solid #22e9f5;border-radius:50%;background:#06111e;box-shadow:inset 0 0 18px #00d9ef24,0 0 20px #00d9ef24}.uzman-mascot-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:drop-shadow(0 0 5px #00eaff55)}
+.launcher-core{width:62px;height:62px;display:block;overflow:hidden;border:1px solid #22e9f5;border-radius:50%;background:#06111e;box-shadow:inset 0 0 18px #00d9ef24,0 0 20px #00d9ef24}.uzman-mascot-img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent;mix-blend-mode:screen;filter:drop-shadow(0 0 5px #00eaff55)}
 .chat-launcher .launcher-core .uzman-mascot-img{animation:none;transform:none;will-change:auto}
 .chat-launcher:hover .launcher-core .uzman-mascot-img{animation:none}
 @keyframes uzmanMascotMotion{
@@ -104,7 +104,7 @@ body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));hei
   <div class="demo-footnote">UZMANTECH · UZMAN ASİSTAN · TEKNİK ZEKÂ PLATFORMU</div>
  </section>
 </div>
-<button class="chat-launcher visible" id="chatLauncher" type="button" aria-label="UZMAN ASİSTAN sohbetini aç"><span class="launcher-core"><img class="uzman-mascot-img" src="assets/images/uzman-mascot-animated.gif" alt="UZMAN robot maskotu"></span></button>
+<button class="chat-launcher visible" id="chatLauncher" type="button" aria-label="UZMAN ASİSTAN sohbetini aç"><span class="launcher-core"><img class="uzman-mascot-img" src="assets/images/uzman-mascot-animated.gif?v=transparent-bg-20261116" alt="UZMAN robot maskotu"></span></button>
 <div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
 <section class="ai-widget" id="assistant" aria-label="UZMAN ASİSTAN sohbet penceresi">
  <header class="widget-head"><div class="widget-avatar"><img class="uzman-mascot-img" src="assets/images/uzman-mascot.jpg" alt="UZMAN robot maskotu"></div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>

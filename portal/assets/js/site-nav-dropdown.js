@@ -22,7 +22,7 @@
   document.head.appendChild(style);
   const frame=document.createElement("iframe");
   frame.id="uzman-asistan-site-widget";
-  frame.src=new URL("uzman-asistan.html?widget=1",location.href).href;
+  frame.src=new URL("uzman-asistan.html?widget=1&mascot=transparent-20261116-4",location.href).href;
   frame.title="UZMAN ASİSTAN";
   frame.setAttribute("aria-label","UZMAN ASİSTAN sohbet penceresi");
   frame.style.cssText="position:fixed;display:block;right:0;bottom:0;border:0;background:transparent;z-index:2147483000;transition:width .18s ease,height .18s ease";

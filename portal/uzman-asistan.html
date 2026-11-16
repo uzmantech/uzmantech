@@ -33,7 +33,7 @@ body.dashboard-page{background:#060c15}
 .chat-launcher{position:fixed;z-index:30;right:28px;bottom:26px;width:74px;height:74px;border:1px solid #00eaff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#0b4055 0,#071b2b 65%,#06111e 100%);color:#4df5ff;cursor:pointer;box-shadow:0 0 0 7px #00d9ef0d,0 0 32px #00d9ef3b;animation:launcherFloat 3s ease-in-out infinite}
 .chat-launcher:before,.chat-launcher:after{content:"";position:absolute;inset:-8px;border:1px solid #00d9ef66;border-radius:50%;animation:orbitPulse 2.6s ease-out infinite}
 .chat-launcher:after{inset:-15px;animation-delay:1.3s}
-.launcher-core{width:49px;height:49px;display:grid;place-items:center;border:1px solid #22e9f5;border-radius:15px;background:#062535;box-shadow:inset 0 0 18px #00d9ef24,0 0 20px #00d9ef24}.robot-face{width:37px;height:37px;filter:drop-shadow(0 0 5px #00eaff80)}.robot-face path:nth-of-type(2){animation:robotEyes 2.4s ease-in-out infinite;transform-origin:center}
+.launcher-core{width:58px;height:58px;display:grid;place-items:center;border:1px solid #22e9f5;border-radius:15px;background:#062535;box-shadow:inset 0 0 18px #00d9ef24,0 0 20px #00d9ef24}.uzman-mascot{display:block;width:100%;height:100%;filter:drop-shadow(0 0 5px #00eaff55)}.widget-avatar .uzman-mascot{width:42px;height:48px}.welcome-mark{width:94px;height:104px;margin:0 auto 14px;display:grid;place-items:center;border:1px solid #0a879b;background:#062636;color:#1fe5f2;font-size:27px;box-shadow:0 0 25px #00d9ef1c}.welcome-mark .uzman-mascot{width:88px;height:100px}
 .launcher-label{position:absolute;right:86px;white-space:nowrap;padding:8px 11px;border:1px solid #17617b;background:#071827;color:#8ff8ff;font:700 9px "Space Grotesk",sans-serif;letter-spacing:1px;opacity:.95}
 .ai-widget{position:fixed;z-index:40;right:28px;bottom:26px;width:min(430px,calc(100vw - 32px));height:min(660px,calc(100vh - 125px));min-height:430px;display:none;flex-direction:column;overflow:hidden;border:1px solid #00cfe6;border-radius:2px;background:#071321;box-shadow:0 0 0 5px #00d9ef0c,0 22px 70px #000b;transform-origin:bottom right}
 .ai-widget.open{display:flex;animation:widgetIn .22s ease-out}
@@ -59,7 +59,7 @@ body.dashboard-page{background:#060c15}
 body.assistant-embed{background:transparent!important;min-height:100vh;overflow:hidden;pointer-events:none}
 body.assistant-embed .site-global-header,body.assistant-embed .demo-page{display:none!important}
 body.assistant-embed .chat-launcher,body.assistant-embed .ai-widget{pointer-events:auto}
-body.assistant-embed .chat-launcher{right:12px;bottom:12px;width:72px;height:72px}
+body.assistant-embed .chat-launcher{right:12px;bottom:12px;width:82px;height:82px}
 body.assistant-embed .launcher-label{display:none}
 body.assistant-embed .ai-widget{right:12px;bottom:12px;width:430px;height:min(660px,calc(100vh - 24px));min-height:420px}
 body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));height:calc(100vh - 24px)}
@@ -93,12 +93,54 @@ body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));hei
   <div class="demo-footnote">UZMANTECH · UZMAN ASİSTAN · TEKNİK ZEKÂ PLATFORMU</div>
  </section>
 </div>
-<button class="chat-launcher visible" id="chatLauncher" type="button" aria-label="UZMAN ASİSTAN sohbetini aç"><span class="launcher-core"><svg class="robot-face" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5v6M20 5h8M10 18l-4-3M38 18l4-3M8 23v12a5 5 0 0 0 5 5h22a5 5 0 0 0 5-5V23a5 5 0 0 0-5-5H13a5 5 0 0 0-5 5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 27h.1M32 27h.1" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M18 34h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="5" r="2" fill="currentColor"/></svg></span><span class="launcher-label">UZMAN ASİSTAN · ÇEVRİMİÇİ</span></button>
+<button class="chat-launcher visible" id="chatLauncher" type="button" aria-label="UZMAN ASİSTAN sohbetini aç"><span class="launcher-core"><svg class="uzman-mascot" viewBox="0 0 120 136" role="img" aria-label="UZMAN robot maskotu" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="uzArmor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fcff"/><stop offset=".48" stop-color="#9db6c9"/><stop offset="1" stop-color="#526d85"/></linearGradient><linearGradient id="uzBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#54f5ff"/><stop offset="1" stop-color="#0085d8"/></linearGradient></defs>
+<path d="M60 5v10M54 5h12" stroke="#35eaf5" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="5" r="4" fill="#1be7f4"/>
+<path d="M29 36Q27 15 60 15t31 21v24q0 9-9 13H38q-9-4-9-13Z" fill="url(#uzArmor)" stroke="#e7faff" stroke-width="2"/>
+<path d="M35 39q0-17 25-17t25 17v17q0 10-12 12H47Q35 66 35 56Z" fill="#071827" stroke="#2edff1" stroke-width="2"/>
+<path d="M45 46h8m14 0h8" stroke="url(#uzBlue)" stroke-width="6" stroke-linecap="round"/><path d="M52 58q8 7 16 0" fill="none" stroke="#75eaff" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M28 43 17 49v16l12 5M92 43l11 6v16l-12 5" fill="url(#uzArmor)" stroke="#b8d5e6" stroke-width="2"/>
+<path d="M43 68 38 77 25 87l8 33q27 13 54 0l8-33-13-10-5-9Z" fill="url(#uzArmor)" stroke="#e2f7ff" stroke-width="2"/>
+<path d="m38 78-15 8-7 26 10 4 11-19M82 78l15 8 7 26-10 4-11-19" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2"/>
+<path d="m42 79 18 7 18-7 7 32q-25 15-50 0Z" fill="#123c56" stroke="#23dff0" stroke-width="2"/>
+<path d="M44 88h32v17H44z" rx="4" fill="#061b2b" stroke="#43e8f4" stroke-width="1.5"/>
+<text x="60" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="800" letter-spacing=".7" fill="#7ffaff">UZMAN</text>
+<path d="M42 121 38 132h12l4-9m14 0 4 9h12l-4-11" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2" stroke-linejoin="round"/>
+<path d="M9 91h8m86 0h8" stroke="#14dff1" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+</svg></span><span class="launcher-label">UZMAN ASİSTAN · ÇEVRİMİÇİ</span></button>
 <section class="ai-widget" id="assistant" aria-label="UZMAN ASİSTAN sohbet penceresi">
- <header class="widget-head"><div class="widget-avatar">✳</div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
+ <header class="widget-head"><div class="widget-avatar"><svg class="uzman-mascot" viewBox="0 0 120 136" role="img" aria-label="UZMAN robot maskotu" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="uzArmor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fcff"/><stop offset=".48" stop-color="#9db6c9"/><stop offset="1" stop-color="#526d85"/></linearGradient><linearGradient id="uzBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#54f5ff"/><stop offset="1" stop-color="#0085d8"/></linearGradient></defs>
+<path d="M60 5v10M54 5h12" stroke="#35eaf5" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="5" r="4" fill="#1be7f4"/>
+<path d="M29 36Q27 15 60 15t31 21v24q0 9-9 13H38q-9-4-9-13Z" fill="url(#uzArmor)" stroke="#e7faff" stroke-width="2"/>
+<path d="M35 39q0-17 25-17t25 17v17q0 10-12 12H47Q35 66 35 56Z" fill="#071827" stroke="#2edff1" stroke-width="2"/>
+<path d="M45 46h8m14 0h8" stroke="url(#uzBlue)" stroke-width="6" stroke-linecap="round"/><path d="M52 58q8 7 16 0" fill="none" stroke="#75eaff" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M28 43 17 49v16l12 5M92 43l11 6v16l-12 5" fill="url(#uzArmor)" stroke="#b8d5e6" stroke-width="2"/>
+<path d="M43 68 38 77 25 87l8 33q27 13 54 0l8-33-13-10-5-9Z" fill="url(#uzArmor)" stroke="#e2f7ff" stroke-width="2"/>
+<path d="m38 78-15 8-7 26 10 4 11-19M82 78l15 8 7 26-10 4-11-19" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2"/>
+<path d="m42 79 18 7 18-7 7 32q-25 15-50 0Z" fill="#123c56" stroke="#23dff0" stroke-width="2"/>
+<path d="M44 88h32v17H44z" rx="4" fill="#061b2b" stroke="#43e8f4" stroke-width="1.5"/>
+<text x="60" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="800" letter-spacing=".7" fill="#7ffaff">UZMAN</text>
+<path d="M42 121 38 132h12l4-9m14 0 4 9h12l-4-11" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2" stroke-linejoin="round"/>
+<path d="M9 91h8m86 0h8" stroke="#14dff1" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+</svg></div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
  <div class="widget-body" id="messages" aria-live="polite">
   <div class="widget-date">Bugün</div>
-  <div class="welcome" id="emptyState"><div class="welcome-mark">✳</div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p><div class="widget-suggestions"><button type="button" data-prompt="Bir telefonun arıza tespitine nereden başlamalıyım?">⌕　Bir cihazın arıza tespitine başlayalım</button><button type="button" data-prompt="ADB ve Fastboot arasındaki fark nedir?">⌘　ADB ve Fastboot hakkında konuşalım</button><button type="button" data-prompt="Bugün telefon tamiriyle ilgili yeni bir şey öğrenmek istiyorum.">✧　Yeni bir teknik konu öğren</button></div></div>
+  <div class="welcome" id="emptyState"><div class="welcome-mark"><svg class="uzman-mascot" viewBox="0 0 120 136" role="img" aria-label="UZMAN robot maskotu" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="uzArmor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fcff"/><stop offset=".48" stop-color="#9db6c9"/><stop offset="1" stop-color="#526d85"/></linearGradient><linearGradient id="uzBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#54f5ff"/><stop offset="1" stop-color="#0085d8"/></linearGradient></defs>
+<path d="M60 5v10M54 5h12" stroke="#35eaf5" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="5" r="4" fill="#1be7f4"/>
+<path d="M29 36Q27 15 60 15t31 21v24q0 9-9 13H38q-9-4-9-13Z" fill="url(#uzArmor)" stroke="#e7faff" stroke-width="2"/>
+<path d="M35 39q0-17 25-17t25 17v17q0 10-12 12H47Q35 66 35 56Z" fill="#071827" stroke="#2edff1" stroke-width="2"/>
+<path d="M45 46h8m14 0h8" stroke="url(#uzBlue)" stroke-width="6" stroke-linecap="round"/><path d="M52 58q8 7 16 0" fill="none" stroke="#75eaff" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M28 43 17 49v16l12 5M92 43l11 6v16l-12 5" fill="url(#uzArmor)" stroke="#b8d5e6" stroke-width="2"/>
+<path d="M43 68 38 77 25 87l8 33q27 13 54 0l8-33-13-10-5-9Z" fill="url(#uzArmor)" stroke="#e2f7ff" stroke-width="2"/>
+<path d="m38 78-15 8-7 26 10 4 11-19M82 78l15 8 7 26-10 4-11-19" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2"/>
+<path d="m42 79 18 7 18-7 7 32q-25 15-50 0Z" fill="#123c56" stroke="#23dff0" stroke-width="2"/>
+<path d="M44 88h32v17H44z" rx="4" fill="#061b2b" stroke="#43e8f4" stroke-width="1.5"/>
+<text x="60" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="800" letter-spacing=".7" fill="#7ffaff">UZMAN</text>
+<path d="M42 121 38 132h12l4-9m14 0 4 9h12l-4-11" fill="url(#uzArmor)" stroke="#b7d5e5" stroke-width="2" stroke-linejoin="round"/>
+<path d="M9 91h8m86 0h8" stroke="#14dff1" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+</svg></div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p><div class="widget-suggestions"><button type="button" data-prompt="Bir telefonun arıza tespitine nereden başlamalıyım?">⌕　Bir cihazın arıza tespitine başlayalım</button><button type="button" data-prompt="ADB ve Fastboot arasındaki fark nedir?">⌘　ADB ve Fastboot hakkında konuşalım</button><button type="button" data-prompt="Bugün telefon tamiriyle ilgili yeni bir şey öğrenmek istiyorum.">✧　Yeni bir teknik konu öğren</button></div></div>
  </div>
  <div class="widget-composer"><form id="chatForm"><div class="composer-box"><textarea id="messageInput" rows="1" maxlength="12000" placeholder="Bir mesaj yazın..." required></textarea><div class="composer-actions"><span class="composer-hint">Enter gönderir · Shift + Enter yeni satır</span><button class="send-button" id="sendButton" type="submit" aria-label="Mesajı gönder">➤</button></div></div><div class="composer-foot"><span>UZMAN ASİSTAN yapay zekâ desteklidir.</span><span>Yanıtları kontrol etmeniz önerilir.</span></div></form></div>
 </section>

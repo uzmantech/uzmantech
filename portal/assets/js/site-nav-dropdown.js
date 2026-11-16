@@ -29,13 +29,13 @@
   const setWidgetSize=(width,height)=>{frame.style.setProperty("width",width,"important");frame.style.setProperty("height",height,"important")};
   setWidgetSize(innerWidth<=560?"132px":"148px",innerWidth<=560?"174px":"190px");
   document.body.appendChild(frame);
-  window.addEventListener("resize",()=>{if(frame.isConnected&&!frame.contentWindow?.document?.querySelector?.(".ai-widget.open"))setWidgetSize(innerWidth<=560?"132px":"148px",innerWidth<=560?"174px":"190px")});
+  window.addEventListener("resize",()=>{if(frame.isConnected&&frame.offsetWidth<200)setWidgetSize(innerWidth<=560?"132px":"148px",innerWidth<=560?"174px":"190px")});
   window.addEventListener("message",event=>{
    if(event.source!==frame.contentWindow)return;
    const type=event.data?.type,mobile=innerWidth<=560;
    if(type==="uzman-asistan-resize"){
     const opened=!!event.data.open;
-    setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"88px":"104px"),opened?(mobile?"100vh":"684px"):(mobile?"88px":"104px"));
+    setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"132px":"148px"),opened?(mobile?"100vh":"684px"):(mobile?"174px":"190px"));
    }
   });
  }

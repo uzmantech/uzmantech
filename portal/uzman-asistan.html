@@ -84,7 +84,9 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
  const toast = document.getElementById("toast");
  const status = document.getElementById("connectionState");
  let busy = false;
+ const HISTORY_KEY = "uzman_asistan_history_v1";
  let conversationHistory = [];
+ try { const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); if (Array.isArray(saved)) conversationHistory = saved.filter(x => x && ["user","assistant"].includes(x.role) && typeof x.content === "string").slice(-40); } catch { conversationHistory = []; }
  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  function notify(text){toast.textContent=text;toast.classList.add("show");window.setTimeout(()=>toast.classList.remove("show"),3200);}
  function addMessage(role,text,sources=[]){
@@ -111,7 +113,8 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
    pending.remove();
    const answer=data.reply||"Boş yanıt alındı.";
    conversationHistory.push({role:"user",content:text},{role:"assistant",content:answer});
-   conversationHistory=conversationHistory.slice(-12);
+   conversationHistory=conversationHistory.slice(-40);
+   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(conversationHistory)); } catch { notify("Sohbet geçmişi bu tarayıcıda saklanamadı."); }
    addMessage("assistant",answer,Array.isArray(data.sources)?data.sources:[]);
   }catch(error){pending.remove();addMessage("assistant","Bağlantı hatası: "+error.message+"\n\nYerel UZMAN ASİSTAN backend sunucusunun çalıştığını kontrol et.");}
   finally{busy=false;send.disabled=false;input.disabled=false;input.focus();}
@@ -122,6 +125,7 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
  document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];try{localStorage.removeItem(HISTORY_KEY);}catch{}messages.innerHTML='<div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Yeni teknik görüşme</h2><p>Teknik sorunu yazıp yeni bir test başlatabilirsin.</p></div>';input.value="";input.focus();});
  const navButton=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");
  if(navButton&&nav){navButton.addEventListener("click",()=>{const open=!nav.classList.contains("is-open");nav.classList.toggle("is-open",open);navButton.setAttribute("aria-expanded",String(open));});}
+ conversationHistory.forEach(item => addMessage(item.role, item.content));
  checkHealth();
 })();
 </script>

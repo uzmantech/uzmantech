@@ -78,6 +78,43 @@ body.assistant-embed
 body.assistant-embed .ai-widget{right:12px;bottom:12px;width:430px;height:min(660px,calc(100vh - 24px));min-height:420px}
 body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));height:calc(100vh - 24px)}
 @media(max-width:560px){body.assistant-embed .ai-widget{right:6px;bottom:6px;width:calc(100vw - 12px);height:calc(100vh - 12px)}}
+
+/* UZMAN ASISTAN — mascot palette refresh */
+.ai-widget{border:1px solid #08dff2;border-radius:12px;background:#061321;box-shadow:0 0 0 1px #08dff222,0 0 28px #00dff21c,0 22px 70px #000b}
+.widget-head{background:linear-gradient(110deg,#071b2e 0%,#0b3047 58%,#09263b 100%);border-bottom:1px solid #167b98;padding:0 16px}
+.widget-avatar{border:1px solid #38eaff;border-radius:50%;background:radial-gradient(circle at 35% 25%,#e8ffff 0%,#72eaff 12%,#087b9e 48%,#052338 100%);box-shadow:0 0 0 3px #0bdcf21c,0 0 20px #00dff255;color:#052133}
+.widget-avatar-mark{font:900 25px "Space Grotesk",sans-serif;color:#052133;text-shadow:0 1px 0 #d8ffff}
+.widget-heading b{color:#f2fdff;font-size:14px;letter-spacing:.8px}
+.widget-heading small{color:#75eaff;font-size:10px}
+.widget-tag{border-color:#27d9ed;background:#082f43;color:#8ff8ff}
+.widget-tools button{color:#b9f6ff;border-radius:7px}
+.widget-tools button:hover{border-color:#25dff2;background:#0a3a50;color:#fff}
+.widget-body{padding:18px 16px;gap:15px;background:radial-gradient(ellipse at 10% 0%,#0c2b42 0%,transparent 46%),linear-gradient(180deg,#071726 0%,#081a2b 100%)}
+.widget-date{border:1px solid #17647a;border-radius:20px;background:#09283b;color:#9ceefa;font-size:10px;padding:5px 12px}
+.ai-message{max-width:96%;gap:9px}
+.ai-avatar{width:30px;height:30px;flex-basis:30px;border:1px solid #35e4f4;border-radius:9px;background:linear-gradient(145deg,#eaffff,#55dff0 48%,#087eaa);color:#052438;font-size:14px;box-shadow:0 0 12px #00dff226}
+.ai-message.user .ai-avatar{border-color:#6daeff;background:linear-gradient(145deg,#d9eaff,#5999e7 55%,#174f91);color:#071c35}
+.ai-bubble{max-width:calc(100% - 39px);padding:13px 14px;border:1px solid #17617a;border-radius:3px 13px 13px 13px;background:linear-gradient(145deg,#0c263b,#0a1d2e);color:#e3f5ff;font-size:13px;line-height:1.85;letter-spacing:.05px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 5px 16px #0003}
+.ai-message.user .ai-bubble{border-color:#168da9;border-radius:13px 3px 13px 13px;background:linear-gradient(145deg,#0b4058,#0a2c45);color:#f0fcff}
+.ai-bubble strong{color:#8ff7ff;font-weight:750}
+.ai-message.user .ai-bubble strong{color:#b8e8ff}
+.widget-composer{padding:13px 13px 10px;border-top:1px solid #17617a;background:linear-gradient(180deg,#081b2c,#061522)}
+.composer-box{padding:10px 11px 9px 14px;border:1px solid #176c86;border-radius:9px;background:#061827}
+.composer-box:focus-within{border-color:#31e7f5;box-shadow:0 0 0 3px #00d9ef20,0 0 18px #00d9ef12}
+.composer-box textarea{min-height:48px;color:#f0fbff;font-size:13px;line-height:1.65}
+.composer-box textarea::placeholder{color:#8baabd}
+.composer-hint{color:#85b8ca;font-size:9px}
+.send-button{width:39px;height:38px;border:1px solid #8df8ff;border-radius:9px;background:linear-gradient(145deg,#e7ffff 0%,#48e5f3 42%,#0785b4 100%);color:#05283b;font-size:21px;box-shadow:0 0 14px #00dff244}
+.send-button:hover{filter:brightness(1.12);box-shadow:0 0 20px #00dff277}
+.composer-foot{color:#83aabc;font-size:9px}
+.widget-suggestions button{border:1px solid #17617a;border-radius:8px;background:linear-gradient(100deg,#0a2032,#0b2a40);color:#d5f3fc;font-size:12px;padding:11px 13px}
+.widget-suggestions button:hover{border-color:#2fe5f3;background:#0c354b;color:#fff}
+.welcome h2{color:#f2fcff}.welcome h2 span{color:#65f0fb}.welcome p{color:#b3cad8;font-size:12px}
+.welcome-mark{border:1px solid #46e9f5;border-radius:50%;background:radial-gradient(circle at 35% 25%,#eaffff 0%,#64e7f4 18%,#087d9e 56%,#062238 100%);box-shadow:0 0 24px #00dff244}
+.welcome-mark-letter{font:900 32px "Space Grotesk",sans-serif;color:#052638;text-shadow:0 1px 0 #d8ffff}
+.ai-toast{border:1px solid #20d9eb;border-radius:9px;background:#09283b;color:#edfdff}
+@media(max-width:640px){.ai-bubble{font-size:13px;line-height:1.8;padding:12px}.widget-body{padding:14px 11px}.widget-composer{padding:10px 10px 8px}}
+
 </style></head><body class="dashboard-page"><script>if(new URLSearchParams(location.search).get("widget")==="1")document.body.classList.add("assistant-embed");</script>
 <div class="demo-page">
 <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 13h6M9 17h6"/></symbol><symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14 6a5 5 0 0 0-6 6l-5 5 4 4 5-5a5 5 0 0 0 6-6l-3 3-4-4z"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 7 5 4 5-7 5 7 5-4-2 13H4z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1.2 1-1.7 1.3-1.7 2.7M12 17h.01"/></symbol></svg>
@@ -150,10 +187,10 @@ body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));hei
 </svg></span></button>
 <div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
 <section class="ai-widget" id="assistant" aria-label="UZMAN ASİSTAN sohbet penceresi">
- <header class="widget-head"><div class="widget-avatar"><img class="uzman-mascot-img" src="assets/images/uzman-mascot-transparent.webp?v=20261116-4" alt="UZMAN robot maskotu"></div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
+ <header class="widget-head"><div class="widget-avatar" aria-label="UZMAN robot maskotu"><span class="widget-avatar-mark">U</span></div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
  <div class="widget-body" id="messages" aria-live="polite">
   <div class="widget-date">Bugün</div>
-  <div class="welcome" id="emptyState"><div class="welcome-mark"><img class="uzman-mascot-img" src="assets/images/uzman-mascot-transparent.webp?v=20261116-4" alt="UZMAN robot maskotu"></div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p><div class="widget-suggestions"><button type="button" data-prompt="Bir telefonun arıza tespitine nereden başlamalıyım?">⌕　Bir cihazın arıza tespitine başlayalım</button><button type="button" data-prompt="ADB ve Fastboot arasındaki fark nedir?">⌘　ADB ve Fastboot hakkında konuşalım</button><button type="button" data-prompt="Bugün telefon tamiriyle ilgili yeni bir şey öğrenmek istiyorum.">✧　Yeni bir teknik konu öğren</button></div></div>
+  <div class="welcome" id="emptyState"><div class="welcome-mark" aria-label="UZMAN robot maskotu"><span class="welcome-mark-letter">U</span></div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p><div class="widget-suggestions"><button type="button" data-prompt="Bir telefonun arıza tespitine nereden başlamalıyım?">⌕　Bir cihazın arıza tespitine başlayalım</button><button type="button" data-prompt="ADB ve Fastboot arasındaki fark nedir?">⌘　ADB ve Fastboot hakkında konuşalım</button><button type="button" data-prompt="Bugün telefon tamiriyle ilgili yeni bir şey öğrenmek istiyorum.">✧　Yeni bir teknik konu öğren</button></div></div>
  </div>
  <div class="widget-composer"><form id="chatForm"><div class="composer-box"><textarea id="messageInput" rows="1" maxlength="12000" placeholder="Bir mesaj yazın..." required></textarea><div class="composer-actions"><span class="composer-hint">Enter gönderir · Shift + Enter yeni satır</span><button class="send-button" id="sendButton" type="submit" aria-label="Mesajı gönder">➤</button></div></div><div class="composer-foot"><span>UZMAN ASİSTAN yapay zekâ desteklidir.</span><span>Yanıtları kontrol etmeniz önerilir.</span></div></form></div>
 </section>
@@ -172,7 +209,7 @@ body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));hei
  function showMascotBubble(){if(widget.classList.contains("open")||document.hidden)return;mascotBubble.textContent=bubbleWords[bubbleIndex++%bubbleWords.length];mascotBubble.classList.add("visible");if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-bubble",show:true},"*");if(bubbleHideTimer)clearTimeout(bubbleHideTimer);bubbleHideTimer=window.setTimeout(hideMascotBubble,3600)}
  function openWidget(){hideMascotBubble();widget.classList.add("open");launcher.style.display="none";if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-resize",open:true},"*");input.focus()} function closeWidget(){widget.classList.remove("open","expanded");launcher.style.display="grid";if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-resize",open:false},"*")}
  function notify(text){toast.textContent=text;toast.classList.add("show");window.setTimeout(()=>toast.classList.remove("show"),3000)}
- function addMessage(role,text,sources=[]){document.getElementById("emptyState")?.remove();messages.querySelector(".widget-date")?.remove();const article=document.createElement("article");article.className="ai-message "+role;const avatar=role==="user"?"S":"✳";const src=sources.length?'<div class="ai-sources"><b>Yararlanılan kaynaklar</b>'+sources.map(s=>'<span class="ai-source">'+escapeHtml(s.title||"Kaynak")+' · '+escapeHtml(s.source||"")+'</span>').join("")+'</div>':"";article.innerHTML='<div class="ai-avatar">'+(role==="assistant"?'<img src="assets/images/uzman-mascot-transparent.webp?v=20261116-4" alt="UZMAN">':avatar)+'</div><div class="ai-bubble">'+escapeHtml(text)+src+'</div>';messages.appendChild(article);messages.scrollTop=messages.scrollHeight;return article}
+ function addMessage(role,text,sources=[]){document.getElementById("emptyState")?.remove();messages.querySelector(".widget-date")?.remove();const article=document.createElement("article");article.className="ai-message "+role;const avatar=role==="user"?"S":"U";article.innerHTML='<div class="ai-avatar">'+avatar+'</div><div class="ai-bubble">'+escapeHtml(text).replace(/\\*\\*(.*?)\\*\\*/g,"<strong>$1</strong>")+'</div>';messages.appendChild(article);messages.scrollTop=messages.scrollHeight;return article}
  async function checkHealth(){try{const r=await fetch(API_BASE+"/health",{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();status.textContent="Çevrimiçi · "+(j.app||"UZMAN ASİSTAN")}catch{status.textContent="Bulut bağlantısı kurulamadı"}}
  async function sendMessage(text){if(busy||!text.trim())return;busy=true;send.disabled=true;input.disabled=true;addMessage("user",text);const pending=addMessage("assistant","Yanıt hazırlanıyor…");try{const response=await fetch(API_BASE+"/api/v1/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,history:conversationHistory.slice(-8)})});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.detail||"Asistan yanıt veremedi.");pending.remove();const answer=data.reply||"Boş yanıt alındı.";conversationHistory.push({role:"user",content:text},{role:"assistant",content:answer});conversationHistory=conversationHistory.slice(-40);try{localStorage.setItem(HISTORY_KEY,JSON.stringify(conversationHistory))}catch{notify("Sohbet geçmişi kaydedilemedi.")}addMessage("assistant",answer,Array.isArray(data.sources)?data.sources:[])}catch(error){pending.remove();addMessage("assistant","Bağlantı hatası: "+error.message+"\n\nBulut bağlantısını kontrol edip tekrar dene.")}finally{busy=false;send.disabled=false;input.disabled=false;input.focus()}}
  document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(text){input.value="";sendMessage(text)}});

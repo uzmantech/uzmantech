@@ -111,10 +111,10 @@ body.dashboard-page{background:#060c15}
  input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatForm").requestSubmit()}});
  document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.prompt;input.focus()}));
  document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];try{localStorage.removeItem(HISTORY_KEY)}catch{}messages.innerHTML='<div class="widget-date">Bugün</div><div class="welcome" id="emptyState"><div class="welcome-mark">✳</div><h2>Yeni bir <span>sohbet.</span></h2><p>Yeni bir konu seç veya sorununu anlat.</p></div>';input.value=""});
- document.getElementById("minimizeChat").addEventListener("click",()=>{widget.classList.add("minimized");widget.classList.remove("expanded");launcher.classList.add("visible")});
- document.getElementById("expandChat").addEventListener("click",()=>{widget.classList.toggle("expanded");widget.classList.remove("minimized");launcher.classList.remove("visible")});
- launcher.addEventListener("click",()=>{widget.classList.remove("minimized");launcher.classList.remove("visible");input.focus()});
- document.getElementById("openAssistant").addEventListener("click",e=>{e.preventDefault();widget.classList.remove("minimized");launcher.classList.remove("visible");input.focus()});
+ document.getElementById("minimizeChat").addEventListener("click",closeWidget);
+ document.getElementById("expandChat").addEventListener("click",()=>widget.classList.toggle("expanded"));
+ launcher.addEventListener("click",openWidget);
+ 
  conversationHistory.forEach(item=>addMessage(item.role,item.content));checkHealth();
 })();
 </script>

@@ -27,18 +27,15 @@
   frame.setAttribute("aria-label","UZMAN ASİSTAN sohbet penceresi");
   frame.style.cssText="position:fixed;display:block;right:0;bottom:0;border:0;background:transparent;z-index:2147483000;transition:width .18s ease,height .18s ease";
   const setWidgetSize=(width,height)=>{frame.style.setProperty("width",width,"important");frame.style.setProperty("height",height,"important")};
-  setWidgetSize(innerWidth<=560?"120px":"136px",innerWidth<=560?"164px":"180px");
+  setWidgetSize(innerWidth<=560?"132px":"148px",innerWidth<=560?"174px":"190px");
   document.body.appendChild(frame);
-  window.addEventListener("resize",()=>{if(frame.isConnected&&frame.offsetWidth<150)setWidgetSize(innerWidth<=560?"120px":"136px",innerWidth<=560?"164px":"180px")});
+  window.addEventListener("resize",()=>{if(frame.isConnected&&!frame.contentWindow?.document?.querySelector?.(".ai-widget.open"))setWidgetSize(innerWidth<=560?"132px":"148px",innerWidth<=560?"174px":"190px")});
   window.addEventListener("message",event=>{
    if(event.source!==frame.contentWindow)return;
    const type=event.data?.type,mobile=innerWidth<=560;
    if(type==="uzman-asistan-resize"){
     const opened=!!event.data.open;
     setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"88px":"104px"),opened?(mobile?"100vh":"684px"):(mobile?"88px":"104px"));
-   }else if(type==="uzman-asistan-bubble"){
-    const visible=!!event.data.show;
-    setWidgetSize(visible?(mobile?"270px":"290px"):(mobile?"120px":"136px"),visible?(mobile?"170px":"184px"):(mobile?"164px":"180px"));
    }
   });
  }

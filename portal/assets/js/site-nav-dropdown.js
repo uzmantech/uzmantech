@@ -31,9 +31,15 @@
   document.body.appendChild(frame);
   window.addEventListener("resize",()=>{if(frame.isConnected&&frame.offsetWidth<120)setWidgetSize(innerWidth<=560?"88px":"104px",innerWidth<=560?"88px":"104px")});
   window.addEventListener("message",event=>{
-   if(event.source!==frame.contentWindow||event.data?.type!=="uzman-asistan-resize")return;
-   const opened=!!event.data.open,mobile=innerWidth<=560;
-   setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"88px":"104px"),opened?(mobile?"100vh":"684px"):(mobile?"88px":"104px"));
+   if(event.source!==frame.contentWindow)return;
+   const type=event.data?.type,mobile=innerWidth<=560;
+   if(type==="uzman-asistan-resize"){
+    const opened=!!event.data.open;
+    setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"88px":"104px"),opened?(mobile?"100vh":"684px"):(mobile?"88px":"104px"));
+   }else if(type==="uzman-asistan-bubble"){
+    const visible=!!event.data.show;
+    setWidgetSize(visible?(mobile?"252px":"270px"):(mobile?"88px":"104px"),visible?(mobile?"148px":"154px"):(mobile?"88px":"104px"));
+   }
   });
  }
  if(window.__uzDropdownBound)return;

@@ -84,6 +84,7 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
  const toast = document.getElementById("toast");
  const status = document.getElementById("connectionState");
  let busy = false;
+ let conversationHistory = [];
  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  function notify(text){toast.textContent=text;toast.classList.add("show");window.setTimeout(()=>toast.classList.remove("show"),3200);}
  function addMessage(role,text,sources=[]){

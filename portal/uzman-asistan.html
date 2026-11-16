@@ -33,9 +33,9 @@ body.dashboard-page{background:#060c15}
 .chat-launcher{position:fixed;z-index:30;right:28px;bottom:26px;width:74px;height:74px;border:1px solid #00eaff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#0b4055 0,#071b2b 65%,#06111e 100%);color:#4df5ff;cursor:pointer;box-shadow:0 0 0 7px #00d9ef0d,0 0 32px #00d9ef3b;animation:launcherFloat 3s ease-in-out infinite}
 .chat-launcher:before,.chat-launcher:after{content:"";position:absolute;inset:-8px;border:1px solid #00d9ef66;border-radius:50%;animation:orbitPulse 2.6s ease-out infinite}
 .chat-launcher:after{inset:-15px;animation-delay:1.3s}
-.launcher-core{width:62px;height:62px;display:block;overflow:hidden;border:1px solid #22e9f5;border-radius:50%;background:#06111e;box-shadow:inset 0 0 18px #00d9ef24,0 0 20px #00d9ef24}.uzman-mascot-img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent;mix-blend-mode:screen;filter:drop-shadow(0 0 5px #00eaff55)}
-.chat-launcher .launcher-core .uzman-mascot-img{animation:none;transform:none;will-change:auto}
-.chat-launcher:hover .launcher-core .uzman-mascot-img{animation:none}
+.launcher-core{width:62px;height:62px;display:block;overflow:hidden;border:1px solid #22e9f5;border-radius:50%;background:transparent;box-shadow:0 0 20px #00d9ef24;mix-blend-mode:screen}.uzman-mascot-img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent;mix-blend-mode:screen;filter:drop-shadow(0 0 5px #00eaff55)}
+.chat-launcher .launcher-core .uzman-mascot-img{animation:uzmanMascotMotion 4.2s ease-in-out infinite;transform-origin:50% 58%;will-change:transform}
+.chat-launcher:hover .launcher-core .uzman-mascot-img{animation-duration:2.2s}
 @keyframes uzmanMascotMotion{
  0%,100%{transform:translate3d(0,1px,0) rotate(-5deg) scale(1)}
  22%{transform:translate3d(0,-5px,0) rotate(-1deg) scale(1.025)}

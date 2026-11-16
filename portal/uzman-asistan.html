@@ -119,7 +119,7 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
  document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(!text)return;input.value="";sendMessage(text);});
  input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatForm").requestSubmit();}});
  document.querySelectorAll("[data-prompt]").forEach(button=>button.addEventListener("click",()=>{input.value=button.dataset.prompt;input.focus();}));
- document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];messages.innerHTML='<div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Yeni teknik görüşme</h2><p>Teknik sorunu yazıp yeni bir test başlatabilirsin.</p></div>';input.value="";input.focus();});
+ document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];try{localStorage.removeItem(HISTORY_KEY);}catch{}messages.innerHTML='<div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Yeni teknik görüşme</h2><p>Teknik sorunu yazıp yeni bir test başlatabilirsin.</p></div>';input.value="";input.focus();});
  const navButton=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");
  if(navButton&&nav){navButton.addEventListener("click",()=>{const open=!nav.classList.contains("is-open");nav.classList.toggle("is-open",open);navButton.setAttribute("aria-expanded",String(open));});}
  checkHealth();

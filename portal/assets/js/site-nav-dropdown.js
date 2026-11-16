@@ -22,14 +22,14 @@
   document.head.appendChild(style);
   const frame=document.createElement("iframe");
   frame.id="uzman-asistan-site-widget";
-  frame.src=new URL("uzman-asistan.html?widget=1&mascot=transparent-20261116-4",location.href).href;
+  frame.src=new URL("uzman-asistan.html?widget=1&mascot=fullbody-20261116-1",location.href).href;
   frame.title="UZMAN ASİSTAN";
   frame.setAttribute("aria-label","UZMAN ASİSTAN sohbet penceresi");
   frame.style.cssText="position:fixed;display:block;right:0;bottom:0;border:0;background:transparent;z-index:2147483000;transition:width .18s ease,height .18s ease";
   const setWidgetSize=(width,height)=>{frame.style.setProperty("width",width,"important");frame.style.setProperty("height",height,"important")};
-  setWidgetSize(innerWidth<=560?"88px":"104px",innerWidth<=560?"88px":"104px");
+  setWidgetSize(innerWidth<=560?"120px":"136px",innerWidth<=560?"164px":"180px");
   document.body.appendChild(frame);
-  window.addEventListener("resize",()=>{if(frame.isConnected&&frame.offsetWidth<120)setWidgetSize(innerWidth<=560?"88px":"104px",innerWidth<=560?"88px":"104px")});
+  window.addEventListener("resize",()=>{if(frame.isConnected&&frame.offsetWidth<150)setWidgetSize(innerWidth<=560?"120px":"136px",innerWidth<=560?"164px":"180px")});
   window.addEventListener("message",event=>{
    if(event.source!==frame.contentWindow)return;
    const type=event.data?.type,mobile=innerWidth<=560;
@@ -38,7 +38,7 @@
     setWidgetSize(opened?(mobile?"100vw":"454px"):(mobile?"88px":"104px"),opened?(mobile?"100vh":"684px"):(mobile?"88px":"104px"));
    }else if(type==="uzman-asistan-bubble"){
     const visible=!!event.data.show;
-    setWidgetSize(visible?(mobile?"252px":"270px"):(mobile?"88px":"104px"),visible?(mobile?"148px":"154px"):(mobile?"88px":"104px"));
+    setWidgetSize(visible?(mobile?"270px":"290px"):(mobile?"120px":"136px"),visible?(mobile?"170px":"184px"):(mobile?"164px":"180px"));
    }
   });
  }

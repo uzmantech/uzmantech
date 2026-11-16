@@ -54,16 +54,16 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
 </header>
 <main class="ai-shell">
  <section class="ai-heading">
-  <div><div class="ai-kicker">Uzmantech teknik zekâ platformu</div><h1>UZMAN <span>ASİSTAN</span></h1><p>Cep telefonu teknik servis teknisyenleri için yapay zekâ destekli teknik yardımcı. Sorularını yaz, teknik yanıtları ve kullanılan bilgi tabanı kaynaklarını incele.</p></div>
+  <div><div class="ai-kicker">Uzmantech teknik zekâ platformu</div><h1>UZMAN <span>ASİSTAN</span></h1><p>Cep telefonu teknik servis teknisyenleri için yapay zekâ destekli teknik yardımcı. Sorularını sor, doğal sohbet et; teknik konularda kaynaklı yanıtları incele.</p></div>
   <div class="ai-status"><i></i> Test arayüzü</div>
  </section>
  <section class="ai-grid">
   <div class="ai-chat">
-   <div class="ai-chat-top"><div class="ai-chat-brand"><div class="ai-mark">✦</div><div><b>Teknik Asistan</b><small>Yerel model · RAG bilgi tabanı</small></div></div><button class="ai-new" id="newChat" type="button">＋ Yeni sohbet</button></div>
+   <div class="ai-chat-top"><div class="ai-chat-brand"><div class="ai-mark">✦</div><div><b>Teknik Asistan</b><small>Doğal sohbet · Teknik bilgi tabanı</small></div></div><button class="ai-new" id="newChat" type="button">＋ Yeni sohbet</button></div>
    <div class="ai-messages" id="messages" aria-live="polite">
     <div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Teknik sorunu birlikte inceleyelim.</h2><p>Bir cihaz, bağlantı, ADB/Fastboot veya yazılım sorunu yaz. Bu sürüm test amaçlıdır; kritik servis işlemlerini uygulamadan önce mutlaka doğrula.</p><div class="ai-prompts"><button type="button" data-prompt="ADB cihazım unauthorized görünüyor. Ne kontrol etmeliyim?">ADB unauthorized</button><button type="button" data-prompt="Fastboot modunda cihaz algılanmıyor. Güvenli teşhis adımları nelerdir?">Fastboot algılama</button><button type="button" data-prompt="Telefonun model ve ürün bilgisini ADB ile nasıl kontrol ederim?">Cihaz bilgisi okuma</button></div></div>
    </div>
-   <div class="ai-input-wrap"><form id="chatForm"><div class="ai-input-row"><textarea id="messageInput" rows="1" maxlength="12000" placeholder="Teknik sorununu buraya yaz..." required></textarea><button class="ai-send" id="sendButton" type="submit" aria-label="Mesajı gönder">➤</button></div><p class="ai-hint">Enter ile gönder · Shift + Enter ile yeni satır. Bu test ekranında mesajlar kalıcı olarak kaydedilmez.</p></form></div>
+   <div class="ai-input-wrap"><form id="chatForm"><div class="ai-input-row"><textarea id="messageInput" rows="1" maxlength="12000" placeholder="Mesajını buraya yaz..." required></textarea><button class="ai-send" id="sendButton" type="submit" aria-label="Mesajı gönder">➤</button></div><p class="ai-hint">Enter ile gönder · Shift + Enter ile yeni satır. Bu test ekranında mesajlar kalıcı olarak kaydedilmez.</p></form></div>
   </div>
   <aside class="ai-side">
    <section class="ai-side-card"><h3>Asistan özellikleri</h3><div class="ai-feature"><i>⌘</i><div><b>Teknik soru-cevap</b><small>Telefon yazılımı ve servis süreçleri hakkında sorular.</small></div></div><div class="ai-feature"><i>⌕</i><div><b>Bilgi tabanı araması</b><small>Yanıtla birlikte kullanılan kaynakları görüntüleme.</small></div></div><div class="ai-feature"><i>◈</i><div><b>Yerel yapay zekâ</b><small>Şimdilik geliştirici bilgisayarında çalışan model.</small></div></div></section>
@@ -104,17 +104,21 @@ button,input,textarea{font:inherit}.ai-shell{width:min(1500px,100%);margin:auto;
   addMessage("user",text);
   const pending=addMessage("assistant","Yanıt hazırlanıyor…");
   try{
-   const response=await fetch(API_BASE+"/api/v1/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text})});
+   const response=await fetch(API_BASE+"/api/v1/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,history:conversationHistory.slice(-8)})});
    const data=await response.json().catch(()=>({}));
    if(!response.ok)throw new Error(data.detail||"Asistan yanıt veremedi.");
-   pending.remove();addMessage("assistant",data.reply||"Boş yanıt alındı.",Array.isArray(data.sources)?data.sources:[]);
+   pending.remove();
+   const answer=data.reply||"Boş yanıt alındı.";
+   conversationHistory.push({role:"user",content:text},{role:"assistant",content:answer});
+   conversationHistory=conversationHistory.slice(-12);
+   addMessage("assistant",answer,Array.isArray(data.sources)?data.sources:[]);
   }catch(error){pending.remove();addMessage("assistant","Bağlantı hatası: "+error.message+"\n\nYerel UZMAN ASİSTAN backend sunucusunun çalıştığını kontrol et.");}
   finally{busy=false;send.disabled=false;input.disabled=false;input.focus();}
  }
  document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(!text)return;input.value="";sendMessage(text);});
  input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatForm").requestSubmit();}});
  document.querySelectorAll("[data-prompt]").forEach(button=>button.addEventListener("click",()=>{input.value=button.dataset.prompt;input.focus();}));
- document.getElementById("newChat").addEventListener("click",()=>{messages.innerHTML='<div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Yeni teknik görüşme</h2><p>Teknik sorunu yazıp yeni bir test başlatabilirsin.</p></div>';input.value="";input.focus();});
+ document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];messages.innerHTML='<div class="ai-empty" id="emptyState"><div class="ai-empty-icon">✦</div><h2>Yeni teknik görüşme</h2><p>Teknik sorunu yazıp yeni bir test başlatabilirsin.</p></div>';input.value="";input.focus();});
  const navButton=document.querySelector(".site-mobile-nav-toggle"),nav=document.querySelector(".site-global-nav");
  if(navButton&&nav){navButton.addEventListener("click",()=>{const open=!nav.classList.contains("is-open");nav.classList.toggle("is-open",open);navButton.setAttribute("aria-expanded",String(open));});}
  checkHealth();

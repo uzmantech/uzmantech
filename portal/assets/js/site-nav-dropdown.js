@@ -18,7 +18,7 @@
  if(!document.getElementById("uzman-asistan-site-widget")){
   const style=document.createElement("style");
   style.id="uzman-asistan-site-widget-style";
-  style.textContent="#uzman-asistan-site-widget{position:fixed!important;display:block!important;right:0!important;bottom:0!important;max-width:none!important;max-height:none!important;min-width:0!important;min-height:0!important;border:0!important;margin:0!important;padding:0!important;background:transparent!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;touch-action:manipulation!important;z-index:2147483000!important;transition:width .18s ease,height .18s ease}";
+  style.textContent="#uzman-asistan-site-widget{position:fixed!important;display:block!important;right:0!important;bottom:0!important;max-width:none!important;max-height:none!important;min-width:0!important;min-height:0!important;border:0!important;margin:0!important;padding:0!important;background:transparent!important;opacity:1!important;visibility:visible!important;touch-action:manipulation!important;z-index:2147483000!important;transition:width .18s ease,height .18s ease}";
   document.head.appendChild(style);
   const frame=document.createElement("iframe");
   frame.id="uzman-asistan-site-widget";
@@ -43,7 +43,7 @@
   document.head.appendChild(mascotStyle);
   document.body.appendChild(mascot);
   mascot.addEventListener("click",()=>{
-   mascot.style.setProperty("display","none","important");
+   // Keep the mascot visible until the iframe confirms that the chat actually opened.
    frame.style.setProperty("pointer-events","auto","important");
    setWidgetSize(mobile()?"100vw":"454px",mobile()?viewportHeight()+"px":"684px");
    const openFrame=()=>frame.contentWindow?.postMessage({type:"uzman-asistan-parent-open"},"*");
@@ -63,6 +63,7 @@
    if(event.data?.type==="uzman-asistan-resize"&&event.data.open===true){
     frame.style.setProperty("pointer-events","auto","important");
     setWidgetSize(mobile()?"100vw":"454px",mobile()?viewportHeight()+"px":"684px");
+    mascot.style.setProperty("display","none","important");
    }
   });
  }

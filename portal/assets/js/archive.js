@@ -460,29 +460,28 @@ async function enforceArchiveLicense(){
   if(attempt<2)await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));
  }
  if(!user){
+  // Dosya arşivi herkese açık: misafir kullanıcılar da katalog ve dosya listesini görebilir.
   syncArchiveHeader(null);
-  document.body.classList.remove("archive-authorized");
-  document.body.classList.add("archive-preview-locked");
-  applyLockedArchivePreview();
+  document.body.classList.remove("archive-preview-locked");
+  document.body.classList.add("archive-authorized","archive-public");
   if(stage)stage.hidden=false;
-  if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}
-  console.warn("Arşiv oturum kontrolü başarısız:",lastSessionError);
+  if(gate)gate.hidden=true;
+  try {
+   await loadLiveArchive();
+  } catch(error) {
+   console.error("Herkese açık arşiv verileri yüklenemedi:",error);
+   const grid=$("#archiveLiveGrid");
+   const detail=String(error?.message||error||"Bilinmeyen hata").slice(0,240);
+   if(grid)grid.innerHTML='<div class="archive-live-empty">Model kataloğu oluşturulamadı: '+archiveEsc(detail)+'</div>';
+  }
   return;
  }
 
  // Oturum doğrulandı. Yönetici kimliği veri yükleme sürecinden bağımsız korunur.
  syncArchiveHeader(user);
- const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
- const hasPaidAccess=user.role==="admin"||(user.license_status==="active"&&paidPlans.has(String(user.license_plan||"").toLowerCase()));
- const isPublicHonorPage=!!$("#archiveModelsPage")&&["Honor","Tecno","Infinix","Google","Motorola","Nokia"].includes(normBrand(selectedBrand));
- if(!hasPaidAccess&&!isPublicHonorPage){
-  document.body.classList.remove("archive-authorized");
-  document.body.classList.add("archive-preview-locked");
-  applyLockedArchivePreview();
-  if(stage)stage.hidden=false;
-  if(gate){gate.hidden=false;gate.style.setProperty("display","flex","important");}
-  return;
- }
+ // Oturum açmış ücretsiz üyeler de katalog ve dosya listesini görüntüleyebilir.
+ // Paket kontrolü indirme bağlantısı oluşturulurken sunucu tarafında uygulanır.
+
 
  document.body.classList.remove("archive-preview-locked");
  document.body.classList.add("archive-authorized");

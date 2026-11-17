@@ -54,6 +54,11 @@ body.full-mode .assistant-site-header .site-nav-dropdown-item:hover{background:#
 
 /* Assistant is a dedicated chat surface; never render the host website navigation/auth header here. */
 body>.assistant-site-header{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;overflow:hidden!important;}
+
+/* Embedded assistant: cancel the global fixed-header spacer from site-header.css. */
+body.embed-mode:has(.assistant-site-header){padding-top:0!important;padding-bottom:0!important;margin:0!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;background:#fff!important}
+body.embed-mode>.assistant-site-header{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important}
+body.embed-mode #chat-widget{display:flex!important;flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 </style>
 </head>
 <body>

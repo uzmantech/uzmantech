@@ -106,13 +106,13 @@
     const close = () => overlay.remove();
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantNavigate(event) {
-      if (event.source !== frame.contentWindow || event.data?.type !== "uzman-asistan-navigate" || event.data.url !== "/paketler.html") return;
+      if (event.source !== frame.contentWindow || event.data?.type !== "uzman-asistan-navigate" || typeof event.data.url !== "string" || !/^\/(paketler|kayit|odeme)\.html(?:\?|$)/.test(event.data.url)) return;
       let page = overlay.querySelector("#uzman-package-background");
       if (!page) {
         page = document.createElement("iframe");
         page.id = "uzman-package-background";
         page.title = "Uzmantech Paketler";
-        page.src = "/paketler.html";
+        page.src = event.data.url;
         page.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:1;background:#080e19";
         overlay.appendChild(page);
       }

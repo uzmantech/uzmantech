@@ -42,22 +42,22 @@
 <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h8"/></symbol>
 </svg>
 <header class="dash-topbar site-global-header">
- <a class="site-header-brand" href="index.html?view=home"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <a class="site-header-brand" href="/index.html?view=home"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
  <nav class="site-global-nav" aria-label="Ana menü">
   <a class="site-nav-link" href="index.html?view=home" data-page="home"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg></span><b>Ana Sayfa</b></a>
-  <a class="site-nav-link" href="archive.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-folder"/></svg></span><b>Dosya Arşivi</b></a>
-  <a class="site-nav-link" href="index.html#download" data-page="download"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-download"/></svg></span><b>İndir</b></a>
+  <a class="site-nav-link" href="/archive.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-folder"/></svg></span><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link" href="/index.html#download" data-page="download"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-download"/></svg></span><b>İndir</b></a>
   <a class="site-nav-link" href="index.html#updates"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg></span><b>Haberler</b></a>
   <a class="site-nav-link" href="cam-uyumluluk.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg></span><b>Cam Uyumluluğu</b></a>
-  <a class="site-nav-link" href="yazilimci-tv.html"><span class="site-nav-icon" aria-hidden="true">▶</span><b>Yazılımcı TV</b></a>
+  <a class="site-nav-link" href="/yazilimci-tv.html"><span class="site-nav-icon" aria-hidden="true">▶</span><b>Yazılımcı TV</b></a>
   <div class="site-nav-dropdown"><button class="site-nav-link site-nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wrench"/></svg></span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></button><div class="site-nav-dropdown-menu">
     <a class="site-nav-dropdown-item" href="cam-uyumluluk.html"><span aria-hidden="true">▦</span> Cam Uyumluluğu</a>
     <a class="site-nav-dropdown-item" href="servis-takip.html"><span aria-hidden="true">▣</span> Servis Takip</a>
     <a class="site-nav-dropdown-item" href="imei-araclari.html"><span aria-hidden="true">▦</span> IMEI Çoğaltma</a>
     <a class="site-nav-dropdown-item" href="mediatek-temp-root.html"><span aria-hidden="true">⚙</span> MediaTek Temp Root</a>
    </div></div>
-  <a class="site-nav-link" href="paketler.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-crown"/></svg></span><b>Paketler</b></a>
-  <a class="site-nav-link" href="destek.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-help"/></svg></span><b>İletişim</b></a>
+  <a class="site-nav-link" href="/paketler.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-crown"/></svg></span><b>Paketler</b></a>
+  <a class="site-nav-link" href="/destek.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-help"/></svg></span><b>İletişim</b></a>
  </nav>
  <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
  <div class="dash-top-actions">
@@ -116,13 +116,12 @@
 document.addEventListener("click",function(event){
  const button=event.target.closest(".package-buy[data-plan]");
  if(!button)return;
+ event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
  const plan=button.dataset.plan;
+ if(!["weekly","monthly","half_year","annual"].includes(plan))return;
  try{sessionStorage.setItem("uzmantech_pending_plan",plan);}catch(_){}
  const token=window.UzmantechAPI?.getToken?.();
- if(token){
-  event.preventDefault();event.stopImmediatePropagation();
-  location.href="odeme.html?plan="+encodeURIComponent(plan)+"&v=5";
- }
+ location.href=token?("/odeme.html?plan="+encodeURIComponent(plan)+"&v=5"):("/kayit.html?plan="+encodeURIComponent(plan));
 },true);
 </script>
 <script>

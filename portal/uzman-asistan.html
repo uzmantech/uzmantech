@@ -51,6 +51,9 @@ body.full-mode .assistant-site-header .site-nav-dropdown-item:hover{background:#
  body.full-mode #chat-widget{width:100%;height:auto;min-height:0;max-height:none;flex:1 1 0}
  body.full-mode #chat-widget .scroll-area{min-height:0}
 }
+
+/* Assistant is a dedicated chat surface; never render the host website navigation/auth header here. */
+body>.assistant-site-header{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;overflow:hidden!important;}
 </style>
 </head>
 <body>

@@ -1268,3 +1268,47 @@ body.archive-shell .archive-recent-track{margin-top:0!important}
 @keyframes archiveCyberPulse{50%{opacity:.35}}
 @media(max-width:520px){.archive-cyber-topbar,.archive-cyber-header,.archive-cyber-footer{padding-left:17px;padding-right:17px}.archive-cyber-top-meta{display:none}.archive-cyber-content{padding:23px 18px 20px}.archive-cyber-content h3{font-size:24px}.archive-cyber-copy{font-size:12px}.archive-cyber-telemetry{font-size:9px}.archive-cyber-telemetry>div:first-child{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.archive-cyber-ring,.archive-cyber-lock i,.archive-cyber-topbar i,.archive-cyber-status i{animation:none!important}}
+
+
+/* VIP Vault gold access card — based on the supplied design */
+.archive-shell.archive-download-gated #modal{background:rgba(2,3,7,.84)!important;backdrop-filter:blur(9px)!important}
+.archive-shell.archive-download-gated #modal .modal-card{width:min(540px,calc(100% - 24px))!important;padding:0!important;overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.archive-shell.archive-download-gated #modal .modal-card:before{display:none!important}
+.archive-shell.archive-download-gated #modal .modal-heading{display:none!important}
+.archive-shell.archive-download-gated #modal #modalBody{overflow:visible}
+.archive-vault-gate{--vault-gold:#fbbf24;--vault-amber:#f59e0b;position:relative;isolation:isolate;overflow:hidden;color:#fff;border:1px solid rgba(251,191,36,.48);border-radius:27px;background:#0c0e14;box-shadow:0 28px 80px rgba(0,0,0,.85),0 0 50px rgba(245,158,11,.16)}
+.archive-vault-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px),radial-gradient(circle at 50% 46%,rgba(245,158,11,.12),transparent 58%);background-size:24px 24px,auto}
+.archive-vault-gate:before{content:"";position:absolute;top:0;left:20%;width:60%;height:2px;background:linear-gradient(90deg,transparent,#fcd34d,transparent);box-shadow:0 0 16px 2px rgba(251,191,36,.55)}
+.archive-vault-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 25px 19px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.035),transparent)}
+.archive-vault-brand{display:flex;align-items:center;gap:13px}
+.archive-vault-brand-icon{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(251,191,36,.3);border-radius:12px;color:#fbbf24;background:linear-gradient(180deg,rgba(251,191,36,.18),rgba(217,119,6,.05));box-shadow:inset 0 1px rgba(255,255,255,.15)}
+.archive-vault-brand-icon svg{width:20px;height:20px}
+.archive-vault-brand strong{font:700 21px "Outfit","Space Grotesk",sans-serif;letter-spacing:-.4px;color:#fff}
+.archive-vault-status{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid rgba(251,191,36,.3);border-radius:30px;background:rgba(245,158,11,.09);color:#fcd34d;font-size:10px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+.archive-vault-status i{width:7px;height:7px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;animation:archiveVaultPulse 1.8s infinite}
+.archive-vault-content{position:relative;display:flex;flex-direction:column;align-items:center;padding:30px 30px 27px;text-align:center}
+.archive-vault-lock{position:relative;width:124px;height:124px;display:grid;place-items:center;margin:0 auto 22px}
+.archive-vault-lock-halo{position:absolute;inset:0;border:1px solid rgba(251,191,36,.35);border-radius:50%;background:linear-gradient(180deg,rgba(251,191,36,.1),transparent);box-shadow:0 0 35px rgba(245,158,11,.2);animation:archiveVaultBreathe 3.2s ease-in-out infinite}
+.archive-vault-lock:before{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.1);border-radius:50%;background:#12151e;box-shadow:inset 0 2px 6px rgba(0,0,0,.85),0 1px rgba(255,255,255,.08)}
+.archive-vault-lock-core{position:relative;width:78px;height:78px;display:grid;place-items:center;border:1px solid rgba(251,191,36,.5);border-radius:19px;background:linear-gradient(180deg,#232736,#151822 60%,#0d0f16);box-shadow:0 12px 28px rgba(0,0,0,.85),0 0 25px rgba(245,158,11,.3),inset 0 1px rgba(255,255,255,.25);animation:archiveVaultFloat 4s ease-in-out infinite}
+.archive-vault-lock-core:before{content:"";position:absolute;top:0;left:12px;right:12px;height:1px;background:linear-gradient(90deg,transparent,#fde68a,transparent)}
+.archive-vault-lock-core svg{width:43px;height:43px;filter:drop-shadow(0 4px 12px rgba(245,158,11,.55))}
+.archive-vault-eyebrow{display:inline-flex;margin-bottom:13px;padding:6px 13px;border:1px solid rgba(251,191,36,.24);border-radius:30px;background:rgba(251,191,36,.09);color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:1.7px}
+.archive-vault-content h3{margin:0 0 13px;color:#fff;font:800 clamp(25px,4.8vw,32px)/1.18 "Outfit","Space Grotesk",sans-serif;letter-spacing:-.7px}
+.archive-vault-copy{max-width:430px;margin:0 auto 25px;color:#cbd5e1;font-size:14px;line-height:1.75}
+.archive-vault-cta{position:relative;overflow:hidden;width:100%;min-height:57px;display:flex;align-items:center;justify-content:center;gap:13px;padding:15px 24px;border:1px solid rgba(253,230,138,.7);border-radius:15px;background:linear-gradient(180deg,#fcd34d,#fbbf24 55%,#d97706);color:#090a0f;font:800 16px "Outfit","Space Grotesk",sans-serif;letter-spacing:.2px;box-shadow:0 12px 32px rgba(245,158,11,.4),0 4px 0 #92400e,inset 0 1px rgba(255,255,255,.75);cursor:pointer;transition:filter .2s,transform .2s,box-shadow .2s}
+.archive-vault-cta:after{content:"";position:absolute;top:0;bottom:0;left:-55%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-22deg);animation:archiveVaultShimmer 3.8s infinite ease-in-out}
+.archive-vault-cta:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 16px 40px rgba(251,191,36,.48),0 4px 0 #92400e,inset 0 1px rgba(255,255,255,.9)}
+.archive-vault-cta:active{transform:translateY(2px)}
+.archive-vault-cta b{font-size:23px;line-height:1;font-weight:700;transition:transform .2s}
+.archive-vault-cta:hover b{transform:translateX(5px)}
+.archive-vault-note{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:25px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);color:#9ca3af;font-size:11px;line-height:1.6}
+.archive-vault-note svg{width:17px;height:17px;flex:0 0 17px;color:rgba(251,191,36,.9)}
+.archive-vault-footer{display:flex;justify-content:space-between;gap:10px;padding:11px 24px;border-top:1px solid rgba(255,255,255,.05);background:#080a0f;color:#697386;font:9px "Plus Jakarta Sans",sans-serif;letter-spacing:1px}
+.archive-vault-footer b{color:rgba(251,191,36,.72);font-weight:700}
+@keyframes archiveVaultPulse{50%{opacity:.35}}
+@keyframes archiveVaultBreathe{0%,100%{transform:scale(.96);opacity:.45}50%{transform:scale(1.06);opacity:.85}}
+@keyframes archiveVaultFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes archiveVaultShimmer{0%{transform:translateX(-140%) skewX(-22deg)}35%,100%{transform:translateX(260%) skewX(-22deg)}}
+@media(max-width:520px){.archive-vault-gate{border-radius:21px}.archive-vault-header{padding:17px 17px 15px}.archive-vault-brand strong{font-size:18px}.archive-vault-status{font-size:9px;padding:6px 8px}.archive-vault-content{padding:25px 18px 21px}.archive-vault-lock{width:112px;height:112px}.archive-vault-lock-core{width:72px;height:72px}.archive-vault-content h3{font-size:26px}.archive-vault-copy{font-size:12px}.archive-vault-cta{min-height:53px;font-size:15px}.archive-vault-footer{padding:10px 16px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.archive-vault-lock-halo,.archive-vault-lock-core,.archive-vault-status i,.archive-vault-cta:after{animation:none!important}}

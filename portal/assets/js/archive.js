@@ -430,19 +430,24 @@ function showPackageRequired(){
  document.body.classList.add("archive-download-gated");
  $("#modal").dataset.locked="true";
  $("#modalClose").hidden=true;
- $("#modalTitle").textContent="Üyelik erişimi";
- $("#modalBody").innerHTML=`<div class="archive-access-v2">
-  <div class="archive-access-v2-top"><span class="archive-access-v2-badge"><span></span> UZMANTOOL PREMIUM ERİŞİM</span><div class="archive-access-symbol"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="21" width="30" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 21v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="31" r="2.2" fill="currentColor"/><path d="M24 33v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
-  <span class="archive-access-kicker">DOSYA ARŞİVİ • ÜYELİK GEREKLİ</span>
-  <h3 class="archive-access-title">Bu dosya indirilmeye hazır.<br>İndirmek için paket gerekli.</h3>
-  <p class="archive-access-copy">Arşivdeki model ve dosya bilgilerini inceleyebilirsiniz. İndirme bağlantılarını kullanmak için hesabınızda aktif ve yönetici onaylı bir paket bulunmalıdır.</p>
-  <div class="archive-access-v2-benefits"><div><b>✓</b><span>Dosya kataloğu herkese açık</span></div><div><b>✓</b><span>İndirme erişimi paket sahiplerine özel</span></div><div><b>✓</b><span>Onay sonrası erişim otomatik açılır</span></div></div>
-  <button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button>
-  <small class="archive-access-note">Paket satın aldıysanız, yönetici onayından sonra tekrar giriş yapmanız yeterlidir.</small>
- </div>`;
+ $("#modalTitle").textContent="Dosya Arşivi";
+ $("#modalBody").innerHTML=`<section class="archive-cyber-gate" aria-labelledby="archiveCyberTitle">
+  <div class="archive-cyber-scanlines" aria-hidden="true"></div>
+  <div class="archive-cyber-topbar"><div><i></i><span>SEC-GATE // AUTH_REQUIRED</span></div><div class="archive-cyber-top-meta"><span>AES-256</span><b>•</b><span>NODE: TR-IST</span></div></div>
+  <header class="archive-cyber-header"><div class="archive-cyber-brand"><span class="archive-cyber-folder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2Z"/></svg></span><span><strong>Dosya Arşivi</strong><small>ARCHIVE_INDEX // LOCKED</small></span></div><span class="archive-cyber-status"><i></i>KİLİTLİ</span></header>
+  <div class="archive-cyber-content">
+   <div class="archive-cyber-core" aria-hidden="true"><svg class="archive-cyber-ring archive-cyber-ring-one" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="49"/></svg><svg class="archive-cyber-ring archive-cyber-ring-two" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/></svg><i class="archive-cyber-tick top"></i><i class="archive-cyber-tick bottom"></i><i class="archive-cyber-tick left"></i><i class="archive-cyber-tick right"></i><span class="archive-cyber-lock"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 10V7a4 4 0 1 1 8 0v3"/><rect x="5" y="10" width="14" height="10"/><circle cx="12" cy="14.5" r="1.2" fill="#FF8A00" stroke="none"/><path d="M12 15.5v2" stroke="#FF8A00"/></svg></span></div>
+   <div class="archive-cyber-eyebrow"><b>//</b> UZMANTOOL DOSYA ARŞİVİ <b>//</b></div>
+   <h3 id="archiveCyberTitle">İndirme için paket gerekli</h3>
+   <p class="archive-cyber-copy">Dosyaları görüntüleyebilirsiniz. İndirme bağlantısını açmak için aktif ve yönetici tarafından onaylanmış bir üyelik paketine ihtiyacınız var.</p>
+   <div class="archive-cyber-telemetry"><div><span>DURUM:</span><strong>Kilitli / Paket Bekleniyor</strong></div><div><em>PROTOCOL v4.2</em><span> | </span><span>ONAY: GEREKLİ</span></div></div>
+   <button type="button" class="archive-cyber-cta" id="archivePackageContinue"><span>[01]</span><strong>Paketleri Görüntüle</strong><b>→</b></button>
+   <div class="archive-cyber-footnote"><b>[!]</b><span>Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</span></div>
+  </div>
+  <footer class="archive-cyber-footer"><span>SYS.VERIFY // INTEGRITY_OK</span><b>UZMANTOOL_CORE</b></footer>
+ </section>`;
  $("#modal").classList.add("open");
 }
-
 function syncArchiveHeader(user){
  const auth=$("#headerAuth");if(!auth)return;
  if(user){

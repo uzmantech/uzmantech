@@ -445,6 +445,11 @@ function showPackageRequired(){
   <footer class="archive-vault-footer"><span>UZMANTOOL • SECURE FILE VAULT</span><b>VIP ACCESS</b></footer>
  </section>`;
  $("#modal").classList.add("open");
+ const packageButton=$("#archivePackageContinue");
+ if(packageButton&&!packageButton.dataset.navigationBound){
+  packageButton.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();window.location.assign(new URL("paketler.html",window.location.href).href);});
+  packageButton.dataset.navigationBound="1";
+ }
 }
 function syncArchiveHeader(user){
  const auth=$("#headerAuth");if(!auth)return;

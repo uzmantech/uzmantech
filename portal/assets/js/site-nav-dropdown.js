@@ -30,11 +30,12 @@
    if(document.getElementById("uzman-chat-overlay"))return;
    const overlay=document.createElement("div");
    overlay.id="uzman-chat-overlay";
-   overlay.innerHTML='<section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-clean-overlay-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
+   overlay.innerHTML='<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-popup-20261117-2" allow="clipboard-read; clipboard-write"></iframe></section>';
    const css=document.createElement("style");
-   css.textContent='#uzman-chat-overlay{position:fixed;inset:0;z-index:2147483001;margin:0;padding:0;pointer-events:none}#uzman-chat-overlay .uz-chat-frame-wrap{position:fixed;inset:0;width:100vw;height:100dvh;max-height:none;margin:0;padding:0;border:0;border-radius:0;overflow:hidden;background:transparent;box-shadow:none;pointer-events:auto}#uzman-chat-overlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}';
+   css.textContent='#uzman-chat-overlay{position:fixed;inset:0;z-index:2147483001;margin:0;padding:0;pointer-events:none}#uzman-chat-overlay .uz-chat-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(3,12,24,.22);pointer-events:auto}#uzman-chat-overlay .uz-chat-frame-wrap{position:fixed;right:18px;bottom:18px;width:min(460px,calc(100vw - 24px));height:min(700px,calc(100dvh - 30px));max-height:none;margin:0;padding:0;border:1px solid #00cfe6;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 18px 65px #000b;pointer-events:auto}#uzman-chat-overlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}@media(max-width:560px){#uzman-chat-overlay .uz-chat-frame-wrap{right:12px;bottom:12px;width:calc(100vw - 24px);height:min(700px,calc(100dvh - 24px));border-radius:14px}}';
    overlay.appendChild(css);document.body.appendChild(overlay);mascot.style.visibility="hidden";
    const close=()=>{overlay.remove();mascot.style.visibility="";};
+   overlay.querySelector(".uz-chat-backdrop").addEventListener("click",close);
    overlay.querySelector("iframe").addEventListener("load",e=>e.target.contentWindow.postMessage({type:"uzman-asistan-parent-open"},"*"));
    window.addEventListener("message",function onAssistantMessage(e){if(e.source===overlay.querySelector("iframe").contentWindow&&e.data?.type==="uzman-asistan-close"){close();window.removeEventListener("message",onAssistantMessage)}});
   });

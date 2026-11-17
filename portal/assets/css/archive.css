@@ -1168,3 +1168,34 @@ body.archive-shell #archiveModelsPage>.archive-back-brands{display:none!importan
 /* Add a clear visual gap between the recent-software heading and moving cards */
 body.archive-shell .archive-recent-head{margin-bottom:24px!important}
 body.archive-shell .archive-recent-track{margin-top:0!important}
+
+
+/* 2026-11-17: richer package gate on the file-detail/download screen */
+.archive-shell.archive-download-gated #modal{background:rgba(2,7,16,.78)!important;backdrop-filter:blur(9px)!important}
+.archive-shell.archive-download-gated #modal .modal-card{width:min(560px,calc(100% - 28px))!important;padding:0!important;overflow:hidden!important;border:1px solid rgba(92,151,222,.42)!important;border-radius:22px!important;background:linear-gradient(145deg,#1a263a 0%,#111a2a 58%,#171b2b 100%)!important;box-shadow:0 32px 110px rgba(0,0,0,.72),0 0 65px rgba(40,126,220,.13)!important;position:relative!important}
+.archive-shell.archive-download-gated #modal .modal-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#3188ed,#79c5ff,#8b70f5,#3188ed)}
+.archive-shell.archive-download-gated #modal .modal-heading{min-height:66px;padding:20px 26px 12px!important;margin:0!important;justify-content:flex-start!important;border-bottom:1px solid rgba(133,166,207,.12)}
+.archive-shell.archive-download-gated #modal .modal-heading h2{color:#f2f7ff!important;font:700 17px "Space Grotesk",sans-serif!important;letter-spacing:-.2px!important}
+.archive-shell.archive-download-gated #modal .modal-heading .icon-button{display:none!important}
+.archive-access-v2{padding:22px 28px 26px;text-align:left}
+.archive-access-v2-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.archive-access-v2-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid rgba(91,159,237,.28);border-radius:30px;background:rgba(36,105,181,.12);color:#a9d2ff;font-size:9px;font-weight:800;letter-spacing:1.15px}
+.archive-access-v2-badge span{width:7px;height:7px;border-radius:50%;background:#54b5ff;box-shadow:0 0 12px #54b5ff}
+.archive-access-v2 .archive-access-symbol{width:66px;height:66px;margin:0 4px 0 0;border-color:rgba(91,159,237,.5);background:radial-gradient(circle at 35% 25%,#2b5481,#172b46 70%);color:#a8d3ff;box-shadow:0 0 32px rgba(48,135,226,.2),inset 0 0 18px rgba(111,184,255,.1)}
+.archive-access-v2 .archive-access-symbol svg{width:35px;height:35px}
+.archive-access-v2 .archive-access-kicker{margin-bottom:9px;color:#82baff;font-size:9px;letter-spacing:1.6px}
+.archive-access-v2 .archive-access-title{margin:0 0 12px;color:#f6f8fc;font:700 clamp(21px,4vw,26px)/1.25 "Space Grotesk",sans-serif;letter-spacing:-.7px}
+.archive-access-v2 .archive-access-copy{max-width:none;margin:0;color:#b8c6d9;font-size:13px;line-height:1.75}
+.archive-access-v2-benefits{display:grid;gap:10px;margin:20px 0 22px;padding:15px 16px;border:1px solid rgba(111,149,194,.2);border-radius:13px;background:linear-gradient(110deg,rgba(38,69,105,.28),rgba(16,29,47,.4))}
+.archive-access-v2-benefits>div{display:flex;align-items:center;gap:10px;color:#d1deef;font-size:11px;font-weight:600}
+.archive-access-v2-benefits b{display:grid;place-items:center;width:19px;height:19px;flex:0 0 19px;border-radius:50%;background:rgba(57,157,122,.16);color:#73e0b3;font-size:11px}
+.archive-access-v2 .archive-access-button{min-height:49px;border:1px solid #4a9af1;border-radius:10px;background:linear-gradient(105deg,#2377d4,#2869cb 55%,#455bd0);box-shadow:0 8px 24px rgba(27,105,207,.2);font-size:13px}
+.archive-access-v2 .archive-access-button:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.archive-access-v2 .archive-access-note{margin-top:13px;color:#8fa2bb;font-size:10px}
+.archive-download-locked-panel{display:grid;justify-items:center;gap:9px;margin-top:18px;padding:22px 18px;border:1px solid rgba(88,143,208,.3);border-radius:13px;background:linear-gradient(145deg,rgba(27,54,85,.45),rgba(14,24,40,.65));text-align:center}
+.archive-download-locked-icon{display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(100,162,229,.34);border-radius:13px;background:rgba(40,105,173,.2);font-size:20px}
+.archive-download-locked-panel strong{color:#eaf3ff;font-size:13px}
+.archive-download-locked-panel p{max-width:430px;margin:0;color:#9fb2cb;font-size:11px;line-height:1.6}
+.archive-download-locked-panel .archive-access-button{max-width:320px;margin-top:7px}
+.archive-file-detail-locked{border-color:rgba(84,135,194,.42);box-shadow:0 18px 48px rgba(0,0,0,.18)}
+@media(max-width:520px){.archive-shell.archive-download-gated #modal .modal-heading{padding:17px 19px 10px!important}.archive-access-v2{padding:18px 19px 22px}.archive-access-v2-top{align-items:flex-start}.archive-access-v2 .archive-access-symbol{width:56px;height:56px;flex:0 0 56px}.archive-access-v2 .archive-access-title{font-size:21px}}

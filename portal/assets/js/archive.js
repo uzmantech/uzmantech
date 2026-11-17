@@ -20,7 +20,7 @@ brandSearchInput?.addEventListener("input",filterBrandCards);
 $("#archiveBrandSearchClear")?.addEventListener("click",()=>{if(brandSearchInput)brandSearchInput.value="";filterBrandCards();brandSearchInput?.focus();});
 
 const pageParams=new URLSearchParams(location.search);
-let archiveItems=[],selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"",modelVisibleLimit=48;
+let archiveItems=[],archiveCurrentUser=null,archiveHasDownloadAccess=false,selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"",modelVisibleLimit=48;
 
 const MODEL_CATALOG={
  "Xiaomi":"Mi 1|Mi 1S|Mi 2|Mi 2S|Mi 3|Mi 4|Mi 4i|Mi 4c|Mi 5|Mi 5s|Mi 5s Plus|Mi 5c|Mi 5X|Mi 6|Mi 6X|Mi 8|Mi 8 Lite|Mi 8 Pro|Mi 8 SE|Mi 9|Mi 9 SE|Mi 9T|Mi 9T Pro|Mi 10|Mi 10 Pro|Mi 10 Lite|Mi 10T|Mi 10T Pro|Mi 10T Lite|Mi 11|Mi 11 Lite|Mi 11 Lite 5G NE|Mi 11 Pro|Mi 11 Ultra|Xiaomi 11T|Xiaomi 11T Pro|Xiaomi 12|Xiaomi 12 Pro|Xiaomi 12X|Xiaomi 12 Lite|Xiaomi 12T|Xiaomi 12T Pro|Xiaomi 13|Xiaomi 13 Pro|Xiaomi 13 Ultra|Xiaomi 13 Lite|Xiaomi 13T|Xiaomi 13T Pro|Xiaomi 14|Xiaomi 14 Pro|Xiaomi 14 Ultra|Xiaomi 14T|Xiaomi 14T Pro|Xiaomi 15|Xiaomi 15 Pro|Xiaomi 15 Ultra|Xiaomi 15T|Xiaomi 15T Pro|Xiaomi 17|Xiaomi 17 Pro|Xiaomi 17 Pro Max|Redmi 1|Redmi 2|Redmi 3|Redmi 4|Redmi 5|Redmi 6|Redmi 7|Redmi 8|Redmi 9|Redmi 10|Redmi 12|Redmi 13|Redmi 14C|Redmi 15|Redmi 15C|Redmi Note 3|Redmi Note 4|Redmi Note 5|Redmi Note 6 Pro|Redmi Note 7|Redmi Note 8|Redmi Note 8 Pro|Redmi Note 9|Redmi Note 9S|Redmi Note 9 Pro|Redmi Note 10|Redmi Note 10 Pro|Redmi Note 11|Redmi Note 11 Pro|Redmi Note 12|Redmi Note 12 Pro|Redmi Note 13|Redmi Note 13 Pro|Redmi Note 13 Pro+|Redmi Note 14|Redmi Note 14 Pro|Redmi Note 14 Pro+|Redmi Note 15|Redmi Note 15 Pro|Redmi Note 15 Pro+|POCO F1|POCO F2 Pro|POCO F3|POCO F4|POCO F5|POCO F5 Pro|POCO F6|POCO F6 Pro|POCO F7|POCO X3|POCO X3 Pro|POCO X4 Pro|POCO X5|POCO X5 Pro|POCO X6|POCO X6 Pro|POCO X7|POCO X7 Pro|POCO M3|POCO M4 Pro|POCO M5|POCO M6|POCO C3|POCO C55|POCO C65|POCO C75",
@@ -181,6 +181,10 @@ function renderLiveArchive(){
    count.textContent="DOSYA DETAYI";
    head.querySelector("h2").textContent=file.title||file.original_filename||"Yazılım dosyası";
    head.querySelector("p").textContent=brand+" • "+selectedDevice+" • "+(archiveCategory[file.category]||file.category||"Diğer");
+   if(!archiveHasDownloadAccess){
+    grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackFile">← Dosya klasörüne dön</button><article class="archive-file-detail archive-file-detail-locked"><div class="archive-file-detail-icon">📁</div><span class="archive-file-detail-category">'+archiveEsc(archiveCategory[file.category]||file.category||"Diğer")+'</span><h3>'+archiveEsc(file.title||file.original_filename||"Yazılım dosyası")+'</h3><p>'+archiveEsc(file.description||"Bu dosya için açıklama eklenmemiş.")+'</p><div class="archive-file-detail-meta"><span>Marka: <b>'+archiveEsc(brand)+'</b></span><span>Model: <b>'+archiveEsc(selectedDevice)+'</b></span><span>Dosya: <b>'+archiveEsc(file.original_filename||"Teknik dosya")+'</b></span><span>Eklenme: <b>'+archiveEsc(file.created_at?new Date(file.created_at).toLocaleDateString("tr-TR"):"-")+'</b></span></div><div class="archive-download-locked-panel"><span class="archive-download-locked-icon">🔒</span><strong>İndirme erişimi paket üyeliği gerektirir</strong><p>Dosya bilgileri görüntülenebilir. İndirme bağlantısı, aktif ve onaylanmış paketiniz olduğunda açılır.</p><button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button></div></article>';
+    return;
+   }
    grid.innerHTML='<button type="button" class="archive-back-devices" id="archiveBackFile">← Dosya klasörüne dön</button><article class="archive-file-detail"><div class="archive-file-detail-icon">📁</div><span class="archive-file-detail-category">'+archiveEsc(archiveCategory[file.category]||file.category||"Diğer")+'</span><h3>'+archiveEsc(file.title||file.original_filename||"Yazılım dosyası")+'</h3><p>'+archiveEsc(file.description||"Bu dosya için açıklama eklenmemiş.")+'</p><div class="archive-file-detail-meta"><span>Marka: <b>'+archiveEsc(brand)+'</b></span><span>Model: <b>'+archiveEsc(selectedDevice)+'</b></span><span>Dosya: <b>'+archiveEsc(file.original_filename||"Teknik dosya")+'</b></span><span>Eklenme: <b>'+archiveEsc(file.created_at?new Date(file.created_at).toLocaleDateString("tr-TR"):"-")+'</b></span></div>'+(file.is_samsung_api?'<div class="samsung-local-download-box"><p>Ücretsiz samloader aracı, seçtiğiniz model ve CSC için Samsung sunucusunda mevcut en güncel firmware paketini bilgisayarınıza indirir. IMEI gerekmez; dosya Uzmantech sunucusuna yüklenmez. FirmwareIndex sürüm bilgisi referanstır, eski sürümlerin birebir indirilmesi garanti edilmez.</p><details class="samsung-download-guide"><summary>Nasıl indirilir? Adım adım anlatım</summary><ol><li><b>İndirme dosyasını hazırlayın.</b> Aşağıdaki mavi butona basın. Bilgisayarınıza <code>.bat</code> uzantılı küçük bir yardımcı dosya iner. Bu dosya firmware değildir; indirme işlemini başlatır.</li><li><b>İnen dosyayı bulun.</b> Tarayıcınızın İndirilenler klasörünü açın ve <code>Uzmantech_MODEL_CSC_Firmware_Indir.bat</code> adlı dosyayı bulun. Dosya adı seçtiğiniz modele ve CSC koduna göre değişir.</li><li><b>Dosyayı çalıştırın.</b> Windows 64-bit bilgisayarda dosyaya çift tıklayın. Açılan siyah komut penceresini kapatmayın. Gerekli ücretsiz araç indirilir, SHA256 kontrolü yapılır ve firmware Samsung sunucularından indirilir.</li><li><b>İndirme bitene kadar bekleyin.</b> İnternet hızına ve firmware boyutuna göre işlem birkaç dakika veya daha uzun sürebilir. Pencerede tamamlandığı yazana kadar bekleyin.</li><li><b>Firmware klasörünü açın.</b> İndirme tamamlanınca klasör otomatik açılır. Ayrıca yardımcı dosyanın bulunduğu yerde <code>Firmware</code> klasörü, onun içinde de model ve CSC adına ait klasör oluşur.</li></ol><p class="samsung-guide-note"><b>Önemli:</b> Bu yöntem Windows 64-bit içindir. İlk dosya yalnızca indirme aracını çalıştırır. Samsung sunucusundan model ve CSC için mevcut en güncel sürüm indirilir; listede görünen eski sürümün birebir indirilmesi garanti edilmez. Windows güvenlik uyarısı çıkarsa uyarıyı okumadan korumayı devre dışı bırakmayın veya dosyayı zorla çalıştırmayın.</p></details><button type="button" class="archive-live-download" data-samsung-local-download="'+archiveEsc(file.id)+'">ÜCRETSİZ İNDİRME DOSYASINI HAZIRLA</button><a class="samsung-tool-link" href="https://github.com/topjohnwu/samloader-rs/releases/latest" target="_blank" rel="noopener noreferrer">Açık kaynak aracın GitHub sayfası</a></div>':(file.is_honor_free||file.is_oneplus_free||file.is_realme_free||file.is_tecno_free||file.is_infinix_free||file.is_google_free||file.is_nokia_free)&&file.external_url?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">ÜCRETSİZ İNDİRME BAĞLANTISINI AÇ</a>':file.is_motorola_source&&file.external_url?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">MOTOROLA FIRMWARE DETAY SAYFASINI AÇ</a>':(file.is_engineer_rom||file.is_samfw)?'<a class="archive-live-download" href="'+archiveEsc(file.source_url)+'" target="_blank" rel="noopener noreferrer">KAYNAK İNDİRME SAYFASINI AÇ</a>':file.external_url&&/^https:\/\/(www\.)?firmwarefile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FIRMWAREFILE FREE LİNKİNİ AÇ</a>':file.external_url&&/^https:\/\/(www\.)?vivofirmware\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">FREE / PAID İNDİRME SEÇENEKLERİNİ AÇ</a>':file.external_url&&/^https:\/\/[a-z0-9.-]*vivoglobal\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">RESMİ VIVO FIRMWARE İNDİR</a>':file.external_url&&/^https:\/\/(www\.)?sammobile\.com\//i.test(file.external_url)?'<a class="archive-live-download" href="'+archiveEsc(file.external_url)+'" target="_blank" rel="noopener noreferrer">SAMMOBILE FIRMWARE SAYFASINI AÇ</a>':'<button type="button" class="archive-live-download" data-archive-download="'+archiveEsc(file.id)+'">İNDİRMEYİ BAŞLAT</button>')+'</article>';
    return;
   }
@@ -410,7 +414,7 @@ document.addEventListener("click",async e=>{
  if(device){selectedDevice=device.dataset.deviceModel;selectedFolder=null;selectedFile=null;if(normBrand(selectedBrand)==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(selectedDevice)){try{await fetchSamFwCatalog(selectedDevice,false);}catch(err){toast(err.message||"SamFrew listesi yüklenemedi.");}}renderLiveArchive();return;}
  const folder=e.target.closest("[data-archive-folder]");if(folder){selectedFolder=folder.dataset.archiveFolder;renderLiveArchive();return;}
  if(e.target.id==="archiveBackFolder"){selectedFolder=null;selectedFile=null;renderLiveArchive();return;}
- const fileCard=e.target.closest("[data-archive-file]");if(fileCard){selectedFile=fileCard.dataset.archiveFile;renderLiveArchive();return;}
+ const fileCard=e.target.closest("[data-archive-file]");if(fileCard){selectedFile=fileCard.dataset.archiveFile;renderLiveArchive();if(!archiveHasDownloadAccess)showPackageRequired();return;}
  if(e.target.id==="archiveBackFile"){selectedFile=null;renderLiveArchive();return;}
  if(e.target.id==="archiveBackDevices"){selectedDevice=null;location.href="models.html?brand="+encodeURIComponent(selectedBrand||"");return;}
  const localSamsungBtn=e.target.closest("[data-samsung-local-download]");
@@ -423,12 +427,22 @@ document.addEventListener("click",async e=>{
 });
 if($("#archiveModelsPage")){if(!selectedBrand||!MODEL_CATALOG[selectedBrand]){location.replace("archive.html");}else{const label=$("#archiveModelBrandLabel");if(label)label.textContent=selectedBrand.toLocaleUpperCase("tr-TR")+" MODEL KATALOĞU";const title=$("#archiveModelPageTitle");if(title)title.textContent=selectedBrand+" Cihaz Modelleri";}}
 function showPackageRequired(){
+ document.body.classList.add("archive-download-gated");
  $("#modal").dataset.locked="true";
  $("#modalClose").hidden=true;
- $("#modalTitle").textContent="Dosya Arşivi";
- $("#modalBody").innerHTML=`<div class="archive-access-symbol" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="9" y="21" width="30" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 21v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="31" r="2.2" fill="currentColor"/><path d="M24 33v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="archive-access-kicker">UZMANTOOL DOSYA ARŞİVİ</span><h3 class="archive-access-title">İndirme için paket gerekli</h3><p class="archive-access-copy">Dosyaları görüntüleyebilirsiniz. İndirme bağlantısını açmak için aktif ve yönetici tarafından onaylanmış bir üyelik paketine ihtiyacınız var.</p><div class="archive-access-divider"></div><button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button><small class="archive-access-note">Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</small>`;
+ $("#modalTitle").textContent="Üyelik erişimi";
+ $("#modalBody").innerHTML=`<div class="archive-access-v2">
+  <div class="archive-access-v2-top"><span class="archive-access-v2-badge"><span></span> UZMANTOOL PREMIUM ERİŞİM</span><div class="archive-access-symbol"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="21" width="30" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 21v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="31" r="2.2" fill="currentColor"/><path d="M24 33v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+  <span class="archive-access-kicker">DOSYA ARŞİVİ • ÜYELİK GEREKLİ</span>
+  <h3 class="archive-access-title">Bu dosya indirilmeye hazır.<br>İndirmek için paket gerekli.</h3>
+  <p class="archive-access-copy">Arşivdeki model ve dosya bilgilerini inceleyebilirsiniz. İndirme bağlantılarını kullanmak için hesabınızda aktif ve yönetici onaylı bir paket bulunmalıdır.</p>
+  <div class="archive-access-v2-benefits"><div><b>✓</b><span>Dosya kataloğu herkese açık</span></div><div><b>✓</b><span>İndirme erişimi paket sahiplerine özel</span></div><div><b>✓</b><span>Onay sonrası erişim otomatik açılır</span></div></div>
+  <button type="button" class="archive-access-button" id="archivePackageContinue">Paketleri Görüntüle <span aria-hidden="true">→</span></button>
+  <small class="archive-access-note">Paket satın aldıysanız, yönetici onayından sonra tekrar giriş yapmanız yeterlidir.</small>
+ </div>`;
  $("#modal").classList.add("open");
 }
+
 function syncArchiveHeader(user){
  const auth=$("#headerAuth");if(!auth)return;
  if(user){
@@ -445,6 +459,7 @@ function applyLockedArchivePreview(){
  document.querySelectorAll(".archive-global-search,.archive-brand-catalog-head,.archive-brand-search").forEach(el=>{el.hidden=true;el.style.setProperty("display","none","important");});
 }
 async function enforceArchiveLicense(){
+ archiveCurrentUser=null;archiveHasDownloadAccess=false;
  const gate=$("#archiveLicenseGate"),stage=$(".archive-stage");
  if(stage)stage.hidden=true;
 
@@ -477,6 +492,10 @@ async function enforceArchiveLicense(){
   return;
  }
 
+ // İndirme yetkisi: yönetici veya ücretli plan sahibi.
+ archiveCurrentUser=user;
+ const paidArchivePlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
+ archiveHasDownloadAccess=String(user.role||"").toLowerCase()==="admin"||paidArchivePlans.has(String(user.license_plan||"").toLowerCase());
  // Oturum doğrulandı. Yönetici kimliği veri yükleme sürecinden bağımsız korunur.
  syncArchiveHeader(user);
  // Oturum açmış ücretsiz üyeler de katalog ve dosya listesini görüntüleyebilir.

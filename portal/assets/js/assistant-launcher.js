@@ -106,19 +106,40 @@
     const close = () => overlay.remove();
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantNavigate(event) {
-      if (event.source !== frame.contentWindow || event.data?.type !== "uzman-asistan-navigate" || typeof event.data.url !== "string" || !/^\/(paketler|kayit|odeme)\.html(?:\?|$)/.test(event.data.url)) return;
+      if (typeof event.data?.url !== "string" || !/^\/(paketler|kayit|odeme)\.html(?:\?|$)/.test(event.data.url)) return;
+
+      // İlk geçiş yalnızca sohbet iframe'inden gelir; satın alma/kayıt/ödeme
+      // geçişleri ise paket iframe'inden gelir. İkisini de doğru kaynağa bağla.
       let page = overlay.querySelector("#uzman-package-background");
-      if (!page) {
-        page = document.createElement("iframe");
-        page.id = "uzman-package-background";
-        page.title = "Uzmantech Paketler";
+      if (event.source === frame.contentWindow) {
+        if (!page) {
+          page = document.createElement("iframe");
+          page.id = "uzman-package-background";
+          page.title = "Uzmantech sayfası";
+          page.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:1;background:#080e19;display:block;pointer-events:auto";
+          overlay.appendChild(page);
+        }
         page.src = event.data.url;
-        page.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:1;background:#080e19";
-        overlay.appendChild(page);
+      } else if (page && event.source === page.contentWindow) {
+        // Paket içindeki Satın Al butonu: ana siteyi değiştirme,
+        // aynı tam ekran iframe içinde kayıt/ödeme sayfasını aç.
+        page.src = event.data.url;
+      } else {
+        return;
       }
+
       overlay.querySelector(".uz-chat-backdrop").style.display = "none";
+      overlay.style.setProperty("z-index", "2147483001", "important");
+      overlay.style.setProperty("pointer-events", "none", "important");
+      page.style.setProperty("position", "fixed", "important");
+      page.style.setProperty("inset", "0", "important");
+      page.style.setProperty("width", "100vw", "important");
+      page.style.setProperty("height", "100dvh", "important");
+      page.style.setProperty("z-index", "1", "important");
+      page.style.setProperty("pointer-events", "auto", "important");
+
       const wrap = overlay.querySelector(".uz-chat-frame-wrap");
-      wrap.style.cssText += ";position:fixed!important;top:auto!important;left:auto!important;right:18px!important;bottom:18px!important;width:min(450px,calc(100vw - 36px))!important;height:min(700px,calc(100dvh - 36px))!important;max-height:none!important;z-index:2!important;border:1px solid #dbe4f0!important;border-radius:20px!important;overflow:hidden!important;box-shadow:0 20px 60px #0008!important;background:#fff!important";
+      wrap.style.cssText += ";position:fixed!important;top:auto!important;left:auto!important;right:18px!important;bottom:18px!important;width:min(450px,calc(100vw - 36px))!important;height:min(700px,calc(100dvh - 36px))!important;max-height:none!important;z-index:2!important;pointer-events:auto!important;border:1px solid #dbe4f0!important;border-radius:20px!important;overflow:hidden!important;box-shadow:0 20px 60px #0008!important;background:#fff!important";
     });
     window.addEventListener("message", function onAssistantMessage(event) {
       if (event.source === frame.contentWindow && event.data?.type === "uzman-asistan-close") {

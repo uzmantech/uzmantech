@@ -104,22 +104,22 @@
     overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
     const close = () => overlay.remove();
-    window.addEventListener("message", function onAssistantNavigate(event) {
-      if (event.source === frame.contentWindow && event.data?.type === "uzman-asistan-navigate" && event.data.url === "/paketler.html") {
-        let page = document.getElementById("uzman-package-background");
-        if (!page) { page=document.createElement("iframe"); page.id="uzman-package-background"; page.title="Uzmantech Paketler"; page.src="/paketler.html"; page.style.cssText="position:fixed;inset:0;width:100%;height:100%;border:0;z-index:2147482999;background:#080e19"; document.body.appendChild(page); }
-      }
-    });
-    window.addEventListener("message", function onAssistantNavigate(event) {
-      if (event.source === frame.contentWindow && event.data?.type === "uzman-asistan-navigate" && event.data.url === "/paketler.html") {
-        let page = document.getElementById("uzman-package-background");
-        if (!page) { page=document.createElement("iframe"); page.id="uzman-package-background"; page.title="Uzmantech Paketler"; page.src="/paketler.html"; page.style.cssText="position:fixed;inset:0;width:100%;height:100%;border:0;z-index:2147482999;background:#080e19"; document.body.appendChild(page); }
-      }
-    });
-    const closeButton = overlay.querySelector(".uz-chat-close");
-    if (closeButton) closeButton.addEventListener("click", close);
-    overlay.querySelector(".uz-chat-backdrop").addEventListener("click", close);
     const frame = overlay.querySelector("iframe");
+    window.addEventListener("message", function onAssistantNavigate(event) {
+      if (event.source !== frame.contentWindow || event.data?.type !== "uzman-asistan-navigate" || event.data.url !== "/paketler.html") return;
+      let page = overlay.querySelector("#uzman-package-background");
+      if (!page) {
+        page = document.createElement("iframe");
+        page.id = "uzman-package-background";
+        page.title = "Uzmantech Paketler";
+        page.src = "/paketler.html";
+        page.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:1;background:#080e19";
+        overlay.appendChild(page);
+      }
+      overlay.querySelector(".uz-chat-backdrop").style.display = "none";
+      const wrap = overlay.querySelector(".uz-chat-frame-wrap");
+      wrap.style.cssText += ";position:fixed!important;top:auto!important;left:auto!important;right:18px!important;bottom:18px!important;width:min(450px,calc(100vw - 36px))!important;height:min(700px,calc(100dvh - 36px))!important;max-height:none!important;z-index:2!important;border:1px solid #dbe4f0!important;border-radius:20px!important;overflow:hidden!important;box-shadow:0 20px 60px #0008!important;background:#fff!important";
+    });
     window.addEventListener("message", function onAssistantMessage(event) {
       if (event.source === frame.contentWindow && event.data?.type === "uzman-asistan-close") {
         close();

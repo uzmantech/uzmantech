@@ -68,6 +68,20 @@ body:not(.full-mode)>.assistant-site-header{display:none!important;visibility:hi
 body.embed-mode:has(.assistant-site-header){padding-top:0!important;padding-bottom:0!important;margin:0!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;background:#fff!important}
 body.embed-mode>.assistant-site-header{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important}
 body.embed-mode #chat-widget{display:flex!important;flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+
+/* Chat typography refinement: larger, calmer and easier to scan. */
+.message{max-width:96%;gap:11px}
+.avatar{width:32px;height:32px;flex-basis:32px;border-radius:11px}
+.bubble{padding:14px 17px;font-size:14px;line-height:1.85;letter-spacing:.02px;color:#243247;border-color:#dce5f0;border-radius:5px 17px 17px 17px;box-shadow:0 4px 14px -8px #0f172a24;white-space:pre-wrap}
+.message.user .bubble{font-size:13.5px;line-height:1.75;background:linear-gradient(135deg,#4f46e5,#4338ca);border-color:#4f46e5;color:#fff}
+.bubble strong{font-weight:800;color:#312e81;background:#eef2ff;padding:1px 4px;border-radius:5px}
+.message.user .bubble strong{color:#fff;background:#ffffff24}
+.bubble code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.92em;color:#075985;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;padding:2px 6px;white-space:normal}
+.scroll-area{scroll-behavior:smooth}
+.composer textarea{font-size:14px;line-height:1.7}
+.composer textarea::placeholder{font-size:13px}
+.send{font-size:12px;padding:10px 16px}
+@media(max-width:560px){.bubble{font-size:13.5px;padding:12px 14px;line-height:1.8}.message{max-width:98%}.message.user .bubble{font-size:13px}}
 </style>
 </head>
 <body>

@@ -42,6 +42,13 @@ body.full-mode .assistant-site-header .site-nav-dropdown-item:hover{background:#
  body.full-mode .assistant-site-header .site-header-brand b{font-size:14px}
  body.full-mode .assistant-site-header .dash-top-actions .header-register{display:none}
 }
+
+/* Full-screen chat: keep the chat panel inside the remaining viewport below the site header. */
+@media(max-width:560px){
+ body.full-mode{height:100dvh;min-height:0;overflow:hidden}
+ body.full-mode #chat-widget{width:100%;height:auto;min-height:0;max-height:none;flex:1 1 0}
+ body.full-mode #chat-widget .scroll-area{min-height:0}
+}
 </style>
 </head>
 <body>

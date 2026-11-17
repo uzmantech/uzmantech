@@ -2,14 +2,74 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UZMAN ASİSTAN</title>
+<title>UZMAN ASİSTAN | Uzmantech</title><link rel="stylesheet" href="/assets/css/site-header.css?v=assistant-full-nav-20261117-1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{font-family:Inter,system-ui,sans-serif;color:#0f172a;color-scheme:light}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:100%;font-family:Inter,system-ui,sans-serif}body{display:flex;align-items:center;justify-content:center;padding:12px;background:linear-gradient(135deg,#e2e8f0,#fafaf9 55%,#eef2ff)}button,textarea{font:inherit}#chat-widget{width:min(450px,100%);height:min(750px,calc(100dvh - 24px));min-height:440px;display:flex;flex-direction:column;overflow:hidden;position:relative;background:#fff;border:1px solid #e2e8f0;border-radius:25px;box-shadow:0 24px 60px -12px #0f172a24,0 0 1px #0f172a10;transition:width .25s,height .25s,border-radius .25s}body.full-mode{background:linear-gradient(135deg,#e2e8f0,#fafaf9 55%,#eef2ff)}body.full-mode #chat-widget{width:min(920px,calc(100vw - 32px));height:calc(100dvh - 32px);max-height:none}body.embed-mode{padding:0;background:transparent;overflow:hidden}body.embed-mode #chat-widget{width:100%;height:100%;min-height:0;border-radius:20px;border:1px solid #e2e8f0;box-shadow:0 24px 60px -12px #0f172a24}header{padding:15px 18px;background:#ffffffed;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:2}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:44px;height:44px;border-radius:15px;background:#fff;display:grid;place-items:center;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 2px 7px #0f172a20}.brand-mark img{width:100%;height:100%;object-fit:contain}.brand-title{font-size:14px;font-weight:800;letter-spacing:-.3px}.brand-tag{font-size:9px;font-weight:800;letter-spacing:1px;color:#4f46e5;background:#eef2ff;border:1px solid #c7d2fe;border-radius:20px;padding:4px 7px;margin-left:5px}.connection{display:flex;align-items:center;gap:6px;font-size:10px;color:#64748b;margin-top:5px}.dot{width:7px;height:7px;border-radius:50%;background:#f59e0b}.dot.online{background:#10b981}.tools{display:flex;gap:5px}.tools button{width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#64748b;font-size:20px;cursor:pointer}.tools button:hover{background:#f1f5f9;color:#4f46e5}.scroll-area{flex:1;overflow-y:auto;background:#fafafc;padding:20px;display:flex;flex-direction:column}.date{text-align:center;margin-bottom:22px}.date span{font-size:10px;color:#64748b;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:5px 12px}.welcome{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:8px}.hero{text-align:center;margin-bottom:25px}.hero-logo{width:64px;height:64px;border-radius:21px;margin:0 auto 15px;background:#fff;border:1px solid #e2e8f0;display:grid;place-items:center;overflow:hidden;box-shadow:0 5px 18px #6366f126}.hero-logo img{width:100%;height:100%;object-fit:contain;padding:4px}.hero h2{font-size:20px;letter-spacing:-.6px;margin:0;font-weight:800}.hero h2 span{color:#4f46e5}.hero p{font-size:12px;color:#64748b;line-height:1.7;margin:9px auto 0;max-width:310px}.prompts{display:grid;gap:9px}.prompt{width:100%;padding:12px 13px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #e2e8f0;border-radius:14px;background:#fff;cursor:pointer;box-shadow:0 2px 8px -2px #0f172a0a;transition:.18s}.prompt:hover{border-color:#a5b4fc;box-shadow:0 10px 25px -5px #4f46e51a}.prompt strong{display:block;font-size:12px;color:#1e293b}.prompt small{display:block;font-size:10px;color:#94a3b8;margin-top:4px}.prompt-icon{width:35px;height:35px;flex:0 0 35px;border-radius:11px;background:#eef2ff;color:#4f46e5;display:grid;place-items:center;font-weight:800}.prompt-arrow{color:#cbd5e1}.messages{display:flex;flex-direction:column;gap:15px;padding-bottom:8px}.message{max-width:90%;display:flex;gap:9px;align-items:flex-start}.message.user{align-self:flex-end;flex-direction:row-reverse}.avatar{width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:#e0e7ff;color:#4338ca;display:grid;place-items:center;font-size:11px;font-weight:800;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:contain;padding:2px;background:#fff}.message.user .avatar{background:#dbeafe;color:#1d4ed8}.bubble{padding:11px 13px;border:1px solid #e2e8f0;border-radius:4px 14px 14px 14px;background:#fff;color:#334155;font-size:12px;line-height:1.75;overflow-wrap:anywhere;white-space:pre-wrap;box-shadow:0 2px 8px -2px #0f172a08}.message.user .bubble{background:#4f46e5;color:#fff;border-color:#4f46e5;border-radius:14px 4px 14px 14px}.bubble strong{font-weight:700}.typing{display:flex;gap:4px;align-items:center}.typing i{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:pulse 1.2s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}footer{padding:13px 15px 12px;background:#fff;border-top:1px solid #f1f5f9;flex-shrink:0}.composer{padding:10px 11px;border:1px solid #e2e8f0;border-radius:15px;background:#fafafc;box-shadow:0 8px 24px -6px #0f172a0d}.composer:focus-within{border-color:#818cf8;background:#fff;box-shadow:0 0 0 4px #6366f11a}.composer textarea{width:100%;min-height:46px;max-height:130px;resize:vertical;border:0;outline:0;background:transparent;color:#1e293b;font-size:12px;line-height:1.6}.composer textarea::placeholder{color:#94a3b8}.composer-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e2e8f080;padding-top:8px;margin-top:5px}.hint{font-size:9px;color:#94a3b8}.send{border:0;border-radius:10px;padding:9px 13px;background:#4f46e5;color:white;font-size:11px;font-weight:700;cursor:pointer}.send:hover{background:#4338ca}.send:disabled{opacity:.45;cursor:wait}.footnote{display:flex;justify-content:space-between;font-size:8px;color:#94a3b8;margin-top:8px}.toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;border-radius:30px;padding:9px 14px;font-size:10px;display:none}.toast.show{display:block}@media(max-width:560px){body{padding:0}#chat-widget,body.full-mode #chat-widget,body.embed-mode #chat-widget{width:100%;height:100dvh;max-height:none;min-height:0;border-radius:0}header{padding:12px 13px}.scroll-area{padding:15px}.hero h2{font-size:18px}.footnote{font-size:7px}} 
+
+body.full-mode{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;min-height:100dvh;height:100dvh;overflow:hidden;background:#080d1b}
+body.full-mode .assistant-site-header{display:flex;position:relative;top:auto;left:auto;right:auto;z-index:50;flex:0 0 auto;width:100%;height:88px;min-height:88px}
+body.full-mode #chat-widget{flex:1 1 auto;width:100%;max-width:none;height:auto;min-height:0;max-height:none;border:0;border-radius:0;box-shadow:none}
+body.full-mode #chat-widget>header:not(.site-global-header){padding:11px 22px}
+body.full-mode .assistant-site-header .site-header-brand{display:flex!important;width:218px;flex:0 0 218px}
+body.full-mode .assistant-site-header .site-global-nav{display:flex;flex:1 1 auto;min-width:0;align-items:center;justify-content:space-between;gap:5px}
+body.full-mode .assistant-site-header .site-nav-link{flex:1 1 auto;min-width:0;height:60px;padding:0 9px;font-size:clamp(10px,.82vw,13px);gap:7px}
+body.full-mode .assistant-site-header .site-nav-icon{flex:0 0 22px;width:22px;height:22px;font-size:17px}
+body.full-mode .assistant-site-header .site-mobile-nav-toggle{display:none}
+body.full-mode .assistant-site-header .dash-top-actions{display:flex;flex:0 0 auto;margin-left:8px}
+body.full-mode .assistant-site-header .header-auth{display:flex;gap:6px}
+body.full-mode .assistant-site-header .header-login,body.full-mode .assistant-site-header .header-register{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 11px;border-radius:9px;text-decoration:none;font-size:11px}
+body.full-mode .assistant-site-header .header-login{color:#dceaff;background:#14243a;border:1px solid #405875}
+body.full-mode .assistant-site-header .header-register{color:#061522;background:#8bdcff;border:1px solid #b9edff}
+body.full-mode .assistant-site-header .site-nav-dropdown{position:relative;flex:1 1 auto;min-width:0}
+body.full-mode .assistant-site-header .site-nav-dropdown-menu{display:none;position:absolute;top:calc(100% + 7px);left:0;z-index:100;min-width:220px;padding:8px;border:1px solid #35516e;border-radius:12px;background:#0c1a2c;box-shadow:0 15px 35px #0009}
+body.full-mode .assistant-site-header .site-nav-dropdown.is-open .site-nav-dropdown-menu{display:grid}
+body.full-mode .assistant-site-header .site-nav-dropdown-item{display:block;padding:11px 12px;border-radius:8px;color:#dceaff;text-decoration:none;font-size:12px}
+body.full-mode .assistant-site-header .site-nav-dropdown-item:hover{background:#183451;color:#fff}
+@media(max-width:980px){
+ body.full-mode .assistant-site-header{height:auto;min-height:72px;flex-wrap:wrap;padding:8px 12px}
+ body.full-mode .assistant-site-header .site-header-brand{height:54px;width:auto;flex:1 1 180px}
+ body.full-mode .assistant-site-header .site-mobile-nav-toggle{display:block;order:2}
+ body.full-mode .assistant-site-header .site-global-nav{display:none;order:4;flex:1 0 100%;flex-wrap:wrap;padding:7px 0}
+ body.full-mode .assistant-site-header .site-global-nav.is-open{display:flex}
+ body.full-mode .assistant-site-header .site-nav-link{flex:1 1 145px;height:43px}
+ body.full-mode .assistant-site-header .dash-top-actions{order:3;margin-left:auto}
+}
+@media(max-width:560px){
+ body.full-mode #chat-widget>header:not(.site-global-header){padding:9px 12px}
+ body.full-mode .assistant-site-header .site-nav-link{flex-basis:calc(50% - 5px);height:42px}
+ body.full-mode .assistant-site-header .site-header-brand b{font-size:14px}
+ body.full-mode .assistant-site-header .dash-top-actions .header-register{display:none}
+}
 </style>
 </head>
 <body>
+
+<header class="site-global-header assistant-site-header" aria-label="Uzmantech ana menüsü">
+ <a class="site-header-brand" href="/index.html"><img src="/assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="/index.html"><span class="site-nav-icon">⌂</span><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="/archive.html"><span class="site-nav-icon">▤</span><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link" href="/index.html#download"><span class="site-nav-icon">⇩</span><b>İndirilenler</b></a>
+  <a class="site-nav-link" href="/index.html#updates"><span class="site-nav-icon">▧</span><b>Haberler</b></a>
+  <a class="site-nav-link" href="/yazilimci-tv.html"><span class="site-nav-icon">▶</span><b>Yazılımcı TV</b></a>
+  <div class="site-nav-dropdown">
+   <button class="site-nav-link site-nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="site-nav-icon">⚒</span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></button>
+   <div class="site-nav-dropdown-menu">
+    <a class="site-nav-dropdown-item" href="/uzman-asistan.html">✦ UZMAN ASİSTAN</a>
+    <a class="site-nav-dropdown-item" href="/cam-uyumluluk.html">▦ Cam Uyumluluğu</a>
+    <a class="site-nav-dropdown-item" href="/servis-takip.html">▣ Servis Takip</a>
+    <a class="site-nav-dropdown-item" href="/imei-araclari.html">▦ IMEI Çoğaltma</a>
+    <a class="site-nav-dropdown-item" href="/mediatek-temp-root.html">⚙ MediaTek Temp Root</a>
+   </div>
+  </div>
+  <a class="site-nav-link" href="/paketler.html"><span class="site-nav-icon">♛</span><b>Paketler</b></a>
+  <a class="site-nav-link" href="/destek.html"><span class="site-nav-icon">?</span><b>İletişim</b></a>
+ </nav>
+ <button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+ <div class="dash-top-actions"><div class="header-auth"><a class="header-login" href="/giris.html">Giriş Yap</a><a class="header-register" href="/kayit.html">Üye Ol</a></div></div>
+</header>
 <main id="chat-widget">
 <header><div class="brand"><div class="brand-mark"><img src="/assets/logo.svg" alt="Uzmantech logosu"></div><div><div class="brand-title">UZMAN ASİSTAN <span class="brand-tag">AI</span></div><div class="connection"><i class="dot" id="status-dot"></i><span id="connection-text">Bulut bağlantısı kontrol ediliyor</span></div></div></div>
 <div class="tools"><button id="new-chat-btn" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expand-btn" type="button" title="Tam ekran" aria-label="Tam ekran">⤢</button><button id="close-btn" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
@@ -20,8 +80,12 @@
 <footer><form id="chat-form"><div class="composer"><textarea id="message-input" rows="2" maxlength="12000" placeholder="Bir mesaj yazın..." required></textarea><div class="composer-bottom"><span class="hint">Enter gönderir · Shift + Enter yeni satır</span><button class="send" id="send-btn" type="submit">Gönder&nbsp; ➤</button></div></div><div class="footnote"><span>UZMAN ASİSTAN yapay zekâ desteklidir.</span><span>Yanıtları kontrol etmeniz önerilir.</span></div></form></footer><div class="toast" id="toast"></div>
 </main>
 <script>
-(()=>{const API_BASE="https://uzman-asistan-api.uzmantech58.workers.dev";const params=new URLSearchParams(location.search);const embedded=params.get("widget")==="1";const full=params.get("full")==="1";if(embedded)document.body.classList.add("embed-mode");if(full)document.body.classList.add("full-mode");
-const welcome=document.getElementById("welcome-screen"),messages=document.getElementById("messages-container"),scroll=document.getElementById("chat-scroll-area"),input=document.getElementById("message-input"),send=document.getElementById("send-btn"),status=document.getElementById("connection-text"),dot=document.getElementById("status-dot"),toast=document.getElementById("toast");let history=[],busy=false;
+(()=>{const API_BASE="https://uzman-asistan-api.uzmantech58.workers.dev";const params=new URLSearchParams(location.search);const embedded=params.get("widget")==="1";const full=params.get("full")==="1";if(embedded)document.body.classList.add("embed-mode");if(full){document.body.classList.add("full-mode","dashboard-page");document.querySelector(".assistant-site-header")?.classList.add("is-full-nav");}
+
+const mobileNav=document.querySelector(".assistant-site-header .site-mobile-nav-toggle");
+if(mobileNav){mobileNav.addEventListener("click",()=>{const nav=document.querySelector(".assistant-site-header .site-global-nav");const opened=nav.classList.toggle("is-open");mobileNav.setAttribute("aria-expanded",String(opened));});}
+document.querySelectorAll(".assistant-site-header .site-nav-dropdown-toggle").forEach(btn=>btn.addEventListener("click",()=>{const wrap=btn.closest(".site-nav-dropdown");const opened=wrap.classList.toggle("is-open");btn.setAttribute("aria-expanded",String(opened));}));
+\nconst welcome=document.getElementById("welcome-screen"),messages=document.getElementById("messages-container"),scroll=document.getElementById("chat-scroll-area"),input=document.getElementById("message-input"),send=document.getElementById("send-btn"),status=document.getElementById("connection-text"),dot=document.getElementById("status-dot"),toast=document.getElementById("toast");let history=[],busy=false;
 const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function scrollBottom(){scroll.scrollTo({top:scroll.scrollHeight,behavior:"smooth"})}
 function addMessage(role,text,typing=false){welcome.style.display="none";const row=document.createElement("div");row.className="message "+(role==="user"?"user":"assistant");const avatar=document.createElement("div");avatar.className="avatar";if(role==="user"){avatar.textContent="S"}else{avatar.innerHTML='<img src="/assets/logo.svg" alt="Uzmantech" />'}const bubble=document.createElement("div");bubble.className="bubble";if(typing){bubble.innerHTML='<span class="typing"><i></i><i></i><i></i></span>'}else{bubble.innerHTML=escapeHTML(text).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>")}row.append(avatar,bubble);messages.appendChild(row);scrollBottom();return row}

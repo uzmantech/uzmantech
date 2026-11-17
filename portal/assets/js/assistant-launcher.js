@@ -104,7 +104,8 @@
     overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
     const close = () => overlay.remove();
-    const closeButton = overlay.querySelector(".uz-chat-close");\n    if (closeButton) closeButton.addEventListener("click", close);
+    const closeButton = overlay.querySelector(".uz-chat-close");
+    if (closeButton) closeButton.addEventListener("click", close);
     overlay.querySelector(".uz-chat-backdrop").addEventListener("click", close);
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantMessage(event) {

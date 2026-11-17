@@ -431,20 +431,18 @@ function showPackageRequired(){
  $("#modal").dataset.locked="true";
  $("#modalClose").hidden=true;
  $("#modalTitle").textContent="Dosya Arşivi";
- $("#modalBody").innerHTML=`<section class="archive-cyber-gate" aria-labelledby="archiveCyberTitle">
-  <div class="archive-cyber-scanlines" aria-hidden="true"></div>
-  <div class="archive-cyber-topbar"><div><i></i><span>SEC-GATE // AUTH_REQUIRED</span></div><div class="archive-cyber-top-meta"><span>AES-256</span><b>•</b><span>NODE: TR-IST</span></div></div>
-  <header class="archive-cyber-header"><div class="archive-cyber-brand"><span class="archive-cyber-folder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2Z"/></svg></span><span><strong>Dosya Arşivi</strong><small>ARCHIVE_INDEX // LOCKED</small></span></div><span class="archive-cyber-status"><i></i>KİLİTLİ</span></header>
-  <div class="archive-cyber-content">
-   <div class="archive-cyber-core" aria-hidden="true"><svg class="archive-cyber-ring archive-cyber-ring-one" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="49"/></svg><svg class="archive-cyber-ring archive-cyber-ring-two" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/></svg><i class="archive-cyber-tick top"></i><i class="archive-cyber-tick bottom"></i><i class="archive-cyber-tick left"></i><i class="archive-cyber-tick right"></i><span class="archive-cyber-lock"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 10V7a4 4 0 1 1 8 0v3"/><rect x="5" y="10" width="14" height="10"/><circle cx="12" cy="14.5" r="1.2" fill="#FF8A00" stroke="none"/><path d="M12 15.5v2" stroke="#FF8A00"/></svg></span></div>
-   <div class="archive-cyber-eyebrow"><b>//</b> UZMANTOOL DOSYA ARŞİVİ <b>//</b></div>
-   <h3 id="archiveCyberTitle">İndirme için paket gerekli</h3>
-   <p class="archive-cyber-copy">Dosyaları görüntüleyebilirsiniz. İndirme bağlantısını açmak için aktif ve yönetici tarafından onaylanmış bir üyelik paketine ihtiyacınız var.</p>
-   <div class="archive-cyber-telemetry"><div><span>DURUM:</span><strong>Kilitli / Paket Bekleniyor</strong></div><div><em>PROTOCOL v4.2</em><span> | </span><span>ONAY: GEREKLİ</span></div></div>
-   <button type="button" class="archive-cyber-cta" id="archivePackageContinue"><span>[01]</span><strong>Paketleri Görüntüle</strong><b>→</b></button>
-   <div class="archive-cyber-footnote"><b>[!]</b><span>Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</span></div>
+ $("#modalBody").innerHTML=`<section class="archive-vault-gate" aria-labelledby="archiveVaultTitle">
+  <div class="archive-vault-backdrop" aria-hidden="true"></div>
+  <header class="archive-vault-header"><div class="archive-vault-brand"><span class="archive-vault-brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 1 0 0-4h14a2 2 0 1 0 0 4M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8m-9 4h4"/></svg></span><strong>Dosya Arşivi</strong></div><span class="archive-vault-status"><i></i>KİLİTLİ ERİŞİM</span></header>
+  <div class="archive-vault-content">
+   <div class="archive-vault-lock" aria-hidden="true"><div class="archive-vault-lock-halo"></div><div class="archive-vault-lock-core"><svg viewBox="0 0 48 48" fill="none"><defs><linearGradient id="vaultShackle" x1="14" y1="6" x2="34" y2="22"><stop offset="0" stop-color="#FDE68A"/><stop offset=".5" stop-color="#F59E0B"/><stop offset="1" stop-color="#B45309"/></linearGradient><linearGradient id="vaultBody" x1="10" y1="20" x2="38" y2="42"><stop offset="0" stop-color="#FBBF24"/><stop offset=".55" stop-color="#F59E0B"/><stop offset="1" stop-color="#B45309"/></linearGradient></defs><path d="M16 21V15a8 8 0 1 1 16 0v6" stroke="url(#vaultShackle)" stroke-width="3.8" stroke-linecap="round"/><rect x="11" y="20" width="26" height="21" rx="5" fill="url(#vaultBody)"/><rect x="12" y="21" width="24" height="2" rx="1" fill="#FEF3C7" fill-opacity=".55"/><circle cx="24" cy="28.5" r="2.6" fill="#090A0F"/><path d="M24 30v4.5" stroke="#090A0F" stroke-width="2.6" stroke-linecap="round"/></svg></div></div>
+   <span class="archive-vault-eyebrow">UZMANTOOL DOSYA ARŞİVİ</span>
+   <h3 id="archiveVaultTitle">İndirme için paket gerekli</h3>
+   <p class="archive-vault-copy">Dosyaları görüntüleyebilirsiniz. İndirme bağlantısını açmak için aktif ve yönetici tarafından onaylanmış bir üyelik paketine ihtiyacınız var.</p>
+   <button type="button" class="archive-vault-cta" id="archivePackageContinue"><span>Paketleri Görüntüle</span><b aria-hidden="true">→</b></button>
+   <div class="archive-vault-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.6-4A12 12 0 0 1 12 3a12 12 0 0 1-8.6 3A12 12 0 0 0 3 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2-.4-3Z"/></svg><span>Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</span></div>
   </div>
-  <footer class="archive-cyber-footer"><span>SYS.VERIFY // INTEGRITY_OK</span><b>UZMANTOOL_CORE</b></footer>
+  <footer class="archive-vault-footer"><span>UZMANTOOL • SECURE FILE VAULT</span><b>VIP ACCESS</b></footer>
  </section>`;
  $("#modal").classList.add("open");
 }

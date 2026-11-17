@@ -121,7 +121,9 @@ document.addEventListener("click",function(event){
  if(!["weekly","monthly","half_year","annual"].includes(plan))return;
  try{sessionStorage.setItem("uzmantech_pending_plan",plan);}catch(_){}
  const token=window.UzmantechAPI?.getToken?.();
- location.href=token?("/odeme.html?plan="+encodeURIComponent(plan)+"&v=5"):("/kayit.html?plan="+encodeURIComponent(plan));
+ const target=token?("/odeme.html?plan="+encodeURIComponent(plan)+"&v=5"):("/kayit.html?plan="+encodeURIComponent(plan));
+ if(window.parent!==window)window.parent.postMessage({type:"uzman-asistan-navigate",url:target},"*");
+ else window.location.assign(target);
 },true);
 </script>
 <script>

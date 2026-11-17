@@ -418,7 +418,7 @@ document.addEventListener("click",async e=>{
  const btn=e.target.closest("[data-archive-download]");if(!btn)return;
  const id=btn.dataset.archiveDownload;btn.disabled=true;const tab=window.open("about:blank","_blank");
  try{const result=await UzmantechAPI.archiveFileDownload(id);if(tab)tab.location=result.url;else window.location.href=result.url;}
- catch(err){if(tab)tab.close();if(err?.code==="PACKAGE_REQUIRED"||/paket satın alınmış/i.test(err.message||""))showPackageRequired();else{toast(err.message||"İndirme bağlantısı alınamadı.");if(/giriş|üyelik/i.test(err.message||""))showLogin();}}
+ catch(err){if(tab)tab.close();if(err?.code==="PACKAGE_REQUIRED"||/paket/i.test(err.message||""))showPackageRequired();else{toast(err.message||"İndirme bağlantısı alınamadı.");if(/giriş|üyelik/i.test(err.message||""))showLogin();}}
  finally{btn.disabled=false;}
 });
 if($("#archiveModelsPage")){if(!selectedBrand||!MODEL_CATALOG[selectedBrand]){location.replace("archive.html");}else{const label=$("#archiveModelBrandLabel");if(label)label.textContent=selectedBrand.toLocaleUpperCase("tr-TR")+" MODEL KATALOĞU";const title=$("#archiveModelPageTitle");if(title)title.textContent=selectedBrand+" Cihaz Modelleri";}}

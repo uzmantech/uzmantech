@@ -49,17 +49,13 @@
           background: rgba(3, 12, 24, .22) !important;
         }
         #${OVERLAY_ID} .uz-chat-frame-wrap {
-          position: absolute !important;
-          right: 18px !important;
-          bottom: 18px !important;
-          width: min(460px, calc(100vw - 24px)) !important;
-          height: min(700px, calc(100dvh - 30px)) !important;
-          border: 1px solid #00cfe6 !important;
-          border-radius: 16px !important;
-          overflow: hidden !important;
-          background: #071321 !important;
-          box-shadow: 0 18px 65px #000b !important;
+          position: fixed !important; inset: 0 !important;
+          width: 100vw !important; height: 100dvh !important; max-height: none !important;
+          margin: 0 !important; padding: 0 !important; border: 0 !important;
+          border-radius: 0 !important; overflow: hidden !important;
+          background: transparent !important; box-shadow: none !important;
         }
+        #${OVERLAY_ID} .uz-chat-close { display:none !important; }
         #${OVERLAY_ID} iframe {
           display: block !important;
           width: 100% !important;
@@ -108,7 +104,7 @@
     overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
     const close = () => overlay.remove();
-    overlay.querySelector(".uz-chat-close").addEventListener("click", close);
+    const closeButton = overlay.querySelector(".uz-chat-close");\n    if (closeButton) closeButton.addEventListener("click", close);
     overlay.querySelector(".uz-chat-backdrop").addEventListener("click", close);
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantMessage(event) {

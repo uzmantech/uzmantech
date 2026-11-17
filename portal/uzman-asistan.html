@@ -1,229 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070d16">
-<meta name="description" content="UZMAN ASİSTAN - Telefon teknik servis teknisyenleri için yapay zekâ destekli teknik yardımcı.">
-<title>UZMAN ASİSTAN — Teknik Zekâ</title>
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/dashboard.css"><link rel="stylesheet" href="assets/css/site-header.css?v=dropdown-layer-20261114-4">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-
-<style id="assistant-theme">
-:root{color-scheme:dark;--ink:#edf5ff;--muted:#9aacc2;--cyan:#00d9ef;--line:#16415a}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"DM Sans",Arial,sans-serif;color:var(--ink);background:#060c15}button,textarea{font:inherit}
-body.dashboard-page{background:#060c15}
-.demo-page{min-height:calc(100vh - 80px);overflow:hidden;position:relative;background-color:#060c15;background-image:linear-gradient(#17324a38 1px,transparent 1px),linear-gradient(90deg,#17324a38 1px,transparent 1px),radial-gradient(ellipse at 72% 32%,#063d5840,transparent 38%),radial-gradient(ellipse at 12% 70%,#082c4930,transparent 38%);background-size:52px 52px,52px 52px,auto,auto}
-.demo-hero{width:min(1180px,calc(100% - 48px));margin:0 auto;padding:clamp(68px,9vh,112px) 0 90px;text-align:center}
-.demo-pill{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border:1px solid #0a7185;background:#071a27;color:#48e6f4;font:700 10px "Space Grotesk",sans-serif;letter-spacing:1.5px}
-.demo-pill i{width:7px;height:7px;border-radius:50%;background:#16e6f0;box-shadow:0 0 12px #16e6f0;animation:signal 1.5s infinite}
-.demo-hero h1{margin:28px 0 18px;color:#f3f8ff;font:800 clamp(44px,7vw,82px)/.99 "Space Grotesk",sans-serif;letter-spacing:-3.6px;text-transform:uppercase}
-.demo-hero h1 span{display:block;color:#00d9ef;text-shadow:0 0 30px #00d9ef26}
-.demo-hero>p{max-width:690px;margin:0 auto;color:#9db3c9;font-size:15px;line-height:1.85}
-.demo-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1000px;margin:62px auto 0;text-align:left}
-.demo-card{min-height:135px;padding:22px;border:1px solid #1b4562;background:linear-gradient(145deg,#0b1a2aeb,#081321eb);box-shadow:inset 0 1px #ffffff08}
-.demo-card-icon{width:36px;height:36px;display:grid;place-items:center;margin-bottom:15px;border:1px solid #087b91;background:#062432;color:#1de4f1;font-size:19px}
-.demo-card b{display:block;color:#eaf7ff;font:700 12px "Space Grotesk",sans-serif;letter-spacing:.5px;text-transform:uppercase}
-.demo-card p{margin:8px 0 0;color:#8da6bd;font-size:11px;line-height:1.7}
-.demo-footnote{margin-top:36px;color:#53748c;font:600 9px "Space Grotesk",sans-serif;letter-spacing:2px}
-.chat-launcher{position:fixed;z-index:2147483001!important;right:2px;bottom:2px;width:138px;height:178px;border:0;border-radius:0;display:grid;place-items:end center;background:transparent!important;color:#4df5ff;cursor:pointer;box-shadow:none;animation:none!important;overflow:visible;pointer-events:auto!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.chat-launcher:before,.chat-launcher:after{display:none!important;content:none!important}
-.launcher-core{position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;overflow:visible;border:0;border-radius:0;background:transparent!important;box-shadow:none;mix-blend-mode:normal;pointer-events:none}.chat-launcher .uzman-mascot-img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;background:transparent!important;mix-blend-mode:normal;filter:drop-shadow(0 0 8px #00eaff55);overflow:visible}
-.chat-launcher .launcher-core .uzman-mascot-img{animation:uzmanMascotMotion 1.9s cubic-bezier(.36,.07,.2,1) infinite;transform-origin:50% 86%;will-change:transform}
-.chat-launcher .robot-wave-arm{transform-box:view-box;transform-origin:65% 51%;animation:robotWave .72s ease-in-out infinite alternate}
-.chat-launcher:hover .launcher-core .uzman-mascot-img{animation-duration:1.55s}
-@keyframes uzmanMascotMotion{
- 0%,100%{transform:translateY(0) rotate(-5deg) scale(1)}
- 22%{transform:translateY(-13px) rotate(-2deg) scale(1.015)}
- 38%{transform:translateY(-18px) rotate(5deg) scale(1.02)}
- 52%{transform:translateY(-5px) rotate(2deg) scale(1.01)}
- 66%{transform:translateY(1px) rotate(-3deg) scale(1.04,.96)}
- 78%{transform:translateY(0) rotate(2deg) scale(1)}
-}
-@keyframes robotWave{from{transform:rotate(-16deg)}to{transform:rotate(28deg)}}.widget-avatar{overflow:hidden;border-radius:13px}.widget-avatar .uzman-mascot-img{width:100%;height:100%;object-fit:cover}.welcome-mark{width:108px;height:108px;margin:0 auto 14px;display:block;overflow:hidden;border:1px solid #0a879b;border-radius:50%;background:#06111e;color:#1fe5f2;box-shadow:0 0 25px #00d9ef1c}.welcome-mark .uzman-mascot-img{width:100%;height:100%;object-fit:cover}
-
-.ai-widget{position:fixed;z-index:40;right:28px;bottom:26px;width:min(430px,calc(100vw - 32px));height:min(660px,calc(100vh - 125px));min-height:430px;display:none;flex-direction:column;overflow:hidden;border:1px solid #00cfe6;border-radius:2px;background:#071321;box-shadow:0 0 0 5px #00d9ef0c,0 22px 70px #000b;transform-origin:bottom right}
-.ai-widget.open{display:flex;animation:widgetIn .22s ease-out}
-.ai-widget.expanded{width:min(780px,calc(100vw - 48px));height:min(800px,calc(100vh - 110px))}
-.widget-head{height:72px;flex:0 0 72px;display:flex;align-items:center;gap:11px;padding:0 15px;color:#f2fbff;background:linear-gradient(100deg,#071d30,#08283b);border-bottom:1px solid #14536a}
-.widget-avatar{position:relative;width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border:1px solid #00d9ef;border-radius:50%;background:#062a3a;color:#29eaf5;font-size:22px;box-shadow:0 0 18px #00d9ef25}
-.widget-avatar:after{content:"";position:absolute;width:8px;height:8px;right:-1px;bottom:1px;border:2px solid #08283b;border-radius:50%;background:#35e9a5}
-.widget-heading{min-width:0;flex:1}.widget-heading b{display:block;font:700 13px "Space Grotesk",sans-serif;letter-spacing:1px}.widget-heading small{display:block;margin-top:5px;color:#54c8d9;font:600 9px "Space Grotesk",sans-serif;letter-spacing:.6px}.widget-tag{display:inline-block;margin-left:6px;padding:3px 5px;border:1px solid #087d91;color:#38e7f2;font-size:8px;vertical-align:2px}
-.widget-tools{display:flex;align-items:center;gap:4px}.widget-tools button{width:30px;height:30px;border:1px solid transparent;background:transparent;color:#a9c4d5;font-size:17px;cursor:pointer}.widget-tools button:hover{border-color:#17637a;color:#35e8f3}
-.widget-body{flex:1;min-height:0;overflow:auto;padding:17px 16px;background:linear-gradient(180deg,#071321,#091827);display:flex;flex-direction:column;gap:13px}
-.widget-date{align-self:center;padding:5px 10px;border:1px solid #144157;color:#5e9caf;font:600 9px "Space Grotesk",sans-serif;margin-bottom:4px}
-.welcome{margin:auto;width:100%;padding:12px 0 18px;text-align:center}.welcome-mark{width:56px;height:56px;margin:0 auto 14px;display:grid;place-items:center;border:1px solid #0a879b;background:#062636;color:#1fe5f2;font-size:27px;box-shadow:0 0 25px #00d9ef1c}.welcome h2{margin:0;color:#eaf7ff;font:700 19px "Space Grotesk",sans-serif}.welcome h2 span{color:#20e3f0}.welcome p{max-width:300px;margin:10px auto 17px;color:#8ba8bd;font-size:10px;line-height:1.7}
-.widget-suggestions{display:grid;gap:7px}.widget-suggestions button{padding:10px 11px;border:1px solid #16445b;background:#091d2d;color:#b8d3e2;text-align:left;font-size:10px;cursor:pointer}.widget-suggestions button:hover{border-color:#00bcd2;color:#e6fcff}
-.ai-message{max-width:94%;display:flex;align-items:flex-start;gap:8px}.ai-message.user{align-self:flex-end;flex-direction:row-reverse}.ai-avatar{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border:1px solid #12627b;background:#092b3b;color:#3ce8f2;font-size:12px;font-weight:800}.ai-message.user .ai-avatar{border-color:#245077;background:#10243a;color:#9dc7f4}.ai-avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
-.ai-bubble{max-width:calc(100% - 35px);padding:10px 12px;border:1px solid #153e55;border-radius:1px;background:#0b1d2e;color:#c4d7e4;font-size:11px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}.ai-message.user .ai-bubble{border-color:#17607b;background:#092b3e;color:#d6f5fc}
-.ai-sources{margin-top:8px;padding-top:8px;border-top:1px solid #1a4358;color:#87aabd;font-size:9px}.ai-sources b{display:block;color:#2eddea;margin-bottom:4px}.ai-source{display:block;margin-top:3px}
-.widget-composer{padding:12px 13px 10px;border-top:1px solid #15455b;background:#071523}.composer-box{padding:9px 10px 8px 13px;border:1px solid #15506a;background:#081c2c}.composer-box:focus-within{border-color:#00cfe6;box-shadow:0 0 0 2px #00d9ef18}.composer-box textarea{display:block;width:100%;min-height:39px;max-height:100px;resize:vertical;border:0;outline:0;background:transparent;color:#e3f6ff;font-size:11px;line-height:1.6;padding:3px 0 7px}.composer-box textarea::placeholder{color:#68879d}.composer-actions{display:flex;align-items:center;justify-content:space-between}.composer-hint{color:#60869c;font-size:8px}.send-button{width:36px;height:35px;border:1px solid #00cfe6;background:#00cfe6;color:#04202b;font-size:19px;font-weight:900;cursor:pointer}.send-button:disabled{opacity:.45;cursor:not-allowed}.composer-foot{display:flex;justify-content:space-between;gap:8px;padding:8px 3px 0;color:#5c7b90;font-size:8px}
-.ai-toast{position:fixed;z-index:90;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:10px 14px;border:1px solid #17617b;background:#071827;color:#c9f8ff;font-size:11px;transition:.2s}.ai-toast.show{opacity:1;transform:translate(-50%,0)}
-@keyframes robotEyes{0%,43%,47%,100%{opacity:1}45%{opacity:.12}}@keyframes signal{50%{opacity:.35;box-shadow:0 0 2px #16e6f0}}@keyframes launcherFloat{50%{transform:translateY(-4px)}}@keyframes orbitPulse{0%{transform:translate(-50%,-50%) scale(.82);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.35);opacity:0}}@keyframes widgetIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-@media(max-width:980px){.demo-page{min-height:calc(100vh - 72px)}}
-@media(max-width:640px){.demo-hero{width:calc(100% - 34px);padding:62px 0 80px}.demo-hero h1{font-size:clamp(39px,11vw,58px);letter-spacing:-2px}.demo-hero>p{font-size:12px}.demo-cards{grid-template-columns:1fr;gap:10px;margin-top:36px}.demo-card{min-height:0;padding:17px}.chat-launcher{right:2px;bottom:2px;width:106px;height:148px}.ai-widget{right:10px;bottom:10px;width:calc(100vw - 20px);height:min(690px,calc(100dvh - 95px));min-height:420px}.ai-widget.expanded{width:calc(100vw - 12px);height:calc(100dvh - 90px);right:6px;bottom:6px}.composer-foot>span:last-child{display:none}}
-@media(prefers-reduced-motion:reduce){.chat-launcher,.chat-launcher:before,.chat-launcher:after,.chat-launcher .uzman-mascot-img,.chat-launcher .robot-wave-arm,.demo-pill i,.mascot-bubble.visible{animation:none!important}.mascot-bubble{transition:none!important}}
-body.assistant-embed .mascot-bubble{display:none!important}.mascot-bubble{position:fixed;right:112px;bottom:56px;z-index:35;display:block;min-width:90px;max-width:142px;padding:9px 13px;border:1px solid #08d5e7;background:linear-gradient(145deg,#0a2436,#071522);color:#9af7ff;font:700 10px "Space Grotesk",sans-serif;letter-spacing:1px;text-align:center;text-transform:uppercase;box-shadow:0 0 18px #00d9ef24,0 8px 24px #0008;opacity:0;visibility:hidden;transform:translateY(7px) scale(.96);transition:opacity .2s ease,transform .2s ease,visibility .2s}.mascot-bubble:after{content:"";position:absolute;right:-6px;bottom:10px;width:10px;height:10px;background:#071522;border-top:1px solid #08d5e7;border-right:1px solid #08d5e7;transform:rotate(45deg)}.mascot-bubble.visible{opacity:1;visibility:visible;transform:translateY(0) scale(1)}.mascot-bubble.visible{animation:bubbleNudge 3.4s ease-in-out 1}@keyframes bubbleNudge{0%{transform:translateY(9px) scale(.95)}15%,85%{transform:translateY(0) scale(1)}100%{transform:translateY(2px) scale(1)}}
-html:has(body.assistant-embed),body.assistant-embed{background:transparent!important;min-height:100%;overflow:hidden;pointer-events:auto!important;touch-action:pan-x pan-y}
-body.assistant-embed .site-global-header,body.assistant-embed .demo-page{display:none!important}body.assistant-embed .chat-launcher{display:none!important}
-html:has(body.assistant-embed),body.dashboard-page.assistant-embed{background:transparent!important}body.assistant-embed .chat-launcher,body.assistant-embed .ai-widget{pointer-events:auto}body.assistant-embed .ai-widget{display:flex!important;visibility:visible!important;opacity:1!important;position:fixed!important;right:0!important;bottom:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;min-height:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:none!important}body.assistant-embed .chat-launcher{display:none!important;visibility:hidden!important}body.assistant-embed .ai-widget .widget-tools #expandChat{display:none!important}
-body.assistant-embed .mascot-bubble{right:116px;bottom:62px;max-width:136px;min-width:88px}
-body.assistant-embed .mascot-bubble:after{right:-6px}
-body.assistant-embed .chat-launcher{right:2px;bottom:2px;width:138px;height:178px}@media(max-width:560px){body.assistant-embed .chat-launcher{width:122px;height:164px}}
-body.assistant-embed 
-body.assistant-embed .ai-widget{right:12px;bottom:12px;width:430px;height:min(660px,calc(100vh - 24px));min-height:420px}
-body.assistant-embed .ai-widget.expanded{width:min(780px,calc(100vw - 24px));height:calc(100vh - 24px)}
-@media(max-width:560px){body.assistant-embed .ai-widget{right:6px;bottom:6px;width:calc(100vw - 12px);height:calc(100vh - 12px)}}
-
-/* UZMAN ASISTAN — mascot palette refresh */
-.ai-widget{border:1px solid #08dff2;border-radius:12px;background:#061321;box-shadow:0 0 0 1px #08dff222,0 0 28px #00dff21c,0 22px 70px #000b}
-.widget-head{background:linear-gradient(110deg,#071b2e 0%,#0b3047 58%,#09263b 100%);border-bottom:1px solid #167b98;padding:0 16px}
-.widget-avatar{border:1px solid #38eaff;border-radius:50%;background:radial-gradient(circle at 35% 25%,#e8ffff 0%,#72eaff 12%,#087b9e 48%,#052338 100%);box-shadow:0 0 0 3px #0bdcf21c,0 0 20px #00dff255;color:#052133}
-.widget-avatar-mark{font:900 25px "Space Grotesk",sans-serif;color:#052133;text-shadow:0 1px 0 #d8ffff}.widget-brand-logo{display:block;width:34px;height:34px;object-fit:contain;border-radius:50%}.welcome-brand-logo{display:block;width:100%;height:100%;object-fit:contain;padding:7px}.ai-avatar img{padding:3px;background:#061b2b}
-.widget-heading b{color:#f2fdff;font-size:14px;letter-spacing:.8px}
-.widget-heading small{color:#75eaff;font-size:10px}
-.widget-tag{border-color:#27d9ed;background:#082f43;color:#8ff8ff}
-.widget-tools button{color:#b9f6ff;border-radius:7px}
-.widget-tools button:hover{border-color:#25dff2;background:#0a3a50;color:#fff}
-.widget-body{padding:18px 16px;gap:15px;background:radial-gradient(ellipse at 10% 0%,#0c2b42 0%,transparent 46%),linear-gradient(180deg,#071726 0%,#081a2b 100%)}
-.widget-date{border:1px solid #17647a;border-radius:20px;background:#09283b;color:#9ceefa;font-size:10px;padding:5px 12px}
-.ai-message{max-width:96%;gap:9px}
-.ai-avatar{width:30px;height:30px;flex-basis:30px;border:1px solid #35e4f4;border-radius:9px;background:linear-gradient(145deg,#eaffff,#55dff0 48%,#087eaa);color:#052438;font-size:14px;box-shadow:0 0 12px #00dff226}
-.ai-message.user .ai-avatar{border-color:#6daeff;background:linear-gradient(145deg,#d9eaff,#5999e7 55%,#174f91);color:#071c35}
-.ai-bubble{max-width:calc(100% - 39px);padding:13px 14px;border:1px solid #17617a;border-radius:3px 13px 13px 13px;background:linear-gradient(145deg,#0c263b,#0a1d2e);color:#e3f5ff;font-size:13px;line-height:1.85;letter-spacing:.05px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 5px 16px #0003}
-.ai-message.user .ai-bubble{border-color:#168da9;border-radius:13px 3px 13px 13px;background:linear-gradient(145deg,#0b4058,#0a2c45);color:#f0fcff}
-.ai-bubble strong{color:#8ff7ff;font-weight:750}.ai-table-row{display:grid;grid-template-columns:minmax(70px,.8fr) minmax(0,1fr) minmax(0,1fr);gap:7px;padding:7px 0;border-bottom:1px solid #1b5269;font-size:12px;line-height:1.55}.ai-table-row:first-child{color:#8ef6ff;font-weight:750;border-bottom-color:#2bcfe2}.ai-table-row .ai-table-label{color:#91eff8;font-weight:700}@media(max-width:640px){.ai-table-row{grid-template-columns:minmax(65px,.8fr) minmax(0,1fr) minmax(0,1fr);gap:5px;font-size:11px}}
-.ai-message.user .ai-bubble strong{color:#b8e8ff}
-.widget-composer{padding:13px 13px 10px;border-top:1px solid #17617a;background:linear-gradient(180deg,#081b2c,#061522)}
-.composer-box{padding:10px 11px 9px 14px;border:1px solid #176c86;border-radius:9px;background:#061827}
-.composer-box:focus-within{border-color:#31e7f5;box-shadow:0 0 0 3px #00d9ef20,0 0 18px #00d9ef12}
-.composer-box textarea{min-height:48px;color:#f0fbff;font-size:13px;line-height:1.65}
-.composer-box textarea::placeholder{color:#8baabd}
-.composer-hint{color:#85b8ca;font-size:9px}
-.send-button{width:39px;height:38px;border:1px solid #8df8ff;border-radius:9px;background:linear-gradient(145deg,#e7ffff 0%,#48e5f3 42%,#0785b4 100%);color:#05283b;font-size:21px;box-shadow:0 0 14px #00dff244}
-.send-button:hover{filter:brightness(1.12);box-shadow:0 0 20px #00dff277}
-.composer-foot{color:#83aabc;font-size:9px}
-.widget-suggestions button{border:1px solid #17617a;border-radius:8px;background:linear-gradient(100deg,#0a2032,#0b2a40);color:#d5f3fc;font-size:12px;padding:11px 13px}
-.widget-suggestions button:hover{border-color:#2fe5f3;background:#0c354b;color:#fff}
-.welcome h2{color:#f2fcff}.welcome h2 span{color:#65f0fb}.welcome p{color:#b3cad8;font-size:12px}
-.welcome-mark{border:1px solid #46e9f5;border-radius:50%;background:radial-gradient(circle at 35% 25%,#eaffff 0%,#64e7f4 18%,#087d9e 56%,#062238 100%);box-shadow:0 0 24px #00dff244}
-.welcome-mark-letter{font:900 32px "Space Grotesk",sans-serif;color:#052638;text-shadow:0 1px 0 #d8ffff}
-.ai-toast{border:1px solid #20d9eb;border-radius:9px;background:#09283b;color:#edfdff}
-@media(max-width:640px){.ai-bubble{font-size:13px;line-height:1.8;padding:12px}.widget-body{padding:14px 11px}.widget-composer{padding:10px 10px 8px}}
-
-body.chat-autostart .ai-widget{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}body.chat-autostart .chat-launcher{display:none!important}body.chat-autostart .demo-page{filter:blur(2px);pointer-events:none}body.chat-autostart .ai-widget{z-index:2147483001;right:50%;bottom:50%;transform:translate(50%,50%);width:min(760px,calc(100vw - 28px));height:min(820px,calc(100dvh - 28px));min-height:0;box-shadow:0 0 0 9999px #020914c9,0 22px 70px #000b}body.chat-autostart .ai-widget.open{display:flex}body.chat-autostart .chat-launcher{display:none!important}@media(max-width:640px){body.chat-autostart .ai-widget{right:0;bottom:0;transform:none;width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}\n</style></head><body class="dashboard-page"><script>const assistantParams=new URLSearchParams(location.search);if(assistantParams.get("widget")==="1")document.body.classList.add("assistant-embed");if(assistantParams.get("full")==="1")document.body.classList.add("chat-autostart");</script>
-<div class="demo-page">
-<svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 13h6M9 17h6"/></symbol><symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14 6a5 5 0 0 0-6 6l-5 5 4 4 5-5a5 5 0 0 0 6-6l-3 3-4-4z"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 7 5 4 5-7 5 7 5-4-2 13H4z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1.2 1-1.7 1.3-1.7 2.7M12 17h.01"/></symbol></svg>
-<header class="dash-topbar site-global-header">
-<a class="site-header-brand" href="index.html?view=home" data-page="home"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
-<nav class="site-global-nav" aria-label="Ana menü">
-<a class="site-nav-link" href="index.html?view=home" data-page="home"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg></span><b>Ana Sayfa</b></a>
-<a class="site-nav-link" href="archive.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-folder"/></svg></span><b>Dosya Arşivi</b></a>
-<a class="site-nav-link" href="index.html#download" data-page="download"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-download"/></svg></span><b>İndir</b></a>
-<a class="site-nav-link" href="index.html#updates"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-file"/></svg></span><b>Haberler</b></a>
-<a class="site-nav-link" href="yazilimci-tv.html"><span class="site-nav-icon">▶</span><b>Yazılımcı TV</b></a>
-<div class="site-nav-dropdown"><button class="site-nav-link site-nav-dropdown-toggle active" type="button" aria-haspopup="true" aria-expanded="false"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-wrench"/></svg></span><b>Araçlar</b><span class="site-nav-chevron">⌄</span></button><div class="site-nav-dropdown-menu"><a class="site-nav-dropdown-item active" href="uzman-asistan.html">✦ UZMAN ASİSTAN</a><a class="site-nav-dropdown-item" href="cam-uyumluluk.html">▦ Cam Uyumluluğu</a><a class="site-nav-dropdown-item" href="servis-takip.html">▣ Servis Takip</a><a class="site-nav-dropdown-item" href="imei-araclari.html">▦ IMEI Çoğaltma</a><a class="site-nav-dropdown-item" href="mediatek-temp-root.html">⚙ MediaTek Temp Root</a></div></div>
-<a class="site-nav-link" href="paketler.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-crown"/></svg></span><b>Paketler</b></a>
-<a class="site-nav-link" href="destek.html"><span class="site-nav-icon"><svg viewBox="0 0 24 24"><use href="#i-help"/></svg></span><b>İletişim</b></a>
-</nav><button class="site-mobile-nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
-<div class="dash-top-actions"><div class="header-auth" id="headerAuth"><button class="header-login" id="headerLogin" type="button" data-open="login">Giriş Yap</button><a class="header-register" id="headerRegister" href="kayit.html">Üye Ol</a></div></div>
-</header>
- <section class="demo-hero">
-  <div class="demo-pill"><i></i> TEKNİK SERVİS İÇİN YAPAY ZEKÂ</div>
-  <h1>Teknik işlerinde<br><span>akıllı yardımcın.</span></h1>
-  <p>Telefon tamiri ve yazılım süreçlerinde sorularını sor, fikirlerini geliştir, teknik konuları birlikte değerlendir. UZMAN ASİSTAN ile doğal bir sohbet başlat.</p>
-  <div class="demo-cards">
-   <article class="demo-card"><div class="demo-card-icon">⌕</div><b>Teknik sorularını sor</b><p>Arıza belirtilerini anlat, olası nedenleri ve kontrol adımlarını birlikte değerlendir.</p></article>
-   <article class="demo-card"><div class="demo-card-icon">✧</div><b>Doğal sohbet et</b><p>Konuşma bağlamını takip eden, açıklayıcı ve anlaşılır yanıtlar al.</p></article>
-   <article class="demo-card"><div class="demo-card-icon">◈</div><b>Bilgiye dayalı ilerle</b><p>Teknik konularda kaynaklı ve doğrulanabilir bilgi yaklaşımını kullan.</p></article>
-  </div>
-  <div class="demo-footnote">UZMANTECH · UZMAN ASİSTAN · TEKNİK ZEKÂ PLATFORMU</div>
- </section>
-</div>
-<button class="chat-launcher visible" id="chatLauncher" type="button" aria-label="UZMAN ASİSTAN sohbetini aç"><span class="launcher-core"><svg class="uzman-mascot-img" viewBox="0 0 120 160" role="img" aria-label="UZMAN robot maskotu" xmlns="http://www.w3.org/2000/svg">
-<defs>
- <linearGradient id="uBody" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5fdff"/><stop offset=".48" stop-color="#9cc9dd"/><stop offset="1" stop-color="#36728f"/></linearGradient>
- <linearGradient id="uDark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173b55"/><stop offset="1" stop-color="#061522"/></linearGradient>
- <linearGradient id="uCyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a4ffff"/><stop offset=".45" stop-color="#00dff5"/><stop offset="1" stop-color="#0075c9"/></linearGradient>
- <filter id="uGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-</defs>
-<ellipse cx="60" cy="148" rx="31" ry="5" fill="#00cfff" opacity=".28" filter="url(#uGlow)"/>
-<g stroke="#48eaff" stroke-width="2.5" stroke-linecap="round" fill="none" filter="url(#uGlow)">
- <path d="M60 12V5"/><path d="M43 30 34 24"/><path d="M77 30 86 24"/>
-</g><circle cx="60" cy="5" r="4" fill="#7fffff" filter="url(#uGlow)"/>
-<g stroke="#235b78" stroke-width="2">
- <path d="M42 82 27 99 19 111" fill="none" stroke-width="10" stroke-linecap="round"/>
- <path d="M49 111 42 132 39 140" fill="none" stroke-width="12" stroke-linecap="round"/>
- <path d="M71 111 78 132 81 140" fill="none" stroke-width="12" stroke-linecap="round"/>
-</g>
-<g class="robot-wave-arm" stroke="#235b78" stroke-width="10" stroke-linecap="round" fill="none">
- <path d="M78 82 93 99 101 111"/>
- <circle cx="101" cy="113" r="7" fill="url(#uBody)" stroke="#6bb8d4" stroke-width="1.5"/>
-</g>
-<g fill="url(#uBody)" stroke="#6bb8d4" stroke-width="1.5">
- <circle cx="19" cy="113" r="7"/>
- <path d="M41 77 Q60 69 79 77 L82 111 Q60 123 38 111Z"/>
- <path d="M45 108 39 136 Q39 143 47 143 L54 141 59 116Z"/>
- <path d="M75 108 81 136 Q81 143 73 143 L66 141 61 116Z"/>
-</g>
-<path d="M50 84 Q60 80 70 84 L70 104 Q60 111 50 104Z" fill="url(#uDark)" stroke="#00cfe9" stroke-width="1.5"/>
-<text x="60" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="800" fill="#55f4ff">U</text>
-<g fill="url(#uBody)" stroke="#70bad4" stroke-width="1.5">
- <rect x="13" y="37" width="94" height="57" rx="22"/>
- <rect x="7" y="51" width="12" height="28" rx="6"/><rect x="101" y="51" width="12" height="28" rx="6"/>
- <rect x="17" y="42" width="86" height="49" rx="18" fill="url(#uDark)" stroke="#78c6df"/>
-</g>
-<rect x="25" y="49" width="70" height="35" rx="13" fill="#03101d"/>
-<g fill="none" stroke="url(#uCyan)" stroke-width="4" stroke-linecap="round" filter="url(#uGlow)">
- <path d="M36 65 Q43 56 50 65"/><path d="M70 65 Q77 56 84 65"/>
-</g>
-<path d="M51 75 Q60 80 69 75" fill="none" stroke="#39d9ee" stroke-width="2" stroke-linecap="round"/>
-<path d="M38 43 Q60 34 82 43" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
-<circle cx="13" cy="65" r="3" fill="#00eaff"/><circle cx="107" cy="65" r="3" fill="#00eaff"/>
-</svg></span></button>
-<div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
-<section class="ai-widget" id="assistant" aria-label="UZMAN ASİSTAN sohbet penceresi">
- <header class="widget-head"><div class="widget-avatar" aria-label="Uzmantech logosu"><img src="assets/logo.svg" alt="Uzmantech" class="widget-brand-logo"></div><div class="widget-heading"><b>UZMAN ASİSTAN <span class="widget-tag">AI</span></b><small id="connectionState">Bulut bağlantısı kontrol ediliyor</small></div><div class="widget-tools"><button id="newChat" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expandChat" type="button" title="Genişlet" aria-label="Genişlet">⤢</button><button id="minimizeChat" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
- <div class="widget-body" id="messages" aria-live="polite">
-  <div class="widget-date">Bugün</div>
-  <div class="welcome" id="emptyState"><div class="welcome-mark" aria-label="Uzmantech logosu"><img src="assets/logo.svg" alt="Uzmantech" class="welcome-brand-logo"></div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p><div class="widget-suggestions"><button type="button" data-prompt="Bir telefonun arıza tespitine nereden başlamalıyım?">⌕　Bir cihazın arıza tespitine başlayalım</button><button type="button" data-prompt="ADB ve Fastboot arasındaki fark nedir?">⌘　ADB ve Fastboot hakkında konuşalım</button><button type="button" data-prompt="Bugün telefon tamiriyle ilgili yeni bir şey öğrenmek istiyorum.">✧　Yeni bir teknik konu öğren</button></div></div>
- </div>
- <div class="widget-composer"><form id="chatForm"><div class="composer-box"><textarea id="messageInput" rows="1" maxlength="12000" placeholder="Bir mesaj yazın..." required></textarea><div class="composer-actions"><span class="composer-hint">Enter gönderir · Shift + Enter yeni satır</span><button class="send-button" id="sendButton" type="submit" aria-label="Mesajı gönder">➤</button></div></div><div class="composer-foot"><span>UZMAN ASİSTAN yapay zekâ desteklidir.</span><span>Yanıtları kontrol etmeniz önerilir.</span></div></form></div>
-</section>
-<div class="ai-toast" id="toast" role="status"></div>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UZMAN ASİSTAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{font-family:Inter,system-ui,sans-serif;color:#0f172a;color-scheme:light}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:100%;font-family:Inter,system-ui,sans-serif}body{display:flex;align-items:center;justify-content:center;padding:12px;background:linear-gradient(135deg,#e2e8f0,#fafaf9 55%,#eef2ff)}button,textarea{font:inherit}#chat-widget{width:min(450px,100%);height:min(750px,calc(100dvh - 24px));min-height:440px;display:flex;flex-direction:column;overflow:hidden;position:relative;background:#fff;border:1px solid #e2e8f0;border-radius:25px;box-shadow:0 24px 60px -12px #0f172a24,0 0 1px #0f172a10;transition:width .25s,height .25s,border-radius .25s}body.full-mode{background:linear-gradient(135deg,#e2e8f0,#fafaf9 55%,#eef2ff)}body.full-mode #chat-widget{width:min(920px,calc(100vw - 32px));height:calc(100dvh - 32px);max-height:none}body.embed-mode{padding:0;background:transparent;overflow:hidden}body.embed-mode #chat-widget{width:100%;height:100%;min-height:0;border-radius:20px;border:1px solid #e2e8f0;box-shadow:0 24px 60px -12px #0f172a24}header{padding:15px 18px;background:#ffffffed;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:2}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:44px;height:44px;border-radius:15px;background:linear-gradient(135deg,#0f172a,#312e81 75%,#4f46e5);display:grid;place-items:center;color:white;font-weight:800;font-size:21px;box-shadow:0 2px 7px #0f172a20}.brand-title{font-size:14px;font-weight:800;letter-spacing:-.3px}.brand-tag{font-size:9px;font-weight:800;letter-spacing:1px;color:#4f46e5;background:#eef2ff;border:1px solid #c7d2fe;border-radius:20px;padding:4px 7px;margin-left:5px}.connection{display:flex;align-items:center;gap:6px;font-size:10px;color:#64748b;margin-top:5px}.dot{width:7px;height:7px;border-radius:50%;background:#f59e0b}.dot.online{background:#10b981}.tools{display:flex;gap:5px}.tools button{width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#64748b;font-size:20px;cursor:pointer}.tools button:hover{background:#f1f5f9;color:#4f46e5}.scroll-area{flex:1;overflow-y:auto;background:#fafafc;padding:20px;display:flex;flex-direction:column}.date{text-align:center;margin-bottom:22px}.date span{font-size:10px;color:#64748b;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:5px 12px}.welcome{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:8px}.hero{text-align:center;margin-bottom:25px}.hero-logo{width:64px;height:64px;border-radius:21px;margin:0 auto 15px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;display:grid;place-items:center;font-size:29px;font-weight:800;box-shadow:0 5px 18px #6366f126}.hero h2{font-size:20px;letter-spacing:-.6px;margin:0;font-weight:800}.hero h2 span{color:#4f46e5}.hero p{font-size:12px;color:#64748b;line-height:1.7;margin:9px auto 0;max-width:310px}.prompts{display:grid;gap:9px}.prompt{width:100%;padding:12px 13px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #e2e8f0;border-radius:14px;background:#fff;cursor:pointer;box-shadow:0 2px 8px -2px #0f172a0a;transition:.18s}.prompt:hover{border-color:#a5b4fc;box-shadow:0 10px 25px -5px #4f46e51a}.prompt strong{display:block;font-size:12px;color:#1e293b}.prompt small{display:block;font-size:10px;color:#94a3b8;margin-top:4px}.prompt-icon{width:35px;height:35px;flex:0 0 35px;border-radius:11px;background:#eef2ff;color:#4f46e5;display:grid;place-items:center;font-weight:800}.prompt-arrow{color:#cbd5e1}.messages{display:flex;flex-direction:column;gap:15px;padding-bottom:8px}.message{max-width:90%;display:flex;gap:9px;align-items:flex-start}.message.user{align-self:flex-end;flex-direction:row-reverse}.avatar{width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:#e0e7ff;color:#4338ca;display:grid;place-items:center;font-size:11px;font-weight:800}.message.user .avatar{background:#dbeafe;color:#1d4ed8}.bubble{padding:11px 13px;border:1px solid #e2e8f0;border-radius:4px 14px 14px 14px;background:#fff;color:#334155;font-size:12px;line-height:1.75;overflow-wrap:anywhere;white-space:pre-wrap;box-shadow:0 2px 8px -2px #0f172a08}.message.user .bubble{background:#4f46e5;color:#fff;border-color:#4f46e5;border-radius:14px 4px 14px 14px}.bubble strong{font-weight:700}.typing{display:flex;gap:4px;align-items:center}.typing i{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:pulse 1.2s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}footer{padding:13px 15px 12px;background:#fff;border-top:1px solid #f1f5f9;flex-shrink:0}.composer{padding:10px 11px;border:1px solid #e2e8f0;border-radius:15px;background:#fafafc;box-shadow:0 8px 24px -6px #0f172a0d}.composer:focus-within{border-color:#818cf8;background:#fff;box-shadow:0 0 0 4px #6366f11a}.composer textarea{width:100%;min-height:46px;max-height:130px;resize:vertical;border:0;outline:0;background:transparent;color:#1e293b;font-size:12px;line-height:1.6}.composer textarea::placeholder{color:#94a3b8}.composer-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e2e8f080;padding-top:8px;margin-top:5px}.hint{font-size:9px;color:#94a3b8}.send{border:0;border-radius:10px;padding:9px 13px;background:#4f46e5;color:white;font-size:11px;font-weight:700;cursor:pointer}.send:hover{background:#4338ca}.send:disabled{opacity:.45;cursor:wait}.footnote{display:flex;justify-content:space-between;font-size:8px;color:#94a3b8;margin-top:8px}.toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;border-radius:30px;padding:9px 14px;font-size:10px;display:none}.toast.show{display:block}@media(max-width:560px){body{padding:0}#chat-widget,body.full-mode #chat-widget,body.embed-mode #chat-widget{width:100%;height:100dvh;max-height:none;min-height:0;border-radius:0}header{padding:12px 13px}.scroll-area{padding:15px}.hero h2{font-size:18px}.footnote{font-size:7px}} 
+</style>
+</head>
+<body>
+<main id="chat-widget">
+<header><div class="brand"><div class="brand-mark">U</div><div><div class="brand-title">UZMAN ASİSTAN <span class="brand-tag">AI</span></div><div class="connection"><i class="dot" id="status-dot"></i><span id="connection-text">Bulut bağlantısı kontrol ediliyor</span></div></div></div>
+<div class="tools"><button id="new-chat-btn" type="button" title="Yeni sohbet" aria-label="Yeni sohbet">＋</button><button id="expand-btn" type="button" title="Tam ekran" aria-label="Tam ekran">⤢</button><button id="close-btn" type="button" title="Kapat" aria-label="Kapat">×</button></div></header>
+<div class="scroll-area" id="chat-scroll-area"><div class="date" id="date-separator"><span>Bugün</span></div>
+<section class="welcome" id="welcome-screen"><div class="hero"><div class="hero-logo">U</div><h2>Merhaba, ben <span>UZMAN ASİSTAN.</span></h2><p>Telefon teknik servis süreçlerinde sana nasıl yardımcı olabilirim?</p></div>
+<div class="prompts"><button class="prompt" data-prompt="Bir cihazın arıza tespitine başlayalım"><span class="prompt-icon">⌕</span><span style="flex:1"><strong>Bir cihazın arıza tespitine başlayalım</strong><small>Adım adım donanım ve yazılım teşhisi</small></span><span class="prompt-arrow">›</span></button><button class="prompt" data-prompt="ADB ve Fastboot hakkında konuşalım"><span class="prompt-icon">⌘</span><span style="flex:1"><strong>ADB ve Fastboot hakkında konuşalım</strong><small>Komut satırı, ROM yükleme ve hata ayıklama</small></span><span class="prompt-arrow">›</span></button><button class="prompt" data-prompt="Yeni bir teknik konu öğren"><span class="prompt-icon">✧</span><span style="flex:1"><strong>Yeni bir teknik konu öğren</strong><small>Anakart şemaları, entegreler ve onarım ipuçları</small></span><span class="prompt-arrow">›</span></button></div></section>
+<div class="messages" id="messages-container"></div></div>
+<footer><form id="chat-form"><div class="composer"><textarea id="message-input" rows="2" maxlength="12000" placeholder="Bir mesaj yazın..." required></textarea><div class="composer-bottom"><span class="hint">Enter gönderir · Shift + Enter yeni satır</span><button class="send" id="send-btn" type="submit">Gönder&nbsp; ➤</button></div></div><div class="footnote"><span>UZMAN ASİSTAN yapay zekâ desteklidir.</span><span>Yanıtları kontrol etmeniz önerilir.</span></div></form></footer><div class="toast" id="toast"></div>
+</main>
 <script>
-(()=> {
- const API_BASE="https://uzman-asistan-api.uzmantech58.workers.dev";const mobileToggle=document.querySelector(".site-mobile-nav-toggle"),globalNav=document.querySelector(".site-global-nav");mobileToggle?.addEventListener("click",()=>{const open=globalNav.classList.toggle("is-open");mobileToggle.setAttribute("aria-expanded",String(open))});document.querySelectorAll(".site-nav-dropdown-toggle").forEach(btn=>btn.addEventListener("click",()=>{const box=btn.closest(".site-nav-dropdown"),open=box.classList.toggle("is-open");btn.setAttribute("aria-expanded",String(open))}));document.addEventListener("click",e=>{document.querySelectorAll(".site-nav-dropdown.is-open").forEach(box=>{if(!box.contains(e.target)){box.classList.remove("is-open");box.querySelector("button")?.setAttribute("aria-expanded","false")}})});
- const messages=document.getElementById("messages"),input=document.getElementById("messageInput"),send=document.getElementById("sendButton"),toast=document.getElementById("toast"),status=document.getElementById("connectionState"),widget=document.getElementById("assistant"),launcher=document.getElementById("chatLauncher");
- let busy=false;const HISTORY_KEY="uzman_asistan_history_v1";let conversationHistory=[];
- // Sohbet geçmişi kalıcı depolanmaz; sayfa her açıldığında yeni oturum başlar.
- try{localStorage.removeItem(HISTORY_KEY);sessionStorage.removeItem(HISTORY_KEY)}catch{}
- const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
- const mascotBubble=document.getElementById("mascotBubble");
- const bubbleWords=["Merhaba!","Hazırım!","Buradayım!","Selam!","Sor!","Dinliyorum!"];
- let bubbleIndex=0,bubbleHideTimer=null;
- function hideMascotBubble(){if(!mascotBubble.classList.contains("visible"))return;mascotBubble.classList.remove("visible");if(bubbleHideTimer)clearTimeout(bubbleHideTimer);bubbleHideTimer=null;if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-bubble",show:false},"*")}
- function showMascotBubble(){if(widget.classList.contains("open")||document.hidden)return;mascotBubble.textContent=bubbleWords[bubbleIndex++%bubbleWords.length];mascotBubble.classList.add("visible");if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-bubble",show:true},"*");if(bubbleHideTimer)clearTimeout(bubbleHideTimer);bubbleHideTimer=window.setTimeout(hideMascotBubble,3600)}
- function openWidget(){hideMascotBubble();widget.classList.add("open");launcher.style.display="none";if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-resize",open:true},"*");if(!window.matchMedia("(max-width: 640px)").matches)input.focus()} function closeWidget(){widget.classList.remove("open","expanded");launcher.style.display="grid";if(document.body.classList.contains("assistant-embed"))parent.postMessage({type:"uzman-asistan-resize",open:false},"*")}
- function notify(text){toast.textContent=text;toast.classList.add("show");window.setTimeout(()=>toast.classList.remove("show"),3000)}
- function renderAssistantText(value){const inline=value=>escapeHtml(value).replace(/\\*\\*(.*?)\\*\\*/g,"<strong>$1</strong>");return String(value??"").split(/\\r?\\n/).map(line=>{const t=line.trim();if(/^\\|?[\\s:|-]+\\|?$/.test(t)&&t.includes("-"))return "";if(t.startsWith("|")&&t.endsWith("|")){const cells=t.split("|").slice(1,-1).map(x=>x.trim());if(!cells.length)return "";return '<div class="ai-table-row">'+cells.map((cell,i)=>'<span class="'+(i===0?"ai-table-label":"")+'">'+inline(cell)+"</span>").join("")+"</div>"}return inline(line)}).join("\\n")}function addMessage(role,text,sources=[]){document.getElementById("emptyState")?.remove();messages.querySelector(".widget-date")?.remove();const article=document.createElement("article");article.className="ai-message "+role;const avatar=role==="user"?"S":'<img src="assets/logo.svg" alt="Uzmantech">';article.innerHTML='<div class="ai-avatar">'+avatar+'</div><div class="ai-bubble">'+renderAssistantText(text)+'</div>';messages.appendChild(article);messages.scrollTop=messages.scrollHeight;return article}
- async function checkHealth(){try{const r=await fetch(API_BASE+"/health",{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();status.textContent="Çevrimiçi · "+(j.app||"UZMAN ASİSTAN")}catch{status.textContent="Bulut bağlantısı kurulamadı"}}
- async function sendMessage(text){if(busy||!text.trim())return;busy=true;send.disabled=true;input.disabled=true;addMessage("user",text);const pending=addMessage("assistant","Yanıt hazırlanıyor…");try{const response=await fetch(API_BASE+"/api/v1/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,history:conversationHistory.slice(-8)})});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error([data.detail,data.error].filter(Boolean).join(" · ")||"Asistan yanıt veremedi.");pending.remove();const answer=data.reply||"Boş yanıt alındı.";conversationHistory.push({role:"user",content:text},{role:"assistant",content:answer});conversationHistory=conversationHistory.slice(-40);addMessage("assistant",answer,Array.isArray(data.sources)?data.sources:[])}catch(error){pending.remove();addMessage("assistant","Bağlantı hatası: "+error.message+"\n\nBulut bağlantısını kontrol edip tekrar dene.")}finally{busy=false;send.disabled=false;input.disabled=false;input.focus()}}
- document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(text){input.value="";sendMessage(text)}});
- input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatForm").requestSubmit()}});
- document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.prompt;input.focus()}));
- document.getElementById("newChat").addEventListener("click",()=>{conversationHistory=[];messages.innerHTML='<div class="widget-date">Bugün</div><div class="welcome" id="emptyState"><div class="welcome-mark">✳</div><h2>Yeni bir <span>sohbet.</span></h2><p>Yeni bir konu seç veya sorununu anlat.</p></div>';input.value=""});
- document.getElementById("minimizeChat").addEventListener("click",()=>{if(document.body.classList.contains("assistant-embed")){parent.postMessage({type:"uzman-asistan-close"},"*");return;}closeWidget()});
- document.getElementById("expandChat").addEventListener("click",()=>{if(document.body.classList.contains("assistant-embed")){window.top.location.href="/uzman-asistan.html?full=1";return;}widget.classList.toggle("expanded")});
- launcher.addEventListener("click",openWidget);
- if(document.body.classList.contains("assistant-embed")){window.addEventListener("message",event=>{if(event.source===parent&&event.data?.type==="uzman-asistan-parent-open")openWidget()});document.getElementById("expandChat").style.display="";}
- 
- conversationHistory.forEach(item=>addMessage(item.role,item.content));checkHealth();const forceOpen=()=>{if(!widget.classList.contains("open"))openWidget();};requestAnimationFrame(forceOpen);window.addEventListener("load",forceOpen,{once:true});setTimeout(forceOpen,250);
- /* The embedded mascot stays silent; movement is the greeting. */
+(()=>{const API_BASE="https://uzman-asistan-api.uzmantech58.workers.dev";const params=new URLSearchParams(location.search);const embedded=params.get("widget")==="1";const full=params.get("full")==="1";if(embedded)document.body.classList.add("embed-mode");if(full)document.body.classList.add("full-mode");
+const welcome=document.getElementById("welcome-screen"),messages=document.getElementById("messages-container"),scroll=document.getElementById("chat-scroll-area"),input=document.getElementById("message-input"),send=document.getElementById("send-btn"),status=document.getElementById("connection-text"),dot=document.getElementById("status-dot"),toast=document.getElementById("toast");let history=[],busy=false;
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function scrollBottom(){scroll.scrollTo({top:scroll.scrollHeight,behavior:"smooth"})}
+function addMessage(role,text,typing=false){welcome.style.display="none";const row=document.createElement("div");row.className="message "+(role==="user"?"user":"assistant");const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent=role==="user"?"S":"U";const bubble=document.createElement("div");bubble.className="bubble";if(typing){bubble.innerHTML='<span class="typing"><i></i><i></i><i></i></span>'}else{bubble.innerHTML=escapeHTML(text).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>")}row.append(avatar,bubble);messages.appendChild(row);scrollBottom();return row}
+async function checkHealth(){try{const r=await fetch(API_BASE+"/health",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json();status.textContent="Bulut bağlantısı aktif"+(d.app?" · "+d.app:"");dot.classList.add("online")}catch(e){status.textContent="Bağlantı kontrol edilemedi";dot.classList.remove("online")}}
+async function sendMessage(text){text=String(text||"").trim();if(!text||busy)return;busy=true;send.disabled=true;input.disabled=true;addMessage("user",text);const pending=addMessage("assistant","",true);try{const response=await fetch(API_BASE+"/api/v1/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,history:history.slice(-8)})});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error([data.detail,data.error].filter(Boolean).join(" · ")||"Asistan yanıt veremedi (HTTP "+response.status+")");const answer=data.reply||data.message||"Asistandan boş yanıt geldi.";pending.remove();history.push({role:"user",content:text},{role:"assistant",content:answer});history=history.slice(-40);addMessage("assistant",answer)}catch(e){pending.remove();addMessage("assistant","Yanıt alınamadı: "+e.message)}finally{busy=false;send.disabled=false;input.disabled=false;input.focus()}}
+document.getElementById("chat-form").addEventListener("submit",e=>{e.preventDefault();const t=input.value.trim();if(t){input.value="";sendMessage(t)}});
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chat-form").requestSubmit()}});
+document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>sendMessage(b.dataset.prompt)));
+document.getElementById("new-chat-btn").addEventListener("click",()=>{history=[];messages.innerHTML="";welcome.style.display="flex";input.value="";input.focus()});
+document.getElementById("close-btn").addEventListener("click",()=>{if(embedded){parent.postMessage({type:"uzman-asistan-close"},"*")}else if(history.length&&confirm("Sohbeti kapatıp ana sayfaya dönmek istiyor musunuz?")){location.href="/index.html"}else if(!history.length){location.href="/index.html"}});
+document.getElementById("expand-btn").addEventListener("click",()=>{if(embedded){window.top.location.href="/uzman-asistan.html?full=1"}else{document.body.classList.toggle("full-mode")}});
+checkHealth();if(!embedded&&!full){/* normal page view */}
 })();
-</script>
-</body></html>
+</script></body></html>

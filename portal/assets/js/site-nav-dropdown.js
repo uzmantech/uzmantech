@@ -30,13 +30,11 @@
    if(document.getElementById("uzman-chat-overlay"))return;
    const overlay=document.createElement("div");
    overlay.id="uzman-chat-overlay";
-   overlay.innerHTML='<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><button type="button" class="uz-chat-close" aria-label="Sohbeti kapat">×</button><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=modern-ui-logo-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
+   overlay.innerHTML='<section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-clean-overlay-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
    const css=document.createElement("style");
-   css.textContent='#uzman-chat-overlay{position:fixed;inset:0;z-index:2147483001;pointer-events:none}#uzman-chat-overlay .uz-chat-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;pointer-events:auto}#uzman-chat-overlay .uz-chat-frame-wrap{position:absolute;right:18px;bottom:18px;width:min(460px,calc(100vw - 24px));height:min(700px,calc(100dvh - 30px));border:1px solid #00cfe6;border-radius:14px;overflow:hidden;background:#071321;box-shadow:0 18px 65px #000b;pointer-events:auto}#uzman-chat-overlay iframe{width:100%;height:100%;border:0;display:block;background:#071321}#uzman-chat-overlay .uz-chat-close{position:absolute;right:8px;top:7px;z-index:3;width:27px;height:27px;border:1px solid #27718a;border-radius:50%;background:#08283b;color:#dffaff;font-size:18px;cursor:pointer}@media(max-width:560px){#uzman-chat-overlay .uz-chat-frame-wrap{right:0;bottom:0;width:100vw;height:min(720px,100dvh);border-radius:12px 12px 0 0}}';
+   css.textContent='#uzman-chat-overlay{position:fixed;inset:0;z-index:2147483001;margin:0;padding:0;pointer-events:none}#uzman-chat-overlay .uz-chat-frame-wrap{position:fixed;inset:0;width:100vw;height:100dvh;max-height:none;margin:0;padding:0;border:0;border-radius:0;overflow:hidden;background:transparent;box-shadow:none;pointer-events:auto}#uzman-chat-overlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}';
    overlay.appendChild(css);document.body.appendChild(overlay);mascot.style.visibility="hidden";
    const close=()=>{overlay.remove();mascot.style.visibility="";};
-   overlay.querySelector(".uz-chat-close").addEventListener("click",close);
-   overlay.querySelector(".uz-chat-backdrop").addEventListener("click",close);
    overlay.querySelector("iframe").addEventListener("load",e=>e.target.contentWindow.postMessage({type:"uzman-asistan-parent-open"},"*"));
    window.addEventListener("message",function onAssistantMessage(e){if(e.source===overlay.querySelector("iframe").contentWindow&&e.data?.type==="uzman-asistan-close"){close();window.removeEventListener("message",onAssistantMessage)}});
   });

@@ -7,7 +7,7 @@
  let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
- function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="email"){loadBroadcasts().catch(e=>toast(e.message));loadMailLog().catch(e=>toast(e.message));}if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
+ function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="ai"?"Yapay Zekâ Eğitim Merkezi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="email"){loadBroadcasts().catch(e=>toast(e.message));loadMailLog().catch(e=>toast(e.message));}if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));if(id==="ai")loadAiKnowledge().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
 
  const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık"};
@@ -325,5 +325,55 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   finally{btn.disabled=false;btn.textContent="Sonraki 5 kişiye gönder";}
  });
  $("#reloadBroadcasts")?.addEventListener("click",()=>loadBroadcasts().catch(e=>toast(e.message)));
+
+ let aiEntries=[];
+ function renderAiKnowledge(){
+  const q=($("#aiKnowledgeSearch")?.value||"").trim().toLocaleLowerCase("tr-TR");
+  const rows=aiEntries.filter(x=>[x.title,x.category,x.content,(x.keywords||[]).join(" ")].join(" ").toLocaleLowerCase("tr-TR").includes(q));
+  $("#aiKnowledgeBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc((x.content||"").slice(0,150))+(x.content?.length>150?"…":"")+'</small></td><td>'+esc(x.category)+'</td><td><span class="status '+(x.is_active?"active":"expired")+'">'+(x.is_active?"Aktif":"Pasif")+'</span></td><td>'+esc(x.updated_at?new Date(x.updated_at).toLocaleString("tr-TR"):"-")+'</td><td><button class="btn" data-ai-edit="'+esc(x.id)+'">Düzenle</button> <button class="btn" data-ai-toggle="'+esc(x.id)+'">'+(x.is_active?"Pasifleştir":"Aktifleştir")+'</button> <button class="btn danger" data-ai-delete="'+esc(x.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="5">Henüz öğretilmiş bilgi yok.</td></tr>';
+  $("#aiStatTotal").textContent=aiEntries.length;$("#aiStatActive").textContent=aiEntries.filter(x=>x.is_active).length;
+ }
+ async function loadAiKnowledge(){
+  $("#aiKnowledgeBody").innerHTML='<tr><td colspan="5">Bilgi havuzu yükleniyor…</td></tr>';
+  const r=await api.aiKnowledge({action:"list"});aiEntries=r.entries||[];renderAiKnowledge();
+  $("#aiSystemInstructions").value=r.settings?.system_instructions||"";
+  $("#aiProviderStatus").textContent="Testte kontrol edilecek";
+ }
+ function resetAiForm(){const f=$("#aiKnowledgeForm");f.reset();f.elements.id.value="";f.elements.is_active.checked=true;$("#aiFormStatus").textContent="Yeni bilgi eklemeye hazır.";}
+ $("#aiKnowledgeForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();const f=e.currentTarget,fd=new FormData(f),btn=$("#aiSaveBtn");btn.disabled=true;$("#aiFormStatus").textContent="Kaydediliyor…";
+  try{
+   const r=await api.aiKnowledge({action:"save",id:String(fd.get("id")||"")||null,title:fd.get("title"),category:fd.get("category"),content:fd.get("content"),keywords:String(fd.get("keywords")||"").split(",").map(x=>x.trim()).filter(Boolean),is_active:fd.get("is_active")==="on"});
+   $("#aiFormStatus").textContent=r.message;toast(r.message);resetAiForm();await loadAiKnowledge();
+  }catch(err){$("#aiFormStatus").textContent=err.message;toast(err.message);}
+  finally{btn.disabled=false;}
+ });
+ $("#aiResetBtn")?.addEventListener("click",resetAiForm);
+ $("#aiReload")?.addEventListener("click",()=>loadAiKnowledge().catch(e=>toast(e.message)));
+ $("#aiKnowledgeSearch")?.addEventListener("input",renderAiKnowledge);
+ $("#aiKnowledgeBody")?.addEventListener("click",async e=>{
+  const edit=e.target.closest("[data-ai-edit]"),toggle=e.target.closest("[data-ai-toggle]"),del=e.target.closest("[data-ai-delete]");
+  const item=aiEntries.find(x=>x.id===(edit?.dataset.aiEdit||toggle?.dataset.aiToggle||del?.dataset.aiDelete));if(!item)return;
+  if(edit){const f=$("#aiKnowledgeForm");f.elements.id.value=item.id;f.elements.title.value=item.title;f.elements.category.value=item.category;f.elements.content.value=item.content;f.elements.keywords.value=(item.keywords||[]).join(", ");f.elements.is_active.checked=item.is_active;$("#aiFormStatus").textContent="Düzenleme: "+item.title;f.scrollIntoView({behavior:"smooth",block:"center"});return;}
+  if(del){if(!confirm('"'+item.title+'" bilgi kaydı kalıcı olarak silinsin mi?'))return;try{await api.aiKnowledge({action:"delete",id:item.id});toast("Bilgi silindi.");await loadAiKnowledge();}catch(err){toast(err.message);}return;}
+  if(toggle){try{await api.aiKnowledge({action:"save",id:item.id,title:item.title,category:item.category,content:item.content,keywords:item.keywords||[],is_active:!item.is_active});toast("Bilgi durumu güncellendi.");await loadAiKnowledge();}catch(err){toast(err.message);}}
+ });
+ $("#aiSaveInstructions")?.addEventListener("click",async()=>{
+  const btn=$("#aiSaveInstructions");btn.disabled=true;$("#aiInstructionsStatus").textContent="Kaydediliyor…";
+  try{const r=await api.aiKnowledge({action:"settings_save",system_instructions:$("#aiSystemInstructions").value});$("#aiInstructionsStatus").textContent=r.message;toast(r.message);}
+  catch(err){$("#aiInstructionsStatus").textContent=err.message;toast(err.message);}
+  finally{btn.disabled=false;}
+ });
+ $("#aiTestBtn")?.addEventListener("click",async()=>{
+  const btn=$("#aiTestBtn"),out=$("#aiTestResult"),question=$("#aiTestQuestion").value.trim();if(!question){toast("Önce test sorusunu yaz.");return;}
+  btn.disabled=true;out.textContent="Bilgi havuzu taranıyor ve cevap hazırlanıyor…";
+  try{
+   const r=await api.aiKnowledge({action:"test",question});
+   if(!r.configured){$("#aiProviderStatus").textContent="API anahtarı eksik";out.innerHTML='<strong>Bilgi havuzu bağlantısı çalışıyor.</strong><p>'+esc(r.message)+'</p><p>Eşleşen kayıt: '+r.retrieved+'</p>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.category)+'</div>').join("");}
+   else{$("#aiProviderStatus").textContent="Bağlı";out.innerHTML='<div class="ai-answer">'+esc(r.answer).replace(/\n/g,"<br>")+'</div><h3>Kullanılan bilgi kaynakları</h3>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.category)+'</div>').join("")||'<p class="muted">Eşleşen kayıt bulunmadı.</p>';}
+  }catch(err){out.textContent=err.message;toast(err.message);}
+  finally{btn.disabled=false;}
+ });
+
  checkSession().catch(e=>toast(e.message));
 })();

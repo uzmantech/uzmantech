@@ -66,26 +66,16 @@
           height: 100% !important;
           border: 0 !important;
         }
-        #${OVERLAY_ID} .uz-chat-close {
-          position: absolute !important;
-          right: 8px !important;
-          top: 7px !important;
-          z-index: 3 !important;
-          width: 30px !important;
-          height: 30px !important;
-          border: 1px solid #27718a !important;
-          border-radius: 50% !important;
-          background: #08283b !important;
-          color: #fff !important;
-          font-size: 20px !important;
-          cursor: pointer !important;
-        }
+        #${OVERLAY_ID} .uz-chat-close { display:none !important; }
         @media(max-width:560px) {
           #${ID} { width: 88px !important; height: 116px !important; right: 4px !important; bottom: 4px !important; }
           #${OVERLAY_ID} .uz-chat-frame-wrap {
-            right: 0 !important; bottom: 0 !important; width: 100vw !important;
-            height: min(720px, 100dvh) !important; border-radius: 14px 14px 0 0 !important;
+            top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important;
+            width: 100vw !important; height: 100dvh !important; max-height: none !important;
+            margin: 0 !important; padding: 0 !important; border: 0 !important;
+            border-radius: 0 !important; box-shadow: none !important;
           }
+          #${OVERLAY_ID} iframe { position:absolute !important; inset:0 !important; width:100% !important; height:100% !important; }
         }`;
       document.head.appendChild(style);
     }
@@ -115,7 +105,7 @@
     if (document.getElementById(OVERLAY_ID)) return;
     const overlay = document.createElement("div");
     overlay.id = OVERLAY_ID;
-    overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><button type="button" class="uz-chat-close" aria-label="Sohbeti kapat">×</button><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
+    overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
     const close = () => overlay.remove();
     overlay.querySelector(".uz-chat-close").addEventListener("click", close);

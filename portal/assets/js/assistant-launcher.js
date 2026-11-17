@@ -106,7 +106,10 @@
     const close = () => overlay.remove();
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantNavigate(event) {
-      if (typeof event.data?.url !== "string" || !/^\/(paketler|kayit|odeme)\.html(?:\?|$)/.test(event.data.url)) return;
+      if (typeof event.data?.url !== "string") return;
+      let target;
+      try { target = new URL(event.data.url, location.origin); } catch (_) { return; }
+      if (target.origin !== location.origin || !/^\/(?:paketler(?:\.html)?|kayit\.html|odeme\.html)$/.test(target.pathname)) return;
 
       // İlk geçiş yalnızca sohbet iframe'inden gelir; satın alma/kayıt/ödeme
       // geçişleri ise paket iframe'inden gelir. İkisini de doğru kaynağa bağla.
@@ -119,7 +122,7 @@
           page.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:1;background:#080e19;display:block;pointer-events:auto";
           overlay.appendChild(page);
         }
-        page.src = event.data.url;
+        page.src = target.href;
       } else if (page && event.source === page.contentWindow) {
         // Paket içindeki Satın Al butonu: ana siteyi değiştirme,
         // aynı tam ekran iframe içinde kayıt/ödeme sayfasını aç.

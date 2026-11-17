@@ -439,17 +439,12 @@ function showPackageRequired(){
    <span class="archive-vault-eyebrow">UZMANTOOL DOSYA ARŞİVİ</span>
    <h3 id="archiveVaultTitle">İndirme için paket gerekli</h3>
    <p class="archive-vault-copy">Dosyaları görüntüleyebilirsiniz. İndirme bağlantısını açmak için aktif ve yönetici tarafından onaylanmış bir üyelik paketine ihtiyacınız var.</p>
-   <button type="button" class="archive-vault-cta" id="archivePackageContinue"><span>Paketleri Görüntüle</span><b aria-hidden="true">→</b></button>
+   <a class="archive-vault-cta" id="archivePackageContinue" href="paketler.html"><span>Paketleri Görüntüle</span><b aria-hidden="true">→</b></a>
    <div class="archive-vault-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.6-4A12 12 0 0 1 12 3a12 12 0 0 1-8.6 3A12 12 0 0 0 3 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2-.4-3Z"/></svg><span>Satın alma işleminiz yönetici tarafından onaylandığında erişiminiz açılır.</span></div>
   </div>
   <footer class="archive-vault-footer"><span>UZMANTOOL • SECURE FILE VAULT</span><b>VIP ACCESS</b></footer>
  </section>`;
  $("#modal").classList.add("open");
- const packageButton=$("#archivePackageContinue");
- if(packageButton&&!packageButton.dataset.navigationBound){
-  packageButton.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();window.location.assign(new URL("paketler.html",window.location.href).href);});
-  packageButton.dataset.navigationBound="1";
- }
 }
 function syncArchiveHeader(user){
  const auth=$("#headerAuth");if(!auth)return;

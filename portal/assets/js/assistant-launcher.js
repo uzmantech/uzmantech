@@ -104,6 +104,12 @@
     overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-fallback-20261117-1" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
     const close = () => overlay.remove();
+    window.addEventListener("message", function onAssistantNavigate(event) {
+      if (event.source === frame.contentWindow && event.data?.type === "uzman-asistan-navigate" && event.data.url === "/paketler.html") {
+        let page = document.getElementById("uzman-package-background");
+        if (!page) { page=document.createElement("iframe"); page.id="uzman-package-background"; page.title="Uzmantech Paketler"; page.src="/paketler.html"; page.style.cssText="position:fixed;inset:0;width:100%;height:100%;border:0;z-index:2147482999;background:#080e19"; document.body.appendChild(page); }
+      }
+    });
     const closeButton = overlay.querySelector(".uz-chat-close");
     if (closeButton) closeButton.addEventListener("click", close);
     overlay.querySelector(".uz-chat-backdrop").addEventListener("click", close);

@@ -27,7 +27,7 @@
   document.head.appendChild(style);
   document.body.appendChild(mascot);
   mascot.addEventListener("click",()=>{
-   const target=new URL("uzman-asistan.html?open=1",location.href);
+   const target=new URL("/uzman-asistan.html?open=1&v=chat-autostart-20261117-2",location.origin);
    location.assign(target.href);
   });
  }

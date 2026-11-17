@@ -6,7 +6,7 @@ const xml=(v:unknown)=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").
 export async function onRequest():Promise<Response>{
  let items:any[]=[];
  try{const r=await fetch(API+"?limit=60",{headers:{apikey:KEY,Authorization:"Bearer "+KEY},cf:{cacheTtl:300,cacheEverything:true}});const d=await r.json() as any;if(r.ok&&d.success&&Array.isArray(d.news))items=d.news;}catch{}
- const fixed=["/","/archive.html","/cam-uyumluluk.html","/paketler.html","/destek.html","/gizlilik-politikasi.html"];
+ const fixed=["/","/archive.html","/models.html","/imei-araclari.html","/cam-uyumluluk.html","/mediatek-temp-root.html","/engineer-roms.html","/yazilimci-tv.html","/paketler.html","/hakkimizda.html","/destek.html","/gizlilik-politikasi.html","/kullanim-sartlari.html"];
  const urls=fixed.map(path=>'<url><loc>https://uzmantool.com.tr'+path+'</loc><changefreq>weekly</changefreq><priority>'+(path==="/"?"1.0":"0.6")+'</priority></url>');
  for(const n of items){if(n.slug)urls.push('<url><loc>https://uzmantool.com.tr/haber/'+encodeURIComponent(n.slug)+'</loc><lastmod>'+xml(n.published_at||new Date().toISOString())+'</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>');}
  const body='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.join("")+'</urlset>';

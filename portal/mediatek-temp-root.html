@@ -98,7 +98,7 @@ body{background:#070d18;color:#e7eef8}.mtk-wrap{width:min(96%,1500px);margin:26p
 <script>
 (()=>{const devices=[
 ["POCO X6 Pro 5G","duchamp",[14,15,16],"MediaTek","Dimensity 8300 Ultra"],
-["POCO X8 Pro Max","dash",[16],"MediaTek","Dimensity 9500s"],
+["POCO X8 Pro Max","dash",[16],"İşlemci doğrulanmadı","Bilgi bekleniyor"],
 ["POCO X7 Pro","rodin",[15,16],"MediaTek","Dimensity 8400 Ultra"],
 ["Redmi 13","moon/tides",[15,16],"MediaTek","Helio G91-Ultra"],
 ["Redmi 13C","gale",[15],"MediaTek","Helio G85"],
@@ -111,9 +111,9 @@ body{background:#070d18;color:#e7eef8}.mtk-wrap{width:min(96%,1500px);margin:26p
 ["Redmi Note 14 Pro 5G","malachite",[15,16],"MediaTek","Dimensity 7300-Ultra"],
 ["Redmi Note 14 Pro 4G","obsidian",[15,16],"MediaTek","Helio G100-Ultra"],
 ["Redmi Note 14 Pro+ 5G","amethyst",[16],"Qualcomm","Snapdragon 7s Gen 3"],
-["Redmi Note 15 Pro 4G","charoite",[15,16],"MediaTek","Helio G200-Ultra"],
+["Redmi Note 15 Pro 4G","charoite",[15,16],"İşlemci doğrulanmadı","Bilgi bekleniyor"],
 ["Redmi Note 15 Pro 5G","lapis",[15],"MediaTek","Dimensity 7400-Ultra"],
-["Redmi Turbo 5 Max","dash",[16],"MediaTek","Dimensity 9500s"],
+["Redmi Turbo 5 Max","dash",[16],"İşlemci doğrulanmadı","Bilgi bekleniyor"],
 ["Xiaomi 13T","aristotle",[13,14,15],"MediaTek","Dimensity 8200-Ultra"],
 ["Xiaomi 14T","degas",[14,15,16],"MediaTek","Dimensity 8300-Ultra"],
 ["Xiaomi 14T Pro","rothko",[14,15,16],"MediaTek","Dimensity 9300+"],
@@ -124,7 +124,7 @@ const findDevice=()=>{const model=$("mtkModel").value.trim(),code=norm($("mtkCod
 $("mtkModel").addEventListener("change",()=>{const d=findDevice();if(d){$("mtkCodename").value=d[1];$("mtkStatus").className="mtk-status";$("mtkStatus").textContent="İşlemci: "+d[3]+" "+d[4]+" · Android sürümünü seçip sorgulayın.";showResult({state:"is-empty",icon:"i",intro:"Cihaz profili bulundu. Android sürümüyle ön kontrol yapın.",title:"İşlemci bilgisi görüntülendi",message:"Bu bilgi cihazın işlemcisini tanımlar; TempRoot desteğini tek başına doğrulamaz.",model:d[0],code:d[1],chipset:d[3]+" "+d[4],scope:d[2].join(", ")});}});
 const showResult=({state="is-warn",icon="!",intro,title,message,model="—",code="—",chipset="—",android="—",scope="—"})=>{const box=$("mtkResult");box.className="mtk-result "+state;$("mtkResultIcon").textContent=icon;$("mtkResultIntro").textContent=intro;$("mtkResultTitle").textContent=title;$("mtkResultMessage").textContent=message;$("mtkDetailModel").textContent=model||"—";$("mtkDetailCode").textContent=code||"—";$("mtkDetailChipset").textContent=chipset||"—";$("mtkDetailAndroid").textContent=android||"—";$("mtkDetailScope").textContent=scope||"—";};
 $("mtkCheck").addEventListener("click",()=>{const model=$("mtkModel").value.trim(),code=norm($("mtkCodename").value),android=Number($("mtkAndroid").value),d=findDevice(),status=$("mtkStatus");status.className="mtk-status";if(!model&&!code){status.classList.add("warn");status.textContent="Önce cihaz modelini seçin veya kod adını girin.";showResult({state:"is-warn",icon:"!",intro:"Kontrol için cihaz bilgisi eksik.",title:"Eksik bilgi",message:"Lütfen listeden cihaz modelini seçin ve Android sürümünü belirtin."});return;}if(!d){status.classList.add("warn");status.textContent="Bu cihaz için profil veya işlemci kaydı bulunamadı.";showResult({state:"is-warn",icon:"!",intro:"Girilen cihaz listede bulunamadı.",title:"Cihaz profili bulunamadı",message:"Bu sonuç cihazın desteklenmediği anlamına gelmez; yalnızca veritabanında doğrulanmış profil bulunmadığını gösterir.",model:model||"Belirtilmedi",code:$("mtkCodename").value.trim()||"Belirtilmedi",android:android||"Belirtilmedi",scope:"Kayıt yok"});return;}const codeMatch=!code||d[1].split("/").some(y=>norm(y)===code),versionMatch=android&&d[2].includes(android),chipset=d[3]+" "+d[4];if(codeMatch&&versionMatch){status.classList.add("warn");status.textContent="Cihaz profili eşleşti; TempRoot desteği henüz doğrulanmış değil.";showResult({state:"is-warn",icon:"?",intro:"Model, kod adı ve Android sürümü profil kaydıyla eşleşiyor.",title:"Ön eşleşme var · TempRoot desteği doğrulanmadı",message:"İşlemci bilgisi yukarıda gösterilmiştir. Bu eşleşme, TempRoot açığının bu cihazda çalıştığını kanıtlamaz. Firmware derlemesi, güvenlik yaması ve yönteme özel test sonucu olmadan destek garantisi verilemez.",model:d[0],code:d[1],chipset,android:String(android),scope:d[2].join(", ")});}else{status.classList.add("warn");status.textContent="Model bulundu ancak kod adı veya Android sürümü profil ile eşleşmiyor.";showResult({state:"is-warn",icon:"!",intro:"Girilen bilgiler cihaz profiliyle tam eşleşmiyor.",title:"Uyumluluk doğrulanamadı",message:"Android sürümünü ve kod adını yeniden kontrol edin. Bu durumda TempRoot işlemi için destek varsayımı yapmayın.",model:d[0],code:d[1],chipset,android:android||"Belirtilmedi",scope:d[2].join(", ")});}});})();;
-</script></body>
+</script>
 <script src="assets/js/site-nav-dropdown.js?v=modern-assistant-logo-20261117-1" defer></script>
 </body>
 </html>

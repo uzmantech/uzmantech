@@ -98,10 +98,10 @@ body{background:#070d18;color:#e7eef8}.mtk-wrap{width:min(96%,1500px);margin:26p
 (()=>{const devices=[
 ["POCO X6 Pro 5G","duchamp",[14,15,16]],["POCO X8 Pro Max","dash",[16]],["POCO X7 Pro","rodin",[15,16]],
 ["Redmi 13","moon/tides",[15,16]],["Redmi 13C","gale",[15]],["Redmi 15C","dew",[15,16]],["Redmi K50","rubens",[14]],["Redmi K70 Ultra","rothko",[14,15,16]],
-["Redmi Note 13 Pro 4G","emerald",[13,14,15,16]],["Redmi Note 13 Pro 5G","garnet",[14,15,16]],["Redmi Note 13 Pro+ 5G","zircon",[16]],
+["Redmi Note 13 Pro 4G","emerald",[13,14,15,16]],["Redmi Note 13 Pro+ 5G","zircon",[16]],
 ["Redmi Note 14 4G","tanzanite",[14,15,16]],["Redmi Note 14 Pro 5G","malachite",[15,16]],["Redmi Note 14 Pro","obsidian",[15,16]],["Redmi Note 14 Pro+ 5G","amethyst",[16]],
-["Redmi Note 15 Pro 4G","charoite",[15,16]],["Redmi Note 15 Pro 5G","lapis",[15]],["Redmi Note 15 Pro+ 5G","flourite",[15,16]],
-["Redmi Turbo 5 Max","dash",[16]],["Xiaomi 13T","aristotle",[13,14,15]],["Xiaomi 14T","degas",[14,15,16]],["Xiaomi 14T Pro","rothko",[14,15,16]],["Xiaomi 15T","goya",[15,16]],["Xiaomi 15T Pro","klimt",[15,16]],["Xiaomi Pad 7","uke",[16]]
+["Redmi Note 15 Pro 4G","charoite",[15,16]],["Redmi Note 15 Pro 5G","lapis",[15]],
+["Redmi Turbo 5 Max","dash",[16]],["Xiaomi 13T","aristotle",[13,14,15]],["Xiaomi 14T","degas",[14,15,16]],["Xiaomi 14T Pro","rothko",[14,15,16]],["Xiaomi 15T","goya",[15,16]],["Xiaomi 15T Pro","klimt",[15,16]],
 ];const $=id=>document.getElementById(id),norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");$("mtkModels").innerHTML=devices.map(d=>'<option value="'+d[0]+'">').join("");$("mtkModelList").innerHTML=devices.slice(0,10).map(d=>'<div class="mtk-model"><b>'+d[0]+'</b><span>'+d[1]+' · '+d[2].join("/")+'</span></div>').join("");
 $("mtkModel").addEventListener("change",()=>{const d=devices.find(x=>norm(x[0])===norm($("mtkModel").value));if(d)$("mtkCodename").value=d[1];});
 const showResult=({state="warn",icon="!",intro,title,message,model="—",code="—",android="—",scope="—"})=>{const box=$("mtkResult");box.className="mtk-result "+state;$("mtkResultIcon").textContent=icon;$("mtkResultIntro").textContent=intro;$("mtkResultTitle").textContent=title;$("mtkResultMessage").textContent=message;$("mtkDetailModel").textContent=model||"—";$("mtkDetailCode").textContent=code||"—";$("mtkDetailAndroid").textContent=android||"—";$("mtkDetailScope").textContent=scope||"—";};

@@ -82,12 +82,11 @@
    if(drop?.classList.contains("is-open"))close();else if(drop)open(drop,toggle);
    e.preventDefault();e.stopPropagation();return;
   }
-  const assistantLink=e.target.closest('.site-nav-dropdown-menu a[href]');
+  const assistantLink=e.target instanceof Element ? e.target.closest('.site-nav-dropdown-menu a[href]') : null;
   if(assistantLink){
-   let targetPath="";
-   try{targetPath=new URL(assistantLink.href,location.origin).pathname.toLowerCase();}catch(_){}
-   if(targetPath==="/uzman-asistan.html"){
-    e.preventDefault();e.stopPropagation();
+   const targetPath=(assistantLink.getAttribute("href")||"").split("?")[0].split("#")[0].replace(/^\\.\\//,"").toLowerCase();
+   if(targetPath==="uzman-asistan.html" || targetPath==="/uzman-asistan.html"){
+    e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();
     close();
     document.getElementById("uzman-asistan-parent-mascot")?.click();
     return;
@@ -95,7 +94,7 @@
   }
   if(e.target.closest(".site-nav-dropdown-menu.is-portal-open"))return;
   if(!e.target.closest(".site-nav-dropdown"))close();
- });
+ },true);
  document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
  window.addEventListener("resize",close);
  document.addEventListener("scroll",e=>{

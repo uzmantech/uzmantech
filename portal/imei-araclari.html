@@ -151,7 +151,6 @@ copy.addEventListener("click",async()=>{if(!generated.length)return;try{await na
 save.addEventListener("click",()=>{if(!generated.length)return;const blob=new Blob([generated.join("\n")+"\n"],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="uzmantech-imei-test-verileri.txt";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);report("TXT dosyası indirildi.",true);});
 $("imeiClear").addEventListener("click",()=>{base.value="";qty.value="1";generated=[];out.textContent="";$("imeiCount").textContent="0 KAYIT";copy.disabled=save.disabled=true;report("Alanlar temizlendi.",true);base.focus();});
 })();
-</script></bod
-<script src="assets/js/site-nav-dropdown.js?v=assistant-no-header-gap-20261117-4" defer></script><script src="assets/js/assistant-launcher.js?v=assistant-overlay-fullscreen-20261117-5" defer></script>
+</script><script src="assets/js/site-nav-dropdown.js?v=assistant-no-header-gap-20261117-4" defer></script><script src="assets/js/assistant-launcher.js?v=assistant-overlay-fullscreen-20261117-5" defer></script>
 <script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/page-access-guard.js?v=member-gate-20261119-1" defer></script></body>
 </html>

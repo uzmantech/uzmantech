@@ -20,7 +20,7 @@ brandSearchInput?.addEventListener("input",filterBrandCards);
 $("#archiveBrandSearchClear")?.addEventListener("click",()=>{if(brandSearchInput)brandSearchInput.value="";filterBrandCards();brandSearchInput?.focus();});
 
 const pageParams=new URLSearchParams(location.search);
-let archiveItems=[],archiveCurrentUser=null,archiveHasDownloadAccess=false,selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"",modelVisibleLimit=48;
+let archiveItems=[],archiveBrandStats={},archiveCurrentUser=null,archiveHasDownloadAccess=false,selectedDevice=pageParams.get("model")||null,selectedBrand=normBrand(pageParams.get("brand")||"")||null,selectedFolder=null,selectedFile=null,modelSearch=pageParams.get("q")||"",modelVisibleLimit=48;
 
 const MODEL_CATALOG={
  "Xiaomi":"Mi 1|Mi 1S|Mi 2|Mi 2S|Mi 3|Mi 4|Mi 4i|Mi 4c|Mi 5|Mi 5s|Mi 5s Plus|Mi 5c|Mi 5X|Mi 6|Mi 6X|Mi 8|Mi 8 Lite|Mi 8 Pro|Mi 8 SE|Mi 9|Mi 9 SE|Mi 9T|Mi 9T Pro|Mi 10|Mi 10 Pro|Mi 10 Lite|Mi 10T|Mi 10T Pro|Mi 10T Lite|Mi 11|Mi 11 Lite|Mi 11 Lite 5G NE|Mi 11 Pro|Mi 11 Ultra|Xiaomi 11T|Xiaomi 11T Pro|Xiaomi 12|Xiaomi 12 Pro|Xiaomi 12X|Xiaomi 12 Lite|Xiaomi 12T|Xiaomi 12T Pro|Xiaomi 13|Xiaomi 13 Pro|Xiaomi 13 Ultra|Xiaomi 13 Lite|Xiaomi 13T|Xiaomi 13T Pro|Xiaomi 14|Xiaomi 14 Pro|Xiaomi 14 Ultra|Xiaomi 14T|Xiaomi 14T Pro|Xiaomi 15|Xiaomi 15 Pro|Xiaomi 15 Ultra|Xiaomi 15T|Xiaomi 15T Pro|Xiaomi 17|Xiaomi 17 Pro|Xiaomi 17 Pro Max|Redmi 1|Redmi 2|Redmi 3|Redmi 4|Redmi 5|Redmi 6|Redmi 7|Redmi 8|Redmi 9|Redmi 10|Redmi 12|Redmi 13|Redmi 14C|Redmi 15|Redmi 15C|Redmi Note 3|Redmi Note 4|Redmi Note 5|Redmi Note 6 Pro|Redmi Note 7|Redmi Note 8|Redmi Note 8 Pro|Redmi Note 9|Redmi Note 9S|Redmi Note 9 Pro|Redmi Note 10|Redmi Note 10 Pro|Redmi Note 11|Redmi Note 11 Pro|Redmi Note 12|Redmi Note 12 Pro|Redmi Note 13|Redmi Note 13 Pro|Redmi Note 13 Pro+|Redmi Note 14|Redmi Note 14 Pro|Redmi Note 14 Pro+|Redmi Note 15|Redmi Note 15 Pro|Redmi Note 15 Pro+|POCO F1|POCO F2 Pro|POCO F3|POCO F4|POCO F5|POCO F5 Pro|POCO F6|POCO F6 Pro|POCO F7|POCO X3|POCO X3 Pro|POCO X4 Pro|POCO X5|POCO X5 Pro|POCO X6|POCO X6 Pro|POCO X7|POCO X7 Pro|POCO M3|POCO M4 Pro|POCO M5|POCO M6|POCO C3|POCO C55|POCO C65|POCO C75",
@@ -253,6 +253,7 @@ async function loadLiveArchive(){
   const [archiveResult,engineerResult,honorResult,oneplusResult,realmeResult,tecnoResult,infinixResult,googleResult,motorolaResult,nokiaResult]=await Promise.allSettled([archivePromise,engineerPromise,honorPromise,oneplusPromise,realmePromise,tecnoPromise,infinixPromise,googlePromise,motorolaPromise,nokiaPromise]);
   if(archiveResult.status==="fulfilled"){
    const payload=archiveResult.value;
+   archiveBrandStats=payload?.brandStats&&typeof payload.brandStats==="object"?payload.brandStats:{};
    const candidates=[payload?.files,payload?.data?.files,payload?.result?.files,payload?.items,payload?.data?.items];
    archiveItems=candidates.find(Array.isArray)||[];
    if(!archiveItems.length)console.warn("Arşiv API yanıtında dosya listesi boş veya beklenen alanın dışında:",payload);
@@ -360,7 +361,7 @@ async function loadLiveArchive(){
    try{await fetchSamFwCatalog(selectedDevice,false);}catch(samError){console.warn("Samsung firmware kataloğu yüklenemedi:",samError);}
   }
  }catch(err){console.error("Arşiv kataloğu yüklenemedi:",err);}
- renderBrandArchiveCounts();renderRecentSoftware();renderLiveArchive();
+ renderBrandArchiveCounts(archiveBrandStats);renderRecentSoftware();renderLiveArchive();
 }
 
 $("#archiveSearchForm")?.addEventListener("submit",e=>{e.preventDefault();const q=($("#archiveQuery")?.value||"").trim().toLocaleLowerCase("tr-TR");const found=Object.keys(MODEL_CATALOG).find(b=>b.toLocaleLowerCase("tr-TR").includes(q));if(found){location.href="models.html?brand="+encodeURIComponent(found);return;}const match=Object.keys(MODEL_CATALOG).find(b=>getModels(b).some(m=>m.toLocaleLowerCase("tr-TR").includes(q)));if(match){location.href="models.html?brand="+encodeURIComponent(match)+"&q="+encodeURIComponent(q);return;}toast("Marka veya model bulunamadı.");});

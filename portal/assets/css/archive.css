@@ -1312,3 +1312,15 @@ body.archive-shell .archive-recent-track{margin-top:0!important}
 @keyframes archiveVaultShimmer{0%{transform:translateX(-140%) skewX(-22deg)}35%,100%{transform:translateX(260%) skewX(-22deg)}}
 @media(max-width:520px){.archive-vault-gate{border-radius:21px}.archive-vault-header{padding:17px 17px 15px}.archive-vault-brand strong{font-size:18px}.archive-vault-status{font-size:9px;padding:6px 8px}.archive-vault-content{padding:25px 18px 21px}.archive-vault-lock{width:112px;height:112px}.archive-vault-lock-core{width:72px;height:72px}.archive-vault-content h3{font-size:26px}.archive-vault-copy{font-size:12px}.archive-vault-cta{min-height:53px;font-size:15px}.archive-vault-footer{padding:10px 16px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.archive-vault-lock-halo,.archive-vault-lock-core,.archive-vault-status i,.archive-vault-cta:after{animation:none!important}}
+
+
+/* Son eklenen dosyalar: yatay kayan, farklı model kartları */
+body.archive-shell .archive-recent-track{display:block!important;height:190px!important;overflow:hidden!important;padding:3px 2px 10px!important;scrollbar-width:none}
+body.archive-shell .archive-recent-track::-webkit-scrollbar{display:none}
+body.archive-shell .archive-recent-marquee{display:flex!important;flex-direction:row!important;align-items:stretch;gap:12px;width:max-content;will-change:transform;animation:archiveRecentHorizontal 42s linear infinite}
+body.archive-shell .archive-recent-track:hover .archive-recent-marquee{animation-play-state:paused}
+body.archive-shell .archive-recent-folder{flex:0 0 210px;min-height:158px}
+body.archive-shell .archive-recent-track.is-static .archive-recent-marquee{animation:none!important}
+@keyframes archiveRecentHorizontal{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){body.archive-shell .archive-recent-track{height:178px!important}body.archive-shell .archive-recent-folder{flex-basis:175px;min-height:145px}}
+@media(prefers-reduced-motion:reduce){body.archive-shell .archive-recent-marquee{animation:none!important}}

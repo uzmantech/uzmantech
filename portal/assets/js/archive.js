@@ -250,8 +250,12 @@ async function loadLiveArchive(){
    return response.json();
   })();
   const [archiveResult,engineerResult,honorResult,oneplusResult,realmeResult,tecnoResult,infinixResult,googleResult,motorolaResult,nokiaResult]=await Promise.allSettled([archivePromise,engineerPromise,honorPromise,oneplusPromise,realmePromise,tecnoPromise,infinixPromise,googlePromise,motorolaPromise,nokiaPromise]);
-  if(archiveResult.status==="fulfilled")archiveItems=archiveResult.value.files||[];
-  else console.warn("Arşiv dosyaları yüklenemedi:",archiveResult.reason);
+  if(archiveResult.status==="fulfilled"){
+   const payload=archiveResult.value;
+   const candidates=[payload?.files,payload?.data?.files,payload?.result?.files,payload?.items,payload?.data?.items];
+   archiveItems=candidates.find(Array.isArray)||[];
+   if(!archiveItems.length)console.warn("Arşiv API yanıtında dosya listesi boş veya beklenen alanın dışında:",payload);
+  }else console.warn("Arşiv dosyaları yüklenemedi:",archiveResult.reason);
   if(honorResult.status==="fulfilled"&&honorResult.value?.success&&Array.isArray(honorResult.value.firmware)){
    const honorModels=Array.isArray(honorResult.value.models)?honorResult.value.models:[];
    if(honorModels.length)MODEL_CATALOG.Honor=[...new Set([...(MODEL_CATALOG.Honor||"").split("|").filter(Boolean),...honorModels])].join("|");

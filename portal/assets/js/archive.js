@@ -152,11 +152,21 @@ function renderBrandArchiveCounts(){
 }
 function renderRecentSoftware(){
  const track=$("#archiveRecentTrack"),count=$("#archiveRecentCount");if(!track||!count)return;
- const sorted=[...archiveItems].filter(f=>f&&f.is_active!==false).sort((a,b)=>{const dateDiff=new Date(b.created_at||0)-new Date(a.created_at||0);return dateDiff||String(b.id||"").localeCompare(String(a.id||""));});
- // Aynı toplu aktarım saatinde tek markanın tüm alanı kaplamasını önle: önce her markanın en yeni kayıtlarını göster.
- const recent=[],seenBrands=new Set();
- for(const file of sorted){const brand=normBrand(file.brand||"");if(brand&&!seenBrands.has(brand)){recent.push(file);seenBrands.add(brand);}}
- for(const file of sorted){if(recent.length>=12)break;if(!recent.some(x=>String(x.id)===String(file.id)))recent.push(file);}
+ const sorted=[...archiveItems].filter(f=>f&&f.is_active!==false&&String(f.model||"").trim()).sort((a,b)=>{const dateDiff=new Date(b.created_at||0)-new Date(a.created_at||0);return dateDiff||String(b.id||"").localeCompare(String(a.id||""));});
+ // En yeni kayıt havuzundan her yenilemede farklı cihaz modelleri seçilir.
+ const pool=sorted.slice(0,Math.min(sorted.length,60));
+ for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+ const recent=[],seenModels=new Set(),seenBrands=new Set();
+ for(const file of pool){
+  const brand=normBrand(file.brand||""),model=String(file.model||"").trim();
+  const key=brand+"|"+model.toLocaleLowerCase("tr-TR");
+  if(!model||seenModels.has(key))continue;
+  // Önce farklı markaları ve modelleri dengeli göster.
+  if(brand&&seenBrands.has(brand)&&recent.length<8)continue;
+  recent.push(file);seenModels.add(key);if(brand)seenBrands.add(brand);
+  if(recent.length>=12)break;
+ }
+ for(const file of sorted){if(recent.length>=12)break;const key=normBrand(file.brand||"")+"|"+String(file.model||"").trim().toLocaleLowerCase("tr-TR");if(!seenModels.has(key)){recent.push(file);seenModels.add(key);}}
  count.textContent=recent.length+" DOSYA";
  const cards=recent.map(f=>'<a class="archive-recent-folder" href="models.html?brand='+encodeURIComponent(normBrand(f.brand)||"")+'&model='+encodeURIComponent(f.model||"")+'"><span class="archive-recent-folder-icon">📁</span><span class="archive-recent-folder-info"><strong>'+archiveEsc(f.title||f.original_filename||"Teknik dosya")+'</strong><small>'+archiveEsc((f.brand||"")+" "+(f.model||""))+'</small></span><em>'+archiveEsc(archiveCategory[f.category]||f.category||"Diğer")+'</em></a>').join("");
  track.innerHTML=recent.length?'<div class="archive-recent-marquee">'+cards+cards+'</div>':'<p class="archive-live-empty">Henüz arşive dosya eklenmemiş.</p>';

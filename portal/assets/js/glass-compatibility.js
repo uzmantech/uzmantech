@@ -7,7 +7,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const norm=s=>String(s||"").toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i").replace(/[^a-z0-9]/g,"");
 function t(tr,en){return language==="en"?en:tr;}
 function api(){const c=window.UZMANTECH_CONFIG;if(!c?.apiBaseUrl||!c?.publishableKey)throw Error("Portal API ayarları bulunamadı.");return c;}
-function headers(){const c=api();return {apikey:c.publishableKey,Authorization:"Bearer "+c.publishableKey};}
+function headers(){const c=api();let token="";try{token=localStorage.getItem("uzmantech_web_session")||sessionStorage.getItem("uzmantech_web_session")||"";}catch(_){}return {apikey:c.publishableKey,Authorization:"Bearer "+(token||c.publishableKey)};}
 function setLanguage(v){
  language=v==="en"?"en":"tr";document.documentElement.lang=language;
  document.querySelectorAll("[data-tr][data-en]").forEach(e=>{e.textContent=e.dataset[language];});

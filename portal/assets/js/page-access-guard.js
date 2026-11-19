@@ -1,6 +1,6 @@
 (()=>{"use strict";
 const protectedPaths=["/imei-araclari.html","/mediatek-temp-root.html","/cam-uyumluluk.html","/servis-takip.html"];
-const paidPlans=new Set(["weekly","monthly","half_year","annual"]);
+const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
 if(!protectedPaths.includes(location.pathname.toLowerCase()))return;
 const root=document.documentElement;
 const style=document.createElement("style");

@@ -1,5 +1,5 @@
 (()=>{"use strict";
-const protectedPaths=["/imei-araclari.html","/mediatek-temp-root.html","/cam-uyumluluk.html"];
+const protectedPaths=["/imei-araclari.html","/mediatek-temp-root.html","/cam-uyumluluk.html","/servis-takip.html"];
 if(!protectedPaths.includes(location.pathname.toLowerCase()))return;
 const root=document.documentElement;
 const style=document.createElement("style");

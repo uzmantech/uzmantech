@@ -1,5 +1,5 @@
 (()=>{"use strict";
-const pagePath=(()=>{const p=location.pathname.toLowerCase().replace(/\\/+$/,"");return p.endsWith(".html")?p:(p+".html");})();
+const pagePath=(()=>{const p=location.pathname.toLowerCase().replace(/\/+$/,"");return p.endsWith(".html")?p:(p+".html");})();
 const protectedPaths=["/imei-araclari.html","/mediatek-temp-root.html","/cam-uyumluluk.html","/servis-takip.html"];
 const paidPlans=new Set(["weekly","monthly","half_year","annual","365","full_365"]);
 if(!protectedPaths.includes(pagePath))return;

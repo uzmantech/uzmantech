@@ -1,6 +1,7 @@
 (() => {
   const config = window.UZMANTECH_CONFIG || {};
-  const token = () => { const saved = localStorage.getItem("uzmantech_web_session"); if(saved) return saved; const legacy = sessionStorage.getItem("uzmantech_web_session") || ""; if(legacy){ localStorage.setItem("uzmantech_web_session", legacy); sessionStorage.removeItem("uzmantech_web_session"); } return legacy; };
+  const edgeCookie = value => { try { document.cookie = value ? "uzmantech_edge_session=" + encodeURIComponent(value) + "; Path=/; Max-Age=43200; SameSite=Lax; Secure" : "uzmantech_edge_session=; Path=/; Max-Age=0; SameSite=Lax; Secure"; } catch {} };
+  const token = () => { const saved = localStorage.getItem("uzmantech_web_session"); if(saved){ edgeCookie(saved); return saved; } const legacy = sessionStorage.getItem("uzmantech_web_session") || ""; if(legacy){ localStorage.setItem("uzmantech_web_session", legacy); sessionStorage.removeItem("uzmantech_web_session"); edgeCookie(legacy); } return legacy; };
   async function call(path, options = {}) {
     if (!config.apiBaseUrl || !config.publishableKey) throw new Error("Portal bağlantısı yapılandırılmamış.");
     const { timeoutMs = (path.includes("payment-receipt") ? 45000 : 12000), ...requestOptions } = options;
@@ -80,7 +81,7 @@
     supportHistory: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_history" }) }),
     supportList: () => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_list" }) }),
     supportUpdate: data => call("/portal-api", { method: "POST", body: JSON.stringify({ action: "support_update", ...data }) }),
-    setSession: value => { if(value){ localStorage.setItem("uzmantech_web_session", value); sessionStorage.removeItem("uzmantech_web_session"); } else { localStorage.removeItem("uzmantech_web_session"); sessionStorage.removeItem("uzmantech_web_session"); } },
+    setSession: value => { if(value){ localStorage.setItem("uzmantech_web_session", value); sessionStorage.removeItem("uzmantech_web_session"); edgeCookie(value); } else { localStorage.removeItem("uzmantech_web_session"); sessionStorage.removeItem("uzmantech_web_session"); edgeCookie(""); } },
     getToken: token
   });
 

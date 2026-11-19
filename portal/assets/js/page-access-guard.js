@@ -1,5 +1,6 @@
 (()=>{"use strict";
 const protectedPaths=["/imei-araclari.html","/mediatek-temp-root.html","/cam-uyumluluk.html","/servis-takip.html"];
+const paidPlans=new Set(["weekly","monthly","half_year","annual"]);
 if(!protectedPaths.includes(location.pathname.toLowerCase()))return;
 const root=document.documentElement;
 const style=document.createElement("style");
@@ -23,7 +24,7 @@ async function check(){
   if(!token){goPackages();return;}
   const result=await window.UzmantechAPI.session();
   const user=result?.user;
-  const entitled=!!user&&(user.role==="admin"||(user.status==="active"&&user.license_status==="active"&&!user.membership_expired));
+  const entitled=!!user&&(user.role==="admin"||(user.status==="active"&&user.license_status==="active"&&!user.membership_expired&&paidPlans.has(String(user.license_plan||"").toLowerCase())));
   if(entitled){root.classList.remove("uz-page-access-pending");return;}
   goPackages();
  }catch(e){

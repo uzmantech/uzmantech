@@ -27,7 +27,7 @@ async function check(){
   const user=result?.user;
   const entitled=!!user&&(user.role==="admin"||(user.status==="active"&&user.license_status==="active"&&!user.membership_expired&&paidPlans.has(String(user.license_plan||"").toLowerCase())));
   if(entitled){root.classList.remove("uz-page-access-pending");return;}
-  if(location.pathname.toLowerCase()==="/imei-araclari.html"){gate("Bu bölüm paket sahiplerine özeldir","IMEI Araçları bölümünü kullanabilmek için aktif bir üyelik paketi satın almalısınız.");return;}
+  if(pagePath==="/imei-araclari.html"||pagePath==="/mediatek-temp-root.html"){gate("Bu bölüm paket sahiplerine özeldir","Bu aracı kullanabilmek için aktif bir üyelik paketi satın almalısınız.");return;}
   goPackages();
  }catch(e){
   gate("Oturum doğrulanamadı",e.message||"Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",true);

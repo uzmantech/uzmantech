@@ -82,6 +82,17 @@
    if(drop?.classList.contains("is-open"))close();else if(drop)open(drop,toggle);
    e.preventDefault();e.stopPropagation();return;
   }
+  const assistantLink=e.target.closest('.site-nav-dropdown-menu a[href]');
+  if(assistantLink){
+   let targetPath="";
+   try{targetPath=new URL(assistantLink.href,location.origin).pathname.toLowerCase();}catch(_){}
+   if(targetPath==="/uzman-asistan.html"){
+    e.preventDefault();e.stopPropagation();
+    close();
+    document.getElementById("uzman-asistan-parent-mascot")?.click();
+    return;
+   }
+  }
   if(e.target.closest(".site-nav-dropdown-menu.is-portal-open"))return;
   if(!e.target.closest(".site-nav-dropdown"))close();
  });

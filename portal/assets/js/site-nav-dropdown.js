@@ -76,7 +76,7 @@
    // Guests may see the Araçlar heading, but its submenu requires a signed-in account.
    if(drop&&drop.querySelector(".site-nav-dropdown-menu")&&document.querySelector("#headerAuth .guest-profile")){
     close();
-    location.href="/index.html?login=1";
+    location.href="/paketler.html?required=1";
     e.preventDefault();e.stopPropagation();return;
    }
    if(drop?.classList.contains("is-open"))close();else if(drop)open(drop,toggle);

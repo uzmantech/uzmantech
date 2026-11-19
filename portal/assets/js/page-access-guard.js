@@ -21,11 +21,12 @@ async function check(){
   if(!window.UZMANTECH_CONFIG)await load("/assets/js/config.js");
   if(!window.UzmantechAPI)await load("/assets/js/api.js");
   let token="";try{token=localStorage.getItem("uzmantech_web_session")||sessionStorage.getItem("uzmantech_web_session")||"";}catch(_){}
-  if(!token){goPackages();return;}
+  if(!token){if(location.pathname.toLowerCase()==="/imei-araclari.html"){gate("Bu bölüm paket sahiplerine özeldir","IMEI Araçları bölümünü kullanabilmek için hesabınıza giriş yapmalı ve aktif bir üyelik paketi satın almalısınız.");return;}goPackages();return;}
   const result=await window.UzmantechAPI.session();
   const user=result?.user;
   const entitled=!!user&&(user.role==="admin"||(user.status==="active"&&user.license_status==="active"&&!user.membership_expired&&paidPlans.has(String(user.license_plan||"").toLowerCase())));
   if(entitled){root.classList.remove("uz-page-access-pending");return;}
+  if(location.pathname.toLowerCase()==="/imei-araclari.html"){gate("Bu bölüm paket sahiplerine özeldir","IMEI Araçları bölümünü kullanabilmek için aktif bir üyelik paketi satın almalısınız.");return;}
   goPackages();
  }catch(e){
   gate("Oturum doğrulanamadı",e.message||"Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",true);

@@ -138,16 +138,17 @@ function getModels(brand){
  if(brand==="Samsung"&&/^SM-[A-Z0-9]+$/i.test(modelSearch))available.push(modelSearch.toUpperCase());
  return [...new Set(available)].sort((a,b)=>a.localeCompare(b,"tr",{numeric:true,sensitivity:"base"}));
 }
-function renderBrandArchiveCounts(){
+function renderBrandArchiveCounts(stats={}){
  const cards=document.querySelectorAll(".archive-brand-card[data-brand]");
  cards.forEach(card=>{
   const brand=normBrand(card.dataset.brand||"");
-  const items=archiveItems.filter(file=>normBrand(file.brand)===brand);
-  const models=new Set((brand==="Samsung"?[...(MODEL_CATALOG[brand]||"").split("|")]:[]).concat(items.map(file=>String(file.model||"").trim())).map(model=>model.trim()).filter(Boolean));
+  const row=stats[brand]||{};
+  const modelCount=Number(row.models)||0;
+  const softwareCount=Number(row.software)||0;
   let counts=card.querySelector(".archive-brand-counts");
   if(!counts){counts=document.createElement("span");counts.className="archive-brand-counts";card.appendChild(counts);}
-  counts.textContent=models.size.toLocaleString("tr-TR")+" model · "+items.length.toLocaleString("tr-TR")+" yazılım";
-  counts.setAttribute("aria-label",models.size+" model, "+items.length+" yazılım kaydı");
+  counts.textContent=modelCount.toLocaleString("tr-TR")+" model · "+softwareCount.toLocaleString("tr-TR")+" yazılım";
+  counts.setAttribute("aria-label",modelCount+" model, "+softwareCount+" yazılım kaydı");
  });
 }
 function renderRecentSoftware(){

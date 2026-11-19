@@ -350,6 +350,16 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  });
  $("#aiResetBtn")?.addEventListener("click",resetAiForm);
  $("#aiReload")?.addEventListener("click",()=>loadAiKnowledge().catch(e=>toast(e.message)));
+ $("#aiSyncAll")?.addEventListener("click",async()=>{
+  const btn=$("#aiSyncAll"),status=$("#aiSyncStatus");
+  btn.disabled=true;status.textContent="Aktif kayıtlar vektörleştiriliyor; pasif ve silinmiş kayıtlar temizleniyor…";
+  try{
+   const r=await api.aiKnowledge({action:"sync_all"});
+   status.textContent=(r.message||"Eşitleme tamamlandı.")+" Eşitlenen: "+r.synced+" · Temizlenen: "+r.removed;
+   toast(status.textContent);
+  }catch(err){status.textContent="Eşitleme başarısız: "+err.message;toast(err.message);}
+  finally{btn.disabled=false;}
+ });
  $("#aiKnowledgeSearch")?.addEventListener("input",renderAiKnowledge);
  $("#aiKnowledgeBody")?.addEventListener("click",async e=>{
   const edit=e.target.closest("[data-ai-edit]"),toggle=e.target.closest("[data-ai-toggle]"),del=e.target.closest("[data-ai-delete]");

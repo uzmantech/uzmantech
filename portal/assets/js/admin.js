@@ -369,8 +369,8 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   btn.disabled=true;out.textContent="Bilgi havuzu taranıyor ve cevap hazırlanıyor…";
   try{
    const r=await api.aiKnowledge({action:"test",question});
-   if(!r.configured){$("#aiProviderStatus").textContent="API anahtarı eksik";out.innerHTML='<strong>Bilgi havuzu bağlantısı çalışıyor.</strong><p>'+esc(r.message)+'</p><p>Eşleşen kayıt: '+r.retrieved+'</p>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.category)+'</div>').join("");}
-   else{$("#aiProviderStatus").textContent="Bağlı";out.innerHTML='<div class="ai-answer">'+esc(r.answer).replace(/\n/g,"<br>")+'</div><h3>Kullanılan bilgi kaynakları</h3>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.category)+'</div>').join("")||'<p class="muted">Eşleşen kayıt bulunmadı.</p>';}
+   if(!r.configured){$("#aiProviderStatus").textContent="API anahtarı eksik";out.innerHTML='<strong>Bilgi havuzu bağlantısı çalışıyor.</strong><p>'+esc(r.message)+'</p><p>Eşleşen kayıt: '+r.retrieved+'</p>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.source||s.category||"")+'</div>').join("");}
+   else{$("#aiProviderStatus").textContent="Bağlı";out.innerHTML='<div class="ai-answer">'+esc(r.answer).replace(/\n/g,"<br>")+'</div><h3>Kullanılan bilgi kaynakları</h3>'+(r.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.source||s.category||"")+'</div>').join("")||'<p class="muted">Eşleşen kayıt bulunmadı.</p>';}
   }catch(err){out.textContent=err.message;toast(err.message);}
   finally{btn.disabled=false;}
  });

@@ -6,6 +6,7 @@ const PROTECTED_PATHS = new Set([
 ]);
 const API_BASE = "https://iutehccebzqnhqkevawz.supabase.co/functions/v1";
 const PUBLISHABLE_KEY = "sb_publishable_T2ogx50EKeT1ST_m6Tszsw_joA5zLpB";
+const PAID_PLANS = new Set(["weekly", "monthly", "half_year", "annual"]);
 
 function sessionCookie(request) {
   const cookie = request.headers.get("Cookie") || "";
@@ -72,7 +73,7 @@ export async function onRequest(context) {
   const user = result?.success ? result.user : null;
   const entitled = !!user && (
     user.role === "admin" ||
-    (user.status === "active" && user.license_status === "active" && !user.membership_expired)
+    (user.status === "active" && user.license_status === "active" && !user.membership_expired && PAID_PLANS.has(String(user.license_plan || "").toLowerCase()))
   );
   if (!entitled) return redirectToPackages(request);
 

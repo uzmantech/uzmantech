@@ -260,6 +260,13 @@ async function start(){
  $("#app").hidden=true;$("#accessGate").hidden=false;$("#gateLogin").hidden=true;$("#gateRetry").hidden=true;
  $("#gateTitle").textContent="Oturum kontrol ediliyor";$("#gateText").textContent="Hesabınız ve servis erişiminiz doğrulanıyor.";
  const token=localStorage.getItem("uzmantech_web_session")||sessionStorage.getItem("uzmantech_web_session")||"";
+ if(!token){
+  syncServiceHeader(null);
+  $("#gateTitle").textContent="Bu bölüm paket sahiplerine özeldir";
+  $("#gateText").textContent="Servis Takip bölümünü kullanabilmek için hesabınıza giriş yapmalı ve aktif bir üyelik paketi satın almalısınız. Paketleri inceleyerek size uygun üyeliği seçebilirsiniz.";
+  $("#gateLogin").hidden=false;$("#gateRetry").hidden=true;
+  startupBusy=false;return;
+ }
  let session=null,lastError=null;
  for(let attempt=0;attempt<3;attempt++){
   try{session=await UzmantechAPI.session();lastError=null;break;}

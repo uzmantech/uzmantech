@@ -237,7 +237,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   }
   let days=365;
   if(action==="activate"||action==="extend"){
-   const answer=prompt(u.username+" için kaç günlük lisans verilsin?",action==="activate"?"365":"30");
+   const answer=prompt(u.username+" için kaç günlük lisans verilsin?",action==="activate"?"30":"30");
    if(answer===null)return;days=Number(answer);
    if(!Number.isInteger(days)||days<1||days>3650){toast("1 ile 3650 arasında gün gir.");return;}
   }

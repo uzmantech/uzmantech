@@ -49,27 +49,30 @@
           background: rgba(3, 12, 24, .22) !important;
         }
         #${OVERLAY_ID} .uz-chat-frame-wrap {
-          position: fixed !important; inset: 0 !important;
-          width: 100vw !important; height: 100dvh !important; max-height: none !important;
-          margin: 0 !important; padding: 0 !important; border: 0 !important;
-          border-radius: 0 !important; overflow: hidden !important;
-          background: transparent !important; box-shadow: none !important;
+          position: fixed !important;
+          right: 18px !important; bottom: 18px !important; left: auto !important; top: auto !important;
+          width: min(460px, calc(100vw - 36px)) !important;
+          height: min(700px, calc(100dvh - 36px)) !important;
+          max-height: calc(100dvh - 36px) !important;
+          margin: 0 !important; padding: 0 !important; border: 1px solid #dbe4f0 !important;
+          border-radius: 20px !important; overflow: hidden !important;
+          background: #fff !important; box-shadow: 0 20px 60px #0008 !important;
+          z-index: 2 !important;
         }
-        #${OVERLAY_ID} .uz-chat-close { display:none !important; }
+        #${OVERLAY_ID} .uz-chat-backdrop { z-index: 1 !important; cursor: pointer !important; }
         #${OVERLAY_ID} iframe {
           display: block !important;
           width: 100% !important;
           height: 100% !important;
           border: 0 !important;
         }
-        #${OVERLAY_ID} .uz-chat-close { display:none !important; }
         @media(max-width:560px) {
           #${ID} { width: 88px !important; height: 116px !important; right: 4px !important; bottom: 4px !important; }
           #${OVERLAY_ID} .uz-chat-frame-wrap {
-            top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important;
-            width: 100vw !important; height: 100dvh !important; max-height: none !important;
-            margin: 0 !important; padding: 0 !important; border: 0 !important;
-            border-radius: 0 !important; box-shadow: none !important;
+            top: 12px !important; right: 12px !important; bottom: 12px !important; left: 12px !important;
+            width: auto !important; height: auto !important; max-height: none !important;
+            margin: 0 !important; padding: 0 !important; border: 1px solid #dbe4f0 !important;
+            border-radius: 18px !important; box-shadow: 0 12px 40px #0008 !important;
           }
           #${OVERLAY_ID} iframe { position:absolute !important; inset:0 !important; width:100% !important; height:100% !important; }
         }`;
@@ -103,7 +106,13 @@
     overlay.id = OVERLAY_ID;
     overlay.innerHTML = '<button type="button" class="uz-chat-backdrop" aria-label="Sohbeti kapat"></button><section class="uz-chat-frame-wrap" role="dialog" aria-label="UZMAN ASİSTAN sohbeti"><iframe title="UZMAN ASİSTAN" src="/uzman-asistan.html?widget=1&v=assistant-sources-session-20261119-2" allow="clipboard-read; clipboard-write"></iframe></section>';
     document.body.appendChild(overlay);
-    const close = () => overlay.remove();
+    const close = () => {
+      overlay.remove();
+      document.removeEventListener("keydown", onEscape);
+    };
+    const onEscape = (event) => { if (event.key === "Escape") close(); };
+    overlay.querySelector(".uz-chat-backdrop").addEventListener("click", close);
+    document.addEventListener("keydown", onEscape);
     const frame = overlay.querySelector("iframe");
     window.addEventListener("message", function onAssistantNavigate(event) {
       if (typeof event.data?.url !== "string") return;

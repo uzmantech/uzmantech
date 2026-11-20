@@ -130,11 +130,14 @@
    const status=u.status==="active"?(remaining!==null&&remaining<=0?"Lisans süresi doldu":"Aktif"):u.status==="pending"?"Onay bekliyor":u.disabled_reason==="license_expired"?"Lisans süresi doldu · Yenileme açık":u.disabled_reason==="admin_disabled"?"Yönetici tarafından kapatıldı":"Pasif";
    const plan=planNames[u.license_plan]||u.license_plan||"Lisans yok";
    const remainingText=remaining===null?"Lisans atanmamış":remaining<=0?"Süresi doldu":remaining+" gün kaldı";
+   const hasValidLicense=!!(expiry&&expiry.getTime()>Date.now()&&u.license_plan&&u.license_plan!=="none");
    const actionButtons=u.status==="pending"
-    ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Onayla + lisans ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
+    ?'<button class="btn" data-action="activate_account" data-id="'+esc(u.id)+'">Hesabı Onayla (Paketsiz)</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
     :u.status==="disabled"
-     ?'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Aktif Et</button>'
-     :'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
+     ?'<button class="btn" data-action="activate_account" data-id="'+esc(u.id)+'">Hesabı Aktif Et</button>'
+     :hasValidLicense
+      ?'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>'
+      :'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Lisans Ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
    const buttons=actionButtons+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
@@ -238,7 +241,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
    if(answer===null)return;days=Number(answer);
    if(!Number.isInteger(days)||days<1||days>3650){toast("1 ile 3650 arasında gün gir.");return;}
   }
-  const label=action==="activate"?"lisans verilsin":action==="extend"?"üyelik süresi uzatılsın":"hesap pasifleştirilsin";
+  const label=action==="activate_account"?"hesap paket tanımlanmadan etkinleştirilsin":action==="activate"?"lisans verilsin":action==="extend"?"üyelik süresi uzatılsın":"hesap pasifleştirilsin";
   if(!confirm(u.username+" hesabı için "+label+" mı?"))return;
   btn.disabled=true;
   try{const result=await adminCall(action,{user_id:id,...(action==="activate"||action==="extend"?{days}:{})});toast(result.message||"İşlem tamamlandı.");await loadDashboard();}

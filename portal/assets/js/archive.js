@@ -139,12 +139,20 @@ function getModels(brand){
  return [...new Set(available)].sort((a,b)=>a.localeCompare(b,"tr",{numeric:true,sensitivity:"base"}));
 }
 function renderBrandArchiveCounts(stats={}){
+ const normalizedStats={};
+ Object.entries(stats&&typeof stats==="object"?stats:{}).forEach(([key,value])=>{
+  const brand=normBrand(key);
+  if(!brand||!value||typeof value!=="object")return;
+  const row=normalizedStats[brand]||(normalizedStats[brand]={models:0,software:0});
+  row.models+=Number(value.models??value.modelCount??value.model_count)||0;
+  row.software+=Number(value.software??value.softwareCount??value.software_count??value.firmware)||0;
+ });
  const cards=document.querySelectorAll(".archive-brand-card[data-brand]");
  cards.forEach(card=>{
   const brand=normBrand(card.dataset.brand||"");
-  const row=stats[brand]||{};
-  const modelCount=Number(row.models)||0;
-  const softwareCount=Number(row.software)||0;
+  const row=normalizedStats[brand]||stats[brand]||{};
+  const modelCount=Number(row.models??row.modelCount??row.model_count)||0;
+  const softwareCount=Number(row.software??row.softwareCount??row.software_count??row.firmware)||0;
   let counts=card.querySelector(".archive-brand-counts");
   if(!counts){counts=document.createElement("span");counts.className="archive-brand-counts";card.appendChild(counts);}
   counts.textContent=modelCount.toLocaleString("tr-TR")+" model · "+softwareCount.toLocaleString("tr-TR")+" yazılım";
@@ -253,7 +261,8 @@ async function loadLiveArchive(){
   const [archiveResult,engineerResult,honorResult,oneplusResult,realmeResult,tecnoResult,infinixResult,googleResult,motorolaResult,nokiaResult]=await Promise.allSettled([archivePromise,engineerPromise,honorPromise,oneplusPromise,realmePromise,tecnoPromise,infinixPromise,googlePromise,motorolaPromise,nokiaPromise]);
   if(archiveResult.status==="fulfilled"){
    const payload=archiveResult.value;
-   archiveBrandStats=payload?.brandStats&&typeof payload.brandStats==="object"?payload.brandStats:{};
+   const statsCandidates=[payload?.brandStats,payload?.data?.brandStats,payload?.result?.brandStats,payload?.stats?.brandStats];
+   archiveBrandStats=statsCandidates.find(value=>value&&typeof value==="object"&&!Array.isArray(value))||{};
    const candidates=[payload?.files,payload?.data?.files,payload?.result?.files,payload?.items,payload?.data?.items];
    archiveItems=candidates.find(Array.isArray)||[];
    if(!archiveItems.length)console.warn("Arşiv API yanıtında dosya listesi boş veya beklenen alanın dışında:",payload);

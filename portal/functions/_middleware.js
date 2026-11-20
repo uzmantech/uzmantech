@@ -45,7 +45,9 @@ function unavailable() {
 
 export async function onRequest(context) {
   const { request, next } = context;
-  const pathname = new URL(request.url).pathname.toLowerCase();
+  const rawPath = new URL(request.url).pathname.toLowerCase().replace(/\/+$/, "") || "/";
+  // Cloudflare Pages clean URLs may serve /tool and /tool.html from the same file.
+  const pathname = rawPath.endsWith(".html") ? rawPath : rawPath + ".html";
   if (!PROTECTED_PATHS.has(pathname)) return next();
 
   const token = sessionCookie(request);

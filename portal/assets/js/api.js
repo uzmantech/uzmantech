@@ -57,6 +57,7 @@
     archiveRealmeFirmware: () => call("/archive-service?resource=realme-free"),
     archiveTecnoFirmware: () => call("/archive-service?resource=tecno-free"),
     archiveInfinixFirmware: () => call("/archive-service?resource=infinix-free"),
+    archiveGoogleFirmware: () => call("/archive-service?resource=google-free"),
     archiveMotorolaFirmware: () => call("/archive-service?resource=motorola-free"),
     archiveNokiaFirmware: () => call("/archive-service?resource=nokia-free"),
     archiveFileDownload: id => call("/archive-service", { method: "POST", body: JSON.stringify({ action: "archive_file_download_url", id }) }),

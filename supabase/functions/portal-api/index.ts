@@ -173,7 +173,7 @@ function scrubLinks(value: any): any {
   return out;
 }
 
-const paidArchivePlans = new Set(["weekly", "monthly", "half_year", "annual", "365", "full_365"]);
+const paidArchivePlans = new Set(["weekly", "monthly", "half_year", "annual", "365", "full_365","custom"]);
 function hasPaidArchiveAccess(member: any): boolean {
   return !!member && (
     member.role === "admin" ||

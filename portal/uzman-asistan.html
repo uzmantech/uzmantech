@@ -135,7 +135,7 @@ async function sendMessage(text){text=String(text||"").trim();if(!text||busy)ret
 document.getElementById("chat-form").addEventListener("submit",e=>{e.preventDefault();const t=input.value.trim();if(t){input.value="";sendMessage(t)}});
 input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chat-form").requestSubmit()}});
 document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>sendMessage(b.dataset.prompt)));
-document.getElementById("new-chat-btn").addEventListener("click",()=>{history=[];messages.innerHTML="";welcome.style.display="flex";input.value="";input.focus()});
+document.getElementById("new-chat-btn").addEventListener("click",()=>{history=[];try{sessionStorage.removeItem("uz_ai_chat_session")}catch(_){}messages.innerHTML="";welcome.style.display="flex";input.value="";input.focus()});
 document.getElementById("close-btn").addEventListener("click",()=>{if(embedded){parent.postMessage({type:"uzman-asistan-close"},"*")}else if(history.length&&confirm("Sohbeti kapatıp ana sayfaya dönmek istiyor musunuz?")){location.href="/index.html"}else if(!history.length){location.href="/index.html"}});
 document.getElementById("expand-btn").addEventListener("click",()=>{if(embedded){window.top.location.href="/uzman-asistan.html?full=1"}else{document.body.classList.toggle("full-mode")}});
 checkHealth();if(!embedded&&!full){/* normal page view */}

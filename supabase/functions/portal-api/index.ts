@@ -1016,12 +1016,22 @@ Deno.serve(async (req: Request) => {
 
 
 
+  if (body.action === "admin_acquisition_list") {
+    const admin = await verifySession(tokenFrom(req));
+    if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Bu kayıtları görüntülemek için yönetici yetkisi gerekli." }, 403);
+    const { data, error } = await db.from("users")
+      .select("id,username,email,created_at,acquisition_source,acquisition_medium,acquisition_campaign,acquisition_referrer,acquisition_landing_page,acquisition_captured_at")
+      .order("created_at", { ascending: false }).limit(300);
+    if (error) return response({ success: false, message: "Üye kaynak bilgileri okunamadı." }, 503);
+    return response({ success: true, users: data || [] });
+  }
+
   if (body.action === "admin_mail_log") {
     const admin = await verifySession(tokenFrom(req));
     if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Bu kayıtları görüntülemek için yönetici yetkisi gerekli." }, 403);
     const [reengagementResult, outboxResult, recipientResult] = await Promise.all([
       db.from("portal_reengagement_sends").select("id,user_id,status,provider_id,last_error,created_at,sent_at,subject,body").order("created_at", { ascending: false }).limit(150),
-      db.from("portal_email_outbox").select("id,recipient,subject,status,attempts,last_error,created_at,sent_at").order("created_at", { ascending: false }).limit(150),
+      db.from("portal_email_outbox").select("id,recipient,subject,status,attempts,last_error,created_at,sent_at,provider_id").order("created_at", { ascending: false }).limit(150),
       db.from("portal_email_campaign_recipients").select("id,campaign_id,email,status,attempts,last_error,created_at,sent_at").order("created_at", { ascending: false }).limit(250)
     ]);
     if (reengagementResult.error || outboxResult.error || recipientResult.error) {
@@ -1563,11 +1573,23 @@ Deno.serve(async (req: Request) => {
     const now = new Date().toISOString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
     const languageCode = String(body.language_code || "tr").toLowerCase() === "en" ? "en" : "tr";
+    const rawAttribution = body.attribution && typeof body.attribution === "object" ? body.attribution : {};
+    const allowedSources = new Set(["google","instagram","facebook","youtube","tiktok","whatsapp","email","referral","direct","other","unknown"]);
+    const acquisitionSource = allowedSources.has(String(rawAttribution.source || "").toLowerCase()) ? String(rawAttribution.source).toLowerCase() : "unknown";
+    const cleanAttr = (value: unknown, max = 300) => String(value || "").replace(/[<>\u0000-\u001f]/g, "").trim().slice(0, max);
+    const acquisition = {
+      acquisition_source: acquisitionSource,
+      acquisition_medium: cleanAttr(rawAttribution.medium, 100) || null,
+      acquisition_campaign: cleanAttr(rawAttribution.campaign, 160) || null,
+      acquisition_referrer: cleanAttr(rawAttribution.referrer, 500) || null,
+      acquisition_landing_page: cleanAttr(rawAttribution.landing_page, 500) || null,
+      acquisition_captured_at: new Date().toISOString(),
+    };
 
     const { error: verificationError } = await db.from("registration_verifications").upsert({
       username, email, phone, country_code: countryCode, language_code: languageCode,
       password_hash: passwordHash, code_hash: codeHash, expires_at: expiresAt,
-      attempts: 0, created_at: now,
+      ...acquisition, attempts: 0, created_at: now,
     }, { onConflict: "email" });
     if (verificationError) {
       console.error("portal registration verification upsert failed", verificationError);
@@ -1689,6 +1711,7 @@ Deno.serve(async (req: Request) => {
       license_days: 0,
       license_started_at: null,
       disabled_reason: null,
+      ...Object.fromEntries(Object.entries(verification).filter(([key]) => key.startsWith("acquisition_"))),
       created_at: now,
       updated_at: now,
     }).select("id,username,email,phone,country_code,language_code,role,status,email_verified,created_at").single();

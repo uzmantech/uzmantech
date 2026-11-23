@@ -207,7 +207,8 @@
           phone:String(data.get("phone")||"").trim(),
           country_code:String(data.get("country_code")||"TR"),
           language_code:lang,
-          password
+          password,
+          registration_channel:"web"
         });
         showRegistrationVerification(email,result.email||email,result.message||"Doğrulama kodu e-posta adresinize gönderildi.");
       }catch(error){toast(error.message);btn.disabled=false;btn.textContent="Doğrulama Kodu Gönder";}

@@ -1046,7 +1046,7 @@ Deno.serve(async (req: Request) => {
     const admin = await verifySession(tokenFrom(req));
     if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Bu kayıtları görüntülemek için yönetici yetkisi gerekli." }, 403);
     const { data, error } = await db.from("users")
-      .select("id,username,email,created_at,acquisition_source,acquisition_medium,acquisition_campaign,acquisition_referrer,acquisition_landing_page,acquisition_captured_at")
+      .select("id,username,email,created_at,registration_channel,acquisition_source,acquisition_medium,acquisition_campaign,acquisition_referrer,acquisition_landing_page,acquisition_captured_at")
       .order("created_at", { ascending: false }).limit(300);
     if (error) return response({ success: false, message: "Üye kaynak bilgileri okunamadı." }, 503);
     return response({ success: true, users: data || [] });
@@ -1599,11 +1599,14 @@ Deno.serve(async (req: Request) => {
     const now = new Date().toISOString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
     const languageCode = String(body.language_code || "tr").toLowerCase() === "en" ? "en" : "tr";
+    const requestedChannel = String(body.registration_channel || "").toLowerCase();
+    const registrationChannel = ["web", "desktop_app"].includes(requestedChannel) ? requestedChannel : "unknown";
     const rawAttribution = body.attribution && typeof body.attribution === "object" ? body.attribution : {};
     const allowedSources = new Set(["google","instagram","facebook","youtube","tiktok","whatsapp","email","referral","direct","other","unknown"]);
     const acquisitionSource = allowedSources.has(String(rawAttribution.source || "").toLowerCase()) ? String(rawAttribution.source).toLowerCase() : "unknown";
     const cleanAttr = (value: unknown, max = 300) => String(value || "").replace(/[<>\u0000-\u001f]/g, "").trim().slice(0, max);
     const acquisition = {
+      registration_channel: registrationChannel,
       acquisition_source: acquisitionSource,
       acquisition_medium: cleanAttr(rawAttribution.medium, 100) || null,
       acquisition_campaign: cleanAttr(rawAttribution.campaign, 160) || null,

@@ -85,7 +85,7 @@
  function renderPayments(){
   const body=$("#paymentsBody");if(!body)return;
   body.innerHTML=payments.map(p=>{
-   const user=p.user||{},date=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
+   const user=p.user||{},displayEmail=user.email||p.email||"E-posta yok",date=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
    const receipt=p.receipt_url?'<a class="btn" href="'+esc(p.receipt_url)+'" target="_blank" rel="noopener noreferrer">Dekontu aç</a>':'<span class="muted">Açılamadı</span>';
    const actions=p.status==="pending"?'<button class="btn" data-payment-action="approved" data-id="'+esc(p.id)+'">Onayla</button> <button class="btn" data-payment-action="rejected" data-id="'+esc(p.id)+'">Reddet</button>':'-';
    const usd='$'+Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})+' USD';

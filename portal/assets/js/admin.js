@@ -2,6 +2,7 @@
  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
  const api=window.UzmantechAPI;
  let users=[];
+ let acquisitionByUser=new Map();
  let payments=[];
  let tickets=[];
  let archiveFiles=[];
@@ -141,12 +142,13 @@
    const buttons=actionButtons+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
-   return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
-  }).join("")||'<tr><td colspan="5">Kayıt bulunamadı.</td></tr>';
+   const acq=acquisitionByUser.get(u.id)||{};const sourceNames={google:"Google",instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",whatsapp:"WhatsApp",email:"E-posta",referral:"Diğer site",direct:"Doğrudan",other:"Diğer",unknown:"Bilinmiyor"};const sourceLabel=sourceNames[acq.acquisition_source]||acq.acquisition_source||"Bilinmiyor";const sourceDetail=[acq.acquisition_medium,acq.acquisition_campaign].filter(Boolean).join(" · ");return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td>'+esc(sourceLabel)+(sourceDetail?'<br><small>'+esc(sourceDetail)+'</small>':'')+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
+  }).join("")||'<tr><td colspan="6">Kayıt bulunamadı.</td></tr>';
  }
  async function loadUsers(){
-  $("#usersBody").innerHTML='<tr><td colspan="5">Kullanıcılar yükleniyor…</td></tr>';
-  const result=await adminCall("list");users=result.users||[];renderUsers();
+  $("#usersBody").innerHTML='<tr><td colspan="6">Kullanıcılar yükleniyor…</td></tr>';
+  const [result, acquisitionResult]=await Promise.all([adminCall("list"),api.portalAdmin({action:"admin_acquisition_list"}).catch(()=>({users:[]}))]);
+  users=result.users||[];acquisitionByUser=new Map((acquisitionResult.users||[]).map(u=>[u.id,u]));renderUsers();
   const now=Date.now(),active=users.filter(u=>u.status==="active"),pending=users.filter(u=>u.status==="pending"),expired=active.filter(u=>u.expiry_date&&new Date(u.expiry_date).getTime()<=now);
   $("#statTotal").textContent=users.length;$("#statActive").textContent=active.length;$("#statPending").textContent=pending.length;$("#statExpired").textContent=expired.length;
  }

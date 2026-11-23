@@ -270,6 +270,36 @@ html body.showcase-home section.latest-files .latest-files-track{
   <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-0160654735972608" data-ad-slot="4871600919"></ins>
  </div>
  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+ <script>
+ (function(){
+   const selector='.adsense-app-slot,.adsense-models-slot,.adsense-home-slot';
+   const slots=Array.from(document.querySelectorAll(selector));
+   const hideIfEmpty=slot=>{
+     const ad=slot.querySelector('ins.adsbygoogle');
+     if(!ad)return;
+     const status=ad.getAttribute('data-ad-status');
+     if(status==='unfilled'){
+       slot.style.setProperty('display','none','important');
+     }else if(status!=='filled' && !ad.querySelector('iframe') && !ad.querySelector('ins')){
+       slot.style.setProperty('display','none','important');
+     }
+   };
+   const observer=new MutationObserver(records=>{
+     records.forEach(record=>{
+       const el=record.target.nodeType===1?record.target:record.target.parentElement;
+       const slot=el&&el.closest?el.closest(selector):null;
+       if(slot)hideIfEmpty(slot);
+     });
+   });
+   slots.forEach(slot=>{
+     const ad=slot.querySelector('ins.adsbygoogle');
+     if(!ad)return;
+     observer.observe(ad,{attributes:true,childList:true,subtree:true});
+     hideIfEmpty(slot);
+     setTimeout(()=>hideIfEmpty(slot),15000);
+   });
+ })();
+ </script>
 </section>
       <section class="support-hub" id="support"><div class="support-hub-main"><div class="support-hub-copy"><span class="support-hub-eyebrow"><i></i> UZMANTOOL DESTEK MERKEZİ</span><h2>İşiniz yarım kalmasın.<br><em>Yanınızdayız.</em></h2><p>Teknik sorunlarınız, lisans işlemleriniz ve portal kullanımıyla ilgili taleplerinizi tek noktadan yönetin.</p><div class="support-hub-points"><span><b>01</b> Talebinizi oluşturun</span><span><b>02</b> Ekibimiz incelesin</span><span><b>03</b> Yanıtınızı takip edin</span></div></div><div class="support-hub-action"><div class="support-hub-orbit"><span>?</span></div><div class="support-hub-action-copy"><b>Size nasıl yardımcı olabiliriz?</b><small>Destek kaydınızı birkaç adımda oluşturun.</small></div><button class="support-button" id="supportRequest" type="button"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebi Oluştur <span>›</span></button><small class="support-hub-footnote">Taleplerinizi hesabınızdan takip edebilirsiniz.</small></div></div><div class="support-hub-bottom"><span><i class="support-dot"></i> Kişisel destek alanınız</span><span>Teknik destek</span><span>Lisans ve üyelik</span><span>Ödeme işlemleri</span></div></section>
 

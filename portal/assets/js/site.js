@@ -1,4 +1,45 @@
 (() => {
+(() => {
+  const KEY = "uzmantech_acquisition_v1";
+  const cleanUrl = value => {
+    try { const u = new URL(value); return u.origin + u.pathname; } catch { return ""; }
+  };
+  const classify = host => {
+    host = String(host || "").toLowerCase().replace(/^www\./, "");
+    if (!host) return "direct";
+    if (/(^|\.)google\./.test(host)) return "google";
+    if (/(^|\.)instagram\.com$/.test(host)) return "instagram";
+    if (/(^|\.)facebook\.com$|(^|\.)fb\.com$|(^|\.)l\.facebook\.com$/.test(host)) return "facebook";
+    if (/(^|\.)youtube\.com$|(^|\.)youtu\.be$/.test(host)) return "youtube";
+    if (/(^|\.)tiktok\.com$/.test(host)) return "tiktok";
+    if (/(^|\.)wa\.me$|(^|\.)whatsapp\.com$/.test(host)) return "whatsapp";
+    return "referral";
+  };
+  try {
+    const params = new URLSearchParams(location.search);
+    const utmSource = (params.get("utm_source") || "").trim().toLowerCase();
+    const ref = document.referrer ? new URL(document.referrer) : null;
+    const externalRef = ref && ref.hostname !== location.hostname ? ref : null;
+    let source = utmSource ? classify(utmSource) : classify(externalRef?.hostname || "");
+    if (utmSource && !["google","instagram","facebook","youtube","tiktok","whatsapp"].includes(source)) source = "other";
+    const medium = params.get("utm_medium") || (source === "google" ? "organic" : ["instagram","facebook","youtube","tiktok","whatsapp"].includes(source) ? "social" : source === "direct" ? "none" : "referral");
+    const candidate = {
+      source,
+      medium: String(medium).slice(0,100),
+      campaign: String(params.get("utm_campaign") || "").slice(0,160),
+      referrer: externalRef ? cleanUrl(externalRef.href) : "",
+      landing_page: cleanUrl(location.href),
+      captured_at: new Date().toISOString()
+    };
+    const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (!saved || saved.source === "direct" && source !== "direct") localStorage.setItem(KEY, JSON.stringify(candidate));
+    window.UZMANTECH_ATTRIBUTION = () => {
+      try { return JSON.parse(localStorage.getItem(KEY) || "null") || candidate; } catch { return candidate; }
+    };
+  } catch {
+    window.UZMANTECH_ATTRIBUTION = () => ({source:"unknown",medium:"unknown"});
+  }
+})();
   const $ = (s, root=document) => root.querySelector(s);
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const state = { user: null, category: "all", query: "", busy: false, timer: null, exchangeRate: null, exchangeRateAt: 0 };

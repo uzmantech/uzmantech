@@ -152,7 +152,7 @@ async function sendPortalEmail(recipient: string, subject: string, body: string,
       throw new Error("Resend e-posta gönderimi başarısız: " + providerMessage);
     }
     console.info("Transactional email accepted by Resend", { id: sendData.id });
-    return;
+    return { provider: "resend", id: String(sendData.id) };
   }
 
   // Temporary fallback until RESEND_API_KEY is configured.
@@ -200,6 +200,7 @@ async function sendPortalEmail(recipient: string, subject: string, body: string,
     console.error("Gmail message send failed", sendResponse.status, sendData.error?.message || "unknown");
     throw new Error("Google Gmail e-postayı gönderemedi.");
   }
+  return { provider: "gmail", id: String(sendData.id) };
 }
 
 async function sendResendOnly(recipient: string, subject: string, body: string, html: string) {
@@ -234,9 +235,9 @@ async function queuePortalEmail(recipient: string, subject: string, body: string
   }).eq("id", job.id).eq("status", "queued");
   if (claimError) return { error: claimError };
   try {
-    await sendPortalEmail(recipient, subject, body, html);
+    const providerResult = await sendPortalEmail(recipient, subject, body, html);
     const { error: sentError } = await db.from("portal_email_outbox").update({
-      status: "sent", body: null, sent_at: new Date().toISOString(), lease_until: null, last_error: null,
+      status: "sent", provider_id: providerResult?.id || null, body: null, sent_at: new Date().toISOString(), lease_until: null, last_error: null,
     }).eq("id", job.id).eq("status", "sending");
     if (sentError) {
       console.error("Gmail sent but outbox status update failed", sentError);

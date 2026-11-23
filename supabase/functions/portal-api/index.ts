@@ -1059,7 +1059,7 @@ Deno.serve(async (req: Request) => {
       logs.push({ id: "campaign-" + row.id, source: campaign.category === "marketing" ? "Bülten / kampanya" : "Toplu e-posta", recipient: row.email, username: "", subject: campaign.subject || "(Konu bulunamadı)", body: campaign.body || "", status: row.status, attempts: row.attempts, last_error: row.last_error, provider_id: "", created_at: row.created_at, sent_at: row.sent_at });
     }
     for (const row of (outboxResult.data || [])) {
-      logs.push({ id: "outbox-" + row.id, source: "Sistem e-postası", recipient: row.recipient, username: "", subject: row.subject, body: "", status: row.status, attempts: row.attempts, last_error: row.last_error, provider_id: "", created_at: row.created_at, sent_at: row.sent_at });
+      logs.push({ id: "outbox-" + row.id, source: "Sistem e-postası", recipient: row.recipient, username: "", subject: row.subject, body: "", status: row.status, attempts: row.attempts, last_error: row.last_error, provider_id: row.provider_id || "", created_at: row.created_at, sent_at: row.sent_at });
     }
     logs.sort((a, b) => new Date(b.sent_at || b.created_at).getTime() - new Date(a.sent_at || a.created_at).getTime());
     return response({ success: true, logs: logs.slice(0, 300), count: logs.length });

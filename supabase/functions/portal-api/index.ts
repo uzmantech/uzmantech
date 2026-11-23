@@ -1017,6 +1017,31 @@ Deno.serve(async (req: Request) => {
 
 
 
+  if (body.action === "ai_chat_log") {
+    const member = await verifySession(tokenFrom(req), true);
+    if (!member || member.role !== "user") return response({ success: false, message: "Sohbet kaydı için geçerli üye oturumu gerekli." }, 401);
+    const question = String(body.question || "").trim().slice(0, 4000);
+    const answer = String(body.answer || "").trim().slice(0, 12000);
+    const sessionId = String(body.session_id || "");
+    if (!question || !answer || !/^[0-9a-f-]{36}$/i.test(sessionId)) return response({ success: false, message: "Sohbet kaydı eksik veya geçersiz." }, 400);
+    const sources = Array.isArray(body.sources) ? body.sources.slice(0, 8).map((s: any) => ({ title: String(s?.title || "").slice(0, 200), source: String(s?.source || "").slice(0, 500) })) : [];
+    const { error } = await db.from("ai_chat_logs").insert({ user_id: member.id, session_id: sessionId, question, answer, sources, model: String(body.model || "").slice(0, 100) });
+    if (error) { console.error("AI chat log insert failed", error); return response({ success: false, message: "Sohbet kaydı oluşturulamadı." }, 503); }
+    return response({ success: true });
+  }
+
+  if (body.action === "admin_ai_chat_logs") {
+    const admin = await verifySession(tokenFrom(req));
+    if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Sohbet geçmişi için yönetici yetkisi gerekli." }, 403);
+    const { data: rows, error } = await db.from("ai_chat_logs").select("id,user_id,session_id,question,answer,sources,model,created_at").order("created_at", { ascending: false }).limit(500);
+    if (error) return response({ success: false, message: "Yapay zekâ sohbet geçmişi okunamadı." }, 503);
+    const ids = [...new Set((rows || []).map((x: any) => x.user_id))];
+    const { data: users, error: usersError } = ids.length ? await db.from("users").select("id,username,email").in("id", ids) : { data: [], error: null };
+    if (usersError) return response({ success: false, message: "Sohbet kullanıcıları okunamadı." }, 503);
+    const map = new Map((users || []).map((u: any) => [u.id, u]));
+    return response({ success: true, logs: (rows || []).map((x: any) => ({ ...x, user: map.get(x.user_id) || null })) });
+  }
+
   if (body.action === "admin_acquisition_list") {
     const admin = await verifySession(tokenFrom(req));
     if (!admin || admin.role !== "admin" || admin.tokenRole !== "admin") return response({ success: false, message: "Bu kayıtları görüntülemek için yönetici yetkisi gerekli." }, 403);

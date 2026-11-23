@@ -400,5 +400,23 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   finally{btn.disabled=false;}
  });
 
+ let aiChatLogs=[];
+ function renderAiChatLogs(){
+  const q=($("#aiChatLogsSearch")?.value||"").trim().toLocaleLowerCase("tr-TR"),uid=$("#aiChatLogsUser")?.value||"";
+  const rows=aiChatLogs.filter(x=>(!uid||x.user_id===uid)&&[x.user?.username,x.user?.email,x.question,x.answer].join(" ").toLocaleLowerCase("tr-TR").includes(q));
+  $("#aiChatLogsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.user?.username||"Bilinmeyen üye")+'</strong><br><small>'+esc(x.user?.email||"")+'</small></td><td>'+esc(x.question.slice(0,180))+(x.question.length>180?"…":"")+'</td><td>'+esc(x.answer.slice(0,180))+(x.answer.length>180?"…":"")+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td><td><button class="btn" data-ai-chat-detail="'+esc(x.id)+'">Görüntüle</button></td></tr>').join("")||'<tr><td colspan="5">Eşleşen sohbet kaydı yok.</td></tr>';
+  $("#aiChatLogsStatus").textContent=rows.length+" kayıt gösteriliyor · Toplam "+aiChatLogs.length+" kayıt";
+ }
+ async function loadAiChatLogs(){
+  $("#aiChatLogsStatus").textContent="Sohbet geçmişi yükleniyor…";
+  const r=await api.portalAdmin({action:"admin_ai_chat_logs"});aiChatLogs=r.logs||[];
+  const select=$("#aiChatLogsUser"),prev=select.value,users=[...new Map(aiChatLogs.map(x=>[x.user_id,x.user]).filter(x=>x[1])).entries()];
+  select.innerHTML='<option value="">Tüm üyeler</option>'+users.map(([id,u])=>'<option value="'+esc(id)+'">'+esc(u.username||u.email||"Üye")+' · '+esc(u.email||"")+'</option>').join("");
+  if(users.some(([id])=>id===prev))select.value=prev;renderAiChatLogs();
+ }
+ $("#aiChatLogsReload")?.addEventListener("click",()=>loadAiChatLogs().catch(e=>{$("#aiChatLogsStatus").textContent=e.message;toast(e.message)}));
+ $("#aiChatLogsSearch")?.addEventListener("input",renderAiChatLogs);$("#aiChatLogsUser")?.addEventListener("change",renderAiChatLogs);
+ $("#aiChatLogsBody")?.addEventListener("click",e=>{const b=e.target.closest("[data-ai-chat-detail]");if(!b)return;const x=aiChatLogs.find(v=>v.id===b.dataset.aiChatDetail);if(!x)return;const box=$("#aiChatLogDetail");box.hidden=false;box.innerHTML='<h3>'+esc(x.user?.username||"Üye")+' · '+esc(x.user?.email||"")+'</h3><p><strong>Soru</strong></p><div class="ai-answer">'+esc(x.question).replace(/\n/g,"<br>")+'</div><p><strong>Yapay zekâ yanıtı</strong></p><div class="ai-answer">'+esc(x.answer).replace(/\n/g,"<br>")+'</div><p class="muted">Model: '+esc(x.model||"-")+' · '+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</p><h3>Kullanılan kaynaklar</h3>'+(x.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.source)+'</div>').join("")||'<p class="muted">Kaynak kaydı yok.</p>';box.scrollIntoView({behavior:"smooth",block:"center"}")});
+
  checkSession().catch(e=>toast(e.message));
 })();

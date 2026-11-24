@@ -1581,7 +1581,7 @@ Deno.serve(async (req: Request) => {
     const [byUsername, byEmail, byPhone] = await Promise.all([
       db.from("users").select("id").eq("username", username).maybeSingle(),
       db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
-      db.from("users").select("id").eq("phone", phone).maybeSingle(),
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("phone", phone).maybeSingle(),
     ]);
     if (byUsername.data) return response({ success: false, message: "Bu kullanıcı adı zaten kullanılıyor." }, 409);
     if (byEmail.data) return response({ success: false, message: "Bu e-posta adresi zaten kayıtlı." }, 409);

@@ -606,7 +606,7 @@ Deno.serve(async (req) => {
         .from("users")
         .update({ trial_expiry_email_sent_at: now, updated_at: now })
         .eq("id", userId)
-        .in("license_plan", ["trial_7", "trial_15"])
+        .like("license_plan", "trial_%")
         .select("id, username, email, trial_expiry_email_sent_at")
         .maybeSingle();
       if (error || !data) {
@@ -623,8 +623,8 @@ Deno.serve(async (req) => {
     if (action === "grant_desktop_trial") {
       const userId = String(body.user_id || "").trim();
       const days = Number(body.days || 7);
-      if (!userId || !Number.isInteger(days) || ![7, 15].includes(days)) {
-        return new Response(JSON.stringify({ success: false, message: "7 veya 15 günlük deneme süresi seçin." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      if (!userId || !Number.isInteger(days) || days < 1 || days > 30) {
+        return new Response(JSON.stringify({ success: false, message: "1 ile 30 gün arasında deneme süresi seçin." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
       const { data: target, error: findError } = await supabase.from("users")
         .select("id,username,role,registration_channel").eq("id", userId).maybeSingle();

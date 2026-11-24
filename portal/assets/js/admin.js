@@ -253,9 +253,9 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   }
   let days=365;
   if(action==="desktop_trial"){
-   const answer=prompt(u.username+" için deneme süresi? 7 veya 15 gün gir.", "7");
+   const answer=prompt(u.username+" için deneme süresi (1-30 gün).", "7");
    if(answer===null)return;days=Number(answer);
-   if(![7,15].includes(days)){toast("Deneme süresi yalnızca 7 veya 15 gün olabilir.");return;}
+   if(!Number.isInteger(days)||days<1||days>30){toast("1 ile 30 arasında gün gir.");return;}
   }
   if(action==="activate"||action==="extend"){
    const answer=prompt(u.username+" için kaç günlük lisans verilsin?",action==="activate"?"30":"30");

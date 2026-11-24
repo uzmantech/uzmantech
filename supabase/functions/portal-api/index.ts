@@ -296,9 +296,10 @@ async function verifySession(token: string, allowExpired = false) {
     const payload = JSON.parse(new TextDecoder().decode(decode64url(parts[0])));
     if (!payload.sub || Number(payload.exp) <= Math.floor(Date.now() / 1000)) return null;
     const { data: user, error } = await db.from("users")
-      .select("id,username,email,phone,country_code,language_code,role,status,email_verified,created_at,last_login,disabled_reason,expiry_date,license_plan,license_days,license_started_at")
+      .select("id,username,email,phone,country_code,language_code,registration_channel,role,status,email_verified,created_at,last_login,disabled_reason,expiry_date,license_plan,license_days,license_started_at")
       .eq("id", payload.sub).maybeSingle();
     if (error || !user || user.email_verified !== true) return null;
+    if (user.role !== "admin" && !["web", "unknown"].includes(String(user.registration_channel || "unknown"))) return null;
 
     const expiryTime = user.expiry_date ? new Date(user.expiry_date).getTime() : 0;
     const expired = user.role !== "admin" && (!expiryTime || expiryTime <= Date.now());
@@ -1579,7 +1580,7 @@ Deno.serve(async (req: Request) => {
 
     const [byUsername, byEmail, byPhone] = await Promise.all([
       db.from("users").select("id").eq("username", username).maybeSingle(),
-      db.from("users").select("id").eq("email", email).maybeSingle(),
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
       db.from("users").select("id").eq("phone", phone).maybeSingle(),
     ]);
     if (byUsername.data) return response({ success: false, message: "Bu kullanıcı adı zaten kullanılıyor." }, 409);
@@ -1599,8 +1600,7 @@ Deno.serve(async (req: Request) => {
     const now = new Date().toISOString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
     const languageCode = String(body.language_code || "tr").toLowerCase() === "en" ? "en" : "tr";
-    const requestedChannel = String(body.registration_channel || "").toLowerCase();
-    const registrationChannel = ["web", "desktop_app"].includes(requestedChannel) ? requestedChannel : "unknown";
+    const registrationChannel = "web";
     const rawAttribution = body.attribution && typeof body.attribution === "object" ? body.attribution : {};
     const allowedSources = new Set(["google","instagram","facebook","youtube","tiktok","whatsapp","email","referral","direct","other","unknown"]);
     const acquisitionSource = allowedSources.has(String(rawAttribution.source || "").toLowerCase()) ? String(rawAttribution.source).toLowerCase() : "unknown";
@@ -1619,7 +1619,7 @@ Deno.serve(async (req: Request) => {
       username, email, phone, country_code: countryCode, language_code: languageCode,
       password_hash: passwordHash, code_hash: codeHash, expires_at: expiresAt,
       ...acquisition, attempts: 0, created_at: now,
-    }, { onConflict: "email" });
+    }, { onConflict: "registration_channel,email" });
     if (verificationError) {
       console.error("portal registration verification upsert failed", verificationError);
       return response({ success: false, message: "Doğrulama isteği oluşturulamadı. Lütfen tekrar deneyin." }, 503);
@@ -1670,7 +1670,7 @@ Deno.serve(async (req: Request) => {
 </body></html>`;
     const { error: mailError } = await queuePortalEmail(email, "Uzmantech | E-posta Adresi Doğrulama", mailBody, mailHtml);
     if (mailError) {
-      await db.from("registration_verifications").delete().eq("email", email);
+      await db.from("registration_verifications").delete().eq("email", email).eq("registration_channel", "web");
       console.error("portal registration email queue failed", mailError);
       return response({ success: false, message: "Doğrulama e-postası kuyruğa alınamadı. Lütfen tekrar deneyin." }, 503);
     }
@@ -1692,8 +1692,8 @@ Deno.serve(async (req: Request) => {
     }
 
     const { data: verification, error: verificationLookupError } = await db.from("registration_verifications")
-      .select("id,username,email,phone,country_code,language_code,password_hash,code_hash,expires_at,attempts")
-      .eq("email", email).maybeSingle();
+      .select("id,username,email,phone,country_code,language_code,registration_channel,password_hash,code_hash,expires_at,attempts")
+      .eq("email", email).eq("registration_channel", "web").maybeSingle();
     if (verificationLookupError || !verification) {
       return response({ success: false, message: "Kod geçersiz veya süresi dolmuş. Yeni kod isteyin." }, 400);
     }
@@ -1713,7 +1713,7 @@ Deno.serve(async (req: Request) => {
 
     const [byUsername, byEmail, byPhone] = await Promise.all([
       db.from("users").select("id").eq("username", verification.username).maybeSingle(),
-      db.from("users").select("id").eq("email", verification.email).maybeSingle(),
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", verification.email).maybeSingle();
       db.from("users").select("id").eq("phone", verification.phone).maybeSingle(),
     ]);
     if (byUsername.error || byEmail.error || byPhone.error) {
@@ -1732,6 +1732,7 @@ Deno.serve(async (req: Request) => {
       country_code: verification.country_code,
       language_code: verification.language_code,
       password_hash: verification.password_hash,
+      registration_channel: "web",
       role: "user",
       status: "pending",
       email_verified: true,
@@ -1827,7 +1828,7 @@ Deno.serve(async (req: Request) => {
       return response({ success: false, message: "Geçerli bir e-posta adresi girin." }, 400);
     }
     const { data: user, error } = await db.from("users")
-      .select("id,username,status,reset_code_sent_at").eq("email", email).maybeSingle();
+      .select("id,username,status,reset_code_sent_at").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
     if (error) return response({ success: false, message: "Şifre sıfırlama servisi şu anda kullanılamıyor." }, 503);
     if (!user || user.status === "disabled") return response({ success: true, accepted: true });
     const lastSent = user.reset_code_sent_at ? new Date(user.reset_code_sent_at).getTime() : 0;
@@ -1874,7 +1875,7 @@ Deno.serve(async (req: Request) => {
     }
     const { data: user, error } = await db.from("users")
       .select("id,status,reset_code_hash,reset_code_expires_at,reset_code_attempts")
-      .eq("email", email).maybeSingle();
+      .in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
     if (error) return response({ success: false, message: "Hesap bilgileri okunamadı." }, 503);
     if (!user || user.status === "disabled") return response({ success: false, message: "Kod geçersiz veya süresi dolmuş." }, 400);
     const attempts = Number(user.reset_code_attempts || 0);
@@ -1908,12 +1909,12 @@ Deno.serve(async (req: Request) => {
       return response({ success: false, message: "Kullanıcı adı/e-posta ve şifre gerekli." }, 400);
     }
     let result = await db.from("users")
-      .select("id,username,email,password_hash,email_verified,role,status,disabled_reason,expiry_date,license_plan,license_days,license_started_at,country_code,language_code")
-      .eq("username", identifier).maybeSingle();
+      .select("id,username,email,password_hash,email_verified,role,status,disabled_reason,expiry_date,license_plan,license_days,license_started_at,country_code,language_code,registration_channel")
+      .eq("username", identifier).in("registration_channel", ["web", "unknown"]).maybeSingle();
     if (!result.data && !result.error) {
       result = await db.from("users")
-        .select("id,username,email,password_hash,email_verified,role,status,disabled_reason,expiry_date,license_plan,license_days,license_started_at,country_code,language_code")
-        .eq("email", identifier.toLowerCase()).maybeSingle();
+        .select("id,username,email,password_hash,email_verified,role,status,disabled_reason,expiry_date,license_plan,license_days,license_started_at,country_code,language_code,registration_channel")
+        .eq("email", identifier.toLowerCase()).in("registration_channel", ["web", "unknown"]).maybeSingle();
     }
     const user = result.data;
     if (result.error) return response({ success: false, message: "Giriş servisi şu anda kullanılamıyor." }, 503);
@@ -1996,7 +1997,7 @@ Deno.serve(async (req: Request) => {
     if (email === String(member.email || "").toLowerCase()) return response({ success: false, message: "Bu adres zaten hesabınızda kayıtlı." }, 400);
     const { data: row, error: userError } = await db.from("users").select("password_hash").eq("id", member.id).single();
     if (userError || !row || !await verifyPassword(currentPassword, row.password_hash)) return response({ success: false, message: "Güvenlik için mevcut şifrenizi doğrulayın." }, 400);
-    const { data: taken } = await db.from("users").select("id").eq("email", email).maybeSingle();
+    const { data: taken } = await db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
     if (taken) return response({ success: false, message: "Bu e-posta başka bir hesapta kullanılıyor." }, 409);
     const code = makeOtp();
     const codeHash = await sha256Hex(code);
@@ -2023,7 +2024,7 @@ Deno.serve(async (req: Request) => {
       await db.from("portal_email_change_requests").update({ attempts: Number(pending.attempts || 0) + 1 }).eq("id", pending.id);
       return response({ success: false, message: "Doğrulama kodu hatalı." }, 400);
     }
-    const { data: taken } = await db.from("users").select("id").eq("email", pending.new_email).maybeSingle();
+    const { data: taken } = await db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", pending.new_email).maybeSingle();
     if (taken && taken.id !== member.id) return response({ success: false, message: "Bu e-posta başka bir hesapta kullanılıyor." }, 409);
     const { error: updateError } = await db.from("users").update({ email: pending.new_email, updated_at: new Date().toISOString() }).eq("id", member.id);
     if (updateError) return response({ success: false, message: "E-posta adresi güncellenemedi." }, 503);

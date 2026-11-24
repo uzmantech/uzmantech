@@ -23,10 +23,13 @@ function b64url(bytes: Uint8Array): string {
   for (const b of bytes) binary += String.fromCharCode(b);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
-function decode64url(value: string): Uint8Array {
+function decode64url(value: string): Uint8Array<ArrayBuffer> {
   let s = value.replace(/-/g, "+").replace(/_/g, "/");
   while (s.length % 4) s += "=";
-  return Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const binary = atob(s);
+  const output = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) output[i] = binary.charCodeAt(i);
+  return output;
 }
 function safeEqual(a: Uint8Array, b: Uint8Array) {
   if (a.length !== b.length) return false;

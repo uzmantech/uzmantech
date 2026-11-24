@@ -1,0 +1,39 @@
+name: Membership isolation checks
+
+on:
+  push:
+    branches:
+      - feature/separate-web-desktop-memberships
+    paths:
+      - "supabase/functions/portal-api/**"
+      - "supabase/functions/login/**"
+      - "supabase/functions/register/**"
+      - "supabase/functions/password-reset/**"
+      - "supabase/functions/rapid-service/**"
+      - "supabase/migrations/**"
+      - ".github/workflows/membership-isolation-check.yml"
+  pull_request:
+    paths:
+      - "supabase/functions/portal-api/**"
+      - "supabase/functions/login/**"
+      - "supabase/functions/register/**"
+      - "supabase/functions/password-reset/**"
+      - "supabase/functions/rapid-service/**"
+      - "supabase/migrations/**"
+
+jobs:
+  deno-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check membership functions
+        run: |
+          deno check \
+            supabase/functions/portal-api/index.ts \
+            supabase/functions/login/index.ts \
+            supabase/functions/register/index.ts \
+            supabase/functions/password-reset/index.ts \
+            supabase/functions/rapid-service/index.ts

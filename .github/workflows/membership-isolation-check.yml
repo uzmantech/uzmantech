@@ -1,4 +1,5 @@
 name: Membership isolation checks
+# Validates the latest branch snapshot before review.
 
 on:
   push:

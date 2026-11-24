@@ -250,8 +250,9 @@ Deno.serve(async (req) => {
       );
     }
 
+    const adminUsername = String(currentAdmin.username || "uzmantech");
     async function writeAdminAudit(actionName: string, targetUserId: string | null, details: string) {
-      try { await supabase.from("activity_logs").insert({user_id:adminSession.sub,username:String(currentAdmin.username||"uzmantech"),action:actionName,category:"admin",item_name:targetUserId||"",result:"success",details:String(details||"").slice(0,1000),device_hash:"",app_version:"admin-web-v3"}); } catch(e){ console.error("Admin audit log hatası:",e); }
+      try { await supabase.from("activity_logs").insert({user_id:adminSession.sub,username:adminUsername,action:actionName,category:"admin",item_name:targetUserId||"",result:"success",details:String(details||"").slice(0,1000),device_hash:"",app_version:"admin-web-v3"}); } catch(e){ console.error("Admin audit log hatası:",e); }
     }
 
     if (action === "analytics_dashboard") {

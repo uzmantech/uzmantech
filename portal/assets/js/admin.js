@@ -7,6 +7,9 @@
  let tickets=[];
  let archiveFiles=[];
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const ISTANBUL_TIME_ZONE="Europe/Istanbul";
+ const formatIstanbulDateTime=value=>{if(!value)return "—";const date=new Date(value);if(Number.isNaN(date.getTime()))return "—";return new Intl.DateTimeFormat("tr-TR",{timeZone:ISTANBUL_TIME_ZONE,dateStyle:"short",timeStyle:"medium"}).format(date);};
+ const formatIstanbulDate=value=>{if(!value)return "—";const date=value instanceof Date?value:new Date(value);if(Number.isNaN(date.getTime()))return "—";return new Intl.DateTimeFormat("tr-TR",{timeZone:ISTANBUL_TIME_ZONE,dateStyle:"short"}).format(date);};
  const toast=m=>{const e=$("#toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)};
  function navigate(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#breadcrumb").textContent=id==="analytics"?"Kullanıcı Analizi":id==="siteMetrics"?"Site İstatistikleri":id==="users"?"Üyeler ve Lisanslar":id==="payments"?"Ödeme Bildirimleri":id==="support"?"Destek Talepleri":id==="email"?"Toplu E-posta":id==="archive"?"Dosya Arşivi Yönetimi":id==="ai"?"Yapay Zekâ Eğitim Merkezi":id==="content"?"Site İçeriği":"Genel Bakış";if(id==="email"){loadBroadcasts().catch(e=>toast(e.message));loadMailLog().catch(e=>toast(e.message));}if(id==="siteMetrics")loadSiteMetrics().catch(e=>toast(e.message));if(id==="analytics")loadAnalytics().catch(e=>toast(e.message));if(id==="payments")loadPayments().catch(e=>toast(e.message));if(id==="support")loadSupport().catch(e=>toast(e.message));if(id==="archive")loadArchiveFiles().catch(e=>toast(e.message));if(id==="ai")loadAiKnowledge().catch(e=>toast(e.message));$("#sidebar").classList.remove("open");}
  async function adminCall(action,extra={}){return api.admin({action,...extra});}
@@ -85,7 +88,7 @@
  function renderPayments(){
   const body=$("#paymentsBody");if(!body)return;
   body.innerHTML=payments.map(p=>{
-   const user=p.user||{},displayEmail=user.email||p.email||"E-posta yok",date=p.created_at?new Date(p.created_at).toLocaleString("tr-TR"):"-";
+   const user=p.user||{},displayEmail=user.email||p.email||"E-posta yok",date=p.created_at?formatIstanbulDateTime(p.created_at):"-";
    const receipt=p.receipt_url?'<a class="btn" href="'+esc(p.receipt_url)+'" target="_blank" rel="noopener noreferrer">Dekontu aç</a>':'<span class="muted">Açılamadı</span>';
    const actions=p.status==="pending"?'<button class="btn" data-payment-action="approved" data-id="'+esc(p.id)+'">Onayla</button> <button class="btn" data-payment-action="rejected" data-id="'+esc(p.id)+'">Reddet</button>':'-';
    const usd='$'+Number(p.amount||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})+' USD';
@@ -104,7 +107,7 @@
   const labels={open:"Yeni",in_progress:"İşlemde",resolved:"Çözüldü"};
   const categoryNames={technical:"Teknik",license:"Lisans",payment:"Ödeme",archive:"Arşiv",other:"Diğer"};
   body.innerHTML=tickets.map(t=>{
-   const user=t.user||{},displayName=user.username||t.guest_name||"Ziyaretçi",displayEmail=user.email||t.guest_email||"E-posta yok",date=t.created_at?new Date(t.created_at).toLocaleString("tr-TR"):"-";
+   const user=t.user||{},displayName=user.username||t.guest_name||"Ziyaretçi",displayEmail=user.email||t.guest_email||"E-posta yok",date=t.created_at?formatIstanbulDateTime(t.created_at):"-";
    const status=t.status||"open";
    const actions=status==="resolved"
     ?'<button class="btn" data-support-status="open" data-id="'+esc(t.id)+'">Yeniden Aç</button>'
@@ -127,7 +130,7 @@
   const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
   $( "#usersBody" ).innerHTML=list.map(u=>{
    const expiry=u.expiry_date?new Date(u.expiry_date):null;
-   const dateText=expiry&&!Number.isNaN(expiry.getTime())?expiry.toLocaleDateString("tr-TR"):"-";
+   const dateText=expiry&&!Number.isNaN(expiry.getTime())?formatIstanbulDate(expiry):"-";
    const remaining=expiry&&!Number.isNaN(expiry.getTime())?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
    const status=u.status==="active"?(remaining!==null&&remaining<=0?"Lisans süresi doldu":"Aktif"):u.status==="pending"?"Onay bekliyor":u.disabled_reason==="license_expired"?"Lisans süresi doldu · Yenileme açık":u.disabled_reason==="admin_disabled"?"Yönetici tarafından kapatıldı":"Pasif";
    const plan=String(u.license_plan||"")==="trial_"+String(u.license_days||"")?String(u.license_days)+" Gün Deneme":(planNames[u.license_plan]||u.license_plan||"Lisans yok");
@@ -145,18 +148,18 @@
    const buttons=actionButtons+trialButton+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
-   const acq=acquisitionByUser.get(u.id)||{};const sourceNames={google:"Google",instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",whatsapp:"WhatsApp",email:"E-posta",referral:"Diğer site",direct:"Doğrudan",other:"Diğer",unknown:"Bilinmiyor"};const sourceLabel=sourceNames[acq.acquisition_source]||acq.acquisition_source||"Bilinmiyor";const channelNames={web:"Web sitesi",desktop_app:"Masaüstü uygulama",unknown:"Bilinmiyor"};const channelLabel=channelNames[acq.registration_channel]||"Bilinmiyor";const sourceDetail=[channelLabel,acq.acquisition_medium,acq.acquisition_campaign].filter(Boolean).join(" · ");return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td>'+esc(sourceLabel)+(sourceDetail?'<br><small>'+esc(sourceDetail)+'</small>':'')+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
-  }).join("")||'<tr><td colspan="6">Kayıt bulunamadı.</td></tr>';
+   const acq=acquisitionByUser.get(u.id)||{};const sourceNames={google:"Google",instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",whatsapp:"WhatsApp",email:"E-posta",referral:"Diğer site",direct:"Doğrudan",other:"Diğer",unknown:"Bilinmiyor"};const sourceLabel=sourceNames[acq.acquisition_source]||acq.acquisition_source||"Bilinmiyor";const channelNames={web:"Web sitesi",desktop_app:"Masaüstü uygulama",unknown:"Bilinmiyor"};const channelLabel=channelNames[acq.registration_channel]||"Bilinmiyor";const sourceDetail=[channelLabel,acq.acquisition_medium,acq.acquisition_campaign].filter(Boolean).join(" · ");const registeredText=formatIstanbulDateTime(u.created_at),lastLoginText=formatIstanbulDateTime(u.last_login);return '<tr><td>'+esc(u.username)+'<br><small>Kayıt: '+esc(registeredText)+'</small></td><td>'+esc(u.email)+emailState+'</td><td>'+esc(sourceLabel)+(sourceDetail?'<br><small>'+esc(sourceDetail)+'</small>':'')+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(lastLoginText)+'</td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
+  }).join("")||'<tr><td colspan="7">Kayıt bulunamadı.</td></tr>';
  }
  async function loadUsers(){
-  $("#usersBody").innerHTML='<tr><td colspan="6">Kullanıcılar yükleniyor…</td></tr>';
+  $("#usersBody").innerHTML='<tr><td colspan="7">Kullanıcılar yükleniyor…</td></tr>';
   const [result, acquisitionResult]=await Promise.all([adminCall("list"),api.portalAdmin({action:"admin_acquisition_list"}).catch(()=>({users:[]}))]);
   users=result.users||[];acquisitionByUser=new Map((acquisitionResult.users||[]).map(u=>[u.id,u]));renderUsers();
   const now=Date.now(),active=users.filter(u=>u.status==="active"),pending=users.filter(u=>u.status==="pending"),expired=active.filter(u=>u.expiry_date&&new Date(u.expiry_date).getTime()<=now);
   $("#statTotal").textContent=users.length;$("#statActive").textContent=active.length;$("#statPending").textContent=pending.length;$("#statExpired").textContent=expired.length;
  }
  let analyticsData=null;
- const analyticsDate=v=>v?new Date(v).toLocaleString("tr-TR",{dateStyle:"short",timeStyle:"short"}):"—";
+ const analyticsDate=formatIstanbulDateTime;
  function renderAnalytics(){if(!analyticsData)return;const s=analyticsData.summary||{};[["anTotal","registered_total"],["an7d","active_7d"],["an30d","active_30d"],["an90d","active_90d"],["anPaid","paid_active"],["anTrial","trial_accounts"],["anNever","never_tracked"],["anVisitors","visitors_24h"]].forEach(([id,k])=>$("#"+id).textContent=Number(s[k]||0).toLocaleString("tr-TR"));
  const max=Math.max(1,...(analyticsData.daily||[]).map(x=>x.events));$("#analyticsTrend").innerHTML=(analyticsData.daily||[]).map(x=>'<div class="trend-day" title="'+esc(x.date+": "+x.events+" etkinlik · "+x.users+" kullanıcı")+'"><i style="height:'+Math.max(3,Math.round(x.events/max*100))+'%"></i><small>'+esc(x.date.slice(8))+'</small></div>').join("");$("#analyticsTrendNote").textContent=Number(s.events_90d||0).toLocaleString("tr-TR")+" müşteri etkinliği / son 90 gün.";
  const funnel=[["Kayıtlı müşteri",s.registered_total],["Son 30 gün aktif",s.active_30d],["Aktif ücretli",s.paid_active],["Deneme hesabı",s.trial_accounts]];$("#analyticsFunnel").innerHTML=funnel.map(([l,v])=>'<div class="funnel-row"><span>'+esc(l)+'</span><b>'+Number(v||0).toLocaleString("tr-TR")+'</b></div>').join("");$("#analyticsPaymentNote").textContent="Son 90 gün ödeme bildirimi: "+Number(s.payment_notices_90d||0)+" · Onaylanan: "+Number(s.payments_approved_90d||0);
@@ -294,7 +297,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
   const rows=mailLogs.filter(x=>(!status||x.status===status)&&[x.recipient,x.username,x.subject,x.source].join(" ").toLocaleLowerCase("tr-TR").includes(q));
   $("#mailLogBody").innerHTML=rows.map(x=>{
    const stamp=x.sent_at||x.created_at;
-   const date=stamp?new Date(stamp).toLocaleString("tr-TR"):"-";
+   const date=stamp?formatIstanbulDateTime(stamp):"-";
    const statusLabel=mailStatusNames[x.status]||x.status||"-";
    const statusClass=x.status==="sent"?"active":x.status==="failed"?"expired":"pending";
    const detail=x.body?'<details><summary>Mesajı görüntüle</summary><p class="ticket-message">'+esc(x.body)+'</p></details>':x.last_error?'<details><summary>Hata ayrıntısı</summary><p class="ticket-message">'+esc(x.last_error)+'</p></details>':'<span class="muted">İçerik bu eski kayıtta tutulmamış.</span>';
@@ -312,7 +315,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  async function loadBroadcasts(){
   const r=await api.broadcastAdmin({action:"broadcast_list"});
   const rows=r.campaigns||[];
-  $("#broadcastsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.subject)+'</strong></td><td>'+esc(audienceNames[x.audience]||x.audience)+'</td><td>'+esc(campaignStatusNames[x.status]||x.status)+'</td><td>'+Number(x.recipient_count||0)+'</td><td>'+Number(x.sent_count||0)+'</td><td>'+Number(x.failed_count||0)+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td><td>'+(x.status==="draft"||x.status==="sending"?'<button class="btn" data-broadcast-resume="'+esc(x.id)+'"> '+(x.status==="draft"?"Taslağı aç":"Devam et")+'</button>':"—")+'</td></tr>').join("")||'<tr><td colspan="8">Henüz toplu e-posta gönderimi yok.</td></tr>';
+  $("#broadcastsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.subject)+'</strong></td><td>'+esc(audienceNames[x.audience]||x.audience)+'</td><td>'+esc(campaignStatusNames[x.status]||x.status)+'</td><td>'+Number(x.recipient_count||0)+'</td><td>'+Number(x.sent_count||0)+'</td><td>'+Number(x.failed_count||0)+'</td><td>'+esc(formatIstanbulDateTime(x.created_at))+'</td><td>'+(x.status==="draft"||x.status==="sending"?'<button class="btn" data-broadcast-resume="'+esc(x.id)+'"> '+(x.status==="draft"?"Taslağı aç":"Devam et")+'</button>':"—")+'</td></tr>').join("")||'<tr><td colspan="8">Henüz toplu e-posta gönderimi yok.</td></tr>';
  }
  $("#broadcastAudience")?.addEventListener("change",()=>{
   const marketing=$("#broadcastAudience").value==="newsletter";
@@ -354,7 +357,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  function renderAiKnowledge(){
   const q=($("#aiKnowledgeSearch")?.value||"").trim().toLocaleLowerCase("tr-TR");
   const rows=aiEntries.filter(x=>[x.title,x.category,x.content,(x.keywords||[]).join(" ")].join(" ").toLocaleLowerCase("tr-TR").includes(q));
-  $("#aiKnowledgeBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc((x.content||"").slice(0,150))+(x.content?.length>150?"…":"")+'</small></td><td>'+esc(x.category)+'</td><td><span class="status '+(x.is_active?"active":"expired")+'">'+(x.is_active?"Aktif":"Pasif")+'</span></td><td>'+esc(x.updated_at?new Date(x.updated_at).toLocaleString("tr-TR"):"-")+'</td><td><button class="btn" data-ai-edit="'+esc(x.id)+'">Düzenle</button> <button class="btn" data-ai-toggle="'+esc(x.id)+'">'+(x.is_active?"Pasifleştir":"Aktifleştir")+'</button> <button class="btn danger" data-ai-delete="'+esc(x.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="5">Henüz öğretilmiş bilgi yok.</td></tr>';
+  $("#aiKnowledgeBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc((x.content||"").slice(0,150))+(x.content?.length>150?"…":"")+'</small></td><td>'+esc(x.category)+'</td><td><span class="status '+(x.is_active?"active":"expired")+'">'+(x.is_active?"Aktif":"Pasif")+'</span></td><td>'+esc(x.updated_at?formatIstanbulDateTime(x.updated_at):"-")+'</td><td><button class="btn" data-ai-edit="'+esc(x.id)+'">Düzenle</button> <button class="btn" data-ai-toggle="'+esc(x.id)+'">'+(x.is_active?"Pasifleştir":"Aktifleştir")+'</button> <button class="btn danger" data-ai-delete="'+esc(x.id)+'">Sil</button></td></tr>').join("")||'<tr><td colspan="5">Henüz öğretilmiş bilgi yok.</td></tr>';
   $("#aiStatTotal").textContent=aiEntries.length;$("#aiStatActive").textContent=aiEntries.filter(x=>x.is_active).length;
  }
  async function loadAiKnowledge(){
@@ -413,7 +416,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  function renderAiChatLogs(){
   const q=($("#aiChatLogsSearch")?.value||"").trim().toLocaleLowerCase("tr-TR"),uid=$("#aiChatLogsUser")?.value||"";
   const rows=aiChatLogs.filter(x=>(!uid||x.user_id===uid)&&[x.user?.username,x.user?.email,x.question,x.answer].join(" ").toLocaleLowerCase("tr-TR").includes(q));
-  $("#aiChatLogsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.user?.username||"Bilinmeyen üye")+'</strong><br><small>'+esc(x.user?.email||"")+'</small></td><td>'+esc(x.question.slice(0,180))+(x.question.length>180?"…":"")+'</td><td>'+esc(x.answer.slice(0,180))+(x.answer.length>180?"…":"")+'</td><td>'+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</td><td><button class="btn" data-ai-chat-detail="'+esc(x.id)+'">Görüntüle</button></td></tr>').join("")||'<tr><td colspan="5">Eşleşen sohbet kaydı yok.</td></tr>';
+  $("#aiChatLogsBody").innerHTML=rows.map(x=>'<tr><td><strong>'+esc(x.user?.username||"Bilinmeyen üye")+'</strong><br><small>'+esc(x.user?.email||"")+'</small></td><td>'+esc(x.question.slice(0,180))+(x.question.length>180?"…":"")+'</td><td>'+esc(x.answer.slice(0,180))+(x.answer.length>180?"…":"")+'</td><td>'+esc(formatIstanbulDateTime(x.created_at))+'</td><td><button class="btn" data-ai-chat-detail="'+esc(x.id)+'">Görüntüle</button></td></tr>').join("")||'<tr><td colspan="5">Eşleşen sohbet kaydı yok.</td></tr>';
   $("#aiChatLogsStatus").textContent=rows.length+" kayıt gösteriliyor · Toplam "+aiChatLogs.length+" kayıt";
  }
  async function loadAiChatLogs(){
@@ -426,7 +429,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  $("#adminNav [data-view=\"ai\"]")?.addEventListener("click",()=>loadAiChatLogs().catch(e=>{$("#aiChatLogsStatus").textContent=e.message}));
  $("#aiChatLogsReload")?.addEventListener("click",()=>loadAiChatLogs().catch(e=>{$("#aiChatLogsStatus").textContent=e.message;toast(e.message)}));
  $("#aiChatLogsSearch")?.addEventListener("input",renderAiChatLogs);$("#aiChatLogsUser")?.addEventListener("change",renderAiChatLogs);
- $("#aiChatLogsBody")?.addEventListener("click",e=>{const b=e.target.closest("[data-ai-chat-detail]");if(!b)return;const x=aiChatLogs.find(v=>v.id===b.dataset.aiChatDetail);if(!x)return;const box=$("#aiChatLogDetail");box.hidden=false;box.innerHTML='<h3>'+esc(x.user?.username||"Üye")+' · '+esc(x.user?.email||"")+'</h3><p><strong>Soru</strong></p><div class="ai-answer">'+esc(x.question).replace(/\n/g,"<br>")+'</div><p><strong>Yapay zekâ yanıtı</strong></p><div class="ai-answer">'+esc(x.answer).replace(/\n/g,"<br>")+'</div><p class="muted">Model: '+esc(x.model||"-")+' · '+esc(new Date(x.created_at).toLocaleString("tr-TR"))+'</p><h3>Kullanılan kaynaklar</h3>'+(x.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.source)+'</div>').join("")||'<p class="muted">Kaynak kaydı yok.</p>';box.scrollIntoView({behavior:"smooth",block:"center"})});
+ $("#aiChatLogsBody")?.addEventListener("click",e=>{const b=e.target.closest("[data-ai-chat-detail]");if(!b)return;const x=aiChatLogs.find(v=>v.id===b.dataset.aiChatDetail);if(!x)return;const box=$("#aiChatLogDetail");box.hidden=false;box.innerHTML='<h3>'+esc(x.user?.username||"Üye")+' · '+esc(x.user?.email||"")+'</h3><p><strong>Soru</strong></p><div class="ai-answer">'+esc(x.question).replace(/\n/g,"<br>")+'</div><p><strong>Yapay zekâ yanıtı</strong></p><div class="ai-answer">'+esc(x.answer).replace(/\n/g,"<br>")+'</div><p class="muted">Model: '+esc(x.model||"-")+' · '+esc(formatIstanbulDateTime(x.created_at))+'</p><h3>Kullanılan kaynaklar</h3>'+(x.sources||[]).map(s=>'<div class="ai-source">• '+esc(s.title)+' · '+esc(s.source)+'</div>').join("")||'<p class="muted">Kaynak kaydı yok.</p>';box.scrollIntoView({behavior:"smooth",block:"center"})});
 
  checkSession().catch(e=>toast(e.message));
 })();

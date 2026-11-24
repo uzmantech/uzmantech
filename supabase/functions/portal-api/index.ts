@@ -1580,7 +1580,7 @@ Deno.serve(async (req: Request) => {
 
     const [byUsername, byEmail, byPhone] = await Promise.all([
       db.from("users").select("id").eq("username", username).maybeSingle(),
-      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle();
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", email).maybeSingle(),
       db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("phone", phone).maybeSingle(),
     ]);
     if (byUsername.data) return response({ success: false, message: "Bu kullanıcı adı zaten kullanılıyor." }, 409);
@@ -1713,8 +1713,8 @@ Deno.serve(async (req: Request) => {
 
     const [byUsername, byEmail, byPhone] = await Promise.all([
       db.from("users").select("id").eq("username", verification.username).maybeSingle(),
-      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", verification.email).maybeSingle();
-      db.from("users").select("id").eq("phone", verification.phone).maybeSingle(),
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("email", verification.email).maybeSingle(),
+      db.from("users").select("id").in("registration_channel", ["web", "unknown"]).eq("phone", verification.phone).maybeSingle(),
     ]);
     if (byUsername.error || byEmail.error || byPhone.error) {
       return response({ success: false, message: "Kayıt bilgileri doğrulanamadı." }, 503);

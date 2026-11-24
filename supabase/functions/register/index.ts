@@ -855,6 +855,7 @@ Deno.serve(async (req) => {
             "phone",
             verification.phone,
           )
+          .in("registration_channel", ["desktop_app", "unknown"])
           .maybeSingle(),
       ]);
 

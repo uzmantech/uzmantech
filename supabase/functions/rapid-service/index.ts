@@ -670,7 +670,17 @@ Deno.serve(async (req) => {
         return new Response(JSON.stringify({success:false,message:"Hesap onaylanamadı."}),{status:500,headers:{...corsHeaders,"Content-Type":"application/json"}});
       }
       await writeAdminAudit("user_account_approved",userId,"Hesap aktif edildi; lisans değiştirilmedi.");
-      return new Response(JSON.stringify({success:true,message:"Hesap etkinleştirildi. Lisans/paket tanımlanmadı.",user:data}),{status:200,headers:{...corsHeaders,"Content-Type":"application/json"}});
+      const notification = await notifyPortalUser(req, userId, "activated");
+      const notificationMessage = notification.sent
+        ? " Onay bilgilendirmesi e-postası gönderildi."
+        : " Ancak onay e-postası gönderilemedi: " + notification.message;
+      return new Response(JSON.stringify({
+        success: true,
+        message: "Hesap etkinleştirildi. Lisans/paket tanımlanmadı." + notificationMessage,
+        email_sent: notification.sent,
+        email_message: notification.message,
+        user: data
+      }),{status:200,headers:{...corsHeaders,"Content-Type":"application/json"}});
     }
 
     /*

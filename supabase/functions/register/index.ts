@@ -509,6 +509,7 @@ Deno.serve(async (req) => {
           .from("users")
           .select("id")
           .eq("phone", phone)
+          .in("registration_channel", ["desktop_app", "unknown"])
           .maybeSingle(),
       ]);
 

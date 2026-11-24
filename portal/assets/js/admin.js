@@ -130,7 +130,7 @@
    const dateText=expiry&&!Number.isNaN(expiry.getTime())?expiry.toLocaleDateString("tr-TR"):"-";
    const remaining=expiry&&!Number.isNaN(expiry.getTime())?Math.ceil((expiry.getTime()-Date.now())/86400000):null;
    const status=u.status==="active"?(remaining!==null&&remaining<=0?"Lisans süresi doldu":"Aktif"):u.status==="pending"?"Onay bekliyor":u.disabled_reason==="license_expired"?"Lisans süresi doldu · Yenileme açık":u.disabled_reason==="admin_disabled"?"Yönetici tarafından kapatıldı":"Pasif";
-   const plan=planNames[u.license_plan]||u.license_plan||"Lisans yok";
+   const plan=String(u.license_plan||"")==="trial_"+String(u.license_days||"")?String(u.license_days)+" Gün Deneme":(planNames[u.license_plan]||u.license_plan||"Lisans yok");
    const remainingText=remaining===null?"Lisans atanmamış":remaining<=0?"Süresi doldu":remaining+" gün kaldı";
    const hasValidLicense=!!(expiry&&expiry.getTime()>Date.now()&&u.license_plan&&u.license_plan!=="none");
    const channel=acquisitionByUser.get(u.id)?.registration_channel||"unknown";

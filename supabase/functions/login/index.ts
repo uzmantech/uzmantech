@@ -23,7 +23,7 @@ function base64url(bytes: Uint8Array): string {
 
 function base64urlDecode(
   value: string,
-): Uint8Array {
+): Uint8Array<ArrayBuffer> {
   let s = value
     .replace(/-/g, "+")
     .replace(/_/g, "/");
@@ -33,11 +33,11 @@ function base64urlDecode(
   }
 
   const binary = atob(s);
-
-  return Uint8Array.from(
-    binary,
-    (c) => c.charCodeAt(0),
-  );
+  const output = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    output[i] = binary.charCodeAt(i);
+  }
+  return output;
 }
 
 function safeEqual(

@@ -122,7 +122,8 @@
 
  function renderUsers(){
   const q=$("#userSearch").value.trim().toLocaleLowerCase("tr-TR");
-  const list=users.filter(u=>[u.username,u.email,u.phone].join(" ").toLocaleLowerCase("tr-TR").includes(q));
+  const channelFilter=$("#userChannelFilter")?.value||"";
+  const list=users.filter(u=>[u.username,u.email,u.phone].join(" ").toLocaleLowerCase("tr-TR").includes(q) && (!channelFilter || (acquisitionByUser.get(u.id)?.registration_channel||"unknown")===channelFilter));
   const planNames={monthly:"1 Aylık",half_year:"6 Aylık",annual:"12 Aylık",trial_7:"7 Gün Deneme",full_365:"12 Aylık",custom:"Özel Lisans","365":"12 Aylık","none":"Lisans Yok"};
   $( "#usersBody" ).innerHTML=list.map(u=>{
    const expiry=u.expiry_date?new Date(u.expiry_date):null;
@@ -132,6 +133,8 @@
    const plan=planNames[u.license_plan]||u.license_plan||"Lisans yok";
    const remainingText=remaining===null?"Lisans atanmamış":remaining<=0?"Süresi doldu":remaining+" gün kaldı";
    const hasValidLicense=!!(expiry&&expiry.getTime()>Date.now()&&u.license_plan&&u.license_plan!=="none");
+   const channel=acquisitionByUser.get(u.id)?.registration_channel||"unknown";
+   const trialButton=channel==="desktop_app"?' <button class="btn" data-action="desktop_trial" data-id="'+esc(u.id)+'">Deneme ver</button>':"";
    const actionButtons=u.status==="pending"
     ?'<button class="btn" data-action="activate_account" data-id="'+esc(u.id)+'">Hesabı Onayla (Paketsiz)</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Reddet</button>'
     :u.status==="disabled"
@@ -139,7 +142,7 @@
      :hasValidLicense
       ?'<button class="btn" data-action="extend" data-id="'+esc(u.id)+'">Süre uzat</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>'
       :'<button class="btn" data-action="activate" data-id="'+esc(u.id)+'">Lisans Ver</button> <button class="btn" data-action="disable" data-id="'+esc(u.id)+'">Pasifleştir</button>';
-   const buttons=actionButtons+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
+   const buttons=actionButtons+trialButton+' <button class="btn danger" data-action="delete" data-id="'+esc(u.id)+'">Sil</button>';
    const css=u.status==="active"?(remaining!==null&&remaining<=0?"expired":"active"):u.status==="pending"?"pending":"expired";
    const emailState=u.email_verified===false?'<br><small class="muted">E-posta doğrulanmadı</small>':'';
    const acq=acquisitionByUser.get(u.id)||{};const sourceNames={google:"Google",instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",whatsapp:"WhatsApp",email:"E-posta",referral:"Diğer site",direct:"Doğrudan",other:"Diğer",unknown:"Bilinmiyor"};const sourceLabel=sourceNames[acq.acquisition_source]||acq.acquisition_source||"Bilinmiyor";const channelNames={web:"Web sitesi",desktop_app:"Masaüstü uygulama",unknown:"Bilinmiyor"};const channelLabel=channelNames[acq.registration_channel]||"Bilinmiyor";const sourceDetail=[channelLabel,acq.acquisition_medium,acq.acquisition_campaign].filter(Boolean).join(" · ");return '<tr><td>'+esc(u.username)+'</td><td>'+esc(u.email)+emailState+'</td><td>'+esc(sourceLabel)+(sourceDetail?'<br><small>'+esc(sourceDetail)+'</small>':'')+'</td><td><span class="status '+css+'">'+esc(status)+'</span></td><td>'+esc(dateText)+'<br><small>'+esc(plan)+' · '+esc(remainingText)+'</small></td><td>'+buttons+'</td></tr>';
@@ -194,6 +197,7 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
  $("#reloadPayments")?.addEventListener("click",()=>loadPayments().catch(e=>toast(e.message)));
  $("#reloadSupport")?.addEventListener("click",()=>loadSupport().catch(e=>toast(e.message)));
  $("#userSearch").addEventListener("input",renderUsers);
+ $("#userChannelFilter")?.addEventListener("change",renderUsers);
  $("#adminNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  document.addEventListener("click",async e=>{
   const jump=e.target.closest("[data-jump]");if(jump)navigate(jump.dataset.jump);
@@ -248,15 +252,20 @@ async function loadDashboard(){await loadUsers();if(!$("#siteMetrics").hidden)aw
    return;
   }
   let days=365;
+  if(action==="desktop_trial"){
+   const answer=prompt(u.username+" için deneme süresi? 7 veya 15 gün gir.", "7");
+   if(answer===null)return;days=Number(answer);
+   if(![7,15].includes(days)){toast("Deneme süresi yalnızca 7 veya 15 gün olabilir.");return;}
+  }
   if(action==="activate"||action==="extend"){
    const answer=prompt(u.username+" için kaç günlük lisans verilsin?",action==="activate"?"30":"30");
    if(answer===null)return;days=Number(answer);
    if(!Number.isInteger(days)||days<1||days>3650){toast("1 ile 3650 arasında gün gir.");return;}
   }
-  const label=action==="activate_account"?"hesap paket tanımlanmadan etkinleştirilsin":action==="activate"?"lisans verilsin":action==="extend"?"üyelik süresi uzatılsın":"hesap pasifleştirilsin";
+  const label=action==="activate_account"?"hesap paket tanımlanmadan etkinleştirilsin":action==="activate"?"lisans verilsin":action==="extend"?"üyelik süresi uzatılsın":action==="desktop_trial"?"masaüstü deneme lisansı verilsin":"hesap pasifleştirilsin";
   if(!confirm(u.username+" hesabı için "+label+" mı?"))return;
   btn.disabled=true;
-  try{const result=await adminCall(action,{user_id:id,...(action==="activate"||action==="extend"?{days}:{})});toast(result.message||"İşlem tamamlandı.");await loadDashboard();}
+  try{const apiAction=action==="desktop_trial"?"grant_desktop_trial":action;const result=await adminCall(apiAction,{user_id:id,...(["activate","extend","desktop_trial"].includes(action)?{days}:{})});toast(result.message||"İşlem tamamlandı.");await loadDashboard();}
   catch(err){toast(err.message);}
   finally{btn.disabled=false;}
  });

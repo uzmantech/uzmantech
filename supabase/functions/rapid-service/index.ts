@@ -612,7 +612,7 @@ Deno.serve(async (req) => {
       if (error || !data) {
         return new Response(JSON.stringify({ success: false, message: "Deneme süresi mail kaydı güncellenemedi." }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
-      await writeAdminAudit("trial_expiry_email_sent", userId, "7 günlük deneme süresi bitiş e-postası gönderildi olarak işaretlendi.");
+      await writeAdminAudit("trial_expiry_email_sent", userId, "Deneme süresi bitiş e-postası gönderildi olarak işaretlendi.");
       return new Response(JSON.stringify({ success: true, user: data }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 

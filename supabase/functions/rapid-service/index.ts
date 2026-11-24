@@ -606,7 +606,7 @@ Deno.serve(async (req) => {
         .from("users")
         .update({ trial_expiry_email_sent_at: now, updated_at: now })
         .eq("id", userId)
-        .eq("license_plan", "trial_7")
+        .in("license_plan", ["trial_7", "trial_15"])
         .select("id, username, email, trial_expiry_email_sent_at")
         .maybeSingle();
       if (error || !data) {

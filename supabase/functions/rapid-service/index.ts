@@ -271,7 +271,7 @@ Deno.serve(async (req) => {
       for(const l of customerLogs){const id=String(l.user_id);let a=activity.get(id);if(!a){a={events:0,days:new Set<string>(),last:l.created_at,features:new Set<string>()};activity.set(id,a);}a.events++;a.days.add(dateKey(l.created_at));a.features.add(String(l.item_name||l.category||"Diğer"));const d=dayMap.get(dateKey(l.created_at));if(d){d.events++;d.users.add(id);}}
       const nowMs=now.getTime(),d7=nowMs-7*86400000,d30=nowMs-30*86400000;
       const activeSince=(ms:number)=>new Set(customerLogs.filter((l:any)=>new Date(l.created_at).getTime()>=ms).map((l:any)=>String(l.user_id))).size;
-      const isPaid=(u:any)=>u.status==="active"&&!!u.license_plan&&!["none","trial_7"].includes(String(u.license_plan));
+      const isPaid=(u:any)=>u.status==="active"&&!!u.license_plan&&u.license_plan!=="none"&&!String(u.license_plan).startsWith("trial");
       const enriched=customerUsers.map((u:any)=>{const a=activity.get(String(u.id))||{events:0,days:new Set(),last:null,features:new Set()};return {username:u.username,status:u.status,license_plan:u.license_plan,registered_at:u.created_at,last_login:u.last_login,last_activity:a.last,events_90d:a.events,active_days_90d:a.days.size,features:Array.from(a.features).slice(0,10),acquisition_source:u.acquisition_source||"unknown",acquisition_campaign:u.acquisition_campaign};}).sort((a:any,b:any)=>b.events_90d-a.events_90d);
       const featureMap=new Map<string,number>();for(const l of customerLogs){const n=String(l.item_name||l.category||"Diğer").trim()||"Diğer";featureMap.set(n,(featureMap.get(n)||0)+1);}
       const sourceMap=new Map<string,number>();for(const u of customerUsers){const n=String(u.acquisition_source||"unknown");sourceMap.set(n,(sourceMap.get(n)||0)+1);}

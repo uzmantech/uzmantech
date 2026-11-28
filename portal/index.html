@@ -252,55 +252,13 @@ html body.showcase-home section.latest-files .latest-files-track{
  <section class="home-tv-latest" aria-label="Yazılımcı TV son videoları"><div class="home-tv-latest-grid" id="homeTvLatest"></div></section>
  <style>.home-tv-latest{margin:12px 0 25px}.home-tv-latest-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.home-tv-latest-card{display:block;overflow:hidden;border:1px solid #244765;border-radius:12px;background:#0b1b2d;color:#eef6ff;text-decoration:none;transition:transform .18s,border-color .18s}.home-tv-latest-card:hover{transform:translateY(-2px);border-color:#39bdf5}.home-tv-latest-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.home-tv-latest-card span{display:block;padding:9px 10px;font-size:11px;font-weight:700;line-height:1.4}.home-tv-latest-card small{display:block;margin-bottom:4px;color:#55cfff;font-size:9px}@media(max-width:850px){.home-tv-latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>
  <script>(function(){const root=document.getElementById("homeTvLatest");if(!root)return;const esc=v=>String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));fetch("/api/youtube-feed").then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{root.innerHTML=(d.videos||[]).slice(0,4).map(v=>'<a class="home-tv-latest-card" href="yazilimci-tv.html?video='+esc(v.id)+'"><img src="'+esc(v.thumbnail)+'" alt="" loading="lazy"><span><small>YAZILIMCI TV</small>'+esc(v.title)+'</span></a>').join("");}).catch(()=>{root.innerHTML='<p style="color:#9db4ca;font-size:12px">Son videolar şu anda yüklenemedi.</p>';});})();</script>
- <div class="adsense-app-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="6268655098" data-ad-format="auto" data-full-width-responsive="true"></ins>
- </div>
- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
  <div class="showcase-categories" aria-label="Teknik kategoriler">
   <span>🤖 Android Araçları</span><span> Apple Araçları</span><span>🟠 Xiaomi Araçları</span><span>▣ Samsung Araçları</span><span>🌺 Huawei Araçları</span><span>⚙ Genel Araçlar</span><span>▤ Rehberler</span><span>☁ İndir</span>
  </div>
- <div class="adsense-models-slot" style="width:100%;max-width:100%;margin:26px auto;padding:8px 0;text-align:center" aria-label="Reklam">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0160654735972608" data-ad-slot="6703557331" data-ad-format="auto" data-full-width-responsive="true"></ins>
- </div>
- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
  <section class="latest-files" aria-labelledby="latestFilesTitle">
   <div class="latest-files-heading"><div><span class="latest-files-kicker">ARŞİVE YENİ EKLENENLER</span><h2 id="latestFilesTitle">Son Eklenen Dosyalar</h2><p>Arşive en son eklenen teknik dosyalar.</p></div><span class="latest-files-live"><i></i> GÜNCEL</span></div>
   <div class="latest-files-window"><div class="latest-files-track" id="latestFilesTrack"><div class="latest-file-placeholder">Son eklenen dosyalar yükleniyor...</div></div></div>
  </section>
-<div class="adsense-home-slot" style="width:100%;max-width:100%;overflow-x:auto;text-align:center;margin:28px auto;padding:8px 0" aria-label="Reklam">
-  <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-0160654735972608" data-ad-slot="4871600919"></ins>
- </div>
- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
- <script>
- (function(){
-   const selector='.adsense-app-slot,.adsense-models-slot,.adsense-home-slot';
-   const slots=Array.from(document.querySelectorAll(selector));
-   const hideIfEmpty=slot=>{
-     const ad=slot.querySelector('ins.adsbygoogle');
-     if(!ad)return;
-     const status=ad.getAttribute('data-ad-status');
-     if(status==='unfilled'){
-       slot.style.setProperty('display','none','important');
-     }else if(status!=='filled' && !ad.querySelector('iframe') && !ad.querySelector('ins')){
-       slot.style.setProperty('display','none','important');
-     }
-   };
-   const observer=new MutationObserver(records=>{
-     records.forEach(record=>{
-       const el=record.target.nodeType===1?record.target:record.target.parentElement;
-       const slot=el&&el.closest?el.closest(selector):null;
-       if(slot)hideIfEmpty(slot);
-     });
-   });
-   slots.forEach(slot=>{
-     const ad=slot.querySelector('ins.adsbygoogle');
-     if(!ad)return;
-     observer.observe(ad,{attributes:true,childList:true,subtree:true});
-     hideIfEmpty(slot);
-     setTimeout(()=>hideIfEmpty(slot),15000);
-   });
- })();
- </script>
 </section>
       <section class="support-hub" id="support"><div class="support-hub-main"><div class="support-hub-copy"><span class="support-hub-eyebrow"><i></i> UZMANTOOL DESTEK MERKEZİ</span><h2>İşiniz yarım kalmasın.<br><em>Yanınızdayız.</em></h2><p>Teknik sorunlarınız, lisans işlemleriniz ve portal kullanımıyla ilgili taleplerinizi tek noktadan yönetin.</p><div class="support-hub-points"><span><b>01</b> Talebinizi oluşturun</span><span><b>02</b> Ekibimiz incelesin</span><span><b>03</b> Yanıtınızı takip edin</span></div></div><div class="support-hub-action"><div class="support-hub-orbit"><span>?</span></div><div class="support-hub-action-copy"><b>Size nasıl yardımcı olabiliriz?</b><small>Destek kaydınızı birkaç adımda oluşturun.</small></div><button class="support-button" id="supportRequest" type="button"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg> Destek Talebi Oluştur <span>›</span></button><small class="support-hub-footnote">Taleplerinizi hesabınızdan takip edebilirsiniz.</small></div></div><div class="support-hub-bottom"><span><i class="support-dot"></i> Kişisel destek alanınız</span><span>Teknik destek</span><span>Lisans ve üyelik</span><span>Ödeme işlemleri</span></div></section>
 

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19">
+<meta name="description" content="ADB cihaz algılama sorunlarında USB hata ayıklama, yetkilendirme, sürücü, kablo ve komut satırı kontrollerini adım adım inceleyin.">
+<title>ADB cihazı algılanmıyor: Windows ve Android kontrol listesi | Uzmantool Teknik Rehber</title>
+<link rel="canonical" href="https://uzmantool.com.tr/adb-cihaz-algilama.html">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site-header.css?v=dropdown-layer-20261114-4">
+<style>
+.guide-wrap{width:min(900px,calc(100% - 32px));margin:38px auto 70px;color:#eaf2ff}
+.guide-breadcrumb{font-size:12px;color:#8da9c5;margin-bottom:18px}.guide-breadcrumb a{color:#65c9ff;text-decoration:none}
+.guide-kicker{color:#55cafa;font-size:11px;font-weight:800;letter-spacing:1.8px}
+.guide-wrap h1{font-size:clamp(30px,5vw,46px);line-height:1.12;letter-spacing:-1px;margin:10px 0 14px}
+.guide-lead{font-size:17px;line-height:1.8;color:#b9cbe0}
+.guide-meta{font-size:12px;color:#829ab5;border-bottom:1px solid #263b54;padding:14px 0 22px}
+.guide-body{margin-top:25px;font-size:15px;line-height:1.85;color:#c7d5e5}
+.guide-body h2{font-size:23px;line-height:1.3;color:#f0f6ff;margin:32px 0 10px}
+.guide-body h3{font-size:17px;color:#eaf4ff;margin:22px 0 8px}
+.guide-body p{margin:10px 0}.guide-body ul,.guide-body ol{padding-left:24px}
+.guide-body li{margin:7px 0}.guide-body code{background:#10243b;border:1px solid #294765;border-radius:5px;padding:2px 6px;color:#9be0ff}
+.guide-note{margin:20px 0;padding:16px 18px;border:1px solid #28547a;border-radius:12px;background:#0d2034;color:#cfe3f7}
+.guide-warning{border-color:#765b2b;background:#2a2112;color:#f3dfb6}
+.guide-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.guide-links a{color:#71ceff}
+.guide-footer{border-top:1px solid #263b54;padding:24px;text-align:center;color:#8198b2;font-size:12px}
+@media(max-width:600px){.guide-wrap{width:calc(100% - 24px);margin-top:24px}.guide-body{font-size:14px}}
+</style>
+</head>
+<body>
+<header class="dash-topbar site-global-header">
+ <a class="site-header-brand" href="index.html"><img src="assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="index.html"><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="archive.html"><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link active" href="rehberler.html"><b>Teknik Rehberler</b></a>
+  <a class="site-nav-link" href="destek.html"><b>İletişim</b></a>
+ </nav>
+</header>
+<main class="guide-wrap">
+<div class="guide-breadcrumb"><a href="index.html">Ana Sayfa</a> / <a href="rehberler.html">Teknik Rehberler</a> / ADB</div>
+<p class="guide-kicker">ANDROID • ADB • ARIZA TESPİTİ</p><h1>ADB cihazı algılanmıyor: adım adım kontrol listesi</h1>
+<p class="guide-lead">Telefon bilgisayara bağlı olduğu hâlde <code>adb devices</code> listesinde görünmüyorsa sorun her zaman ADB programında değildir. Bağlantı modu, Android izinleri, USB sürücüsü ve kablo birlikte kontrol edilmelidir.</p><p class="guide-meta">Uzmantool Teknik Rehber • Güncelleme: 28 Kasım 2026 • Tanılama rehberi</p>
+<div class="guide-body">
+<h2>1. Önce bağlantının temelini kontrol edin</h2><p>Telefonun ekran kilidini açın ve sağlam veri aktarımı destekleyen bir USB kablosu kullanın. Bazı kablolar yalnızca şarj içindir; bu kablolar telefonu şarj etse bile bilgisayara veri bağlantısı sağlamaz. Mümkünse doğrudan bilgisayarın başka bir USB portunu deneyin ve USB çoklayıcıyı geçici olarak devreden çıkarın.</p><p>Telefonun bildirim panelindeki USB bağlantı bildirimini açın. Dosya aktarımı (MTP) seçeneğini seçmek, Windows'un cihazı tanımasına yardımcı olabilir. ADB için ayrıca Android geliştirici seçeneklerinde USB hata ayıklama etkin olmalıdır.</p>
+<h2>2. USB hata ayıklama ve bilgisayar yetkisi</h2><ol><li>Ayarlar bölümünde Geliştirici seçeneklerini açın. Menü adı üreticiye ve Android sürümüne göre değişebilir.</li><li>USB hata ayıklamayı etkinleştirin.</li><li>Telefonu bilgisayara yeniden bağlayın ve ekranda RSA parmak izi yetkilendirme penceresi çıkarsa bilgisayara güveniyorsanız onaylayın.</li><li>Yetkilendirme penceresi görünmüyorsa kabloyu çıkarıp takın; telefonun kilidinin açık olduğundan emin olun.</li></ol><div class="guide-note">Güvenmediğiniz veya ortak kullanılan bilgisayarlara ADB yetkisi vermeyin. İşiniz bittiğinde USB hata ayıklamayı kapatabilir ve kayıtlı USB hata ayıklama yetkilerini iptal edebilirsiniz.</div>
+<h2>3. ADB durumunu komutla ayırın</h2><p>Platform Tools klasöründe terminal açıp şu komutu çalıştırın:</p><p><code>adb devices</code></p><p>Çıktıyı şu şekilde yorumlayın:</p><ul><li><b>device:</b> ADB bağlantısı kurulmuştur.</li><li><b>unauthorized:</b> Telefon bilgisayarı henüz yetkilendirmemiştir. Telefon ekranındaki izin penceresini kontrol edin.</li><li><b>offline:</b> Cihaz ADB sunucusuna yanıt vermiyor olabilir. Kabloyu, USB portunu ve ADB sürümünü kontrol edin.</li><li><b>Boş liste:</b> USB sürücüsü, kablo, USB modu veya hata ayıklama ayarı kontrol edilmelidir.</li></ul>
+<h2>4. ADB sunucusunu yeniden başlatın</h2><p>Başka bir ADB işlemi takılı kalmışsa aşağıdaki komutlar istemci sunucusunu yeniden başlatır:</p><p><code>adb kill-server</code> ardından <code>adb start-server</code> ve tekrar <code>adb devices</code>.</p><p>Birden fazla telefon bağlıysa hangi seri numarasının hedef cihaz olduğunu doğrulayın. İşlem yapmadan önce cihaz listesini yeniden okuyun.</p>
+<h2>5. Windows sürücüsünü inceleyin</h2><p>Aygıt Yöneticisi'nde telefon bağlıyken yeni bir Android, ADB Interface veya bilinmeyen aygıt kaydı oluşup oluşmadığını kontrol edin. Sarı uyarı işareti varsa cihaz modeline uygun üretici USB sürücüsünü veya güvenilir Android USB sürücüsünü yükleyin. Farklı marka sürücülerini rastgele üst üste kurmak yerine eski/yanlış sürücüyü kaldırıp doğru sürümü yüklemek daha sağlıklıdır.</p>
+<h2>6. Sorun devam ediyorsa kayıt alın</h2><p>Telefon modeli, Android sürümü, Windows sürümü, ADB çıktısı ve Aygıt Yöneticisi'ndeki aygıt adı birlikte kaydedilmelidir. Bu bilgiler olmadan yalnızca “ADB görmüyor” ifadesi kesin teşhis için yeterli değildir.</p>
+<div class="guide-note guide-warning"><b>Önemli:</b> ADB bağlantısı kuruldu diye her komut güvenli değildir. <code>adb shell</code>, veri silme, paket kaldırma veya sistem bölümüne yazma komutlarını ne yaptığınızı bilmeden çalıştırmayın. Bu rehber bağlantı tanılaması içindir.</div>
+<h2>Sık sorulan sorular</h2><h3>Telefon şarj oluyor ama ADB görünmüyor. Neden?</h3><p>Kablo yalnızca şarj destekliyor olabilir, USB modu yanlış olabilir veya USB hata ayıklama/izin adımı tamamlanmamış olabilir.</p><h3>ADB cihazı unauthorized gösteriyor. Sürücü mü bozuk?</h3><p>Genellikle ilk kontrol edilmesi gereken konu telefon ekranındaki RSA izin penceresidir. Sürücü sorunları da mümkündür; ancak bu durum tek başına sürücü arızasını kanıtlamaz.</p>
+</div><div class="guide-links"><a href="rehberler.html">← Tüm teknik rehberler</a><a href="destek.html">Destek merkezine git →</a></div>
+</main>
+<footer class="guide-footer">© 2026 Uzmantech · <a href="gizlilik-politikasi.html">Gizlilik Politikası</a> · <a href="kullanim-sartlari.html">Kullanım Şartları</a> · <a href="destek.html">İletişim</a></footer>
+</body></html>

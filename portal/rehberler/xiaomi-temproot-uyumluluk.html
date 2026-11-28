@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080e19">
+<meta name="description" content="Model adı, cihaz kod adı, yonga seti, Android sürümü ve yazılım derlemesi arasındaki farkları öğrenin; uyumluluk sonucunu doğru yorumlayın.">
+<title>Xiaomi Temp Root uyumluluğu nasıl değerlendirilir? | Uzmantool Teknik Rehber</title>
+<link rel="canonical" href="https://uzmantool.com.tr/rehberler/xiaomi-temproot-uyumluluk.html">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/site-header.css?v=dropdown-layer-20261114-4">
+<style>
+.guide-wrap{width:min(900px,calc(100% - 32px));margin:38px auto 70px;color:#eaf2ff}
+.guide-breadcrumb{font-size:12px;color:#8da9c5;margin-bottom:18px}.guide-breadcrumb a{color:#65c9ff;text-decoration:none}
+.guide-kicker{color:#55cafa;font-size:11px;font-weight:800;letter-spacing:1.8px}
+.guide-wrap h1{font-size:clamp(30px,5vw,46px);line-height:1.12;letter-spacing:-1px;margin:10px 0 14px}
+.guide-lead{font-size:17px;line-height:1.8;color:#b9cbe0}
+.guide-meta{font-size:12px;color:#829ab5;border-bottom:1px solid #263b54;padding:14px 0 22px}
+.guide-body{margin-top:25px;font-size:15px;line-height:1.85;color:#c7d5e5}
+.guide-body h2{font-size:23px;line-height:1.3;color:#f0f6ff;margin:32px 0 10px}
+.guide-body h3{font-size:17px;color:#eaf4ff;margin:22px 0 8px}
+.guide-body p{margin:10px 0}.guide-body ul,.guide-body ol{padding-left:24px}
+.guide-body li{margin:7px 0}.guide-body code{background:#10243b;border:1px solid #294765;border-radius:5px;padding:2px 6px;color:#9be0ff}
+.guide-note{margin:20px 0;padding:16px 18px;border:1px solid #28547a;border-radius:12px;background:#0d2034;color:#cfe3f7}
+.guide-warning{border-color:#765b2b;background:#2a2112;color:#f3dfb6}
+.guide-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.guide-links a{color:#71ceff}
+.guide-footer{border-top:1px solid #263b54;padding:24px;text-align:center;color:#8198b2;font-size:12px}
+@media(max-width:600px){.guide-wrap{width:calc(100% - 24px);margin-top:24px}.guide-body{font-size:14px}}
+</style>
+<!-- Google AdSense publisher code -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0160654735972608" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="dash-topbar site-global-header">
+ <a class="site-header-brand" href="../index.html"><img src="../assets/logo.svg" alt="Uzmantech"><span><b>UZMANTECH</b><small>TEKNİK ÇÖZÜM PLATFORMU</small></span></a>
+ <nav class="site-global-nav" aria-label="Ana menü">
+  <a class="site-nav-link" href="../index.html"><b>Ana Sayfa</b></a>
+  <a class="site-nav-link" href="../archive.html"><b>Dosya Arşivi</b></a>
+  <a class="site-nav-link active" href="../rehberler.html"><b>Teknik Rehberler</b></a>
+  <a class="site-nav-link" href="../destek.html"><b>İletişim</b></a>
+ </nav>
+</header>
+<main class="guide-wrap">
+<div class="guide-breadcrumb"><a href="../index.html">Ana Sayfa</a> / <a href="../rehberler.html">Teknik Rehberler</a> / Temp Root</div><p class="guide-kicker">XIAOMI • REDMI • POCO • UYUMLULUK</p><h1>Xiaomi Temp Root uyumluluğu nasıl değerlendirilir?</h1><p class="guide-lead">Temp Root uyumluluğu yalnızca telefonun marka ve model adına bakılarak belirlenemez. Cihaz kod adı, işlemci platformu, Android derlemesi ve güvenlik seviyesi birlikte değerlendirilmelidir.</p><p class="guide-meta">Uzmantool Teknik Rehber • Güncelleme: 28 Kasım 2026 • Uyumluluk değerlendirme rehberi</p><div class="guide-body"><h2>Temp Root ne anlama gelir?</h2><p>Temp Root, bazı cihaz ve yazılım kombinasyonlarında yeniden başlatma sonrasında kalıcı olmayan, geçici yönetici ayrıcalığı elde edilmesini ifade eder. Her Android cihazda veya her yazılım sürümünde çalışmaz. Bir model için daha önce başarılı sonuç alınmış olması, aynı modelin tüm bölge ve yazılım sürümlerinin uyumlu olduğu anlamına gelmez.</p><h2>1. Ticari isim ile cihaz kod adını ayırın</h2><p>Bir cihazın mağaza adı, teknik ürün kodu ve yazılım paketlerinde kullanılan kod adı farklı olabilir. Aynı ticari isim farklı pazarlarda farklı donanım varyantlarıyla satılabilir. Uyumluluk araştırmasına başlamadan önce tam model numarasını ve cihaz kod adını doğrulayın.</p><h2>2. İşlemci platformunu tek başına ölçüt almayın</h2><p>İşlemci ailesi önemli bir parametredir; ancak aynı yonga setini kullanan iki cihaz farklı boot zinciri, kernel derlemesi veya üretici yapılandırması taşıyabilir. Bu nedenle “aynı işlemci = aynı yöntem” varsayımı güvenilir değildir.</p><h2>3. Android sürümü ve güvenlik yaması</h2><p>Android ana sürümü, derleme numarası, kernel sürümü ve güvenlik yaması seviyesi uyumluluğu etkileyebilir. OTA güncellemesi sonrasında model adı değişmese bile sistem bileşenleri değişmiş olabilir. Kontrol sonucunu kaydederken yalnızca Android sürümünü değil tam yapı numarasını da saklayın.</p><h2>4. Uyumluluk sonucunu nasıl okumalı?</h2><ul><li><b>Doğrulanmış:</b> Tam model ve yazılım kombinasyonu için güvenilir test kaydı vardır.</li><li><b>Ön uyumlu:</b> Bazı temel parametreler eşleşir; gerçek cihaz üzerinde doğrulama tamamlanmamıştır.</li><li><b>Belirsiz:</b> Model, kod adı veya yazılım bilgisi eksiktir.</li><li><b>Uyumsuz:</b> Bilinen teknik gereksinimlerden en az biri karşılanmıyordur.</li></ul><p>Bir araç yalnızca işlemci veya model adına bakarak sonuç üretiyorsa bunu kesin başarı garantisi olarak yorumlamayın. Sonuç ekranında hangi parametrelerin kontrol edildiği açıkça belirtilmelidir.</p><h2>5. İşlem öncesi güvenlik kontrolü</h2><p>Önemli kullanıcı verilerinin yedeğini alın. Cihazın tam modelini, derleme numarasını ve mevcut boot durumunu kaydedin. İşlem yönergesinin tam olarak aynı varyant ve yazılım sürümüne ait olduğunu doğrulayın. Güvenilir kaynağı bulunmayan dosya veya komutları denemeyin.</p><div class="guide-note guide-warning"><b>Risk:</b> Geçici root denemeleri güvenlik modelini etkileyebilir; yanlış dosya veya uyumsuz yöntem açılış sorunlarına, veri kaybına ya da güvenlik açıklarına yol açabilir. Bu rehber exploit veya root elde etme talimatı değildir; uyumluluk kontrolü içindir.</div><h2>Uzmantool uyumluluk kaydı için önerilen alanlar</h2><p>Model numarası, cihaz kod adı, işlemci platformu, Android sürümü, tam yapı numarası, kernel bilgisi, güvenlik yaması, test tarihi ve test sonucu ayrı alanlarda tutulmalıdır. “Test edilmedi” ile “başarısız” durumları birbirinden ayrılmalıdır.</p></div><div class="guide-links"><a href="../rehberler.html">← Tüm teknik rehberler</a><a href="../mediatek-temp-root.html">Temp Root uyumluluk aracına git →</a></div>
+</main>
+<footer class="guide-footer">© 2026 Uzmantech · <a href="../gizlilik-politikasi.html">Gizlilik Politikası</a> · <a href="../kullanim-sartlari.html">Kullanım Şartları</a> · <a href="../destek.html">İletişim</a></footer>
+</body></html>
